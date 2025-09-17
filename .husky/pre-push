@@ -2,20 +2,17 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "코드 포맷 확인..."
-npm run format:check  FORMAT_CHECK_FAILED=true
-
-if [ "$FORMAT_CHECK_FAILED" = "true" ]; then
+if ! npm run format:check; then
   echo "❌ 포맷 오류 - 푸시 취소"
   echo "다음 명령어로 수정 후 다시 푸시하세요:"
   echo "npm run format"
+  echo "git add ."
   echo "git commit -m "Fix code formatting""
   exit 1
 fi
 
 echo "푸시 전 빌드 테스트 진행"
-npm run build  BUILD_FAILED=true
-
-if [ "$BUILD_FAILED" = "true" ]; then
+if ! npm run build; then
   echo "빌드 실패 - 푸시 취소.."
   exit 1
 else
