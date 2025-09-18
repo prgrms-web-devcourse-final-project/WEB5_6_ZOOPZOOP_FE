@@ -1,26 +1,59 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Grey */
+  --grey-light: #f2f2f2;
+  --grey-light-hover: #ececec;
+  --grey-light-active: #d7d7d7;
+  --grey-normal: #7d7d7d;
+  --grey-normal-hover: #717171;
+  --grey-normal-active: #646464;
+  --grey-dark: #5e5e5e;
+  --grey-dark-hover: #4b4b4b;
+  --grey-dark-active: #383838;
+  --grey-darker: #2c2c2c;
+
+  /* Green */
+  --green-light: #e6f7ef;
+  --green-light-hover: #d9f2e7;
+  --green-light-active: #b0e5ce;
+  --green-normal: #01ab62;
+  --green-normal-hover: #019a58;
+  --green-normal-active: #01894e;
+  --green-dark: #01804a;
+  --green-dark-hover: #01673b;
+  --green-dark-active: #004d2c;
+  --green-darker: #003c22;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Grey Colors */
+  --color-light: var(--grey-light);
+  --color-light-hover: var(--grey-light-hover);
+  --color-light-active: var(--grey-light-active);
+  --color-normal: var(--grey-normal);
+  --color-normal-hover: var(--grey-normal-hover);
+  --color-normal-active: var(--grey-normal-active);
+  --color-dark: var(--grey-dark);
+  --color-dark-hover: var(--grey-dark-hover);
+  --color-dark-active: var(--grey-dark-active);
+  --color-darker: var(--grey-darker);
+
+  /* Green Colors */
+  --color-green-light: var(--green-light);
+  --color-green-light-hover: var(--green-light-hover);
+  --color-green-light-active: var(--green-light-active);
+  --color-green-normal: var(--green-normal);
+  --color-green-normal-hover: var(--green-normal-hover);
+  --color-green-normal-active: var(--green-normal-active);
+  --color-green-dark: var(--green-dark);
+  --color-green-dark-hover: var(--green-dark-hover);
+  --color-green-dark-active: var(--green-dark-active);
+  --color-green-darker: var(--green-darker);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
