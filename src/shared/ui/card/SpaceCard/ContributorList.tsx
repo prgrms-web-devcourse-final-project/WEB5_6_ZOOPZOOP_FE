@@ -16,11 +16,12 @@ const ContributorList = ({ contributors, maxDisplay = 5 }: Props) => {
         className="flex -space-x-3"
         aria-label="팀원 목록">
         {displayContributors.map((_, index) => (
-          <Avatar
-            key={index}
-            url="https://github.com/shadcn.png"
-            alt="사용자"
-          />
+          <li key={index}>
+            <Avatar
+              url="https://github.com/shadcn.png"
+              alt="사용자"
+            />
+          </li>
         ))}
         {remainingCount > 0 && <RemainingAvatar count={remainingCount} />}
       </ul>
