@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Orange */
+  --org: #ff9354;
   /* Grey */
   --grey-light: #f2f2f2;
   --grey-light-hover: #ececec;
@@ -63,6 +65,9 @@
 }
 
 @theme inline {
+  /* Orange Color */
+  --color-orange-accent: var(--org);
+
   /* Grey Colors */
   --color-light: var(--grey-light);
   --color-light-hover: var(--grey-light-hover);
