@@ -14,7 +14,7 @@ export const InputSpaceName = ({
         <input
           type="text"
           id="space-name"
-          className="border border-light rounded-md py-3 px-3 text-base"
+          className="border border-gray-light rounded-md py-3 px-3 text-base"
           placeholder="스페이스 이름을 입력해 주세요"
         />
       </div>

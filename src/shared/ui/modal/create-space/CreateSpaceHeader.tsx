@@ -8,14 +8,14 @@ export const CreateModalHeader = ({ step }: { step: number }) => {
       <div className="flex">
         <p
           className={tw(
-            'w-[200px] py-2.5 text-center text-lg text-normal border-b-2 border-light-active',
+            'w-[200px] py-2.5 text-center text-lg text-normal border-b-2 border-gray-light-active',
             step === 1 && 'border-green-normal text-green-normal'
           )}>
           1. 이름 입력
         </p>
         <p
           className={tw(
-            'w-[200px] py-2.5 text-center text-lg text-normal border-b-2 border-light-active',
+            'w-[200px] py-2.5 text-center text-lg text-normal border-b-2 border-gray-light-active',
             step === 2 && 'border-green-normal text-green-normal'
           )}>
           2. 팀원 초대

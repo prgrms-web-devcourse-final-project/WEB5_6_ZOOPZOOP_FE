@@ -13,7 +13,7 @@ export const InviteMember = () => {
         <input
           type="text"
           id="space-members"
-          className="border border-light rounded-md py-3 px-3 text-base w-full"
+          className="border border-gray-light rounded-md py-3 px-3 text-base w-full"
           placeholder="이메일을 입력해 주세요"
         />
         <LuSearch
