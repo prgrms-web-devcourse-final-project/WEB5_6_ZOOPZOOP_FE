@@ -7,10 +7,30 @@ import {
   ChartNetwork,
   TextSearch,
   Users,
-  BotMessageSquare
+  BotMessageSquare,
+  LucideProps
 } from 'lucide-react'
+import { ForwardRefExoticComponent, RefAttributes } from 'react'
 
-export const navItems = [
+export type MainNav = {
+  href: string
+  label: string
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+  >
+  count?: number
+  children?: NavItem[]
+}
+
+export type NavItem = {
+  href: string
+  label: string
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
+  >
+}
+
+export const navItems: MainNav[] = [
   {
     href: '/archive',
     label: '아카이브',
