@@ -18,7 +18,7 @@ reviews:
     enabled: true
     drafts: true
     base_branches:
-      - '**'
+      - '.*'
 
   # 한국어 리뷰를 위한 글로벌 지시사항
   instructions: |
