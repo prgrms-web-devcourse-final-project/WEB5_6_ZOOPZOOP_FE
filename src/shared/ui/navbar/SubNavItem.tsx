@@ -1,3 +1,5 @@
+'use client'
+
 import { tw } from '@/shared/lib'
 import { NavItem } from '@/shared/lib/navigation'
 import Link from 'next/link'

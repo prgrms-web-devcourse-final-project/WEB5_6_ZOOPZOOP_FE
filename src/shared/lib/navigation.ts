@@ -1,23 +1,20 @@
 import {
-  InboxIcon,
-  Trash2Icon,
-  LayoutGridIcon,
+  Inbox,
+  Trash2,
+  LayoutGrid,
   ScrollText,
   Settings,
   ChartNetwork,
   TextSearch,
   Users,
   BotMessageSquare,
-  LucideProps
+  LucideIcon
 } from 'lucide-react'
-import { ForwardRefExoticComponent, RefAttributes } from 'react'
 
 export type MainNav = {
   href: string
   label: string
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-  >
+  icon: LucideIcon
   count?: number
   children?: NavItem[]
 }
@@ -25,30 +22,28 @@ export type MainNav = {
 export type NavItem = {
   href: string
   label: string
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-  >
+  icon: LucideIcon
 }
 
 export const navItems: MainNav[] = [
   {
     href: '/archive',
     label: '아카이브',
-    icon: InboxIcon,
+    icon: Inbox,
     count: 123,
     children: [
       {
         /* TODO: 루트 변경 */
         href: '/archive',
         label: '휴지통',
-        icon: Trash2Icon
+        icon: Trash2
       }
     ]
   },
   {
     href: '/space',
     label: '스페이스',
-    icon: LayoutGridIcon,
+    icon: LayoutGrid,
     count: 50,
     children: [
       {
@@ -79,7 +74,7 @@ export const navItems: MainNav[] = [
         /* TODO: 루트 변경 */
         href: '/space',
         label: '휴지통',
-        icon: Trash2Icon
+        icon: Trash2
       }
     ]
   },

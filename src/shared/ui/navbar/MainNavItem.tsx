@@ -13,15 +13,19 @@ function MainNavItem({ toggleMainMenu, isMainMenuOpen, mainItem }: Props) {
   const Icon = icon
 
   return (
-    <li onClick={() => toggleMainMenu(label)}>
+    <li>
       <Link
         href={href}
+        onClick={e => {
+          e.preventDefault()
+          toggleMainMenu(label)
+        }}
         className={tw(
-          'flex items-center justify-center sm:justify-start px-2.5 py-2 rounded-md font-bold text-base hover:bg-orange-accent  sm:px-3 sm:gap-4',
+          'flex items-center justify-center sm:justify-start px-2.5 py-2 rounded-md font-bold text-base hover:bg-orange-accent sm:px-3 mb-2',
           !isMainMenuOpen
             ? 'bg-white text-black'
             : 'bg-green-normal text-white',
-          'w-10 h-10 sm:w-auto sm:h-auto sm:px-3 sm:gap-4 px-2.5 py-2'
+          ' px-2.5 py-2 w-10 h-10 sm:w-auto sm:h-auto sm:px-3 sm:gap-4'
         )}>
         {Icon && (
           <span title={label}>
@@ -32,7 +36,9 @@ function MainNavItem({ toggleMainMenu, isMainMenuOpen, mainItem }: Props) {
           </span>
         )}
         <p className="hidden sm:block flex-1">{label}</p>
-        {count && <span className="hidden sm:block">{count}</span>}
+        {typeof count !== 'undefined' && (
+          <span className="hidden sm:block">{count}</span>
+        )}
       </Link>
     </li>
   )

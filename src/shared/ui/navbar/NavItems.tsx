@@ -1,32 +1,16 @@
 import { MainNav } from '@/shared/lib/navigation'
 import MainNavItem from './MainNavItem'
 import SubNavItem from './SubNavItem'
-import { useState } from 'react'
+
 interface Props {
   item: MainNav
+  menuState: { main: string | null; sub: string | null }
+  toggleMainMenu: (label: string) => void
+  toggleSubMenu: (label: string) => void
 }
 
-function NavItems({ item }: Props) {
-  const [menuState, setMenuState] = useState<{
-    main: string | null
-    sub: string | null
-  }>({ main: null, sub: null })
-
+function NavItems({ item, menuState, toggleMainMenu, toggleSubMenu }: Props) {
   const isMainMenuOpen = menuState.main === item.label
-
-  const toggleMainMenu = (label: string) => {
-    setMenuState(prev => ({
-      main: prev.main === label ? null : label,
-      sub: null
-    }))
-  }
-  const toggleSubMenu = (label: string) => {
-    setMenuState(prev => ({
-      ...prev,
-      sub: prev.sub === label ? null : label
-    }))
-  }
-
   return (
     <>
       <MainNavItem
