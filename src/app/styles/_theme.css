@@ -1,19 +1,17 @@
 @theme inline {
-  --color-accent: var(--orange);
-  --color-primary: var(--green-normal);
-  --color-secondary: var(--grey-dark-active);
+  --color-orange-accent: var(--orange);
 
   /* Grey Colors */
-  --color-light: var(--grey-light);
-  --color-light-hover: var(--grey-light-hover);
-  --color-light-active: var(--grey-light-active);
-  --color-normal: var(--grey-normal);
-  --color-normal-hover: var(--grey-normal-hover);
-  --color-normal-active: var(--grey-normal-active);
-  --color-dark: var(--grey-dark);
-  --color-dark-hover: var(--grey-dark-hover);
-  --color-dark-active: var(--grey-dark-active);
-  --color-darker: var(--grey-darker);
+  --color-gray-light: var(--grey-light);
+  --color-gray-light-hover: var(--grey-light-hover);
+  --color-gray-light-active: var(--grey-light-active);
+  --color-gray-normal: var(--grey-normal);
+  --color-gray-normal-hover: var(--grey-normal-hover);
+  --color-gray-normal-active: var(--grey-normal-active);
+  --color-gray-dark: var(--grey-dark);
+  --color-gray-dark-hover: var(--grey-dark-hover);
+  --color-gray-dark-active: var(--grey-dark-active);
+  --color-gray-darker: var(--grey-darker);
 
   /* Green Colors */
   --color-green-light: var(--green-light);
