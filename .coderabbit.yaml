@@ -13,7 +13,7 @@ reviews:
   review_status: true
   collapse_walkthrough: false
   auto_review:
-    enabled: true
+    enabled: false
     drafts: true  # 드래프트 PR도 리뷰
 	  ignore_paths:                    # 불필요한 파일 제외
 	    - "**/*.lock"
