@@ -1,10 +1,10 @@
 import { tw } from '@/shared/lib'
-import { UploadArchiveModal } from '@/shared/ui/modal/archive/UploadArchiveModal'
+import { CreateFolderModal } from '@/shared/ui/modal'
 
 export default function Home() {
   return (
     <div className={tw('flex-center h-screen text-2xl')}>
-      <UploadArchiveModal />
+      <CreateFolderModal />
     </div>
   )
 }
