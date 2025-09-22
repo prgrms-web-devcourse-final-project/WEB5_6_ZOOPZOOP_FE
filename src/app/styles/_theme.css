@@ -1,6 +1,7 @@
 @theme inline {
-  /* Orange Color */
-  --color-orange-accent: var(--orange);
+  --color-accent: var(--orange);
+  --color-primary: var(--green-normal);
+  --color-secondary: var(--grey-dark-active);
 
   /* Grey Colors */
   --color-light: var(--grey-light);
