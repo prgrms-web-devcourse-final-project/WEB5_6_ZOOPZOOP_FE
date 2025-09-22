@@ -6,7 +6,7 @@ early_access: false
 
 # 전체적인 리뷰 설정
 reviews:
-  profile: 'assertive'
+  profile: 'chill'
   request_changes_workflow: false
 
   high_level_summary: true
@@ -18,7 +18,10 @@ reviews:
     enabled: true
     drafts: true
     base_branches:
-      - '.*'
+      - '^OPS-.*'
+  # shadcn/ui 관련 파일 제외 설정
+  ignore_patterns:
+    - 'src/shared/ui/shadcn/**'
 
   # 한국어 리뷰를 위한 글로벌 지시사항
   instructions: |

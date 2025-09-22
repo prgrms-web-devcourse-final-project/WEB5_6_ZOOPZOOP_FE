@@ -1,6 +1,6 @@
 @theme inline {
   /* Orange Color */
-  --color-orange-accent: var(--org);
+  --color-orange-accent: var(--orange);
 
   /* Grey Colors */
   --color-light: var(--grey-light);
