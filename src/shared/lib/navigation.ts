@@ -1,0 +1,70 @@
+import {
+  InboxIcon,
+  Trash2Icon,
+  LayoutGridIcon,
+  ScrollText,
+  Settings,
+  ChartNetwork,
+  TextSearch,
+  Users,
+  BotMessageSquare
+} from 'lucide-react'
+
+export const navItems = [
+  {
+    href: '/archive',
+    label: '아카이브',
+    icon: InboxIcon,
+    count: 123,
+    children: [
+      {
+        /* TODO: 루트 변경 */
+        href: '/archive',
+        label: '휴지통',
+        icon: Trash2Icon
+      }
+    ]
+  },
+  {
+    href: '/space',
+    label: '스페이스',
+    icon: LayoutGridIcon,
+    count: 50,
+    children: [
+      {
+        /* TODO: 루트 변경 */
+        href: '/space',
+        label: '차트 보기',
+        icon: ChartNetwork
+      },
+      {
+        /* TODO: 루트 변경 */
+        href: '/space',
+        label: '자세히 보기',
+        icon: TextSearch
+      },
+      {
+        /* TODO: 루트 변경 */
+        href: '/space',
+        label: '팀원 관리',
+        icon: Users
+      },
+      {
+        /* TODO: 루트 변경 */
+        href: '/space',
+        label: 'Ai 추천 받기',
+        icon: BotMessageSquare
+      },
+      {
+        /* TODO: 루트 변경 */
+        href: '/space',
+        label: '휴지통',
+        icon: Trash2Icon
+      }
+    ]
+  },
+  { href: '/news', label: '뉴스', icon: ScrollText },
+
+  /* TODO: 루트 변경 */
+  { href: '/news', label: '계정 관리', icon: Settings }
+]
