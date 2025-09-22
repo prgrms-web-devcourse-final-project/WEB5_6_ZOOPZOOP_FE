@@ -29,6 +29,7 @@
   /* shadcn/ui 컬러 매핑 */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
