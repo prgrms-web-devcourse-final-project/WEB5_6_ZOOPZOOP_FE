@@ -1,10 +1,10 @@
 import { tw } from '@/shared/lib'
-import { CreateSpaceModal } from '@/shared/ui/modal'
+import { AlarmModal } from '@/shared/ui/modal'
 
 export default function Home() {
   return (
     <div className={tw('flex-center h-screen text-2xl')}>
-      <CreateSpaceModal initialStep={1} />
+      <AlarmModal />
     </div>
   )
 }
