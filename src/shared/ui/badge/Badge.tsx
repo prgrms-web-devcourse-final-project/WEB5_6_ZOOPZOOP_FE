@@ -57,11 +57,11 @@ export const Badge = ({ name }: Props) => {
   return (
     <div
       className={tw(
-        'w-fit px-3 py-1 rounded-full font-semibold text-xs',
-        BadgeList[name as keyof typeof BadgeList].color,
-        BadgeList[name as keyof typeof BadgeList].textColor
+        'w-fit px-3 py-1 rounded-full text-sm font-bold',
+        BadgeList[name as keyof typeof BadgeList]?.color,
+        BadgeList[name as keyof typeof BadgeList]?.textColor
       )}>
-      {BadgeList[name as keyof typeof BadgeList].name}
+      {BadgeList[name as keyof typeof BadgeList]?.name}
     </div>
   )
 }

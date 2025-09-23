@@ -1,12 +1,21 @@
 import Image from 'next/image'
+import { Badge } from '../../badge'
 
 interface Props {
   title: string
   content: string
   imageUrl: string
+  category: string
+  createdAt: string
 }
 
-export const NewsCard = ({ title, content, imageUrl }: Props) => {
+export const NewsCard = ({
+  title,
+  content,
+  imageUrl,
+  category,
+  createdAt
+}: Props) => {
   return (
     <div className="w-[360px] h-[371px] rounded-lg shadow-md bg-white">
       <Image
@@ -18,8 +27,10 @@ export const NewsCard = ({ title, content, imageUrl }: Props) => {
       />
       <div className="p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-gray-normal">태그</p>
-          <p className="text-xs text-gray-normal">시간</p>
+          <Badge name={category} />
+          <p className="text-xs text-gray-normal">
+            {createdAt || '2025.01.01'}
+          </p>
         </div>
         <h3 className="text-lg font-bold">{title}</h3>
         <p className="text-sm text-gray-500">{content}</p>
