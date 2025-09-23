@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { QueryProvider } from '@/shared/providers'
 import Navbar from '@/shared/ui/navbar/Navbar'
+import { GlobalModal } from '@/shared/ui/modal'
 
 export const metadata: Metadata = {
   title: 'ZoopZoop',
@@ -21,7 +22,10 @@ export default function RootLayout({
       <body className="antialiased flex ">
         <Navbar />
         <main className="flex-1">
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            {children}
+            <GlobalModal />
+          </QueryProvider>
         </main>
       </body>
     </html>
