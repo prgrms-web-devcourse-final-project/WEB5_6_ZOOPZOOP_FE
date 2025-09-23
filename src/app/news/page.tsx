@@ -1,4 +1,3 @@
-import { NewsHeader } from '@/widgets/news-header'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,10 +5,11 @@ export const metadata: Metadata = {
   description: '뉴스'
 }
 
-export default function News() {
-  return (
-    <div className="w-full h-full">
-      <NewsHeader />
-    </div>
-  )
+export default async function News({
+  searchParams
+}: {
+  searchParams: Promise<{ search?: string }>
+}) {
+  const { search } = await searchParams
+  return <div>News {search}</div>
 }
