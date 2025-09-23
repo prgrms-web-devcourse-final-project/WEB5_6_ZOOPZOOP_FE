@@ -61,7 +61,7 @@ const Pagination = ({ totalPages, maxVisiblePages = 5 }: Props) => {
             onClick={canGoPrevious ? goToPrevious : undefined}
           />
         </PaginationItem>
-        {/* 코어 패아자  */}
+        {/* 코어 페이지 */}
         {pages.map((page, index) => (
           <PaginationItem key={index}>
             <PaginationLink

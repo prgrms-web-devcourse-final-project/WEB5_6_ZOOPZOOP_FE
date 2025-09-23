@@ -78,7 +78,7 @@ function PaginationPrevious({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label="이전 페이지로 이동"
       className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
       {...props}>
       <ChevronLeftIcon />
@@ -91,7 +91,7 @@ function PaginationFirst({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label="첫 번째 페이지로 이동"
       className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
       {...props}>
       <ChevronsLeft />
@@ -105,7 +105,7 @@ function PaginationNext({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label="다음 페이지로 이동"
       className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
       {...props}>
       <ChevronRightIcon />
@@ -118,7 +118,7 @@ function PaginationLast({
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label="마지막 페이지로 이동"
       className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
       {...props}>
       <ChevronsRight />
