@@ -7,12 +7,13 @@ export const metadata: Metadata = {
   description: '뉴스'
 }
 
-export default async function News({
-  searchParams
-}: {
-  searchParams: Promise<{ search?: string }>
-}) {
-  const { search } = await searchParams
+export default async function News() {
+  //   {
+  //   searchParams
+  // }: {
+  //   searchParams: Promise<{ search?: string }>
+  // }
+  // const { search } = await searchParams
   // console.log(search)
 
   return (

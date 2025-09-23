@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/nextjs-vite'
-import { Badge } from './badge'
+import { Badge } from './Badge'
 
 const meta = {
   tags: ['autodocs'],
