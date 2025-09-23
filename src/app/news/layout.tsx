@@ -1,4 +1,5 @@
 import { NewsHeader } from '@/widgets/news-header'
+import { Suspense } from 'react'
 
 export default function NewsLayout({
   children
@@ -7,7 +8,9 @@ export default function NewsLayout({
 }) {
   return (
     <div className="w-full flex-1">
-      <NewsHeader />
+      <Suspense fallback={<div>Loading...</div>}>
+        <NewsHeader />
+      </Suspense>
       {children}
     </div>
   )
