@@ -1,6 +1,9 @@
 'use client'
 import { Header } from '@/shared/ui/header'
 import { Button } from '@/shared/ui/header/Header'
+import { FileSection } from '@/widgets/archive-file-section/ui'
+import { FolderSection } from '@/widgets/archive-folder-section/ui'
+
 import { Plus, Upload } from 'lucide-react'
 
 export default function Archive() {
@@ -20,13 +23,18 @@ export default function Archive() {
       }
     }
   ]
+
   return (
-    <div>
+    <>
       <Header
         title="아카이브"
         buttons={buttons}
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
-    </div>
+      <div className="flex flex-col p-6  gap-4">
+        <FolderSection />
+        <FileSection />
+      </div>
+    </>
   )
 }
