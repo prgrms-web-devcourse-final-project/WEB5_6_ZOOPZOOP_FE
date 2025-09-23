@@ -1,5 +1,3 @@
-'use client'
-
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import Header, { Button } from './Header'
 import { LucideIcon, Settings, Plus } from 'lucide-react'
@@ -8,12 +6,12 @@ import { LucideIcon, Settings, Plus } from 'lucide-react'
 const buttons: Button[] = [
   {
     label: '추가',
-    icon: Plus as LucideIcon,
+    icon: Plus,
     onClick: () => {}
   },
   {
     label: '설정',
-    icon: Settings as LucideIcon,
+    icon: Settings,
     onClick: () => {}
   }
 ]
@@ -58,7 +56,7 @@ export const OneButton: Story = {
     title: '버튼 1개만 있는 헤더',
     buttons: [
       {
-        label: '불러오기',
+        label: '설정',
         icon: Settings as LucideIcon,
         onClick: () => {}
       }

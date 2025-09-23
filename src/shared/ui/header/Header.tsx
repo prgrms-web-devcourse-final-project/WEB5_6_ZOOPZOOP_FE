@@ -3,7 +3,7 @@
 import { LucideIcon } from 'lucide-react'
 import ActionButton from './ActionButton'
 import SearchBar from './Search'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export type Button = {
   label: string
@@ -16,22 +16,22 @@ interface Props {
   buttons?: Button[]
   searchBar: {
     placeholder: string
-    // api 통신 매개변수 -> 추후 타입 변경 필요
-    onSearch?: (query: string) => void
+    // TODO: API 응답 타입에 따라 Promise<SearchResult[]> 등으로 변경 예정
+    onSearch?: (query: string) => void | Promise<void>
   }
 }
 
 function Header({ title, buttons, searchBar }: Props) {
   const [query, setQuery] = useState('')
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (searchBar.onSearch) {
       searchBar.onSearch(query)
     }
     setQuery('')
-  }
+  }, [searchBar.onSearch, query])
 
-  const searchHeader = () => {
+  const searchHeader = useCallback(() => {
     return (
       <SearchBar
         placeholder={searchBar.placeholder}
@@ -40,9 +40,9 @@ function Header({ title, buttons, searchBar }: Props) {
         onEnter={handleSearch}
       />
     )
-  }
+  }, [searchBar.placeholder, query, handleSearch])
 
-  const buttonWithSearchHeader = () => {
+  const buttonWithSearchHeader = useCallback(() => {
     return (
       <div className="flex justify-between">
         <div className="flex gap-3">
@@ -64,7 +64,7 @@ function Header({ title, buttons, searchBar }: Props) {
         />
       </div>
     )
-  }
+  }, [buttons, searchBar.placeholder, query, handleSearch])
 
   return (
     <header className="bg-gray-darker p-6">
