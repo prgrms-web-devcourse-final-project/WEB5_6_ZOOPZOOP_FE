@@ -1,2 +1,2 @@
-export { tw } from './tw'
 export { navItems } from './navigation'
+export { tw, cn } from './tw'
