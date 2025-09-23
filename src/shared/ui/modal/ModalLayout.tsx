@@ -1,0 +1,26 @@
+import { tw } from '@/shared/lib'
+
+import { LuCircleX } from 'react-icons/lu'
+
+interface Props {
+  children: React.ReactNode
+  size?: 'sm' | 'md'
+}
+
+export const ModalLayout = ({ children, size }: Props) => {
+  return (
+    <div className="fixed inset-0 flex justify-center items-center bg-black/40">
+      <div
+        className={tw(
+          'bg-white rounded-2xl flex-center flex-col relative gap-5',
+          size === 'sm' && 'w-[386px] p-4',
+          size === 'md' && 'w-[500px] p-7.5'
+        )}>
+        <div className="absolute top-4 right-4">
+          <LuCircleX className="text-3xl" />
+        </div>
+        {children}
+      </div>
+    </div>
+  )
+}
