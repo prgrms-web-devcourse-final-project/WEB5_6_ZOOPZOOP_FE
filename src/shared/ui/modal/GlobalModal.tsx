@@ -2,13 +2,11 @@
 
 import { useModalStore } from '@/shared/lib'
 import { useShallow } from 'zustand/shallow'
-import {
-  UrlUploadModal,
-  ArchiveSelectModal,
-  AlarmModal,
-  CreateSpaceModal,
-  CreateFolderModal
-} from './index'
+import { UrlUploadModal } from './archive/url-upload/UrlUploadModal'
+import { ArchiveSelectModal } from './archive/archive-select/ArchiveSelectModal'
+import { AlarmModal } from './alarm/AlarmModal'
+import { CreateSpaceModal } from './create-space/CreateSpaceModal'
+import { CreateFolderModal } from './create-folder/CreateFolderModal'
 
 export const GlobalModal = () => {
   const [type, isOpen] = useModalStore(useShallow(s => [s.type, s.isOpen]))
