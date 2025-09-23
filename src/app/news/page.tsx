@@ -1,3 +1,4 @@
+import { NewsHeader } from '@/widgets/news-header'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,5 +7,9 @@ export const metadata: Metadata = {
 }
 
 export default function News() {
-  return <div className="w-full h-full p-7.5"></div>
+  return (
+    <div className="w-full h-full">
+      <NewsHeader />
+    </div>
+  )
 }
