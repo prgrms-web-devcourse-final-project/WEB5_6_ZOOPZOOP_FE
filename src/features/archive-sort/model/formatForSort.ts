@@ -26,7 +26,7 @@ export const getSortedTableFiles = (
   )
 
   return sortedData.map((file, index) => ({
-    id: files[index].id, // 기존 id 유지
+    id: files[index].id,
     title: file.name,
     category: files[index].category,
     createdAt: file.date,
