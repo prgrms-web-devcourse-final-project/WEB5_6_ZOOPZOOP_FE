@@ -11,7 +11,6 @@ function FolderSection() {
   const [sortKey, setSortKey] = useState<SortKey>('이름')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
 
-  // const sortedFolders
   const sortedFolders = getSortedFolders(folderData, sortKey, sortDirection)
   return (
     <div className="flex flex-col gap-4 pb-5 border-b-1 border-gray-light-hover">
