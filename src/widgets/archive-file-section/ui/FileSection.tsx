@@ -13,7 +13,7 @@ import {
 } from '@/features/archive-sort'
 
 function FileSection() {
-  const [isTableView, setIsTableView] = useState(true)
+  const [isTableView, setIsTableView] = useState(false)
   const [sortKey, setSortKey] = useState<SortKey>('이름')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
 
