@@ -5,7 +5,7 @@ export default function NewsLoading() {
         <div className="flex-1">
           <h1 className="text-2xl font-bold mb-6">뉴스</h1>
           <div className="flex flex-wrap gap-4">
-            {[...Array(6)].map((_, index) => (
+            {[...Array(8)].map((_, index) => (
               <NewsCardSkeleton key={index} />
             ))}
           </div>

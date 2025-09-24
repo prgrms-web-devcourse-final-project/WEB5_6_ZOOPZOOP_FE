@@ -35,6 +35,20 @@ export const NewsGrid = () => {
         title="적당히 길고 적당히 비어있는 뉴스 제목"
         content="적당히 길고 적당히 비어있는 뉴스 내용"
         imageUrl="/image.png"
+        category="스포츠"
+        createdAt="2025.01.01"
+      />
+      <NewsCard
+        title="적당히 길고 적당히 비어있는 뉴스 제목"
+        content="적당히 길고 적당히 비어있는 뉴스 내용"
+        imageUrl="/image.png"
+        category="환경"
+        createdAt="2025.01.01"
+      />
+      <NewsCard
+        title="적당히 길고 적당히 비어있는 뉴스 제목"
+        content="적당히 길고 적당히 비어있는 뉴스 내용"
+        imageUrl="/image.png"
         category="과학"
         createdAt="2025.01.01"
       />
