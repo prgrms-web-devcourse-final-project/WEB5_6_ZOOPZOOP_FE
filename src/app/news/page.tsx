@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   description: '뉴스'
 }
 
-export default function News() {
+export default async function News() {
+  await new Promise(resolve => setTimeout(resolve, 1000))
   return (
     <div className="w-full flex flex-col p-10 min-h-[calc(100vh-72px)]">
       <div className="flex-1">
