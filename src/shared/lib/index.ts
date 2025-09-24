@@ -6,3 +6,6 @@ export { formatDate } from './formatter'
 
 // 모달 상태 관리
 export { useModalStore } from './modal-store'
+
+// 딜레이 함수
+export { delay } from './delay'

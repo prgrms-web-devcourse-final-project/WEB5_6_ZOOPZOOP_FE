@@ -1,3 +1,4 @@
+import { delay } from '@/shared/lib'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { NewsGrid } from '@/widgets/news-section'
 import { Metadata } from 'next'
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
   description: '뉴스'
 }
 
-export default function News() {
+export default async function News() {
+  await delay(1000)
   return (
     <div className="w-full flex flex-col p-10 min-h-[calc(100vh-72px)]">
       <div className="flex-1">
