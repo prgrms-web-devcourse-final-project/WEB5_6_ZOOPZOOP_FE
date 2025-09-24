@@ -16,7 +16,7 @@ function MainNavItem({ toggleMainMenu, isMainMenuOpen, mainItem }: Props) {
     <li>
       <Link
         href={href}
-        onClick={e => {
+        onClick={() => {
           toggleMainMenu(label)
         }}
         className={tw(
