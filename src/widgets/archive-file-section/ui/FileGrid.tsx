@@ -1,28 +1,37 @@
+import { GridData } from '@/features/archive-sort'
 import { FileCard } from '@/shared/ui'
 
-const mockData = [1, 2, 3, 4, 5, 6, 7, 8]
+interface Props {
+  gridData: GridData[]
+}
 
-function FileGrid() {
-  const handleSelect = (cardId: number) => {
-    // console.log('Selected:', cardId)
-  }
-
+function FileGrid({ gridData }: Props) {
   return (
     <div className="grid grid-cols-4 gap-6">
-      {mockData.map(item => (
-        <FileCard
-          key={item}
-          id={item}
-          title={`React 컴포넌트 설계${item}`}
-          category="Frontend"
-          createAt={new Date('2024-03-15')}
-          imageUrl="/image.png"
-          sourceUrl="/image.png"
-          ownerProfileUrl="/zoopzoop.png"
-          isSelected={false}
-          onSelect={handleSelect}
-        />
-      ))}
+      {gridData.map(
+        ({
+          id,
+          title,
+          category,
+          createAt,
+          imageUrl,
+          sourceUrl,
+          ownerProfileUrl
+        }) => (
+          <FileCard
+            key={id}
+            id={id}
+            title={title}
+            category={category}
+            createAt={createAt}
+            imageUrl={imageUrl}
+            sourceUrl={sourceUrl}
+            ownerProfileUrl={ownerProfileUrl}
+            isSelected={false}
+            onSelect={(cardId: number) => {}}
+          />
+        )
+      )}
     </div>
   )
 }
