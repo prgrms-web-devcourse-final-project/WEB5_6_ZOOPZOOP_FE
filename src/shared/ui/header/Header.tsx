@@ -67,7 +67,7 @@ function Header({ title, buttons, searchBar }: Props) {
   }, [buttons, searchBar.placeholder, query, handleSearch])
 
   return (
-    <header className="bg-gray-darker p-6">
+    <header className="bg-gray-dark-active p-6">
       <h1 className="text-white font-bold text-2xl mb-7">{title}</h1>
       {buttons ? buttonWithSearchHeader() : searchHeader()}
     </header>
