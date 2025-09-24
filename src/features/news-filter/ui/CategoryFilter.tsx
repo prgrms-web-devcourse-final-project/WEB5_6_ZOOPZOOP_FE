@@ -1,4 +1,8 @@
+'use client'
+
+import { tw } from '@/shared/lib'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const categories = [
   {
@@ -34,13 +38,20 @@ const categories = [
 ]
 
 export const CategoryFilter = () => {
+  const pathname = usePathname()
+  const isActive = (href: string) => pathname === href
   return (
     <div className="flex gap-8">
       {categories.map(category => (
         <Link
           key={category.id}
           href={`${category.href}`}
-          className="text-base cursor-pointer font-medium">
+          className={tw(
+            'text-base cursor-pointer font-medium',
+            isActive(category.href)
+              ? 'border-b-2 border-orange-accent text-orange-accent'
+              : ''
+          )}>
           {category.name}
         </Link>
       ))}
