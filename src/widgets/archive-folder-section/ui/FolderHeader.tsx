@@ -1,5 +1,20 @@
-import { ArrowUp, ChevronDown, Folder } from 'lucide-react'
-function FolderHeader() {
+import { SortButton, SortKey } from '@/features/archive-sort'
+import { SortDirection } from '@tanstack/react-table'
+import { ChevronDown, Folder } from 'lucide-react'
+import { useState } from 'react'
+
+interface Props {
+  onSortChange: (key: SortKey, direction: SortDirection) => void
+}
+
+function FolderHeader({ onSortChange }: Props) {
+  const [direction, setDirection] = useState<SortDirection>('asc')
+
+  const handleSortClick = () => {
+    const newDirection = direction === 'asc' ? 'desc' : 'asc'
+    setDirection(newDirection)
+    onSortChange('이름', newDirection)
+  }
   return (
     <div className="flex justify-between">
       <div className="flex gap-2 items-center ">
@@ -15,18 +30,11 @@ function FolderHeader() {
       </div>
 
       <div className="flex gap-2">
-        <button
-          type="button"
-          className="flex gap-2 items-center text-base rounded-sm p-1 cursor-pointer hover:bg-gray-light-active hover:font-bold">
-          <p>이름</p>
-          <ArrowUp size={14} />
-        </button>
-        <button
-          type="button"
-          className="flex gap-2 items-center text-base rounded-sm p-1  cursor-pointer hover:bg-gray-light-active hover:font-bold">
-          <p>날짜</p>
-          <ArrowUp size={14} />
-        </button>
+        <SortButton
+          label="이름"
+          direction={direction}
+          onClick={handleSortClick}
+        />
       </div>
     </div>
   )

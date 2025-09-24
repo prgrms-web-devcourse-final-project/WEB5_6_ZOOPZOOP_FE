@@ -1,14 +1,27 @@
+'use client'
+
+import { useState } from 'react'
 import FolderGrid from './FolderGrid'
 import FolderHeader from './FolderHeader'
+import { getSortedFolders, SortKey } from '@/features/archive-sort'
+import { SortDirection } from '@tanstack/react-table'
+import { folderData } from '@/entities/archive/model/mockdata'
 
 function FolderSection() {
-  // 폴더 헤더
-  // 폴더 리스트
+  const [sortKey, setSortKey] = useState<SortKey>('이름')
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
 
+  // const sortedFolders
+  const sortedFolders = getSortedFolders(folderData, sortKey, sortDirection)
   return (
     <div className="flex flex-col gap-4 pb-5 border-b-1 border-gray-light-hover">
-      <FolderHeader />
-      <FolderGrid />
+      <FolderHeader
+        onSortChange={(key, direction) => {
+          setSortKey(key)
+          setSortDirection(direction)
+        }}
+      />
+      <FolderGrid data={sortedFolders} />
     </div>
   )
 }

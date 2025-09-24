@@ -4,13 +4,15 @@ import { LucideIcon } from 'lucide-react'
 interface Props {
   icon: LucideIcon
   isSelected: boolean
+  onClick: () => void
 }
 
-function SwitchViewButton({ icon, isSelected }: Props) {
+function SwitchViewButton({ icon, isSelected, onClick }: Props) {
   const Icon = icon
   return (
     <button
       type="button"
+      onClick={onClick}
       className={tw(
         'flex gap-2 items-center text-base rounded-sm p-1 hover:bg-gray-light-active cursor-pointer',
         isSelected

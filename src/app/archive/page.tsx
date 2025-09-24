@@ -1,9 +1,8 @@
 'use client'
 import { Header } from '@/shared/ui/header'
 import { Button } from '@/shared/ui/header/Header'
-import { FileSection } from '@/widgets/archive-file-section/ui'
-import { FolderSection } from '@/widgets/archive-folder-section/ui'
-
+import { FileSection } from '@/widgets/archive-file-section'
+import { FolderSection } from '@/widgets/archive-folder-section'
 import { Plus, Upload } from 'lucide-react'
 
 export default function Archive() {

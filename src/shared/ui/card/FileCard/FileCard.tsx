@@ -2,7 +2,7 @@ import { EllipsisVertical } from 'lucide-react'
 import { tw } from '@/shared/lib'
 import { formatDate } from '@/shared/lib/formatter'
 import { Checkbox } from '../../shadcn/checkbox'
-import { CategoryTag } from '../../tag'
+
 import { Avatar } from '../../avatar'
 
 import FileCardTitle from './FileCardTitle'
