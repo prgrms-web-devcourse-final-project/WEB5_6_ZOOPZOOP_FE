@@ -32,8 +32,10 @@ export const NewsCard = ({
             {createdAt || '2025.01.01'}
           </p>
         </div>
-        <h3 className="text-lg font-bold">{title}</h3>
-        <p className="text-sm text-gray-500">{content}</p>
+        <div className="flex flex-col gap-1">
+          <h3 className="text-lg font-bold line-clamp-1">{title}</h3>
+          <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
+        </div>
       </div>
     </div>
   )
