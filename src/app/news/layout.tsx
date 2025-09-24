@@ -11,7 +11,7 @@ export default function NewsLayout({
       <Suspense fallback={<div>Loading...</div>}>
         <NewsHeader />
       </Suspense>
-      {children}
+      <div className="w-[1440px] mx-auto">{children}</div>
     </div>
   )
 }

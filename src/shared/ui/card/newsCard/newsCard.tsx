@@ -17,7 +17,7 @@ export const NewsCard = ({
   createdAt
 }: Props) => {
   return (
-    <div className="w-[360px] h-[371px] rounded-lg shadow-md bg-white">
+    <div className="w-[320px] h-[371px] rounded-lg shadow-md bg-white">
       <Image
         src={imageUrl}
         alt="news"
