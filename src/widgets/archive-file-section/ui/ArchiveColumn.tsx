@@ -1,6 +1,6 @@
 'use client'
 
-import { CategoryTag } from '@/shared/ui'
+import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowRight, Calendar } from 'lucide-react'
 
@@ -39,10 +39,7 @@ export const ArchiveColumn: ColumnDef<ArchiveColumnType>[] = [
     header: '파일 이동',
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <CategoryTag
-          name={row.getValue('category')} // 컬럼 존재하므로 사용 가능
-          color="bg-red-100" // TODO: 색상 추후 변경해야됨
-        />
+        <Badge name={row.getValue('category')} />
         <p className="text-base text-gray-darker">{row.getValue('title')}</p>
       </div>
     )
