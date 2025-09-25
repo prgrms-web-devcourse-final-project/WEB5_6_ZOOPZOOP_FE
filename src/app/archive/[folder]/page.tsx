@@ -41,8 +41,8 @@ export default function ArchiveFolderPage({ params }: Props) {
       <div className="flex flex-col p-6 gap-4">
         <FolderSection />
         <FileSection />
-        <Suspense fallback={<div>로딩 중...</div>}>
-          <FileSection />
+        <Suspense fallback={null}>
+          <Pagination totalPages={5} />
         </Suspense>
       </div>
     </>
