@@ -6,9 +6,10 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { folder } = params
+  const title = decodeURIComponent(folder)
 
   return {
-    title: `${folder}`,
+    title,
     description: `${folder} 안의 파일들을 볼 수 있는 페이지`
   }
 }
