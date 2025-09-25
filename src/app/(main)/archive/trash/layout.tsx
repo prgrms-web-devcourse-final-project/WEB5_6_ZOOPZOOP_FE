@@ -1,14 +1,9 @@
-// app/archive/layout.tsx
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: {
-    default: '아카이브',
-    template: '아카이브 | %s '
-  },
-  description: 'ZOOPZOOP의 아카이브 페이지'
+  title: '휴지통',
+  description: '삭제된 파일과 폴더를 관리하는 휴지통 페이지'
 }
-
 export default function ArchiveLayout({
   children
 }: {
