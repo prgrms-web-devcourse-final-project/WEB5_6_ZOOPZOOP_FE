@@ -1,5 +1,9 @@
-import { ArchiveColumnType } from '@/widgets/archive/file-section/ui/ArchiveColumn'
-import { FileItem, FolderData, GridData, SortKey } from './sortType'
+import {
+  ArchiveColumnType,
+  FolderDataType,
+  GridDataType
+} from '@/entities/archive'
+import { FileItem, SortKey } from './sortType'
 import { sortFiles } from './sortUtils'
 import { SortDirection } from '@tanstack/react-table'
 
@@ -7,10 +11,10 @@ function formatTableFilesForSort(files: ArchiveColumnType[]): FileItem[] {
   return files.map(f => ({ name: f.title, date: f.createdAt }))
 }
 
-function formatGridFilesForSort(files: GridData[]): FileItem[] {
+function formatGridFilesForSort(files: GridDataType[]): FileItem[] {
   return files.map(f => ({ name: f.title, date: f.createAt.toISOString() }))
 }
-function formatFolderDataForSort(files: FolderData[]): FileItem[] {
+function formatFolderDataTypeForSort(files: FolderDataType[]): FileItem[] {
   return files.map(f => ({ name: f.name, date: '0000-00-00' }))
 }
 
@@ -35,7 +39,7 @@ export const getSortedTableFiles = (
 }
 
 export const getSortedGridFiles = (
-  gridFiles: GridData[],
+  gridFiles: GridDataType[],
   sortKey: SortKey,
   sortDirection: SortDirection
 ) => {
@@ -57,17 +61,17 @@ export const getSortedGridFiles = (
 }
 
 export const getSortedFolders = (
-  folderData: FolderData[],
+  folderDataTFolderDataType: FolderDataType[],
   sortKey: SortKey,
   sortDirection: SortDirection
 ) => {
   const sortedData = sortFiles(
-    formatFolderDataForSort(folderData),
+    formatFolderDataTypeForSort(folderDataTFolderDataType),
     sortKey,
     sortDirection
   )
   return sortedData.map((folder, index) => ({
-    id: folderData[index].id,
+    id: folderDataTFolderDataType[index].id,
     name: folder.name
   }))
 }
