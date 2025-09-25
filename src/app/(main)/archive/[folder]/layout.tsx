@@ -5,7 +5,7 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { folder } = params
+  const { folder } = await params
   const title = decodeURIComponent(folder)
 
   return {
