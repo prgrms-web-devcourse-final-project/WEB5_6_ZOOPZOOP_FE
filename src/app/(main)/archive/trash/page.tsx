@@ -1,5 +1,3 @@
-'use client'
-
 import { Header } from '@/shared/ui/header'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { FileSection } from '@/widgets/archive/file-section'
