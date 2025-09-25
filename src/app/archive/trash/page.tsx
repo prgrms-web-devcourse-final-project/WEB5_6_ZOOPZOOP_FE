@@ -1,12 +1,8 @@
+'use client'
+
 import { Header } from '@/shared/ui/header'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { FileSection } from '@/widgets/archive-file-section'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: '휴지통',
-  description: '삭제된 파일과 폴더를 관리하는 휴지통 페이지'
-}
 
 function ArchiveTrashPage() {
   return (
