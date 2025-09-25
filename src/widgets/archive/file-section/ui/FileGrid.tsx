@@ -1,8 +1,8 @@
-import { GridData } from '@/features/archive/sort'
+import { GridDataType } from '@/entities/archive'
 import { FileCard } from '@/shared/ui'
 
 interface Props {
-  gridData: GridData[]
+  gridData: GridDataType[]
 }
 
 function FileGrid({ gridData }: Props) {

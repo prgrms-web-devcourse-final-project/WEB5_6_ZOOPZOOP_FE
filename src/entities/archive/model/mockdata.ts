@@ -1,4 +1,4 @@
-import { GridData } from '@/features/archive/sort'
+import { GridDataType } from './type'
 
 // 서버에서 내려주는 원본 데이터
 export const rawFiles = [
@@ -115,7 +115,7 @@ export const rawFiles = [
 ]
 
 // 파일 Grid용으로 가공
-export const gridFiles: GridData[] = rawFiles.map(file => ({
+export const gridFiles: GridDataType[] = rawFiles.map(file => ({
   id: Number(file.id),
   title: file.title,
   category: file.category,

@@ -5,19 +5,3 @@ export interface FileItem {
   name: string
   date: string
 }
-
-export interface GridData {
-  id: number
-  title: string
-  category: string
-  createAt: Date
-  imageUrl: string
-  sourceUrl: string
-  ownerProfileUrl: string
-  isSelected: boolean
-}
-
-export interface FolderData {
-  id: number
-  name: string
-}
