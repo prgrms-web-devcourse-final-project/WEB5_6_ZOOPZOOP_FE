@@ -1,4 +1,4 @@
-export { navItems } from './navigation'
+export { navItems } from '../routes'
 export { tw, cn } from './tw'
 
 // 데이터 포멧 function
