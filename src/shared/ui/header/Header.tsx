@@ -4,6 +4,7 @@ import { LucideIcon } from 'lucide-react'
 import ActionButton from './ActionButton'
 import SearchBar from './Search'
 import { useCallback, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export type Button = {
   label: string
@@ -23,11 +24,14 @@ interface Props {
 
 function Header({ title, buttons, searchBar }: Props) {
   const [query, setQuery] = useState('')
+  const router = useRouter()
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = () => {
+    if (!query.trim()) return
     if (searchBar.onSearch) {
       searchBar.onSearch(query)
     }
+    router.push(`/archive/search?q=${encodeURIComponent(query)}`)
     setQuery('')
   }, [searchBar, query])
 
