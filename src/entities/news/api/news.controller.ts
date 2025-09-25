@@ -1,4 +1,8 @@
-export const fetchNews = async () => {
-  const response = await fetch('/api/news')
-  return response.json()
+import { httpClient } from '@/shared/lib'
+import { NewsResponse } from '../model/type'
+
+export const fetchNews = async (): Promise<NewsResponse> => {
+  return httpClient.get<NewsResponse>('/api/v1/news', {
+    next: { revalidate: 30 }
+  })
 }
