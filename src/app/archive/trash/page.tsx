@@ -3,6 +3,7 @@
 import { Header } from '@/shared/ui/header'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { FileSection } from '@/widgets/archive-file-section'
+import { Suspense } from 'react'
 
 function ArchiveTrashPage() {
   return (
@@ -13,7 +14,9 @@ function ArchiveTrashPage() {
       />
       <div className="flex flex-col p-6 gap-4">
         <FileSection />
-        <Pagination totalPages={5} />
+        <Suspense fallback={null}>
+          <Pagination totalPages={5} />
+        </Suspense>
       </div>
     </>
   )
