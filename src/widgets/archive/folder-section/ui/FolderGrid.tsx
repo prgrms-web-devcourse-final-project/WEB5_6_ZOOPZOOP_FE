@@ -1,8 +1,8 @@
-import { FolderData } from '@/features/archive/sort'
+import { FolderDataType } from '@/entities/archive'
 import FolderItem from './FolderItem'
 
 interface Props {
-  data: FolderData[]
+  data: FolderDataType[]
 }
 
 function FolderGrid({ data }: Props) {

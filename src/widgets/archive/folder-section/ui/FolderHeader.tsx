@@ -1,19 +1,16 @@
-import { SortButton, SortKey } from '@/features/archive/sort'
+import { SortButton } from '@/features/archive/sort'
 import { SortDirection } from '@tanstack/react-table'
 import { ChevronDown, Folder } from 'lucide-react'
-import { useState } from 'react'
 
 interface Props {
-  onSortChange: (key: SortKey, direction: SortDirection) => void
+  direction: SortDirection
+  onSortChange: (direction: SortDirection) => void
 }
 
-function FolderHeader({ onSortChange }: Props) {
-  const [direction, setDirection] = useState<SortDirection>('asc')
-
+function FolderHeader({ onSortChange, direction }: Props) {
   const handleSortClick = () => {
     const newDirection = direction === 'asc' ? 'desc' : 'asc'
-    setDirection(newDirection)
-    onSortChange('이름', newDirection)
+    onSortChange(newDirection)
   }
   return (
     <div className="flex justify-between">
