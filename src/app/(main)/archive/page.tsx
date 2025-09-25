@@ -5,6 +5,7 @@ import Pagination from '@/shared/ui/pagination/Pagination'
 import { FileSection } from '@/widgets/archive-file-section'
 import { FolderSection } from '@/widgets/archive-folder-section'
 import { Plus, Upload } from 'lucide-react'
+import { Suspense } from 'react'
 
 export default function ArchivePage() {
   const buttons: Button[] = [
@@ -34,7 +35,9 @@ export default function ArchivePage() {
       <div className="flex flex-col p-6 gap-4">
         <FolderSection />
         <FileSection />
-        <Pagination totalPages={5} />
+        <Suspense fallback={<div>로딩 중...</div>}>
+          <FileSection />
+        </Suspense>
       </div>
     </>
   )
