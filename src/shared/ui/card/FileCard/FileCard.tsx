@@ -2,11 +2,12 @@ import { EllipsisVertical } from 'lucide-react'
 import { tw } from '@/shared/lib'
 import { formatDate } from '@/shared/lib/formatter'
 import { Checkbox } from '../../shadcn/checkbox'
-import { CategoryTag } from '../../tag'
+
 import { Avatar } from '../../avatar'
 
 import FileCardTitle from './FileCardTitle'
 import FileCardThumbnail from './FileCardThumbnail'
+import { Badge } from '../../badge'
 
 interface Props {
   category: string // 태그
@@ -62,10 +63,7 @@ const FileCard = ({
       />
       {/* 카테고리 + 메뉴 */}
       <div className="flex justify-between">
-        <CategoryTag
-          name={category}
-          color="bg-blue-200"
-        />
+        <Badge name={category} />
         <button
           type="button"
           className="text-gray-normal  hover:text-gray-dark cursor-pointer"
