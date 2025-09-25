@@ -36,7 +36,7 @@ export default function ArchivePage() {
         <FolderSection />
         <FileSection />
         <Suspense fallback={<div>로딩 중...</div>}>
-          <FileSection />
+          <Pagination totalPages={5} />
         </Suspense>
       </div>
     </>
