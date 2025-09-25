@@ -2,7 +2,7 @@
 
 import { Header } from '@/shared/ui/header'
 import Pagination from '@/shared/ui/pagination/Pagination'
-import { FileSection } from '@/widgets/archive-file-section'
+import { FileSection } from '@/widgets/archive/file-section'
 import { Suspense } from 'react'
 
 function ArchiveTrashPage() {

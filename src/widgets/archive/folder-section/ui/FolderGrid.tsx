@@ -1,4 +1,4 @@
-import { FolderData } from '@/features/archive-sort'
+import { FolderData } from '@/features/archive/sort'
 import FolderItem from './FolderItem'
 
 interface Props {

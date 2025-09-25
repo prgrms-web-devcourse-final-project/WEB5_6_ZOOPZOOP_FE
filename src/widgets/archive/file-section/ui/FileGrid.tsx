@@ -1,4 +1,4 @@
-import { GridData } from '@/features/archive-sort'
+import { GridData } from '@/features/archive/sort'
 import { FileCard } from '@/shared/ui'
 
 interface Props {

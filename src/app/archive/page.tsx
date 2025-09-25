@@ -2,8 +2,8 @@
 import { Header } from '@/shared/ui/header'
 import { Button } from '@/shared/ui/header/Header'
 import Pagination from '@/shared/ui/pagination/Pagination'
-import { FileSection } from '@/widgets/archive-file-section'
-import { FolderSection } from '@/widgets/archive-folder-section'
+import { FileSection } from '@/widgets/archive/file-section'
+import { FolderSection } from '@/widgets/archive/folder-section'
 import { Plus, Upload } from 'lucide-react'
 import { Suspense } from 'react'
 
