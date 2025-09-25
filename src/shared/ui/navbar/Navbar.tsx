@@ -26,7 +26,7 @@ function Navbar() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="flex flex-col py-4 px-2 cursor-pointer border-r-1 h-screen">
+      className="flex flex-col py-4 px-2 cursor-pointer border-r-1 min-h-screen">
       <NavHeader
         user={{
           username: '사용자',
