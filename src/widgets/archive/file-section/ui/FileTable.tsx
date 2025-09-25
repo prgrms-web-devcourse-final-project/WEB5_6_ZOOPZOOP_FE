@@ -1,5 +1,7 @@
 import { CustomTable } from '@/shared/ui/shadcn/CustomTable'
-import { ArchiveColumn, ArchiveColumnType } from './ArchiveColumn'
+import { ArchiveColumn } from './ArchiveColumn'
+import { ArchiveColumnType } from '@/entities/archive'
+import { memo } from 'react'
 
 interface Props {
   rowData: ArchiveColumnType[]
@@ -12,4 +14,4 @@ function FileTable({ rowData }: Props) {
     />
   )
 }
-export default FileTable
+export default memo(FileTable)
