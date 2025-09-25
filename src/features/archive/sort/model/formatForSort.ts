@@ -1,4 +1,4 @@
-import { ArchiveColumnType } from '@/widgets/archive-file-section/ui/ArchiveColumn'
+import { ArchiveColumnType } from '@/widgets/archive/file-section/ui/ArchiveColumn'
 import { FileItem, FolderData, GridData, SortKey } from './sortType'
 import { sortFiles } from './sortUtils'
 import { SortDirection } from '@tanstack/react-table'

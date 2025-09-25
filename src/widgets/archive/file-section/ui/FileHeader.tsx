@@ -1,8 +1,8 @@
 import { Columns3, File, TextAlignJustifyIcon } from 'lucide-react'
 import SwitchViewButton from './SwitchViewButton'
 import { Dispatch, SetStateAction, useState } from 'react'
-import { SortButton, SortKey } from '@/features/archive-sort'
 import { SortDirection } from '@tanstack/react-table'
+import { SortButton, SortKey } from '@/features/archive/sort'
 
 interface Props {
   onChangeView: Dispatch<SetStateAction<boolean>>

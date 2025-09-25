@@ -1,4 +1,4 @@
-import { GridData } from '@/features/archive-sort'
+import { GridData } from '@/features/archive/sort'
 
 // 서버에서 내려주는 원본 데이터
 export const rawFiles = [

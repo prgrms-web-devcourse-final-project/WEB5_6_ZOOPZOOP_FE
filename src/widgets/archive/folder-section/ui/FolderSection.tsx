@@ -3,9 +3,9 @@
 import { useState } from 'react'
 import FolderGrid from './FolderGrid'
 import FolderHeader from './FolderHeader'
-import { getSortedFolders, SortKey } from '@/features/archive-sort'
 import { SortDirection } from '@tanstack/react-table'
 import { folderData } from '@/entities/archive/model/mockdata'
+import { getSortedFolders, SortKey } from '@/features/archive/sort'
 
 function FolderSection() {
   const [sortKey, setSortKey] = useState<SortKey>('이름')

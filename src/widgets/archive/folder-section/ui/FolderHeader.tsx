@@ -1,4 +1,4 @@
-import { SortButton, SortKey } from '@/features/archive-sort'
+import { SortButton, SortKey } from '@/features/archive/sort'
 import { SortDirection } from '@tanstack/react-table'
 import { ChevronDown, Folder } from 'lucide-react'
 import { useState } from 'react'
