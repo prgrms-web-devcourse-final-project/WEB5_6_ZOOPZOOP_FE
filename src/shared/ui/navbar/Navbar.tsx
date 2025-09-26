@@ -1,10 +1,10 @@
 'use client'
 
-import { navItems } from '@/shared/routes'
-import NavHeader from './NavHeader'
-import NavItems from './NavItems'
 import { usePathname } from 'next/navigation'
 import { useUserStore } from '@/entities/user/model/store'
+import NavHeader from './NavHeader'
+import NavItems from './NavItems'
+import { navItems } from '@/shared/routes'
 
 function Navbar() {
   const pathName = usePathname()
