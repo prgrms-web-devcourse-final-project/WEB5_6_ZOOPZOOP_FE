@@ -1,10 +1,18 @@
 'use client'
+import { useState } from 'react'
 
+<<<<<<< HEAD
 import { useUserStore } from '@/entities/user'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
 import { usePathname } from 'next/navigation'
 import { navItems } from '@/shared/routes'
+=======
+import { navItems } from '@/shared/lib'
+import { useUserStore } from '@/entities/user'
+import NavHeader from './NavHeader'
+import NavItems from './NavItems'
+>>>>>>> f4b8378 ([feat] 로그인 상태관리 마무리)
 
 function Navbar() {
   const pathName = usePathname()
