@@ -1,9 +1,9 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { useUserStore } from '@/entities/user/model/store'
+import { useUserStore } from '@/entities/user'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
+import { usePathname } from 'next/navigation'
 import { navItems } from '@/shared/routes'
 
 function Navbar() {
