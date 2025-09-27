@@ -14,6 +14,7 @@ import {
 
 function FileSection() {
   const [isTableView, setIsTableView] = useState(false)
+  // 백엔드에서 이름, 날짜 정렬 데이터 줌 -> 추후 삭제할것
   const [sortKey, setSortKey] = useState<SortKey>('이름')
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
 
