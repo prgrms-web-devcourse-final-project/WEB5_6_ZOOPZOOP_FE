@@ -1,20 +1,18 @@
-import { MainNav } from '@/shared/lib/navigation'
+import { MainNav } from '@/shared/ui/routes'
 import MainNavItem from './MainNavItem'
 import SubNavItem from './SubNavItem'
 
 interface Props {
   item: MainNav
-  menuState: { main: string | null; sub: string | null }
-  toggleMainMenu: (label: string) => void
-  toggleSubMenu: (label: string) => void
+  pathName: string
 }
 
-function NavItems({ item, menuState, toggleMainMenu, toggleSubMenu }: Props) {
-  const isMainMenuOpen = menuState.main === item.label
+function NavItems({ item, pathName }: Props) {
+  const isMainMenuOpen = pathName.startsWith(item.href)
+
   return (
     <>
       <MainNavItem
-        toggleMainMenu={toggleMainMenu}
         isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
       />
@@ -22,12 +20,11 @@ function NavItems({ item, menuState, toggleMainMenu, toggleSubMenu }: Props) {
       {isMainMenuOpen && item.children && (
         <ul className="flex flex-col gap-1 border-l-2 ml-4 border-green-normal">
           {item.children.map((child, idx) => {
-            const isSubMenuOpen = menuState.sub === child.label
+            const isSubMenuOpen = pathName === child.href
             return (
               <SubNavItem
                 key={idx}
                 isSubMenuOpen={isSubMenuOpen}
-                toggleSubMenu={toggleSubMenu}
                 subItem={child}
               />
             )

@@ -1,14 +1,14 @@
 import { tw } from '@/shared/lib'
-import { MainNav } from '@/shared/lib/navigation'
+
 import Link from 'next/link'
+import { MainNav } from '@/shared/ui/routes'
 
 interface Props {
-  toggleMainMenu: (label: string) => void
   isMainMenuOpen: boolean
   mainItem: MainNav
 }
 
-function MainNavItem({ toggleMainMenu, isMainMenuOpen, mainItem }: Props) {
+function MainNavItem({ isMainMenuOpen, mainItem }: Props) {
   const { icon, href, label, count } = mainItem
   const Icon = icon
 
@@ -16,9 +16,6 @@ function MainNavItem({ toggleMainMenu, isMainMenuOpen, mainItem }: Props) {
     <li>
       <Link
         href={href}
-        onClick={() => {
-          toggleMainMenu(label)
-        }}
         className={tw(
           'flex items-center justify-center sm:justify-start px-2.5 py-2 rounded-md font-bold text-base hover:bg-orange-accent lg:px-3 mb-2',
           !isMainMenuOpen
