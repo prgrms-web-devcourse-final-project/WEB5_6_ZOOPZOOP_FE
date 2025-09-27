@@ -20,6 +20,7 @@ export const Default: Story = {
       '경제 관련 뉴스의 핵심 내용을 간략하게 정리한 요약문이 표시됩니다.',
     imageUrl: '/image.png',
     category: '정치',
-    createdAt: '2025.01.01'
+    createdAt: '2025.01.01',
+    type: 'base'
   }
 }
