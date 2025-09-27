@@ -1,5 +1,3 @@
-'use client'
-
 import { useMemo, useState } from 'react'
 import FolderGrid from './FolderGrid'
 import FolderHeader from './FolderHeader'

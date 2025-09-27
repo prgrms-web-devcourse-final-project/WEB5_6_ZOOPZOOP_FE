@@ -1,5 +1,3 @@
-'use client'
-
 import { ArchiveColumnType } from '@/entities/archive'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
