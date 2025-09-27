@@ -1,28 +1,17 @@
-'use client'
-
-import { Header } from '@/shared/ui/header'
-import Pagination from '@/shared/ui/pagination/Pagination'
-import { FileSection } from '@/widgets/archive/file-section'
-import { useSearchParams } from 'next/navigation'
+import { ArchiveSearchContents } from '@/widgets/archive/contents'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
-function ArchiveSearchPage() {
-  const searchParams = useSearchParams()
-  const q = searchParams.get('q')
+export const metadata: Metadata = {
+  title: '검색 결과',
+  description: '검색 결과를 확인하는 페이지'
+}
 
+function ArchiveSearchPage() {
   return (
-    <>
-      <Header
-        title={`${q}`}
-        searchBar={{ placeholder: '검색어를 입력해 주세요' }}
-      />
-      <div className="flex flex-col p-6 gap-4">
-        <FileSection />
-        <Suspense fallback={null}>
-          <Pagination totalPages={5} />
-        </Suspense>
-      </div>
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ArchiveSearchContents />
+    </Suspense>
   )
 }
 export default ArchiveSearchPage
