@@ -11,6 +11,3 @@ export { delay } from './delay'
 
 // API 클라이언트
 export { httpClient } from './httpClient'
-
-// API 유틸
-export { createCookieHeader, getAccessToken } from './api'
