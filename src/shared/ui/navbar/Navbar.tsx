@@ -1,28 +1,13 @@
 'use client'
 
-import { navItems } from '@/shared/lib'
+import { navItems } from '@/shared/routes'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 function Navbar() {
-  const [menuState, setMenuState] = useState<{
-    main: string | null
-    sub: string | null
-  }>({ main: null, sub: null })
+  const pathName = usePathname()
 
-  const toggleMainMenu = (label: string) => {
-    setMenuState(prev => ({
-      main: prev.main === label ? null : label,
-      sub: null
-    }))
-  }
-  const toggleSubMenu = (label: string) => {
-    setMenuState(prev => ({
-      ...prev,
-      sub: prev.sub === label ? null : label
-    }))
-  }
   return (
     <nav
       aria-label="Primary navigation"
@@ -36,9 +21,7 @@ function Navbar() {
       <ul>
         {navItems.map(item => (
           <NavItems
-            menuState={menuState}
-            toggleMainMenu={toggleMainMenu}
-            toggleSubMenu={toggleSubMenu}
+            pathName={pathName}
             item={item}
             key={item.label}
           />
