@@ -28,6 +28,7 @@ export type NavItem = {
 export const navItems: MainNav[] = [
   {
     href: '/archive',
+
     label: '아카이브',
     icon: Inbox,
     count: 123,

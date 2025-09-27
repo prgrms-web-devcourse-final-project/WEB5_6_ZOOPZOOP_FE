@@ -1,21 +1,20 @@
 'use client'
 
 import { tw } from '@/shared/lib'
-import { NavItem } from '@/shared/lib/navigation'
 import Link from 'next/link'
+import { NavItem } from '@/shared/routes'
 
 interface Props {
-  toggleSubMenu: (label: string) => void
   subItem: NavItem
   isSubMenuOpen: boolean
 }
 
-function SubNavItem({ toggleSubMenu, subItem, isSubMenuOpen }: Props) {
+function SubNavItem({ subItem, isSubMenuOpen }: Props) {
   const { icon, href, label } = subItem
   const Icon = icon
 
   return (
-    <li onClick={() => toggleSubMenu(label)}>
+    <li>
       <Link
         href={href}
         className={tw(
