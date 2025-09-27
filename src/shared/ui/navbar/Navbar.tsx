@@ -1,6 +1,6 @@
 'use client'
 
-import { navItems } from '@/shared/ui/routes'
+import { navItems } from '@/shared/routes'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
 import { usePathname } from 'next/navigation'

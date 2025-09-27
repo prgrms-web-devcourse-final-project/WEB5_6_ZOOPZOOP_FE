@@ -2,7 +2,7 @@
 
 import { tw } from '@/shared/lib'
 import Link from 'next/link'
-import { NavItem } from '@/shared/ui/routes'
+import { NavItem } from '@/shared/routes'
 
 interface Props {
   subItem: NavItem

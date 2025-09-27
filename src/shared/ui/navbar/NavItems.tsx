@@ -1,4 +1,4 @@
-import { MainNav } from '@/shared/ui/routes'
+import { MainNav } from '@/shared/routes'
 import MainNavItem from './MainNavItem'
 import SubNavItem from './SubNavItem'
 

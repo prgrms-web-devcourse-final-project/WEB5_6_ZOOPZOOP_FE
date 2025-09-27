@@ -1,7 +1,7 @@
 import { tw } from '@/shared/lib'
 
 import Link from 'next/link'
-import { MainNav } from '@/shared/ui/routes'
+import { MainNav } from '@/shared/routes'
 
 interface Props {
   isMainMenuOpen: boolean
