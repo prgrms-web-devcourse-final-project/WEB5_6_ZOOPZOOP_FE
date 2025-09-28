@@ -16,8 +16,14 @@ const nodeTypes = {
 }
 
 export const FlowDashboard = () => {
-  const { nodes, edges, onNodesChange, onEdgesChange, onConnect } =
-    useFlowState()
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    onNodesDelete
+  } = useFlowState()
 
   return (
     <div className="w-full h-full flex-center">
@@ -29,6 +35,7 @@ export const FlowDashboard = () => {
           fitView
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          onNodesDelete={onNodesDelete}
           onConnect={onConnect}>
           <MiniMap position="top-right" />
           <Controls />
