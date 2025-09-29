@@ -1,70 +1,28 @@
-import { NextResponse } from 'next/server'
-
 import {
   clearToken,
   createCookieHeader,
-  getAccessToken
+  getSessionId,
+  withAuth
 } from '@/shared/lib/api-route'
-import { deleteAccountApi, logoutUserApi } from '@/shared/api'
+import { logoutUserServer } from '@/features/auth/api/auth.server'
+import { deleteAccountServer } from '@/entities/user'
 
 // 로그아웃
-export async function GET() {
-  const token = await getAccessToken()
-
-  if (!token) {
-    return NextResponse.json({
-      status: 401,
-      data: null,
-      msg: '인증 토큰이 없습니다'
-    })
-  }
-
-  const { status, data, msg } = await logoutUserApi({
-    headers: createCookieHeader(token)
+export const GET = withAuth(async token => {
+  const sessionId = await getSessionId()
+  const response = logoutUserServer({
+    headers: createCookieHeader(token, sessionId!)
   })
-
-  if (status !== '200') {
-    return NextResponse.json({
-      status: 500,
-      data: null,
-      msg: 'api 통신 실패'
-    })
-  }
-
-  // cookie 클리어
   await clearToken()
-
-  return NextResponse.json({
-    status,
-    data,
-    msg
-  })
-}
+  return response
+})
 
 // 계정 삭제
-export async function DELETE() {
-  const token = await getAccessToken()
-
-  // cookie 클리어
+export const DELETE = withAuth(async token => {
+  const sessionId = await getSessionId()
+  const response = deleteAccountServer({
+    headers: createCookieHeader(token, sessionId!)
+  })
   await clearToken()
-
-  if (!token) throw Error('토큰 없음')
-
-  const { status, data, msg } = await deleteAccountApi({
-    headers: createCookieHeader(token)
-  })
-
-  if (status !== '200') {
-    return NextResponse.json({
-      status: 500,
-      data: null,
-      msg: 'api 통신 실패'
-    })
-  }
-
-  return NextResponse.json({
-    status,
-    data,
-    msg
-  })
-}
+  return response
+})
