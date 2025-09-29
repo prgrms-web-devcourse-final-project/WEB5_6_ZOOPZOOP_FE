@@ -1,8 +1,8 @@
 import { Profile, updateProfileImageClient } from '@/entities/user'
 import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 
-export const useUploadProfileImage = (
-  options?: Omit<UseMutationOptions<Profile, Error, File>, 'mutationFn'>
+export const useProfileImageMutation = (
+  options: Omit<UseMutationOptions<Profile, Error, File>, 'mutationFn'>
 ) => {
   return useMutation({
     mutationFn: (file: File) => updateProfileImageClient(file),

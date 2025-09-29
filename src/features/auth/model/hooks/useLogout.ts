@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 
 import { useUserStore } from '@/entities/user'
 import { useLogoutMutation } from '../../api/useLogoutMutation'
+import { PATH } from '@/shared/constants'
 
 export const useLogout = () => {
   const router = useRouter()
@@ -15,7 +16,7 @@ export const useLogout = () => {
       queryClient.invalidateQueries({ queryKey: ['user'] })
       queryClient.removeQueries({ queryKey: ['user'] })
       setTimeout(() => {
-        router.push('/auth/login')
+        router.push(PATH.AUTH.LOGIN)
       }, 0)
     },
     onError: () => {

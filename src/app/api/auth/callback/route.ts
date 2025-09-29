@@ -1,41 +1,46 @@
+import { PATH } from '@/shared/constants'
 import { NextResponse } from 'next/server'
 
 export async function GET(req: Request) {
   const url = new URL(req.url)
-  const access = url.searchParams.get('accessToken')
+
+  const accessToken = url.searchParams.get('accessToken')
+  const refreshToken = url.searchParams.get('refreshToken')
   const sessionId = url.searchParams.get('sessionId')
-  const refresh = url.searchParams.get('refreshToken')
 
-  if (!access) return NextResponse.redirect(new URL('/auth/login', url))
+  if (!accessToken) {
+    return NextResponse.redirect(new URL(PATH.AUTH.LOGIN, url))
+  }
 
-  const res = NextResponse.redirect(new URL('/', url))
-  res.cookies.set('accessToken', access, {
+  const response = NextResponse.redirect(new URL(PATH.NEWS.ROOT, url))
+
+  response.cookies.set('accessToken', accessToken, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 60 * 60
+    maxAge: 60 * 60 // 1시간
   })
 
-  // Session ID 추가
-  if (sessionId) {
-    res.cookies.set('sessionId', sessionId, {
+  if (refreshToken) {
+    response.cookies.set('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 30
+      maxAge: 60 * 60 * 24 * 30 // 30일
     })
   }
 
-  if (refresh) {
-    res.cookies.set('refreshToken', refresh, {
+  if (sessionId) {
+    response.cookies.set('sessionId', sessionId, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 30
+      maxAge: 60 * 60 * 24 * 30 // 30일
     })
   }
-  return res
+
+  return response
 }

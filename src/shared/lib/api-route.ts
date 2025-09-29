@@ -31,7 +31,7 @@ export const createCookieHeader = (
   Cookie: `accessToken=${accessToken}; ${sessionId ? 'sessionId=' + sessionId : ''} `
 })
 
-// 네트워크 통신에 쿠키 체크
+// 쿠키가 필요한 통신인 경우
 export const withAuth = <T>(handler: AuthHandler<T>) => {
   return async (request: Request): Promise<NextResponse<APIResponse<T>>> => {
     const token = await getAccessToken()
@@ -42,21 +42,6 @@ export const withAuth = <T>(handler: AuthHandler<T>) => {
         msg: '토큰 없음. 인증 필요'
       })
     }
-
-    try {
-      const result = await handler(token, request)
-
-      return NextResponse.json(result)
-    } catch (error) {
-      if (Error.isError(error))
-        // eslint-disable-next-line no-console
-        console.error('withAuth Error', error.message)
-
-      return NextResponse.json({
-        status: '500',
-        data: null,
-        msg: '서버 오류 발생'
-      })
-    }
+    return NextResponse.json(await handler(token, request))
   }
 }
