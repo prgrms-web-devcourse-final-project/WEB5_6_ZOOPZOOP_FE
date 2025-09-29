@@ -12,7 +12,7 @@ const DeleteAccountButton = () => {
 
   return (
     <button
-      className="ml-4 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors duration-200 flex items-center gap-2 cursor-pointer"
+      className="ml-4 px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors duration-200 flex items-center gap-2 cursor-pointer whitespace-nowrap"
       type="button"
       onClick={handleOpenModal}>
       <UserX size={16} />

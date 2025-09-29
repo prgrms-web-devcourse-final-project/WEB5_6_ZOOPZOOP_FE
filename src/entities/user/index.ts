@@ -1,5 +1,13 @@
-export { fetchUser, updateUserNickname } from './api/user.controller'
-export { getUser, updateNickname } from './api/clientApi'
+export {
+  fetchUserClient,
+  updateNicknameClient,
+  deleteAccountClient
+} from './api/user.client'
+export {
+  fetchUserServer,
+  updateNicknameServer,
+  deleteAccountServer
+} from './api/user.server'
 export { useUserStore, useUserQuery } from './model'
 export type {
   User,

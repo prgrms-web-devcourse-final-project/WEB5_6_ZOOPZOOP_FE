@@ -5,11 +5,10 @@ import {
   User,
   UserResponse
 } from '../model/type'
+import { DeleteAccountResponse } from '@/shared/types'
 
-/**
- * 사용자 정보 fetch
- */
-export const getUser = async (): Promise<User> => {
+// 사용자 정보 fetch
+export const fetchUserClient = async (): Promise<User> => {
   const response = await httpClient.get<UserResponse>('/api/user')
   const { data: user, status } = response
 
@@ -19,10 +18,10 @@ export const getUser = async (): Promise<User> => {
   return user
 }
 
-/**
- * 사용자 닉네임 업데이트
- */
-export const updateNickname = async (payload: string): Promise<Nickname> => {
+//  사용자 닉네임 업데이트
+export const updateNicknameClient = async (
+  payload: string
+): Promise<Nickname> => {
   const response = await httpClient.put<UpdateNicknameResponse>(
     '/api/user/nickname',
     {
@@ -36,4 +35,14 @@ export const updateNickname = async (payload: string): Promise<Nickname> => {
   }
 
   return updatedNickname
+}
+
+// 계정 삭제
+export const deleteAccountClient = async (): Promise<void> => {
+  const response = await httpClient.delete<DeleteAccountResponse>('/api/auth')
+  const { status } = response
+
+  if (status !== '200') {
+    throw new Error('계정 삭제 실패')
+  }
 }

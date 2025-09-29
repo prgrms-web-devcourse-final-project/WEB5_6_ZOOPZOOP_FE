@@ -5,7 +5,8 @@ import {
   createCookieHeader,
   getAccessToken
 } from '@/shared/lib/api-route'
-import { deleteAccountApi, logoutUserApi } from '@/shared/api'
+import { logoutUserServer } from '@/features/auth/api/auth.server'
+import { deleteAccountServer } from '@/entities/user'
 
 // 로그아웃
 export async function GET() {
@@ -19,7 +20,7 @@ export async function GET() {
     })
   }
 
-  const { status, data, msg } = await logoutUserApi({
+  const { status, data, msg } = await logoutUserServer({
     headers: createCookieHeader(token)
   })
 
@@ -50,7 +51,7 @@ export async function DELETE() {
 
   if (!token) throw Error('토큰 없음')
 
-  const { status, data, msg } = await deleteAccountApi({
+  const { status, data, msg } = await deleteAccountServer({
     headers: createCookieHeader(token)
   })
 

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
-import { fetchUser } from '@/entities/user'
 import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
+import { fetchUserServer } from '@/entities/user'
 
 // 사용자 정보 조회
 export async function GET() {
@@ -16,7 +16,7 @@ export async function GET() {
     })
   }
 
-  const { status, data, msg } = await fetchUser({
+  const { status, data, msg } = await fetchUserServer({
     headers: createCookieHeader(token)
   })
 

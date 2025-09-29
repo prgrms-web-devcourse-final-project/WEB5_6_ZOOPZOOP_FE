@@ -1,10 +1,10 @@
 'use client'
 
-import Image from 'next/image'
 import { useUserStore } from '@/entities/user'
+import Image from 'next/image'
 import { EditNickname } from '@/features/profile/edit-nickname'
-import EmailInfo from '../components/EmailInfo'
-import JoinDateInfo from '../components/JoinDateInfo'
+import EmailInfo from './EmailInfo'
+import JoinDateInfo from './JoinDateInfo'
 
 const ProfileHeader = () => {
   const user = useUserStore(state => state.user)

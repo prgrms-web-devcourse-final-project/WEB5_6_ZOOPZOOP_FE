@@ -1,4 +1,4 @@
-import { updateUserNickname } from '@/entities/user'
+import { updateNicknameServer } from '@/entities/user'
 import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
@@ -13,7 +13,7 @@ export async function PUT(request: Request) {
       msg: '인증 토큰이 없습니다'
     })
   }
-  const { status, data, msg } = await updateUserNickname(payload, {
+  const { status, data, msg } = await updateNicknameServer(payload, {
     headers: createCookieHeader(token)
   })
 
