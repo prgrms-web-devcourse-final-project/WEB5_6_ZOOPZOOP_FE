@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className="antialiased flex ">
+      <body className="antialiased flex">
         <Navbar />
         <main className="flex-1">
           <QueryProvider>

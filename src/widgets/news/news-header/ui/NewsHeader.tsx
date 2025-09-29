@@ -1,7 +1,6 @@
 'use client'
 
-import { SearchInput } from '@/features/news/news-search'
-import { CategoryFilter } from '@/features/news/news-filter'
+import { CategoryFilter, SearchInput } from '@/features/news'
 import { useRouter } from 'next/navigation'
 
 export const NewsHeader = () => {
