@@ -1,1 +1,1 @@
-export { FlowSidebar } from './ui/FlowSidebar'
+export * from './ui/FlowSidebar'
