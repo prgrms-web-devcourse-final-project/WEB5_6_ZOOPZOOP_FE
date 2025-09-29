@@ -1,4 +1,3 @@
-// src/widgets/dashboard/flow-dashboard/ui/FlowDashboard.tsx
 'use client'
 
 import {
