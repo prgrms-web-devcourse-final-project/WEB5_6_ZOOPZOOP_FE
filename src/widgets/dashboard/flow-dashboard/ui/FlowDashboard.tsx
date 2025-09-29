@@ -1,3 +1,4 @@
+// src/widgets/dashboard/flow-dashboard/ui/FlowDashboard.tsx
 'use client'
 
 import {
@@ -5,29 +6,36 @@ import {
   BackgroundVariant,
   Controls,
   MiniMap,
-  ReactFlow
+  ReactFlow,
+  ReactFlowProvider
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { useFlowState } from '../model/useFlowState'
 import { CustomFlowNode } from './CustomFlowNode'
+import { useFlowDragDrop } from '@/features/dashboard/flow-management'
+import { FlowSidebar } from '../../flow-sidebar'
 
 const nodeTypes = {
   custom: CustomFlowNode
 }
 
-export const FlowDashboard = () => {
+const FlowDashboardContent = () => {
   const {
     nodes,
     edges,
     onNodesChange,
     onEdgesChange,
     onConnect,
-    onNodesDelete
+    onNodesDelete,
+    setNodes
   } = useFlowState()
 
+  const { onDrop, onDragOver } = useFlowDragDrop({ setNodes })
+
   return (
-    <div className="w-full h-full flex-center">
-      <div className="w-full h-[100vh]">
+    <div className="flex w-full h-screen">
+      <FlowSidebar />
+      <div className="flex-1">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -36,7 +44,9 @@ export const FlowDashboard = () => {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onNodesDelete={onNodesDelete}
-          onConnect={onConnect}>
+          onConnect={onConnect}
+          onDrop={onDrop}
+          onDragOver={onDragOver}>
           <MiniMap position="top-right" />
           <Controls />
           <Background
@@ -47,5 +57,13 @@ export const FlowDashboard = () => {
         </ReactFlow>
       </div>
     </div>
+  )
+}
+
+export const FlowDashboard = () => {
+  return (
+    <ReactFlowProvider>
+      <FlowDashboardContent />
+    </ReactFlowProvider>
   )
 }

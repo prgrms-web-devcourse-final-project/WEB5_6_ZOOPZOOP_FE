@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback, useState } from 'react'
 import {
   applyEdgeChanges,
   applyNodeChanges,
@@ -9,56 +10,28 @@ import {
   OnConnect,
   Edge,
   Node,
+  OnNodesDelete,
   getIncomers,
   getOutgoers,
-  getConnectedEdges,
-  OnNodesDelete
+  getConnectedEdges
 } from '@xyflow/react'
-import '@xyflow/react/dist/style.css'
-import { useCallback, useState } from 'react'
 
 const initialNodes = [
   {
     id: 'n1',
     type: 'custom',
-    position: { x: 0, y: 0 },
+    position: { x: 250, y: 5 },
     data: {
-      label: 'Node 1',
-      image: '/image.png',
-      createdAt: '2025.01.01',
-      content: 'Node 1',
-      title: 'Node 1',
-      category: '사회'
-    }
-  },
-  {
-    id: 'n2',
-    type: 'custom',
-    position: { x: 0, y: 500 },
-    data: {
-      label: 'Node 2',
-      image: '/image.png',
-      createdAt: '2025.01.01',
-      content: 'Node 2',
-      title: 'Node 2',
-      category: '경제'
-    }
-  },
-  {
-    id: 'n3',
-    type: 'custom',
-    position: { x: 0, y: 1000 },
-    data: {
-      label: 'Node 3',
-      image: '/image.png',
-      createdAt: '2025.01.01',
-      content: 'Node 3',
-      title: 'Node 3',
-      category: '사회'
+      label: 'Input Node',
+      nodeType: 'input',
+      title: '입력 노드',
+      content: '기본 입력 노드입니다',
+      createdAt: '2025-01-01'
     }
   }
 ]
-const initialEdges = [{ id: 'n1-n2', source: 'n1', target: 'n2', type: 'step' }]
+
+const initialEdges: Edge[] = []
 
 export const useFlowState = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes)
@@ -66,16 +39,17 @@ export const useFlowState = () => {
 
   const onNodesChange: OnNodesChange = useCallback(
     changes => setNodes(nds => applyNodeChanges(changes, nds)),
-    [setNodes]
+    []
   )
+
   const onEdgesChange: OnEdgesChange = useCallback(
     changes => setEdges(eds => applyEdgeChanges(changes, eds)),
-    [setEdges]
+    []
   )
+
   const onConnect: OnConnect = useCallback(
-    connection =>
-      setEdges(eds => addEdge({ ...connection, type: 'step' }, eds)),
-    [setEdges]
+    connection => setEdges(eds => addEdge({ ...connection }, eds)),
+    []
   )
 
   const onNodesDelete: OnNodesDelete = useCallback(
@@ -111,6 +85,7 @@ export const useFlowState = () => {
   return {
     nodes,
     edges,
+    setNodes,
     onNodesChange,
     onEdgesChange,
     onConnect,
