@@ -1,4 +1,5 @@
 import { tw } from '@/shared/lib'
+import { MainNav } from '@/shared/routes'
 import Link from 'next/link'
 
 interface Props {

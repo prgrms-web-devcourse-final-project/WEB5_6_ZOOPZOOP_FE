@@ -2,7 +2,6 @@
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import NavItems from './NavItems'
-import { MainNav } from '@/shared/lib/navigation'
 import { ChartNetwork, LayoutGrid, TextSearch } from 'lucide-react'
 import { MainNav } from '@/shared/routes'
 
