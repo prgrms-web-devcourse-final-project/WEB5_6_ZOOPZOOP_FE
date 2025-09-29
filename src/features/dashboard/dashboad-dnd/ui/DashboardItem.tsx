@@ -16,7 +16,6 @@ export const DashboardItem = ({
   title,
   content,
   createdAt,
-  nodeType,
   imageUrl,
   category
 }: Props) => {
@@ -25,7 +24,16 @@ export const DashboardItem = ({
   return (
     <div
       draggable
-      onDragStart={event => onDragStart(event, nodeType)}
+      onDragStart={event =>
+        onDragStart(event, {
+          title,
+          link: '',
+          imageUrl,
+          category,
+          description: content,
+          pubDate: createdAt
+        })
+      }
       className="cursor-grab active:cursor-grabbing">
       <SubNewsCard
         title={title}

@@ -9,7 +9,7 @@ export const CustomFlowNode = ({ data }: Props) => (
   <BaseNewsCard
     title={data.title}
     content={data.content}
-    imageUrl={data.image}
+    imageUrl={data.imageUrl}
     createdAt={data.createdAt}
     category={data.category}
     type="flow"

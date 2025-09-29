@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
-import { DragEvent } from 'react'
 
 interface Props {
   title: string
@@ -12,7 +11,6 @@ interface Props {
   category?: string
   link?: string
   createdAt: string
-  onDragStart?: (event: DragEvent<HTMLDivElement>) => void
 }
 
 export const SubNewsCard = ({
@@ -21,13 +19,10 @@ export const SubNewsCard = ({
   imageUrl,
   category,
   link,
-  createdAt,
-  onDragStart
+  createdAt
 }: Props) => {
   return (
-    <div
-      className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100"
-      onDragStart={onDragStart && onDragStart}>
+    <div className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100">
       <div className="flex gap-5 h-full">
         <div
           className="w-21 h-21 flex-shrink-0 cursor-pointer rounded-lg overflow-hidden"

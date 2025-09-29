@@ -33,11 +33,13 @@ export const useFlowDragDrop = ({ setNodes }: UseFlowDragDropProps) => {
         type: 'custom',
         position,
         data: {
-          label: `${type} node`,
           nodeType: type,
-          title: `새로운 ${type}`,
-          content: `${type} 컨텐츠`,
-          createdAt: new Date().toISOString().split('T')[0]
+          imageUrl: type.imageUrl,
+          category: type.category,
+          title: `새로운 ${type.title}`,
+          content: `${type.title} 컨텐츠`,
+          createdAt: new Date().toISOString().split('T')[0],
+          link: type.link
         }
       }
 

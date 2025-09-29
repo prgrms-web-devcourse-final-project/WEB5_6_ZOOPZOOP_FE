@@ -26,6 +26,7 @@ const initialNodes = [
       nodeType: 'input',
       title: '입력 노드',
       content: '기본 입력 노드입니다',
+      imageUrl: '',
       createdAt: '2025-01-01'
     }
   }

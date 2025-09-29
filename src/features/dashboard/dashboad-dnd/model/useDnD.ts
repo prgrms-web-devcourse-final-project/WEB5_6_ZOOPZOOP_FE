@@ -3,6 +3,7 @@
 import { useDashboardStore } from '@/entities/dashboard'
 import { DragEvent, useCallback } from 'react'
 import { useShallow } from 'zustand/shallow'
+import { News } from '@/entities/news'
 
 export const useDnD = () => {
   const [type, setType] = useDashboardStore(
@@ -10,9 +11,9 @@ export const useDnD = () => {
   )
 
   const onDragStart = useCallback(
-    (event: DragEvent<HTMLDivElement>, nodeType: string) => {
+    (event: DragEvent<HTMLDivElement>, nodeType: News) => {
       setType(nodeType)
-      event.dataTransfer.setData('text/plain', nodeType)
+      event.dataTransfer.setData('text/plain', String(JSON.stringify(nodeType)))
       event.dataTransfer.effectAllowed = 'move'
     },
     [setType]

@@ -1,10 +1,11 @@
 'use client'
 
+import { News } from '@/entities/news'
 import { create } from 'zustand'
 
 interface DashboardStore {
-  type: string | null
-  setType: (type: string | null) => void
+  type: News | null
+  setType: (type: News | null) => void
 }
 
 export const useDashboardStore = create<DashboardStore>(set => ({
