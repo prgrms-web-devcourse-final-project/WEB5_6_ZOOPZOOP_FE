@@ -1,4 +1,4 @@
-import { DashboardItem } from '@/features/dashboard/dashboad-dnd'
+import { DashboardItem } from '@/features/dashboard'
 
 export const FlowSidebar = () => {
   return (

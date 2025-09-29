@@ -12,7 +12,7 @@ import {
 import '@xyflow/react/dist/style.css'
 import { useFlowState } from '../model/useFlowState'
 import { CustomFlowNode } from './CustomFlowNode'
-import { useFlowDragDrop } from '@/features/dashboard/flow-management'
+import { useFlowDragDrop } from '@/features/dashboard'
 import { FlowSidebar } from '../../flow-sidebar'
 
 const nodeTypes = {
