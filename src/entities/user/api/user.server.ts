@@ -15,7 +15,7 @@ export const updateNicknameServer = async (
   options: NextFetchOptions
 ): Promise<UpdateNicknameResponse> => {
   return httpClient.put<UpdateNicknameResponse>(
-    '/api/v1/member/edit',
+    '/api/v1/member/edit/name',
     payload,
     options
   )

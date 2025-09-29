@@ -1,8 +1,15 @@
+import { NextResponse } from 'next/server'
+
 export interface APIResponse<T> {
   status: string
   msg: string
-  data: T
+  data: T | null
 }
+
+export type AuthHandler<T> = (
+  token: string,
+  request: Request
+) => Promise<APIResponse<T>>
 
 export interface NextFetchOptions extends RequestInit {
   next?: {
