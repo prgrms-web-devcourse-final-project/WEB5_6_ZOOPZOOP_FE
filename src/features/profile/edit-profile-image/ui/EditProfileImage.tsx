@@ -1,9 +1,9 @@
 'use client'
 
-import { Camera, Loader2 } from 'lucide-react'
-import Image from 'next/image'
 import { useId } from 'react'
-import { useEditProfileImage } from '../model/useEditProfileImage'
+import Image from 'next/image'
+import { Camera, Loader2 } from 'lucide-react'
+import { useProfileImageForm } from '../model/useProfileImageForm'
 
 interface Props {
   profileUrl: string
@@ -17,8 +17,9 @@ const EditProfileImage = ({ profileUrl }: Props) => {
     isChanged,
     isUploading,
     onSelect,
-    onUpload
-  } = useEditProfileImage(profileUrl)
+    onUpload,
+    inputRef
+  } = useProfileImageForm(profileUrl)
 
   return (
     <>
@@ -47,6 +48,7 @@ const EditProfileImage = ({ profileUrl }: Props) => {
             )}
           </div>
           <input
+            ref={inputRef}
             id={inputId}
             type="file"
             accept="image/jpeg,image/png,image/webp,image/jpg"

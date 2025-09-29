@@ -1,22 +1,20 @@
-import { useState } from 'react'
-import { useUploadProfileImage } from './useUploadProfileImage'
+import { useRef, useState } from 'react'
+import { useProfileImageMutation } from '../api/useProfileImageMutation'
 
-export const useEditProfileImage = (profileUrl: string) => {
+export const useProfileImageForm = (profileUrl: string) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   // 파생 상태
   const isChanged = previewUrl !== null
   const displayUrl = previewUrl || profileUrl
 
-  // tanstack query
-  const { mutate, isPending } = useUploadProfileImage({
+  const { mutate, isPending } = useProfileImageMutation({
     onSuccess: () => {
-      // 업로드 성공 시 로직
       setPreviewUrl(null)
       setSelectedFile(null)
     },
     onError: () => {
-      // 에러 처리
       alert('업로드에 실패했습니다.')
     }
   })
@@ -49,14 +47,19 @@ export const useEditProfileImage = (profileUrl: string) => {
   const handleCancel = () => {
     setPreviewUrl(null)
     setSelectedFile(null)
+
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
   }
 
   return {
     onSelect: handleImageSelect,
-    displayUrl,
+    onUpload: handleUpload,
     handleCancel,
-    isChanged,
+    inputRef,
     isUploading: isPending,
-    onUpload: handleUpload
+    displayUrl,
+    isChanged
   }
 }
