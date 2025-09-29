@@ -1,9 +1,9 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query'
-import { deleteAccount } from './clientApi'
+import { deleteAccountClient } from '@/entities/user/api/user.client'
 
 export const useDeleteAccountMutation = (options: UseMutationOptions) => {
   return useMutation({
-    mutationFn: deleteAccount,
+    mutationFn: deleteAccountClient,
     ...options
   })
 }

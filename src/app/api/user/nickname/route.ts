@@ -1,33 +1,9 @@
-import { updateUserNickname } from '@/entities/user'
-import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
-import { NextResponse } from 'next/server'
+import { updateNicknameServer } from '@/entities/user'
+import { createCookieHeader, withAuth } from '@/shared/lib/api-route'
 
-export async function PUT(request: Request) {
+export const PUT = withAuth(async (token, request) => {
   const payload = await request.json()
-  const token = await getAccessToken()
-
-  if (!token) {
-    return NextResponse.json({
-      status: 401,
-      data: null,
-      msg: '인증 토큰이 없습니다'
-    })
-  }
-  const { status, data, msg } = await updateUserNickname(payload, {
+  return await updateNicknameServer(payload, {
     headers: createCookieHeader(token)
   })
-
-  if (status !== '200' || !data) {
-    return NextResponse.json({
-      status: 500,
-      data: null,
-      msg: 'api 통신 실패'
-    })
-  }
-
-  return NextResponse.json({
-    status,
-    data,
-    msg
-  })
-}
+})

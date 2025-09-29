@@ -1,5 +1,5 @@
-import DeleteAccountSection from './components/DeleteAccountSection'
-import LogoutSection from './components/LogoutSection'
+import DeleteAccountSection from './DeleteAccountSection'
+import LogoutSection from './LogoutSection'
 
 const AccountManagement = () => {
   return (
