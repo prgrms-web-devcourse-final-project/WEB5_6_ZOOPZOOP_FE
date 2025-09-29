@@ -1,3 +1,4 @@
+import { Room } from '@/app/_providers'
 import { FlowDashboard } from '@/widgets/dashboard'
 import { Metadata } from 'next'
 
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <FlowDashboard />
+  return (
+    <Room>
+      <FlowDashboard />
+    </Room>
+  )
 }
