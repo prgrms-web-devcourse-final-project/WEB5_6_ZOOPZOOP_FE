@@ -35,7 +35,7 @@ const EditNickname = ({ nickname }: Props) => {
           className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-accent focus:border-orange-accent"
           id="nickname"
           placeholder="닉네임을 입력하세요"
-          value={newNickname}
+          value={newNickname.split('#')[0]}
           onChange={handleChange}
         />
         <button

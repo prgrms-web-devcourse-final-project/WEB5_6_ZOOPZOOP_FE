@@ -2,8 +2,9 @@ import { APIResponse } from '@/shared/types'
 
 export interface User {
   name: string
-  email: string
   profileUrl: string
+  createAt: Date
+  provider: string
 }
 
 // 사용자 정보 response

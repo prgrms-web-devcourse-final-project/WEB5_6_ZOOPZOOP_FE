@@ -3,11 +3,13 @@
 import { useUserStore } from '@/entities/user'
 import Image from 'next/image'
 import { EditNickname } from '@/features/profile/edit-nickname'
-import EmailInfo from './EmailInfo'
 import JoinDateInfo from './JoinDateInfo'
+import ProviderInfo from './ProviderInfo'
 
 const ProfileHeader = () => {
   const user = useUserStore(state => state.user)
+
+  const displayName = user?.name.split('#')[0] ?? '사용자 닉네임'
 
   return (
     <section className="flex justify-center flex-col md:flex-row sm:justify-start gap-10 w-full">
@@ -31,9 +33,9 @@ const ProfileHeader = () => {
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
             <div className="px-6 py-4 space-y-6">
               {/* 유저 닉네임 */}
-              <EditNickname nickname={user.name} />
-              {/* 유저 이메일 */}
-              <EmailInfo email={user.email} />
+              <EditNickname nickname={displayName} />
+              {/* provider 타입 */}
+              <ProviderInfo provider={user.provider} />
               {/* 가입일 */}
               <JoinDateInfo />
             </div>
