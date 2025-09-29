@@ -29,7 +29,7 @@ export default function NavHeader({ user }: Props) {
           />
         </div>
         <p className="text-base hidden lg:block">
-          {user ? user.name : '사용자'}
+          {user ? user.name.split('#')[0] : '사용자'}
         </p>
       </div>
     </header>
