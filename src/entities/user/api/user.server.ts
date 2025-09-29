@@ -1,6 +1,10 @@
 import { httpClient } from '@/shared/lib'
 import { DeleteAccountResponse, NextFetchOptions } from '@/shared/types'
-import { UpdateNicknameResponse, UserResponse } from '../model/type'
+import {
+  UpdateNicknameResponse,
+  UpdateProfileImageResponse,
+  UserResponse
+} from '../model/type'
 
 // 사용자 데이터
 export const fetchUserServer = async (
@@ -26,4 +30,16 @@ export const deleteAccountServer = async (
   options: NextFetchOptions
 ): Promise<DeleteAccountResponse> => {
   return httpClient.delete<DeleteAccountResponse>('/api/v1/member', options)
+}
+
+// 프로필 이미지 저장
+export const updateProfileImageServer = async (
+  formData: FormData,
+  options: NextFetchOptions
+) => {
+  return httpClient.put<UpdateProfileImageResponse>(
+    '/api/v1/member/edit/image',
+    formData,
+    options
+  )
 }

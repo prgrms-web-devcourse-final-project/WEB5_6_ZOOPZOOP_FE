@@ -1,7 +1,9 @@
 import { httpClient } from '@/shared/lib'
 import {
   Nickname,
+  Profile,
   UpdateNicknameResponse,
+  UpdateProfileImageResponse,
   User,
   UserResponse
 } from '../model/type'
@@ -45,4 +47,23 @@ export const deleteAccountClient = async (): Promise<void> => {
   if (status !== '200') {
     throw new Error('계정 삭제 실패')
   }
+}
+
+//업데이트 프로필 이미지
+export const updateProfileImageClient = async (
+  payload: File
+): Promise<Profile> => {
+  const formData = new FormData()
+  formData.append('file', payload)
+
+  const response = await httpClient.put<UpdateProfileImageResponse>(
+    '/api/user/profileImage',
+    formData
+  )
+  const { data: updatedProfileImage, status } = response
+
+  if (status !== '200' || !updatedProfileImage) {
+    throw new Error('닉네임 업데이트 실패')
+  }
+  return updatedProfileImage
 }

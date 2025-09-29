@@ -16,3 +16,8 @@ export interface Nickname {
 
 // 사용자 닉네임 변경
 export type UpdateNicknameResponse = APIResponse<Nickname>
+
+export interface Profile {
+  profileUrl: string
+}
+export type UpdateProfileImageResponse = APIResponse<Profile>

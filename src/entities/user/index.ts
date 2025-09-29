@@ -1,17 +1,14 @@
 export {
   fetchUserClient,
   updateNicknameClient,
-  deleteAccountClient
+  deleteAccountClient,
+  updateProfileImageClient
 } from './api/user.client'
 export {
   fetchUserServer,
   updateNicknameServer,
-  deleteAccountServer
+  deleteAccountServer,
+  updateProfileImageServer
 } from './api/user.server'
 export { useUserStore, useUserQuery } from './model'
-export type {
-  User,
-  Nickname,
-  UserResponse,
-  UpdateNicknameResponse
-} from './model'
+export type * from './model'

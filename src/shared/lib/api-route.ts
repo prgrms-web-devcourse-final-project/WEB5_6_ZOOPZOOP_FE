@@ -45,6 +45,7 @@ export const withAuth = <T>(handler: AuthHandler<T>) => {
 
     try {
       const result = await handler(token, request)
+
       return NextResponse.json(result)
     } catch (error) {
       if (Error.isError(error))
