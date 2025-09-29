@@ -1,18 +1,23 @@
 import { useRef, useState } from 'react'
 import { useProfileImageMutation } from '../api/useProfileImageMutation'
+import { useUserStore } from '@/entities/user'
 
 export const useProfileImageForm = (profileUrl: string) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const updateUser = useUserStore(state => state.updateUser)
+
   // 파생 상태
   const isChanged = previewUrl !== null
   const displayUrl = previewUrl || profileUrl
 
   const { mutate, isPending } = useProfileImageMutation({
-    onSuccess: () => {
+    onSuccess: data => {
       setPreviewUrl(null)
       setSelectedFile(null)
+      updateUser(data)
     },
     onError: () => {
       alert('업로드에 실패했습니다.')
