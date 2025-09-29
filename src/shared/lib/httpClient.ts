@@ -10,8 +10,7 @@ const createFetchOptions = (
   const { headers, ...restOptions } = options || {}
 
   const isFormData = data instanceof FormData
-
-  const finalOptions = {
+  return {
     method,
     headers: {
       ...(!isFormData && { 'Content-Type': 'application/json' }),
@@ -20,8 +19,6 @@ const createFetchOptions = (
     body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
     ...restOptions
   }
-
-  return finalOptions
 }
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
