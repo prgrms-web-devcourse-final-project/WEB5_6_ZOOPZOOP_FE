@@ -71,12 +71,12 @@ export const BaseNewsCard = ({
           <Handle
             type="target"
             position={Position.Top}
-            className="w-16 !bg-teal-500"
+            className="!w-6 !h-6 !bg-teal-500"
           />
           <Handle
             type="source"
             position={Position.Bottom}
-            className="w-16 !bg-teal-500"
+            className="!w-6 !h-6 !bg-teal-500"
           />
         </>
       )}
