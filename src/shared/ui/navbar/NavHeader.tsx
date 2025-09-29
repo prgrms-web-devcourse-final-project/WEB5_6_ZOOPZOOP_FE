@@ -6,7 +6,6 @@ interface Props {
 }
 
 export default function NavHeader({ user }: Props) {
-  const [displayName, tag] = user ? user?.name.split('#') : ['사용자', '0000']
   return (
     <header className="mb-2">
       <Image
@@ -29,8 +28,9 @@ export default function NavHeader({ user }: Props) {
             className="object-cover w-full h-full"
           />
         </div>
-        <span className="text-base hidden lg:block">{displayName}</span>
-        <span className="text-base hidden lg:block">#{tag}</span>
+        <p className="text-base hidden lg:block">
+          {user ? user.name.split('#')[0] : '사용자'}
+        </p>
       </div>
     </header>
   )
