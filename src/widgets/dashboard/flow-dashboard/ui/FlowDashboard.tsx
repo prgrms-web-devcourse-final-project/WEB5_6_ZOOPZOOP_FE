@@ -32,7 +32,7 @@ const FlowDashboardContent = () => {
     setNodes
   } = useFlowState()
 
-  const { onDrop, onDragOver } = useFlowDragDrop({ setNodes })
+  const { onDrop, onDragOver } = useFlowDragDrop({ setNodes, nodes })
   const { others, handlePointerMove, handlePointerLeave } = useCursor()
   const { flowToScreenPosition } = useReactFlow()
 
