@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import {
   applyEdgeChanges,
   applyNodeChanges,
@@ -15,77 +15,100 @@ import {
   getOutgoers,
   getConnectedEdges
 } from '@xyflow/react'
-
-const initialNodes = [
-  {
-    id: 'n1',
-    type: 'custom',
-    position: { x: 250, y: 5 },
-    data: {
-      label: 'Input Node',
-      nodeType: 'input',
-      title: '입력 노드',
-      content: '기본 입력 노드입니다',
-      imageUrl: '',
-      createdAt: '2025-01-01'
-    }
-  }
-]
-
-const initialEdges: Edge[] = []
+import { useStorage, useMutation } from '@liveblocks/react'
 
 export const useFlowState = () => {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes)
-  const [edges, setEdges] = useState<Edge[]>(initialEdges)
+  const nodes = useStorage(root => root.nodes) as Node[] | null
+  const edges = useStorage(root => root.edges) as Edge[] | null
+
+  const updateNodes = useMutation(({ storage }, newNodes: Node[]) => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      storage.set('nodes', newNodes as any)
+    } catch {
+      // do nothing
+    }
+  }, [])
+
+  const updateEdges = useMutation(({ storage }, newEdges: Edge[]) => {
+    try {
+      storage.set('edges', newEdges)
+    } catch {
+      // do nothing
+    }
+  }, [])
 
   const onNodesChange: OnNodesChange = useCallback(
-    changes => setNodes(nds => applyNodeChanges(changes, nds)),
-    []
+    changes => {
+      if (!nodes) return
+      const newNodes = applyNodeChanges(changes, nodes)
+      updateNodes(newNodes)
+    },
+    [nodes, updateNodes]
   )
 
   const onEdgesChange: OnEdgesChange = useCallback(
-    changes => setEdges(eds => applyEdgeChanges(changes, eds)),
-    []
+    changes => {
+      if (!edges) return
+      const newEdges = applyEdgeChanges(changes, edges)
+      updateEdges(newEdges)
+    },
+    [edges, updateEdges]
   )
 
   const onConnect: OnConnect = useCallback(
-    connection => setEdges(eds => addEdge({ ...connection }, eds)),
-    []
+    connection => {
+      if (!edges) return
+      const newEdges = addEdge({ ...connection }, edges)
+      updateEdges(newEdges)
+    },
+    [edges, updateEdges]
   )
 
   const onNodesDelete: OnNodesDelete = useCallback(
     deleted => {
+      if (!nodes || !edges) return
       let remainingNodes = [...nodes]
-      setEdges(
-        deleted.reduce((acc, node) => {
-          const incomers = getIncomers(node, remainingNodes, acc)
-          const outgoers = getOutgoers(node, remainingNodes, acc)
-          const connectedEdges = getConnectedEdges([node], acc)
+      const newEdges = deleted.reduce((acc, node) => {
+        const incomers = getIncomers(node, remainingNodes, acc)
+        const outgoers = getOutgoers(node, remainingNodes, acc)
+        const connectedEdges = getConnectedEdges([node], acc)
 
-          const remainingEdges = acc.filter(
-            edge => !connectedEdges.includes(edge)
-          )
+        const remainingEdges = acc.filter(
+          edge => !connectedEdges.includes(edge)
+        )
 
-          const createdEdges = incomers.flatMap(({ id: source }) =>
-            outgoers.map(({ id: target }) => ({
-              id: `${source}->${target}`,
-              source,
-              target
-            }))
-          )
+        const createdEdges = incomers.flatMap(({ id: source }) =>
+          outgoers.map(({ id: target }) => ({
+            id: `${source}->${target}`,
+            source,
+            target
+          }))
+        )
 
-          remainingNodes = remainingNodes.filter(rn => rn.id !== node.id)
+        remainingNodes = remainingNodes.filter(rn => rn.id !== node.id)
+        return [...remainingEdges, ...createdEdges]
+      }, edges)
 
-          return [...remainingEdges, ...createdEdges]
-        }, edges)
-      )
+      updateNodes(remainingNodes)
+      updateEdges(newEdges)
     },
-    [nodes, edges]
+    [nodes, edges, updateNodes, updateEdges]
+  )
+
+  const setNodes = useCallback(
+    (newNodes: Node[] | ((nodes: Node[]) => Node[])) => {
+      if (!nodes) return
+      const updatedNodes =
+        typeof newNodes === 'function' ? newNodes(nodes) : newNodes
+      updateNodes(updatedNodes)
+    },
+    [nodes, updateNodes]
   )
 
   return {
-    nodes,
-    edges,
+    nodes: nodes || [],
+    edges: edges || [],
     setNodes,
     onNodesChange,
     onEdgesChange,
