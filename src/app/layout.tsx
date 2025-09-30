@@ -27,8 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className="antialiased flex ">
-        <main className="flex-1">
+      <body className="antialiased">
+        <main>
           <QueryProvider>
             <AuthProvider>
               {children}
