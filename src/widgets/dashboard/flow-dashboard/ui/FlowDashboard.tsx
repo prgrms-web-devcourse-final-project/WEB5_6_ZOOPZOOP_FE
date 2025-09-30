@@ -16,6 +16,7 @@ import { useCursor, useFlowDragDrop } from '@/features/dashboard'
 import { FlowSidebar } from '../../flow-sidebar'
 
 import { Cursor } from './Cursor'
+import { FlowItemContainer } from '../../flow-item'
 
 const nodeTypes = {
   custom: CustomFlowNode
@@ -37,7 +38,7 @@ const FlowDashboardContent = () => {
   const { flowToScreenPosition } = useReactFlow()
 
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-screen relative">
       {others
         .filter(other => other.presence?.cursor !== null)
         .map(({ connectionId, presence }) => {
@@ -79,6 +80,7 @@ const FlowDashboardContent = () => {
             size={1}
           />
         </ReactFlow>
+        <FlowItemContainer />
       </div>
     </div>
   )
