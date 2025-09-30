@@ -5,7 +5,7 @@ interface Props {
   title: string
 }
 
-const FileCardThumbnail = ({ imageUrl, title }: Props) => {
+const FileThumbnail = ({ imageUrl, title }: Props) => {
   return (
     <Image
       className="aspect-video rounded-sm"
@@ -16,4 +16,4 @@ const FileCardThumbnail = ({ imageUrl, title }: Props) => {
     />
   )
 }
-export default FileCardThumbnail
+export default FileThumbnail

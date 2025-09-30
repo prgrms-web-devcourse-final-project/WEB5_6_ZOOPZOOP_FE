@@ -1,15 +1,14 @@
 'use client'
 
-import { LucideIcon } from 'lucide-react'
 import ActionButton from './ActionButton'
 import SearchBar from './Search'
 import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useModalStore } from '@/shared/lib'
+import { Plus, Upload } from 'lucide-react'
 
 export type Button = {
   label: string
-  icon: LucideIcon
-  onClick: () => void
 }
 
 interface Props {
@@ -24,6 +23,7 @@ interface Props {
 
 function Header({ title, buttons, searchBar }: Props) {
   const [query, setQuery] = useState('')
+  const openModal = useModalStore(s => s.openModal)
   const router = useRouter()
 
   const handleSearch = () => {
@@ -51,14 +51,19 @@ function Header({ title, buttons, searchBar }: Props) {
       <div className="flex justify-between">
         <div className="flex gap-3">
           {buttons &&
-            buttons.map(button => (
-              <ActionButton
-                key={button.label}
-                label={button.label}
-                icon={button.icon}
-                onClick={button.onClick}
-              />
-            ))}
+            buttons.map(button => {
+              const modalLabel =
+                button.label === '폴더 생성' ? 'create-folder' : 'url-upload'
+              const Icon = button.label === '폴더 생성' ? Plus : Upload
+              return (
+                <ActionButton
+                  key={button.label}
+                  label={button.label}
+                  icon={Icon}
+                  onClick={() => openModal(modalLabel)}
+                />
+              )
+            })}
         </div>
         <SearchBar
           placeholder={searchBar.placeholder}

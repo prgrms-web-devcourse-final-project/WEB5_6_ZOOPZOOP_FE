@@ -6,6 +6,7 @@ type ModalType =
   | 'alarm'
   | 'create-space'
   | 'create-folder'
+  | 'move-file'
   | 'delete-account'
 
 interface ModalStore {

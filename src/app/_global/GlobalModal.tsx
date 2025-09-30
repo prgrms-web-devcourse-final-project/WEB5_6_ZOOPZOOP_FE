@@ -10,6 +10,7 @@ import {
   UrlUploadModal
 } from '@/shared/ui/modal'
 import { CreateSpaceModal } from '@/features/space'
+import { MoveFileModal } from '@/shared/ui/modal/archive/move-file/MoveFileModal'
 
 export const GlobalModal = () => {
   const [type, isOpen] = useModalStore(useShallow(s => [s.type, s.isOpen]))
@@ -27,6 +28,8 @@ export const GlobalModal = () => {
       return <CreateSpaceModal />
     case 'create-folder':
       return <CreateFolderModal />
+    case 'move-file':
+      return <MoveFileModal />
     case 'delete-account':
       return <DeleteAccountModal />
     default:
