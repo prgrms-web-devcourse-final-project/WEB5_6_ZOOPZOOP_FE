@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="flex flex-col py-4 px-2 cursor-pointer border-r-1 h-screen">
+      className="fixed flex flex-col py-4 px-2 cursor-pointer border-r-1 h-screen w-60">
       <NavHeader user={user} />
       <ul>
         {navItems.map(item => (
