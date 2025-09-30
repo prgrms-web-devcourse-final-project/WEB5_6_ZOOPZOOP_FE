@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { QueryProvider } from '@/app/_providers'
-import Navbar from '@/shared/ui/navbar/Navbar'
 import { GlobalModal } from '@/shared/ui/modal'
 import AuthProvider from '@/app/_providers/auth-provider'
 
@@ -17,12 +16,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: '미정', // TODO: 도메인 변경후 수정
+    url: 'https://www.zoopzoop.kro.kr/',
     siteName: 'ZoopZoop'
-  },
-  icons: {
-    icon: '/image.png', // TODO: ico으로 변경
-    apple: '/apple-touch-icon.png'
   }
 }
 export default function RootLayout({
@@ -32,9 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className="antialiased flex ">
-        <Navbar />
-        <main className="flex-1">
+      <body className="antialiased">
+        <main>
           <QueryProvider>
             <AuthProvider>
               {children}

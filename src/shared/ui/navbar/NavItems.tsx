@@ -5,9 +5,10 @@ import SubNavItem from './SubNavItem'
 interface Props {
   item: MainNav
   pathName: string
+  isExpanded: boolean
 }
 
-function NavItems({ item, pathName }: Props) {
+function NavItems({ item, pathName, isExpanded }: Props) {
   const isMainMenuOpen = pathName.startsWith(item.href)
 
   return (
@@ -15,9 +16,10 @@ function NavItems({ item, pathName }: Props) {
       <MainNavItem
         isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
+        isExpanded={isExpanded}
       />
 
-      {isMainMenuOpen && item.children && (
+      {isMainMenuOpen && item.children && isExpanded && (
         <ul className="flex flex-col gap-1 border-l-2 ml-4 border-green-normal">
           {item.children.map((child, idx) => {
             const isSubMenuOpen = pathName === child.href
@@ -34,4 +36,5 @@ function NavItems({ item, pathName }: Props) {
     </>
   )
 }
+
 export default NavItems

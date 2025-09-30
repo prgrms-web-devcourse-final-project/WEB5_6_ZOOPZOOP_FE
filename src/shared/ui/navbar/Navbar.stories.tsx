@@ -32,6 +32,7 @@ const Wrapper = ({ item, pathName }: { item: MainNav; pathName: string }) => {
       <NavItems
         pathName={pathName}
         item={item}
+        isExpanded={true}
       />
     </div>
   )
