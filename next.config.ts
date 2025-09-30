@@ -6,7 +6,10 @@ const nextConfig: NextConfig = {
     root: __dirname
   },
   images: {
-    domains: ['k.kakaocdn.net']
+    domains: [
+      'k.kakaocdn.net',
+      'zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com'
+    ]
   }
 }
 
