@@ -33,7 +33,10 @@ const EditProfileImage = ({ profileUrl }: Props) => {
           className="relative cursor-pointer group"
           htmlFor={inputId}>
           <Image
-            src={displayUrl}
+            src={
+              displayUrl ??
+              'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default-profile'
+            }
             alt="사용자 프로필 사진"
             width={300}
             height={300}
