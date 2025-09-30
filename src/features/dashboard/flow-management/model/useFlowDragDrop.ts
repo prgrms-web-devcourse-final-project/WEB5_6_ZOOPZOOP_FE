@@ -27,7 +27,7 @@ export const useFlowDragDrop = ({ setNodes, nodes }: UseFlowDragDropProps) => {
       })
       // 유니크한 아이디로 생성되게 변경해야함
       const newNode = {
-        id: String(nodes.length + 1),
+        id: String(nodes.length + 1) + Math.random(),
         type: 'custom',
         position,
         data: {
@@ -39,6 +39,8 @@ export const useFlowDragDrop = ({ setNodes, nodes }: UseFlowDragDropProps) => {
           createdAt: new Date().toISOString().split('T')[0]
         }
       }
+
+      // 여기서 부터 낙관적 업데이트 진행해서 성공시 백엔드 저장 req에 id 받아서 추가하기
 
       setNodes(nds => nds.concat([newNode]))
     },
