@@ -15,7 +15,7 @@ function MainNavItem({ isMainMenuOpen, mainItem, isExpanded }: Props) {
       <Link
         href={href}
         className={tw(
-          'flex items-center rounded-md font-bold text-base hover:bg-orange-accent transition-all',
+          'flex items-center rounded-md font-bold text-base hover:bg-orange-accent mb-2 transition-all',
           !isMainMenuOpen
             ? 'bg-white text-black'
             : 'bg-green-normal text-white',
