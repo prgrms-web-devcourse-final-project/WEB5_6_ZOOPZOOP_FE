@@ -5,9 +5,10 @@ import SubNavItem from './SubNavItem'
 interface Props {
   item: MainNav
   pathName: string
+  isDashboard: boolean
 }
 
-function NavItems({ item, pathName }: Props) {
+function NavItems({ item, pathName, isDashboard }: Props) {
   const isMainMenuOpen = pathName.startsWith(item.href)
 
   return (
@@ -15,6 +16,7 @@ function NavItems({ item, pathName }: Props) {
       <MainNavItem
         isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
+        isDashboard={isDashboard}
       />
 
       {isMainMenuOpen && item.children && (
@@ -26,6 +28,7 @@ function NavItems({ item, pathName }: Props) {
                 key={idx}
                 isSubMenuOpen={isSubMenuOpen}
                 subItem={child}
+                isDashboard={isDashboard}
               />
             )
           })}

@@ -7,9 +7,10 @@ import { NavItem } from '@/shared/routes'
 interface Props {
   subItem: NavItem
   isSubMenuOpen: boolean
+  isDashboard: boolean
 }
 
-function SubNavItem({ subItem, isSubMenuOpen }: Props) {
+function SubNavItem({ subItem, isSubMenuOpen, isDashboard }: Props) {
   const { icon, href, label } = subItem
   const Icon = icon
 
@@ -29,7 +30,7 @@ function SubNavItem({ subItem, isSubMenuOpen }: Props) {
             className={tw(!isSubMenuOpen ? 'text-dark' : 'text-black')}
           />
         )}
-        <p className="hidden sm:block">{label}</p>
+        <p className={tw('hidden', !isDashboard && 'block')}>{label}</p>
       </Link>
     </li>
   )
