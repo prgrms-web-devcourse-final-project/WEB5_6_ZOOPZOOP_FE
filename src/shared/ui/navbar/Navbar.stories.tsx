@@ -26,11 +26,20 @@ export default meta
 type Story = StoryObj<typeof NavItems>
 
 // Wrapper: 내부 상태 + Controls 동기화
-const Wrapper = ({ item, pathName }: { item: MainNav; pathName: string }) => {
+const Wrapper = ({
+  item,
+  pathName,
+  isDashboard
+}: {
+  item: MainNav
+  pathName: string
+  isDashboard: boolean
+}) => {
   return (
     <div className="w-64 border border-gray-200 p-4">
       <NavItems
         pathName={pathName}
+        isDashboard={isDashboard}
         item={item}
         isExpanded={true}
       />
@@ -44,6 +53,7 @@ export const Closed: Story = {
     <Wrapper
       item={mockNav}
       pathName="/archive"
+      isDashboard={true}
     />
   ),
   name: '메뉴 닫힘'
@@ -54,6 +64,7 @@ export const MainOpen: Story = {
     <Wrapper
       item={mockNav}
       pathName="/space"
+      isDashboard={false}
     />
   ),
   name: '메인 메뉴 열림'
@@ -64,6 +75,7 @@ export const SubOpen: Story = {
     <Wrapper
       item={mockNav}
       pathName="/space" /* or 정확한 child href */
+      isDashboard={false}
     />
   ),
   name: '서브 메뉴 열림'
