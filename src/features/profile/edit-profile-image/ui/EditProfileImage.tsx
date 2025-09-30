@@ -34,7 +34,7 @@ const EditProfileImage = ({ profileUrl }: Props) => {
           htmlFor={inputId}>
           <Image
             src={
-              displayUrl ??
+              displayUrl ||
               'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default-profile'
             }
             alt="사용자 프로필 사진"

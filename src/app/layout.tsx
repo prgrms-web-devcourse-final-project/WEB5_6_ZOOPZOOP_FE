@@ -19,10 +19,6 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: '미정', // TODO: 도메인 변경후 수정
     siteName: 'ZoopZoop'
-  },
-  icons: {
-    icon: '/image.png', // TODO: ico으로 변경
-    apple: '/apple-touch-icon.png'
   }
 }
 export default function RootLayout({
