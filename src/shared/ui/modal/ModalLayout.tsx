@@ -15,13 +15,15 @@ export const ModalLayout = ({ children, size }: Props) => {
       className="fixed inset-0 flex justify-center items-center bg-black/40"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="modal-title">
+      aria-labelledby="modal-title"
+      onClick={closeModal}>
       <div
         className={tw(
           'bg-white rounded-2xl flex-center flex-col relative gap-5',
           size === 'sm' && 'w-[386px] p-4',
           size === 'md' && 'w-[500px] p-7.5'
-        )}>
+        )}
+        onClick={e => e.stopPropagation()}>
         <div className="absolute top-4 right-4">
           <LuCircleX
             className="text-3xl"

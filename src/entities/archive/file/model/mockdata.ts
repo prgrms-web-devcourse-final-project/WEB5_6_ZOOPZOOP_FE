@@ -11,7 +11,9 @@ export const rawFiles = [
     origin: '동아일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다.가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다. 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.가나 관련 경제 기사 요약입니다 오픈소스 SSD와 관련한 프로그램 압축 이슈를 다룹니다.'
   },
   {
     id: '2',
@@ -22,7 +24,9 @@ export const rawFiles = [
     origin: '동아일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다.'
   },
   {
     id: '3',
@@ -33,7 +37,9 @@ export const rawFiles = [
     origin: '동아일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '스포츠 분야 기사 요약. 기술적 비유를 통해 스포츠 이슈를 전하고 있습니다.'
   },
   {
     id: '4',
@@ -44,7 +50,9 @@ export const rawFiles = [
     origin: '조선일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '환경 기사 요약. 프로그램과 오픈소스 기술이 환경 분야와 연결되는 맥락을 보여줍니다.'
   },
   {
     id: '5',
@@ -55,7 +63,8 @@ export const rawFiles = [
     origin: '한겨레',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary: '역사 기사 요약. 과거와 현재 기술 발전의 연관성을 다룹니다.'
   },
   {
     id: '6',
@@ -66,7 +75,9 @@ export const rawFiles = [
     origin: '경향신문',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '세계 기사 요약. 글로벌 관점에서 기술적 변화와 사회 이슈를 설명합니다.'
   },
   {
     id: '7',
@@ -77,7 +88,8 @@ export const rawFiles = [
     origin: '동아일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary: '정치 기사 요약. 최신 정책과 기술 발전 간의 관계를 다룹니다.'
   },
   {
     id: '8',
@@ -88,7 +100,9 @@ export const rawFiles = [
     origin: '조선일보',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary:
+      '경제 기사 요약. 조선일보 보도 기준으로 시장과 기술을 연결하는 내용을 담았습니다.'
   },
   {
     id: '9',
@@ -99,7 +113,8 @@ export const rawFiles = [
     origin: '한겨레',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary: '과학 기사 요약. 기술적 요소와 최신 과학적 논의의 접점을 다룹니다.'
   },
   {
     id: '10',
@@ -110,7 +125,8 @@ export const rawFiles = [
     origin: '경향신문',
     imageUrl: '/image.png',
     sourceUrl: '/source.pdf',
-    ownerProfileUrl: '/zoopzoop.png'
+    ownerProfileUrl: '/zoopzoop.png',
+    summary: '문화 기사 요약. 기술과 문화적 현상이 교차하는 맥락을 소개합니다.'
   }
 ]
 
@@ -123,7 +139,8 @@ export const gridFiles: GridDataType[] = rawFiles.map(file => ({
   imageUrl: file.imageUrl,
   sourceUrl: file.sourceUrl,
   ownerProfileUrl: file.ownerProfileUrl,
-  isSelected: false
+  isSelected: false,
+  summary: file.summary
 }))
 
 // 파일 Table용으로 가공

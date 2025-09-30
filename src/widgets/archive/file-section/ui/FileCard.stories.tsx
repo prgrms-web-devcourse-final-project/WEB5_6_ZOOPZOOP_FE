@@ -1,5 +1,5 @@
+import FileCard from '@/widgets/archive/file-section/ui/FileCard'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import FileCard from './FileCard'
 
 const meta: Meta<typeof FileCard> = {
   title: 'Components/FileCard',
@@ -77,6 +77,7 @@ export const SelectionComparison: Story = {
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
+          summary="정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다."
           isSelected={false}
           onSelect={() => {}}
         />
@@ -87,6 +88,7 @@ export const SelectionComparison: Story = {
           id={2}
           title="React 컴포넌트 설계"
           category="Frontend"
+          summary="정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다."
           createAt={new Date('2024-03-15')}
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"

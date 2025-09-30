@@ -7,8 +7,9 @@ interface Props {
   onClick: () => void
 }
 
-function SwitchViewButton({ icon, isSelected, onClick }: Props) {
+function SwitchFileViewButton({ icon, isSelected, onClick }: Props) {
   const Icon = icon
+
   return (
     <button
       type="button"
@@ -23,4 +24,4 @@ function SwitchViewButton({ icon, isSelected, onClick }: Props) {
     </button>
   )
 }
-export default SwitchViewButton
+export default SwitchFileViewButton

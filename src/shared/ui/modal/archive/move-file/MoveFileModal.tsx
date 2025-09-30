@@ -8,8 +8,9 @@ import { LuFolder } from 'react-icons/lu'
 import archiveData from '../data'
 import { FolderActionButtons } from '../../create-folder/FolderActionButtons'
 import { useModalStore } from '@/shared/lib'
+import { SelectItem } from '../SelectedFileItem'
 
-export const UrlUploadModal = () => {
+export const MoveFileModal = () => {
   const [selectedFolder, setSelectedFolder] = useState<number | null>(null)
   const closeModal = useModalStore(s => s.closeModal)
   const handleSelectFolder = (id: number) => {
@@ -18,9 +19,9 @@ export const UrlUploadModal = () => {
 
   return (
     <ModalLayout size="md">
-      <h1 className="text-2xl font-bold text-center">링크 업로드</h1>
+      <h1 className="text-2xl font-bold text-center">파일 이동</h1>
       <div className="w-full flex flex-col gap-2.5">
-        <h2 className="text-lg font-bold">저장 위치</h2>
+        <h2 className="text-lg font-bold">이동할 위치</h2>
         <div className="flex items-center gap-2 text-base">
           <LuFolder size={20} />
           <p>내 아카이브</p>
@@ -45,19 +46,19 @@ export const UrlUploadModal = () => {
         />
       </div>
 
-      <div className="w-full flex flex-col gap-2.5">
-        <h2 className="text-lg font-bold">URL</h2>
-        <input
+      <div className="w-full h-[40%] flex flex-col gap-2.5 overflow-y-auto">
+        <h2 className="text-lg font-bold">이동할 파일</h2>
+        {/* <input
           type="text"
           className="border border-gray-light rounded-md py-3 px-3 text-base"
           placeholder="URL을 입력해 주세요"
-        />
+        /> */}
+        <SelectItem />
       </div>
       <FolderActionButtons
         onCancel={closeModal}
         onCreate={() => {}}
         isCreating={false}
-        //url 입력해야지 false
         disabled={false}
       />
     </ModalLayout>

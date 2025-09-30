@@ -8,6 +8,8 @@ interface Props {
 }
 
 function SortButton({ label, direction = 'none', onClick }: Props) {
+  // 여기에서 솔트
+
   return (
     <>
       <button

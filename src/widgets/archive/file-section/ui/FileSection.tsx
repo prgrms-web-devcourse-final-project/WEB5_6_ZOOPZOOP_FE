@@ -1,22 +1,31 @@
 'use client'
 
 import { useState } from 'react'
-import FileGrid from './FileGrid'
 import FileHeader from './FileHeader'
-import FileTable from './FileTable'
 import { SortDirection } from '@tanstack/react-table'
-import { gridFiles, tableFiles } from '@/entities/archive/model/mockdata'
 import {
   getSortedGridFiles,
   getSortedTableFiles,
   SortKey
 } from '@/features/archive/sort'
 
-function FileSection() {
-  const [isTableView, setIsTableView] = useState(false)
-  // 백엔드에서 이름, 날짜 정렬 데이터 줌 -> 추후 삭제할것
+import { CustomTable } from '@/shared/ui/shadcn/CustomTable'
+import { ArchiveColumn } from './ArchiveColumn'
+import { gridFiles, tableFiles } from '@/entities/archive/file/model/mockdata'
+import FileCard from './FileCard'
+import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
+import { type FileData } from '@/entities/archive/file'
+
+interface Props {
+  fileList: FileData[]
+}
+
+function FileSection({ fileList }: Props) {
+  // 백엔드에서 이름, 날짜 정렬 데이터 줌 -> 데이터 통신할 때 보내줘야됨
   const [sortKey, setSortKey] = useState<SortKey>('이름')
+  // 기본값은 벡엔드에서 받음
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const { viewMode, onSwitchViewMode } = useFileViewMode()
 
   const sortedTableFiles = getSortedTableFiles(
     tableFiles,
@@ -25,22 +34,88 @@ function FileSection() {
   )
   const sortedGridFiles = getSortedGridFiles(gridFiles, sortKey, sortDirection)
 
+  /* 체크박스 컨트롤 */
+  const [checkedCardList, setCheckedCardList] = useState<number[]>([])
+
+  const handleCheckbox = (cardId: number) => {
+    if (checkedCardList.includes(cardId)) {
+      setCheckedCardList(prev => prev.filter(id => id !== cardId))
+    } else {
+      setCheckedCardList(prev => [...prev, cardId])
+    }
+  }
+
+  const onAllCheck = () => {
+    const allCheckedList = sortedGridFiles.map(item => item.id)
+    if (checkedCardList.length === allCheckedList.length) {
+      setCheckedCardList([])
+    } else {
+      setCheckedCardList(allCheckedList)
+    }
+  }
+
+  const fileCardView = () => {
+    return (
+      <div className="grid grid-cols-4 gap-4 w-full">
+        {sortedGridFiles.map(
+          ({
+            id,
+            title,
+            category,
+            createAt,
+            imageUrl,
+            sourceUrl,
+            ownerProfileUrl,
+            summary
+          }) => {
+            const isSelected = checkedCardList.includes(id)
+            return (
+              <FileCard
+                summary={summary}
+                key={id}
+                id={id}
+                title={title}
+                category={category}
+                createAt={createAt}
+                imageUrl={imageUrl}
+                sourceUrl={sourceUrl}
+                ownerProfileUrl={ownerProfileUrl}
+                isSelected={isSelected}
+                onSelect={handleCheckbox}
+              />
+            )
+          }
+        )}
+      </div>
+    )
+  }
+
+  const tableView = () => {
+    return (
+      <CustomTable
+        columns={ArchiveColumn}
+        data={sortedTableFiles}
+      />
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-4">
+    <>
       <FileHeader
-        isTableView={isTableView}
-        onChangeView={setIsTableView}
+        isChecked={checkedCardList.length > 0}
+        isTableView={viewMode === 'list'}
+        onChangeView={onSwitchViewMode}
         onSortChange={(key, direction) => {
           setSortKey(key)
           setSortDirection(direction)
         }}
+        onAllCheck={onAllCheck}
       />
-      {isTableView ? (
-        <FileTable rowData={sortedTableFiles} />
-      ) : (
-        <FileGrid gridData={sortedGridFiles} />
-      )}
-    </div>
+      {/* <div className="flex items-center justify-center">
+        {viewMode === 'list' ? tableView() : fileCardView()}
+      </div> */}
+      {viewMode === 'list' ? tableView() : fileCardView()}
+    </>
   )
 }
 export default FileSection

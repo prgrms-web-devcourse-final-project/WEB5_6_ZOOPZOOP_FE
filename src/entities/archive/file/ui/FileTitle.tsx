@@ -3,7 +3,7 @@ interface Props {
   sourceUrl: string
 }
 // 파일 카드 타이틀
-const FileCardTitle = ({ sourceUrl, title }: Props) => {
+const FileTitle = ({ sourceUrl, title }: Props) => {
   return (
     <a
       href={sourceUrl}
@@ -16,4 +16,4 @@ const FileCardTitle = ({ sourceUrl, title }: Props) => {
     </a>
   )
 }
-export default FileCardTitle
+export default FileTitle

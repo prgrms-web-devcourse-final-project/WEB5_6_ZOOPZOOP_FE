@@ -1,11 +1,8 @@
-import {
-  ArchiveColumnType,
-  FolderDataType,
-  GridDataType
-} from '@/entities/archive'
+import { ArchiveColumnType, GridDataType } from '@/entities/archive/file'
 import { FileItem, SortKey } from './sortType'
 import { sortFiles } from './sortUtils'
 import { SortDirection } from '@tanstack/react-table'
+import { FolderData } from '@/entities/archive/folder'
 
 function formatTableFilesForSort(files: ArchiveColumnType[]): FileItem[] {
   return files.map(f => ({ name: f.title, date: f.createdAt }))
@@ -14,10 +11,11 @@ function formatTableFilesForSort(files: ArchiveColumnType[]): FileItem[] {
 function formatGridFilesForSort(files: GridDataType[]): FileItem[] {
   return files.map(f => ({ name: f.title, date: f.createAt.toISOString() }))
 }
-function formatFolderDataTypeForSort(files: FolderDataType[]): FileItem[] {
-  return files.map(f => ({ name: f.name, date: '0000-00-00' }))
+function formatFolderDataForSort(files: FolderData[]): FileItem[] {
+  return files.map(f => ({ name: f.folderName, date: '0000-00-00' }))
 }
 
+// api 통신해야됨
 export const getSortedTableFiles = (
   files: ArchiveColumnType[],
   sortKey: SortKey,
@@ -38,6 +36,7 @@ export const getSortedTableFiles = (
   }))
 }
 
+// api 통신해야됨
 export const getSortedGridFiles = (
   gridFiles: GridDataType[],
   sortKey: SortKey,
@@ -56,22 +55,25 @@ export const getSortedGridFiles = (
     imageUrl: gridFiles[index].imageUrl,
     sourceUrl: gridFiles[index].sourceUrl,
     ownerProfileUrl: gridFiles[index].ownerProfileUrl,
-    isSelected: gridFiles[index].isSelected
+    isSelected: gridFiles[index].isSelected,
+    summary: gridFiles[index].summary
   }))
 }
 
+// api 통신해야됨
 export const getSortedFolders = (
-  folderDataTFolderDataType: FolderDataType[],
+  folderData: FolderData[] = [],
   sortKey: SortKey,
   sortDirection: SortDirection
 ) => {
   const sortedData = sortFiles(
-    formatFolderDataTypeForSort(folderDataTFolderDataType),
+    formatFolderDataForSort(folderData),
     sortKey,
     sortDirection
   )
+
   return sortedData.map((folder, index) => ({
-    id: folderDataTFolderDataType[index].id,
-    name: folder.name
+    folderId: folderData[index].folderId,
+    folderName: folder.name
   }))
 }
