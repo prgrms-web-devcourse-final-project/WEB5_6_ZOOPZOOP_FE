@@ -28,6 +28,7 @@ function NavItems({ item, pathName, isExpanded }: Props) {
                 key={idx}
                 isSubMenuOpen={isSubMenuOpen}
                 subItem={child}
+                isDashboard={isDashboard}
               />
             )
           })}
