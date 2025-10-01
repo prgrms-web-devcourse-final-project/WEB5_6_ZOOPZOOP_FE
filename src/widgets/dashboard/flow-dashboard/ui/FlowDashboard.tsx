@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -14,6 +15,7 @@ import { useFlowState } from '../model/useFlowState'
 import { CustomFlowNode } from './CustomFlowNode'
 import { useCursor, useFlowDragDrop } from '@/features/dashboard'
 import { FlowSidebar } from '../../flow-sidebar'
+import { CommentOverlay } from '../../flow-item/ui/CommentOverlay'
 
 import { Cursor } from './Cursor'
 import { FlowItemContainer } from '../../flow-item'
@@ -35,7 +37,24 @@ const FlowDashboardContent = () => {
 
   const { onDrop, onDragOver } = useFlowDragDrop({ setNodes, nodes })
   const { others, handlePointerMove, handlePointerLeave } = useCursor()
-  const { flowToScreenPosition } = useReactFlow()
+  const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
+
+  const [isCreating, setIsCreating] = useState(false)
+  const [newCommentPosition, setNewCommentPosition] = useState<{
+    x: number
+    y: number
+  } | null>(null)
+
+  const handlePaneClick = (event: React.MouseEvent) => {
+    if (isCreating) {
+      const flowPosition = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY
+      })
+
+      setNewCommentPosition(flowPosition)
+    }
+  }
 
   return (
     <div className="flex w-full h-screen relative">
@@ -58,7 +77,7 @@ const FlowDashboardContent = () => {
         })}
       <FlowSidebar />
       <div
-        className="flex-1"
+        className="flex-1 relative"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}>
         <ReactFlow
@@ -71,7 +90,9 @@ const FlowDashboardContent = () => {
           onNodesDelete={onNodesDelete}
           onConnect={onConnect}
           onDrop={onDrop}
-          onDragOver={onDragOver}>
+          onDragOver={onDragOver}
+          onPaneClick={handlePaneClick}
+          className={isCreating ? 'cursor-crosshair' : ''}>
           <MiniMap position="top-right" />
           <Controls />
           <Background
@@ -80,7 +101,17 @@ const FlowDashboardContent = () => {
             size={1}
           />
         </ReactFlow>
-        <FlowItemContainer />
+
+        <FlowItemContainer
+          isCreating={isCreating}
+          setIsCreating={setIsCreating}
+        />
+        <CommentOverlay
+          isCreating={isCreating}
+          setIsCreating={setIsCreating}
+          newCommentPosition={newCommentPosition}
+          setNewCommentPosition={setNewCommentPosition}
+        />
       </div>
     </div>
   )
