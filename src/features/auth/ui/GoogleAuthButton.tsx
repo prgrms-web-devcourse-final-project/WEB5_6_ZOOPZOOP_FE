@@ -17,9 +17,10 @@ const GoogleAuthButton = () => {
       icon={
         <Image
           src={GoogleLogo}
+          className="w-5 h-auto"
           alt="구글 아이콘"
-          width={24}
-          height={24}
+          width={22}
+          height={22}
         />
       }
       aria-label={`구글 소셜 로그인`}>
