@@ -65,7 +65,7 @@ const FlowDashboardContent = () => {
     <div className="flex w-full h-screen relative">
       {others
         .filter(other => other.presence?.cursor !== null)
-        .map(({ connectionId, presence }) => {
+        .map(({ connectionId, presence, info }) => {
           if (!presence.cursor) return null
           const screenPosition = flowToScreenPosition({
             x: presence.cursor.x,
@@ -77,6 +77,8 @@ const FlowDashboardContent = () => {
               key={connectionId}
               x={screenPosition.x}
               y={screenPosition.y}
+              name={info?.name}
+              color={`hsl(${(connectionId.toString().charCodeAt(0) * 137.5) % 360}, 70%, 50%)`}
             />
           )
         })}

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Room>
+    <Room roomId="my-room">
       <FlowDashboard />
     </Room>
   )

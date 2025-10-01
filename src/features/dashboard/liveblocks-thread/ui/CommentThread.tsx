@@ -46,7 +46,7 @@ export const CommentThread = ({
             ${
               isResolved
                 ? 'bg-green-100 border-green-500 text-green-600'
-                : 'bg-white border-green-normal text-green-normal'
+                : 'bg-white border-blue-500 text-blue-600'
             }
           `}>
           <LuMessageCircle className="w-4 h-4" />
