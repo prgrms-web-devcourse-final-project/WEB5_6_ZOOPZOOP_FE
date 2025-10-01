@@ -7,7 +7,8 @@ export const PATH = {
     ROOT: '/news'
   },
   ARCHIVE: {
-    ROOT: '/archive'
+    ROOT: '/archive',
+    TRASH: '/archive/trash'
   },
   SPACE: {
     ROOT: '/space'
