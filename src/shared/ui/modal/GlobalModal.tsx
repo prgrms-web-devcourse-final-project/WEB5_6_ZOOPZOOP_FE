@@ -9,13 +9,14 @@ import { CreateSpaceModal } from './create-space/CreateSpaceModal'
 import { CreateFolderModal } from './create-folder/CreateFolderModal'
 import { DeleteAccountModal } from '@/features/auth/ui/DeleteAccountModal'
 import { MoveFileModal } from './archive/move-file/MoveFileModal'
+import { RenameFolderModal } from './rename-folder/RenameFolderModal'
 
 export const GlobalModal = () => {
-  const [type, isOpen] = useModalStore(useShallow(s => [s.type, s.isOpen]))
+  const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
 
-  if (!isOpen) return null
+  if (!isOpen || !modal) return null
 
-  switch (type) {
+  switch (modal.type) {
     case 'url-upload':
       return <UrlUploadModal />
     case 'archive-select':
@@ -30,6 +31,8 @@ export const GlobalModal = () => {
       return <MoveFileModal />
     case 'delete-account':
       return <DeleteAccountModal />
+    case 'rename-folder':
+      return <RenameFolderModal {...modal.props} />
     default:
       return null
   }

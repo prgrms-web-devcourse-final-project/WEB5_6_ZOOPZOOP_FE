@@ -60,7 +60,7 @@ function Header({ title, buttons, searchBar }: Props) {
                   key={button.label}
                   label={button.label}
                   icon={Icon}
-                  onClick={() => openModal(modalLabel)}
+                  onClick={() => openModal({ type: modalLabel })}
                 />
               )
             })}

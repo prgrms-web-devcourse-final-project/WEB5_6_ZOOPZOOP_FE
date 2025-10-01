@@ -6,7 +6,7 @@ function CopyToSpaceButton() {
     <button
       type="button"
       onClick={() => {
-        openModal('url-upload')
+        openModal({ type: 'url-upload' })
       }}
       className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
       스페이스에 복사
