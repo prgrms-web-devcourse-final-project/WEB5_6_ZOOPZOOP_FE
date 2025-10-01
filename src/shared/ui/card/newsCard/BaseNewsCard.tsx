@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
 import { Handle, Position } from '@xyflow/react'
+import { Avatar } from '@radix-ui/react-avatar'
 
 interface Props {
   title: string
@@ -13,6 +14,10 @@ interface Props {
   link?: string
   createdAt: string
   type: 'base' | 'flow'
+  user?: {
+    name: string
+    profileUrl: string
+  }
 }
 
 export const BaseNewsCard = ({
@@ -22,7 +27,8 @@ export const BaseNewsCard = ({
   category,
   link,
   createdAt,
-  type
+  type,
+  user
 }: Props) => {
   return (
     <div
@@ -65,6 +71,18 @@ export const BaseNewsCard = ({
           </h3>
           <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
         </div>
+        {type === 'flow' && (
+          <div className=" absolute bottom-4 right-4 flex items-center gap-2">
+            <Image
+              src={user?.profileUrl || ''}
+              alt={user?.name || ''}
+              width={20}
+              height={20}
+              className="rounded-full"
+            />
+            <p className="text-xs text-gray-normal">{user?.name}</p>
+          </div>
+        )}
       </div>
       {type === 'flow' && (
         <>

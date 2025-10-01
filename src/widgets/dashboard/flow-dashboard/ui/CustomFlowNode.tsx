@@ -13,5 +13,7 @@ export const CustomFlowNode = ({ data }: Props) => (
     createdAt={data.createdAt}
     category={data.category}
     type="flow"
+    user={data.user}
+    link={data.link}
   />
 )

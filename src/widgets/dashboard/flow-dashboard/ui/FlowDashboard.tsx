@@ -84,7 +84,7 @@ const FlowDashboardContent = () => {
         })}
       <FlowSidebar />
       <div
-        className="flex-1 relative"
+        className="flex-1 relative overflow-hidden"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}>
         <ReactFlow
