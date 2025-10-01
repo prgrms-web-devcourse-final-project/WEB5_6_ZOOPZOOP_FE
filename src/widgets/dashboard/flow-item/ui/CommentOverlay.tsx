@@ -2,8 +2,9 @@
 
 import { useCallback } from 'react'
 import { useReactFlow } from '@xyflow/react'
-import { CommentThread, NewCommentForm } from '../../../../features/dashboard'
+
 import { useComment } from '../model/useComment'
+import { CommentThread, NewCommentForm } from '@/features/dashboard'
 
 interface CommentOverlayProps {
   isCreating: boolean
