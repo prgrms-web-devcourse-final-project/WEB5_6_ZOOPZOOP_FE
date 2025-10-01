@@ -3,30 +3,16 @@ import { FolderResponse } from '../model/type'
 import { httpClient } from '@/shared/lib'
 import { NextFetchOptions } from '@/shared/types'
 
-// 아카이브 폴더 이름 조회
-export const getArchiveFolderServer = async (
-  options: NextFetchOptions
-): Promise<FolderResponse> => {
-  return httpClient.get<FolderResponse>(`/api/v1/archive/folder`, {
-    ...options,
-    next: { revalidate: 30 }
-  })
-}
-
-// export const fetchArchiveFolderServer = withAuth(async (token, _request) => {
-//   const response = await getArchiveFolderServer({
-//     headers: createCookieHeader(token)
-//   })
-//   console.log('특이하다 특히애', response)
-//   return response
-// })
-
+// 폴더 조회
 export const fetchArchiveFolderServer = async () => {
   const token = await getAccessToken()
-  const response = await getArchiveFolderServer({
-    headers: createCookieHeader(token!)
-  })
-
+  const response = await httpClient.get<FolderResponse>(
+    `/api/v1/archive/folder`,
+    {
+      headers: createCookieHeader(token!),
+      next: { revalidate: 30 }
+    }
+  )
   return response
 }
 
@@ -41,3 +27,7 @@ export const postArchiveFolderServer = async (
     options
   )
 }
+
+// 폴더 삭제
+
+// 폴더 수정

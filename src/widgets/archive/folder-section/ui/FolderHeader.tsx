@@ -1,3 +1,5 @@
+'use client'
+
 import { SortButton } from '@/features/archive/sort'
 import type { SortDirection } from '@tanstack/react-table'
 import { Folder } from 'lucide-react'

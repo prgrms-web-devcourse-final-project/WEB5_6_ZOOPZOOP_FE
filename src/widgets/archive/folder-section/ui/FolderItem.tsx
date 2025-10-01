@@ -1,4 +1,5 @@
-import { Folder } from '@/entities/archive/folder'
+'use client'
+
 import { ToggleButton } from '@/features/archive/toggle-folder'
 import { tw } from '@/shared/lib'
 import Link from 'next/link'
@@ -25,13 +26,13 @@ function FolderItem({
       <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
         <div
           className={tw(
-            'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover  cursor-pointer relative',
+            'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover cursor-pointer relative',
             isUndo
               ? 'bg-orange-accent text-gray-darker hover:bg-green-normal'
               : '',
             isActive ? 'bg-gray-light-active' : ''
           )}>
-          <Folder folderName={folderName} />
+          <p className="text-base text-gray-darker truncate ">{folderName}</p>
           <ToggleButton
             id={id}
             isClicked={isClicked}
