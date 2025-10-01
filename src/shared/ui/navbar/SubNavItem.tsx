@@ -30,7 +30,7 @@ function SubNavItem({ subItem, isSubMenuOpen, isDashboard }: Props) {
             className={tw(!isSubMenuOpen ? 'text-dark' : 'text-black')}
           />
         )}
-        <p className={tw('hidden', !isDashboard && 'block')}>{label}</p>
+        <p className="">{label}</p>
       </Link>
     </li>
   )
