@@ -85,7 +85,7 @@ export const CommentThread = ({
           </div>
 
           {/* 댓글 목록 */}
-          <div className="max-h-60 overflow-y-auto p-4">
+          <div className="max-h-[600px] overflow-y-auto p-4">
             <Thread thread={thread} />
           </div>
         </div>
