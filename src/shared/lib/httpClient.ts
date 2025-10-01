@@ -8,14 +8,15 @@ const createFetchOptions = (
   options?: NextFetchOptions
 ): NextFetchOptions => {
   const { headers, ...restOptions } = options || {}
+
+  const isFormData = data instanceof FormData
   return {
     method,
-    credentials: 'include',
     headers: {
-      'Content-Type': 'application/json',
+      ...(!isFormData && { 'Content-Type': 'application/json' }),
       ...headers
     },
-    body: data ? JSON.stringify(data) : undefined,
+    body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
     ...restOptions
   }
 }
@@ -47,6 +48,7 @@ export const httpClient = {
     const url = `${API_BASE_URL}${endpoint}`
 
     const requestOptions = createFetchOptions(method, data, fetchOptions)
+
     const response = await fetch(url, requestOptions)
 
     return handleResponse<T>(response)

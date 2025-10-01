@@ -1,5 +1,4 @@
-import { useUserStore } from '@/entities/user'
-import { updateNickname } from '@/entities/user'
+import { updateNicknameClient, useUserStore } from '@/entities/user'
 import { useMutation } from '@tanstack/react-query'
 
 const useUpdateNickname = () => {
@@ -9,7 +8,7 @@ const useUpdateNickname = () => {
   // 뭐가 맞는건지 잘 모르겠음
   const updateUser = useUserStore(state => state.updateUser)
   return useMutation({
-    mutationFn: (nickname: string) => updateNickname(nickname),
+    mutationFn: (nickname: string) => updateNicknameClient(nickname),
     onSuccess: ({ name }) => {
       // 성공 로직
       updateUser({ name })

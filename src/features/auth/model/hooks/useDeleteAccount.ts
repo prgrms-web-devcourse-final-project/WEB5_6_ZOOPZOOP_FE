@@ -5,6 +5,7 @@ import { useUserStore } from '@/entities/user'
 import { useModalStore } from '@/shared/lib'
 import { useDeleteAccountMutation } from '../../api/useDeleteAccountMutation'
 import { useQueryClient } from '@tanstack/react-query'
+import { PATH } from '@/shared/constants'
 
 export const useDeleteAccount = () => {
   const router = useRouter()
@@ -21,7 +22,7 @@ export const useDeleteAccount = () => {
       queryClient.invalidateQueries({ queryKey: ['user'] })
       queryClient.removeQueries({ queryKey: ['user'] })
       setTimeout(() => {
-        router.push('/auth/login')
+        router.push(PATH.AUTH.LOGIN)
         closeModal()
       }, 0)
     },

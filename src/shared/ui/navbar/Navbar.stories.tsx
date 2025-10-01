@@ -41,6 +41,7 @@ const Wrapper = ({
         pathName={pathName}
         isDashboard={isDashboard}
         item={item}
+        isExpanded={true}
       />
     </div>
   )

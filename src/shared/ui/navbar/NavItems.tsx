@@ -5,10 +5,11 @@ import SubNavItem from './SubNavItem'
 interface Props {
   item: MainNav
   pathName: string
-  isDashboard: boolean
+
+  isExpanded: boolean
 }
 
-function NavItems({ item, pathName, isDashboard }: Props) {
+function NavItems({ item, pathName, isExpanded }: Props) {
   const isMainMenuOpen = pathName.startsWith(item.href)
 
   return (
@@ -16,10 +17,10 @@ function NavItems({ item, pathName, isDashboard }: Props) {
       <MainNavItem
         isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
-        isDashboard={isDashboard}
+        isExpanded={isExpanded}
       />
 
-      {isMainMenuOpen && item.children && (
+      {isMainMenuOpen && item.children && isExpanded && (
         <ul className="flex flex-col gap-1 border-l-2 ml-4 border-green-normal">
           {item.children.map((child, idx) => {
             const isSubMenuOpen = pathName === child.href
@@ -28,7 +29,6 @@ function NavItems({ item, pathName, isDashboard }: Props) {
                 key={idx}
                 isSubMenuOpen={isSubMenuOpen}
                 subItem={child}
-                isDashboard={isDashboard}
               />
             )
           })}
@@ -37,4 +37,5 @@ function NavItems({ item, pathName, isDashboard }: Props) {
     </>
   )
 }
+
 export default NavItems

@@ -6,7 +6,20 @@ const nextConfig: NextConfig = {
     root: __dirname
   },
   images: {
-    domains: ['k.kakaocdn.net']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'k.kakaocdn.net'
+      },
+      {
+        protocol: 'http',
+        hostname: 'k.kakaocdn.net'
+      },
+      {
+        protocol: 'https',
+        hostname: 'zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com'
+      }
+    ]
   }
 }
 

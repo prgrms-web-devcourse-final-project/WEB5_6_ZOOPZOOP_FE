@@ -2,7 +2,7 @@ import { AccountManagement, ProfileHeader } from '@/widgets'
 
 const ProfilePage = () => {
   return (
-    <article className="px-10 py-20 max-w-[1200px]">
+    <article className="px-10 py-20 max-w-[1200px] flex-1">
       <h2 className="sr-only">계정 관리</h2>
       {/* 프로필 섹션 */}
       <ProfileHeader />
