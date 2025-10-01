@@ -46,12 +46,18 @@ const FlowDashboardContent = () => {
 
   const handlePaneClick = (event: React.MouseEvent) => {
     if (isCreating) {
-      const flowPosition = screenToFlowPosition({
-        x: event.clientX,
-        y: event.clientY
-      })
+      const reactFlowBounds = (event.target as Element)
+        .closest('.react-flow')
+        ?.getBoundingClientRect()
 
-      setNewCommentPosition(flowPosition)
+      if (reactFlowBounds) {
+        const flowPosition = screenToFlowPosition({
+          x: event.clientX - reactFlowBounds.left,
+          y: event.clientY - reactFlowBounds.top
+        })
+
+        setNewCommentPosition(flowPosition)
+      }
     }
   }
 
@@ -91,6 +97,9 @@ const FlowDashboardContent = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           onPaneClick={handlePaneClick}
+          minZoom={0.6}
+          maxZoom={0.6}
+          zoomOnScroll={false}
           className={isCreating ? 'cursor-crosshair' : ''}>
           <MiniMap position="top-right" />
           <Controls />
