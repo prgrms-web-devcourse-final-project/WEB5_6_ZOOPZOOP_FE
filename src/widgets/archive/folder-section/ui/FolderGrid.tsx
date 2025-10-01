@@ -1,3 +1,4 @@
+'use client'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import FolderItem from './FolderItem'
@@ -11,6 +12,8 @@ interface Props {
 function FolderGrid({ data }: Props) {
   const { folder } = useParams()
   const [clickedFolderId, setClickedFolderId] = useState<number | null>(null)
+
+  const selectedFolder = folder ? decodeURIComponent(String(folder)) : ''
 
   const selectedIndex = data.findIndex(item => item.folderName === folder)
   // 사용자 이름
@@ -47,7 +50,8 @@ function FolderGrid({ data }: Props) {
         onClick={handleClicked}
       />
       {data.map(({ folderName, folderId }) => {
-        const isActive = folder === folderName
+        const isActive = selectedFolder === folderName
+
         return (
           <FolderItem
             id={folderId}

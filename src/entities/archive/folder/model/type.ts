@@ -1,4 +1,4 @@
-export interface FolderResponse {
+export type FolderResponse = {
   status: string
   msg: string
   data: {
