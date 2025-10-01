@@ -11,6 +11,7 @@ import { useNavbarStore } from '@/shared/hooks'
 function Navbar() {
   const pathName = usePathname()
   const user = useUserStore(state => state.user)
+
   const { isExpanded, toggleNavbar } = useNavbarStore()
 
   return (

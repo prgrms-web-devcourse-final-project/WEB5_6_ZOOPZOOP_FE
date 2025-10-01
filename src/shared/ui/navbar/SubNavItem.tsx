@@ -29,7 +29,7 @@ function SubNavItem({ subItem, isSubMenuOpen }: Props) {
             className={tw(!isSubMenuOpen ? 'text-dark' : 'text-black')}
           />
         )}
-        <p className="hidden sm:block">{label}</p>
+        <p className="">{label}</p>
       </Link>
     </li>
   )

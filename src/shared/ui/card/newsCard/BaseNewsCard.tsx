@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
+import { Handle, Position } from '@xyflow/react'
 
 interface Props {
   title: string
@@ -11,6 +12,7 @@ interface Props {
   category?: string
   link?: string
   createdAt: string
+  type: 'base' | 'flow'
 }
 
 export const BaseNewsCard = ({
@@ -19,10 +21,12 @@ export const BaseNewsCard = ({
   imageUrl,
   category,
   link,
-  createdAt
+  createdAt,
+  type
 }: Props) => {
   return (
-    <div className="w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow">
+    <div
+      className={`w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow `}>
       <div
         className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'}`}
         onClick={() => {
@@ -62,6 +66,20 @@ export const BaseNewsCard = ({
           <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
         </div>
       </div>
+      {type === 'flow' && (
+        <>
+          <Handle
+            type="target"
+            position={Position.Top}
+            className="!w-6 !h-6 !bg-teal-500"
+          />
+          <Handle
+            type="source"
+            position={Position.Bottom}
+            className="!w-6 !h-6 !bg-teal-500"
+          />
+        </>
+      )}
     </div>
   )
 }
