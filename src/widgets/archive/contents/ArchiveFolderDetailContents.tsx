@@ -23,18 +23,18 @@ export default function ArchiveFolderDetailContents() {
   const { foldersQuery } = useArchiveFolders()
 
   const folderName = folder ? decodeURIComponent(String(folder)) : ''
-  const selectedFolder = foldersQuery.data?.data.folders.find(
+  const selectedFolderId = foldersQuery.data?.data.folders.find(
     f => f.folderName === folderName
   )
 
-  const { filesQuery } = useArchiveFiles(selectedFolder?.folderId ?? -1, {
-    enabled: !!selectedFolder
+  const { filesQuery } = useArchiveFiles(selectedFolderId?.folderId ?? -1, {
+    enabled: !!selectedFolderId
   })
 
   if (filesQuery.isLoading) return <p>파일 불러오는 중...</p>
   if (filesQuery.isError) return <p>파일 불러오기 실패</p>
 
-  if (!selectedFolder) return <p>선택한 폴더 없음</p>
+  if (!selectedFolderId) return <p>선택한 폴더 없음</p>
 
   return (
     <>

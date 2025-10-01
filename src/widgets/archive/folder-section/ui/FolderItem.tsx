@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 interface Props {
   folderName: string
-  id: number
+  folderId: number
   isUndo: boolean
   isActive: boolean
   isClicked: boolean
@@ -14,7 +14,7 @@ interface Props {
 }
 
 function FolderItem({
-  id,
+  folderId,
   folderName,
   isUndo,
   isActive,
@@ -23,23 +23,27 @@ function FolderItem({
 }: Props) {
   return (
     <>
-      <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
-        <div
-          className={tw(
-            'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover cursor-pointer relative',
-            isUndo
-              ? 'bg-orange-accent text-gray-darker hover:bg-green-normal'
-              : '',
-            isActive ? 'bg-gray-light-active' : ''
-          )}>
+      <div
+        className={tw(
+          'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover cursor-pointer relative',
+          isUndo
+            ? 'bg-orange-accent text-gray-darker hover:bg-green-normal'
+            : '',
+          isActive ? 'bg-gray-light-active' : ''
+        )}>
+        <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
           <p className="text-base text-gray-darker truncate ">{folderName}</p>
+        </Link>
+
+        {!isUndo && (
           <ToggleButton
-            id={id}
+            id={folderId}
+            folderName={folderName}
             isClicked={isClicked}
             onClick={onClick}
           />
-        </div>
-      </Link>
+        )}
+      </div>
     </>
   )
 }

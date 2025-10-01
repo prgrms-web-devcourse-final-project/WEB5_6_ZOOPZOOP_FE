@@ -19,3 +19,24 @@ export const postArchiveFolderClient = async (
 
   return response
 }
+
+//폴더 이름 변경
+export const patchArchiveFolderClient = async (
+  folderId: number,
+  folderName: string
+) => {
+  const response = await httpClient.patch(
+    `/api/archive/folder?folderId=${folderId}`,
+    {
+      folderName
+    }
+  )
+  return response
+}
+
+//폴더 삭제
+export const deleteArchiveFolderClient = async (folderId: number) => {
+  return await httpClient.delete<FolderResponse>(`/api/archive/folder`, {
+    body: JSON.stringify({ folderId })
+  })
+}
