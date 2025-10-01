@@ -2,7 +2,6 @@
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import NavItems from './NavItems'
-
 import { ChartNetwork, LayoutGrid, TextSearch } from 'lucide-react'
 import { MainNav } from '@/shared/routes'
 
@@ -33,6 +32,7 @@ const Wrapper = ({ item, pathName }: { item: MainNav; pathName: string }) => {
       <NavItems
         pathName={pathName}
         item={item}
+        isExpanded={true}
       />
     </div>
   )

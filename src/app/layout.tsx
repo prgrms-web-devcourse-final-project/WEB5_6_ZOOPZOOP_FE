@@ -1,17 +1,25 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { QueryProvider } from '@/shared/providers'
-import Navbar from '@/shared/ui/navbar/Navbar'
+import { QueryProvider } from '@/app/_providers'
 import { GlobalModal } from '@/shared/ui/modal'
+import AuthProvider from '@/app/_providers/auth-provider'
 
 export const metadata: Metadata = {
-  title: 'ZoopZoop',
-  description: 'ZoopZoop',
-  icons: {
-    icon: '/image.png'
+  title: {
+    default: 'ZoopZoop',
+    template: '%s | ZoopZoop'
+  },
+  description: '마음에 드는 정보를 줍s',
+  keywords: ['news', 'information'],
+  authors: [{ name: 'ZoopZoop Team' }],
+  creator: 'ZoopZoop',
+  openGraph: {
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://www.zoopzoop.kro.kr/',
+    siteName: 'ZoopZoop'
   }
 }
-
 export default function RootLayout({
   children
 }: Readonly<{
@@ -19,12 +27,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className="antialiased flex">
-        <Navbar />
-        <main className="flex-1">
+      <body className="antialiased">
+        <main>
           <QueryProvider>
-            {children}
-            <GlobalModal />
+            <AuthProvider>
+              {children}
+              <GlobalModal />
+            </AuthProvider>
           </QueryProvider>
         </main>
       </body>

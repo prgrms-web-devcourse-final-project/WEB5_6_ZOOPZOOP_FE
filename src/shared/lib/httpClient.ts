@@ -1,27 +1,25 @@
-const API_BASE_URL = process.env.API_URL || ''
+import { NextFetchOptions } from '../types'
 
-interface NextFetchOptions extends RequestInit {
-  next?: {
-    revalidate?: number | false
-    tags?: string[]
-  }
-  cache?: 'force-cache' | 'no-store'
-}
+const API_BASE_URL = process.env.API_URL || ''
 
 const createFetchOptions = (
   method: string,
   data?: unknown,
   options?: NextFetchOptions
-): NextFetchOptions => ({
-  method,
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-    ...options?.headers
-  },
-  body: data ? JSON.stringify(data) : undefined,
-  ...options
-})
+): NextFetchOptions => {
+  const { headers, ...restOptions } = options || {}
+
+  const isFormData = data instanceof FormData
+  return {
+    method,
+    headers: {
+      ...(!isFormData && { 'Content-Type': 'application/json' }),
+      ...headers
+    },
+    body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
+    ...restOptions
+  }
+}
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
@@ -50,6 +48,7 @@ export const httpClient = {
     const url = `${API_BASE_URL}${endpoint}`
 
     const requestOptions = createFetchOptions(method, data, fetchOptions)
+
     const response = await fetch(url, requestOptions)
 
     return handleResponse<T>(response)
