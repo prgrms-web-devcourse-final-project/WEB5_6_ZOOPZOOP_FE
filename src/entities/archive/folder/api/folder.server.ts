@@ -1,7 +1,9 @@
 import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
-import { FolderResponse } from '../model/type'
+
 import { httpClient } from '@/shared/lib'
-import { NextFetchOptions } from '@/shared/types'
+import { APIResponse, NextFetchOptions } from '@/shared/types'
+
+import { FolderPatchResponse, FolderResponse } from '../model/type'
 
 // 폴더 조회
 export const fetchArchiveFolderServer = async () => {
@@ -29,5 +31,25 @@ export const postArchiveFolderServer = async (
 }
 
 // 폴더 삭제
+export const deleteArchiveFolderServer = async (
+  folderId: number,
+  options: NextFetchOptions
+) => {
+  return httpClient.delete<APIResponse<null>>(
+    `/api/v1/archive/folder/${folderId}`,
+    options
+  )
+}
 
-// 폴더 수정
+// 폴더 이름 변경
+export const patchArchiveFolderServer = async (
+  folderId: number,
+  payload: { folderName: string },
+  options: NextFetchOptions
+) => {
+  return httpClient.patch<FolderPatchResponse>(
+    `/api/v1/archive/folder/${folderId}`,
+    payload,
+    options
+  )
+}

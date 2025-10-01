@@ -6,6 +6,14 @@ export type FolderResponse = {
   }
 }
 
+export type FolderPatchResponse = {
+  status: string
+  msg: string
+  data: {
+    folderName: string
+  }
+}
+
 export interface FolderData {
   folderId: number
   folderName: string

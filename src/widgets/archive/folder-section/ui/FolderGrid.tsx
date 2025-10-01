@@ -1,32 +1,43 @@
 'use client'
-import { useParams } from 'next/navigation'
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import FolderItem from './FolderItem'
 import { FolderData } from '@/entities/archive/folder'
 import { useUserStore } from '@/entities/user'
+import { useModalStore } from '@/shared/lib'
 
 interface Props {
   data: FolderData[]
 }
 
 function FolderGrid({ data }: Props) {
-  const { folder } = useParams()
   const [clickedFolderId, setClickedFolderId] = useState<number | null>(null)
 
-  const selectedFolder = folder ? decodeURIComponent(String(folder)) : ''
-
-  const selectedIndex = data.findIndex(item => item.folderName === folder)
+  // const selectedIndex = data.findIndex(item => item.folderName === folder)
   // 사용자 이름
   const user = useUserStore(state => state.user)
   const useName = user?.name.split('#')[0] ?? '사용자 닉네임'
 
   // 선택된 폴더는 사용자 이름 바로 옆에 위치
-  if (selectedIndex > 0) {
-    const [item] = data.splice(selectedIndex, 1)
-    data.unshift(item)
-  }
+  // const reorderedData = useMemo(() => {
+  //   if (!selectedFolder) return data
+  //   const index = data.findIndex(item => item.folderName === selectedFolder)
+  //   if (index > 0) {
+  //     const newData = [...data]
+  //     const [selected] = newData.splice(index, 1)
+  //     newData.unshift(selected)
+  //     return newData
+  //   }
+  //   return data
+  // }, [data, selectedFolder])
 
-  // 파일 모달 열렸을 때는 닫아야됨 -> 상태 끌어올려서
+  const isModalOpen = useModalStore(s => s.isOpen)
+  useEffect(() => {
+    if (isModalOpen) {
+      setClickedFolderId(null)
+    }
+  }, [isModalOpen])
+
   const handleClicked = (id: number) => {
     setClickedFolderId(prev => (prev === id ? null : id))
   }
@@ -42,7 +53,7 @@ function FolderGrid({ data }: Props) {
   return (
     <div className="grid grid-cols-4 gap-4 max-h-[120px] overflow-y-auto">
       <FolderItem
-        id={0}
+        folderId={0}
         folderName={useName}
         isUndo={true}
         isClicked={false}
@@ -50,11 +61,11 @@ function FolderGrid({ data }: Props) {
         onClick={handleClicked}
       />
       {data.map(({ folderName, folderId }) => {
-        const isActive = selectedFolder === folderName
+        const isActive = clickedFolderId === folderId
 
         return (
           <FolderItem
-            id={folderId}
+            folderId={folderId}
             isClicked={clickedFolderId === folderId}
             key={folderId}
             folderName={folderName}
