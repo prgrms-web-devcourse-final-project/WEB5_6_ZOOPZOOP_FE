@@ -3,6 +3,7 @@ declare global {
     Presence: {
       cursor: { x: number; y: number } | null
     }
+
     Storage: {
       nodes: {
         id: string
@@ -22,12 +23,24 @@ declare global {
         target: string
       }[]
     }
+
     UserMeta: {
       id: string
-      info: Record<string, never>
+      info: {
+        name: string
+        avatar?: string
+      }
     }
+
     RoomEvent: Record<string, never>
-    ThreadMetadata: Record<string, never>
+
+    ThreadMetadata: {
+      x: number
+      y: number
+      zIndex: number
+      resolved?: boolean
+    }
+
     RoomInfo: Record<string, never>
   }
 }
