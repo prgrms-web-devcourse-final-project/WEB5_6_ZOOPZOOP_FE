@@ -35,12 +35,7 @@ export const navItems: MainNav[] = [
     count: 123,
     children: [
       {
-<<<<<<< HEAD:src/shared/routes/routes.ts
-        /* TODO: 루트 변경 */
-        href: PATH.ARCHIVE.ROOT,
-=======
-        href: '/archive/trash',
->>>>>>> 5d3e2f1 ([feat] 아카이브 - 하위 페이지 라우팅 및 메타 태그 추가):src/shared/lib/navigation.ts
+        href: PATH.ARCHIVE.TRASH,
         label: '휴지통',
         icon: Trash2
       }
