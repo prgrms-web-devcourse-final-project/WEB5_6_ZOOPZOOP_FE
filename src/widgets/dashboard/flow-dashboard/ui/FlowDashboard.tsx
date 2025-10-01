@@ -15,10 +15,9 @@ import { useFlowState } from '../model/useFlowState'
 import { CustomFlowNode } from './CustomFlowNode'
 import { useCursor, useFlowDragDrop } from '@/features/dashboard'
 import { FlowSidebar } from '../../flow-sidebar'
-import { CommentOverlay } from '../../flow-item/ui/CommentOverlay'
 
 import { Cursor } from './Cursor'
-import { FlowItemContainer } from '../../flow-item'
+import { CommentOverlay, FlowItemContainer } from '../../flow-item'
 
 const nodeTypes = {
   custom: CustomFlowNode
