@@ -1,4 +1,4 @@
-import { fetchArchiveFiles } from '@/entities/archive/file/api/file.server'
+import { fetchArchiveFilesServer } from '@/entities/archive/file/api/file.server'
 import { fetchArchiveFolderServer } from '@/entities/archive/folder/api/folder.server'
 
 import Header, { Button } from '@/shared/ui/header/Header'
@@ -8,7 +8,8 @@ import { FolderSection } from '@/widgets/archive/folder-section'
 
 export default async function Archive() {
   const { data } = await fetchArchiveFolderServer()
-  const fileResponse = await fetchArchiveFiles(null)
+
+  const fileResponse = await fetchArchiveFilesServer(0)
 
   const buttons: Button[] = [
     {
@@ -28,7 +29,9 @@ export default async function Archive() {
       />
       <div className="flex flex-col p-6 gap-4">
         <FolderSection folderList={data.folders} />
-        <FileSection fileList={fileResponse.data?.files ?? []} />
+        <FileSection
+          fileList={(fileResponse && fileResponse.data.files) ?? []}
+        />
         <Pagination totalPages={5} />
       </div>
     </>

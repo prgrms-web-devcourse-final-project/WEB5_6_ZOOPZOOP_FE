@@ -7,7 +7,7 @@ interface Props {
   id: number // 자료 아이디
   category: string // 태그
   title: string // 자료 제목
-  createAt: Date // 작성 시간
+  createdAt: string // 작성 시간
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
@@ -23,7 +23,7 @@ interface Props {
 const File = ({
   title,
   category,
-  createAt,
+  createdAt,
   id,
   imageUrl,
   sourceUrl,
@@ -31,7 +31,7 @@ const File = ({
   isSelected,
   onSelect
 }: Props) => {
-  const formattedDate = formatDate(createAt)
+  const formattedDate = formatDate(new Date(createdAt))
 
   return (
     <>

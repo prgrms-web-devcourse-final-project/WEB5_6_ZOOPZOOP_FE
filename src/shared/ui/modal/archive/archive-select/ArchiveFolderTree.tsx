@@ -10,7 +10,7 @@ interface Props {
   data: {
     id: number
     name: string
-    children: {
+    children?: {
       id: number
       name: string
     }[]
@@ -25,7 +25,7 @@ export const ArchiveFolder = ({ type, data, onSelect, isSelected }: Props) => {
     setSelectFile(id)
   }
   return (
-    <div className="cursor-pointer flex flex-col gap-2 text-sm ml-10">
+    <div className="cursor-pointer flex flex-col gap-2 text-sm ml-10 ">
       <div
         className={tw(
           'flex items-center gap-2.5 w-fit py-1 px-2 rounded-sm',
@@ -35,7 +35,7 @@ export const ArchiveFolder = ({ type, data, onSelect, isSelected }: Props) => {
           onSelect(data.id)
         }}>
         <LuFolder size={20} />
-        <p>폴더 이름</p>
+        <p>{data.name}</p>
       </div>
       {type === 'file' && (
         <div
@@ -43,20 +43,21 @@ export const ArchiveFolder = ({ type, data, onSelect, isSelected }: Props) => {
             'flex flex-col gap-1.5 ml-10',
             !isSelected && 'hidden'
           )}>
-          {data.children.map(item => (
-            <div
-              className={tw(
-                'flex items-center gap-2.5 w-fit py-1 px-2 rounded-sm',
-                selectFile === item.id && 'bg-green-light'
-              )}
-              key={item.id}
-              onClick={() => {
-                handleSelectFile(item.id)
-              }}>
-              <LuFileText size={20} />
-              <p>{item.name}</p>
-            </div>
-          ))}
+          {data.children &&
+            data.children.map(item => (
+              <div
+                className={tw(
+                  'flex items-center gap-2.5 w-fit py-1 px-2 rounded-sm',
+                  selectFile === item.id && 'bg-green-light'
+                )}
+                key={item.id}
+                onClick={() => {
+                  handleSelectFile(item.id)
+                }}>
+                <LuFileText size={20} />
+                <p>{item.name}</p>
+              </div>
+            ))}
         </div>
       )}
     </div>

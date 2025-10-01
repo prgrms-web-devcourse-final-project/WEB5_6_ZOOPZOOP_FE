@@ -3,12 +3,13 @@ import { Checkbox } from '@/shared/ui'
 import Link from 'next/link'
 
 interface Props {
+  id: number
   isHover: boolean
   isSelected: boolean
   title: string
-  id: number
   summary: string
   sourceUrl: string
+  tags: string[]
   onSelect: (cardId: number) => void
 }
 
@@ -19,6 +20,7 @@ function HoveredCard({
   title,
   summary,
   sourceUrl,
+  tags,
   onSelect
 }: Props) {
   return (
@@ -29,7 +31,7 @@ function HoveredCard({
           ? 'opacity-100 scale-105 -translate-x-5 -translate-y-2'
           : 'opacity-0 scale-95 pointer-events-none'
       )}>
-      <div className="flex-1 w-75 min-h-75  bg-white rounded-md shadow-sm p-4 ring-3 ring-green-normal text-gray-darker text-base">
+      <div className="flex-1 flex flex-col w-75 min-h-75  bg-white rounded-md shadow-sm p-4 ring-3 ring-green-normal text-gray-darker text-base ">
         <Checkbox
           className="text-orange-accent size-5 mb-3"
           checked={isSelected}
@@ -37,7 +39,19 @@ function HoveredCard({
           aria-label={`${title} 자료 선택`}
           id={`checkbox-${id}`}
         />
-        <p>{summary}</p>
+        <div className="flex flex-wrap gap-1 mb-2">
+          {tags.map((item, index) => (
+            <p
+              className="text-base  text-gray-darker"
+              key={index}>
+              # {item}
+            </p>
+          ))}
+        </div>
+
+        <div className="flex-1 mb-2 ">
+          <p className="text-lg text-black">{summary}</p>
+        </div>
 
         <Link href={sourceUrl}>
           <button
