@@ -9,11 +9,12 @@ interface Props {
   category: string // 태그
   title: string // 자료 제목
   summary: string // 요약
-  createAt: Date // 작성 시간
+  createdAt: string // 작성 시간
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
   isSelected: boolean
+  tags: string[]
   onSelect: (cardId: number) => void
 }
 
@@ -25,16 +26,16 @@ interface Props {
 const FileCard = ({
   title,
   category,
-  createAt,
+  createdAt,
   id,
   imageUrl,
   sourceUrl,
   ownerProfileUrl,
   isSelected,
   summary,
+  tags,
   onSelect
 }: Props) => {
-  // 임시 state 부모에서 사용할 때 삭제해도 됨 hover:w-80 hover:ring-3 hover:ring-green-normal
   const [isHover, setIsHover] = useState(false)
 
   return (
@@ -49,7 +50,7 @@ const FileCard = ({
         id={id}
         category={category}
         title={title}
-        createAt={createAt}
+        createdAt={createdAt}
         imageUrl={imageUrl}
         sourceUrl={sourceUrl}
         isSelected={isSelected}
@@ -58,6 +59,7 @@ const FileCard = ({
       />
       <HoveredCard
         id={id}
+        tags={tags}
         isSelected={isSelected}
         sourceUrl={sourceUrl}
         title={title}

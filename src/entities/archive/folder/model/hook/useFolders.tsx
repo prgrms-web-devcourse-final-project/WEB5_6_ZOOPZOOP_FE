@@ -1,9 +1,10 @@
 'use client'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   fetchArchiveFolderClient,
-  postArchiveFolderClient
+  postArchiveFolderClient,
+  deleteArchiveFolderClient,
+  patchArchiveFolderClient
 } from '../../api/folder.client'
 
 export const useArchiveFolders = () => {
@@ -22,8 +23,30 @@ export const useArchiveFolders = () => {
     }
   })
 
+  const deleteFolder = useMutation({
+    mutationFn: (folderId: number) => deleteArchiveFolderClient(folderId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFolders'] })
+    }
+  })
+
+  const updateFolderName = useMutation({
+    mutationFn: ({
+      folderId,
+      folderName
+    }: {
+      folderId: number
+      folderName: string
+    }) => patchArchiveFolderClient(folderId, folderName),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFolders'] })
+    }
+  })
+
   return {
     foldersQuery,
-    addFolder
+    addFolder,
+    deleteFolder,
+    updateFolderName
   }
 }

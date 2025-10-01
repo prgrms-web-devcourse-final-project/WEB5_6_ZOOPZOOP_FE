@@ -17,7 +17,7 @@ export const Default: Story = {
     id: 1,
     title: 'TypeScript 실전 활용법',
     category: 'Frontend',
-    createAt: new Date('2024-03-15'),
+    createdAt: '2024-03-15',
     imageUrl: 'https://via.placeholder.com/250x108',
     sourceUrl: 'https://example.com/react-guide',
     ownerProfileUrl: 'https://github.com/shadcn.png',
@@ -30,7 +30,7 @@ export const Selected: Story = {
     id: 2,
     title: 'Next.js 14 App Router 완벽 가이드',
     category: 'Backend',
-    createAt: new Date('2024-03-10'),
+    createdAt: '2024-03-10',
     imageUrl: 'https://via.placeholder.com/250x108',
     sourceUrl: 'https://nextjs.org/docs',
     ownerProfileUrl: 'https://github.com/shadcn.png',
@@ -43,7 +43,7 @@ export const PersonalArchive: Story = {
     id: 3,
     title: 'TypeScript 실전 활용법',
     category: 'Language',
-    createAt: new Date('2024-03-05'),
+    createdAt: '2024-03-05',
     imageUrl: 'https://via.placeholder.com/250x108',
     sourceUrl: 'https://typescript.org',
     isSelected: false
@@ -55,7 +55,7 @@ export const PersonalArchiveSelected: Story = {
     id: 4,
     title: 'TypeScript 실전 활용법',
     category: 'Language',
-    createAt: new Date('2024-03-01'),
+    createdAt: '2024-03-01',
     imageUrl: '',
     sourceUrl: 'https://css-tricks.com',
     isSelected: true
@@ -72,8 +72,9 @@ export const SelectionComparison: Story = {
         <FileCard
           id={1}
           title="React 컴포넌트 설계"
+          tags={['경제', '과학']}
           category="Frontend"
-          createAt={new Date('2024-03-15')}
+          createdAt={'2024-03-15'}
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
@@ -86,10 +87,11 @@ export const SelectionComparison: Story = {
         <h3 className="text-sm font-medium mb-2 text-gray-600">선택됨</h3>
         <FileCard
           id={2}
+          tags={['경제', '과학']}
           title="React 컴포넌트 설계"
           category="Frontend"
           summary="정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다."
-          createAt={new Date('2024-03-15')}
+          createdAt={'2024-03-15'}
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"

@@ -3,38 +3,29 @@
 import { useState } from 'react'
 import FileHeader from './FileHeader'
 import { SortDirection } from '@tanstack/react-table'
-import {
-  getSortedGridFiles,
-  getSortedTableFiles,
-  SortKey
-} from '@/features/archive/sort'
+import { SortKey } from '@/features/archive/sort'
 
 import { CustomTable } from '@/shared/ui/shadcn/CustomTable'
 import { ArchiveColumn } from './ArchiveColumn'
-import { gridFiles, tableFiles } from '@/entities/archive/file/model/mockdata'
+// import { gridFiles, tableFiles } from '@/entities/archive/file/model/mockdata'
 import FileCard from './FileCard'
 import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
 import { type FileData } from '@/entities/archive/file'
 
 interface Props {
-  fileList: FileData[]
+  fileList?: FileData[]
 }
 
 function FileSection({ fileList }: Props) {
   // 백엔드에서 이름, 날짜 정렬 데이터 줌 -> 데이터 통신할 때 보내줘야됨
-  const [sortKey, setSortKey] = useState<SortKey>('이름')
-  // 기본값은 벡엔드에서 받음
-  const [sortDirection, setSortDirection] = useState<SortDirection>('asc')
+  const [sortObj, setSortObj] = useState<{
+    key: SortKey
+    direction: SortDirection
+  } | null>(null)
+
   const { viewMode, onSwitchViewMode } = useFileViewMode()
 
-  const sortedTableFiles = getSortedTableFiles(
-    tableFiles,
-    sortKey,
-    sortDirection
-  )
-  const sortedGridFiles = getSortedGridFiles(gridFiles, sortKey, sortDirection)
-
-  /* 체크박스 컨트롤 */
+  /* 체크박스 컨트롤 ->fileList의 id만 뽑아서 사용  */
   const [checkedCardList, setCheckedCardList] = useState<number[]>([])
 
   const handleCheckbox = (cardId: number) => {
@@ -46,7 +37,7 @@ function FileSection({ fileList }: Props) {
   }
 
   const onAllCheck = () => {
-    const allCheckedList = sortedGridFiles.map(item => item.id)
+    const allCheckedList = fileList!.map(item => item.dataSourceId)
     if (checkedCardList.length === allCheckedList.length) {
       setCheckedCardList([])
     } else {
@@ -57,29 +48,29 @@ function FileSection({ fileList }: Props) {
   const fileCardView = () => {
     return (
       <div className="grid grid-cols-4 gap-4 w-full">
-        {sortedGridFiles.map(
+        {fileList!.map(
           ({
-            id,
+            dataSourceId,
             title,
             category,
-            createAt,
+            createdAt,
             imageUrl,
             sourceUrl,
-            ownerProfileUrl,
+            tags,
             summary
           }) => {
-            const isSelected = checkedCardList.includes(id)
+            const isSelected = checkedCardList.includes(dataSourceId)
             return (
               <FileCard
+                key={dataSourceId}
+                id={dataSourceId}
+                tags={tags}
                 summary={summary}
-                key={id}
-                id={id}
                 title={title}
                 category={category}
-                createAt={createAt}
+                createdAt={createdAt}
                 imageUrl={imageUrl}
                 sourceUrl={sourceUrl}
-                ownerProfileUrl={ownerProfileUrl}
                 isSelected={isSelected}
                 onSelect={handleCheckbox}
               />
@@ -90,14 +81,14 @@ function FileSection({ fileList }: Props) {
     )
   }
 
-  const tableView = () => {
-    return (
-      <CustomTable
-        columns={ArchiveColumn}
-        data={sortedTableFiles}
-      />
-    )
-  }
+  // const tableView = () => {
+  //   return (
+  //     <CustomTable
+  //       columns={ArchiveColumn}
+  //       data={fileList}
+  //     />
+  //   )
+  // }
 
   return (
     <>
@@ -106,15 +97,16 @@ function FileSection({ fileList }: Props) {
         isTableView={viewMode === 'list'}
         onChangeView={onSwitchViewMode}
         onSortChange={(key, direction) => {
-          setSortKey(key)
-          setSortDirection(direction)
+          // setSortKey(key)
+          // setSortDirection(direction)
         }}
         onAllCheck={onAllCheck}
       />
       {/* <div className="flex items-center justify-center">
         {viewMode === 'list' ? tableView() : fileCardView()}
       </div> */}
-      {viewMode === 'list' ? tableView() : fileCardView()}
+      {/* {viewMode === 'list' ? tableView() : fileCardView()} */}
+      {fileList ? fileCardView() : <p>등록된 파일 정보가 없습니다</p>}
     </>
   )
 }
