@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     root: __dirname
   },
   images: {
-    domains: ['k.kakaocdn.net']
+    unoptimized: true
   }
 }
 
