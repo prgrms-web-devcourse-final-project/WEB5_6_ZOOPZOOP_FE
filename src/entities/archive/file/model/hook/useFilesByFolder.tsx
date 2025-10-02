@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchArchiveFilesClient } from '../../api/file.client'
+import { fetchArchiveFilesByFolderClient } from '../../api/file.client'
 
-export const useArchiveFiles = (
+export const useArchiveFilesByFolder = (
   folderId: number,
   options?: { enabled?: boolean }
 ) => {
   const filesQuery = useQuery({
     queryKey: ['archiveFiles', folderId],
-    queryFn: () => fetchArchiveFilesClient(folderId),
+    queryFn: () => fetchArchiveFilesByFolderClient(folderId),
     staleTime: 1000 * 60,
     enabled: options?.enabled
   })

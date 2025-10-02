@@ -1,32 +1,48 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FileHeader from './FileHeader'
 import { SortDirection } from '@tanstack/react-table'
 import { SortKey } from '@/features/archive/sort'
-
 import { CustomTable } from '@/shared/ui/shadcn/CustomTable'
 import { ArchiveColumn } from './ArchiveColumn'
-// import { gridFiles, tableFiles } from '@/entities/archive/file/model/mockdata'
 import FileCard from './FileCard'
 import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
-import { type FileData } from '@/entities/archive/file'
+import { ArchiveColumnType, type FileData } from '@/entities/archive/file'
+import Pagination from '@/shared/ui/pagination/Pagination'
+import { useSearchFiles } from '@/features/archive/search-file/model/hook/useSearchFiles'
+import { PageInfo } from '@/features/archive/search-file/model/type'
 
 interface Props {
-  fileList?: FileData[]
+  initialFileList: FileData[]
+  initialPageInfo: PageInfo
 }
 
-function FileSection({ fileList }: Props) {
-  // 백엔드에서 이름, 날짜 정렬 데이터 줌 -> 데이터 통신할 때 보내줘야됨
-  const [sortObj, setSortObj] = useState<{
-    key: SortKey
-    direction: SortDirection
-  } | null>(null)
-
+function FileSection({ initialFileList, initialPageInfo }: Props) {
   const { viewMode, onSwitchViewMode } = useFileViewMode()
-
-  /* 체크박스 컨트롤 ->fileList의 id만 뽑아서 사용  */
+  const [fileList, setFileList] = useState<FileData[] | null>(initialFileList)
   const [checkedCardList, setCheckedCardList] = useState<number[]>([])
+  const [sortKey, setSortKey] = useState<SortKey>('이름')
+  const [direction, setDirection] = useState<SortDirection>('asc')
+
+  // 페이지네이션도 관리 (예: 기본값 1페이지, 20개)
+  const [page, setPage] = useState(0)
+  const [size, setSize] = useState(8)
+
+  // 정렬된 파일 데이터 불러오기
+  const { data, isLoading, error } = useSearchFiles({
+    // sort: `${sortKey},${direction}`,
+    sort: `이름,asc`,
+    page,
+    size
+  })
+
+  const handleSortClick = (key: SortKey, newDirection: SortDirection) => {
+    setSortKey(key)
+    setDirection(newDirection)
+  }
+
+  /* 체크박스 컨트롤 ->initialFileList의 id만 뽑아서 사용  */
 
   const handleCheckbox = (cardId: number) => {
     if (checkedCardList.includes(cardId)) {
@@ -37,7 +53,7 @@ function FileSection({ fileList }: Props) {
   }
 
   const onAllCheck = () => {
-    const allCheckedList = fileList!.map(item => item.dataSourceId)
+    const allCheckedList = initialFileList!.map(item => item.dataSourceId)
     if (checkedCardList.length === allCheckedList.length) {
       setCheckedCardList([])
     } else {
@@ -48,7 +64,7 @@ function FileSection({ fileList }: Props) {
   const fileCardView = () => {
     return (
       <div className="grid grid-cols-4 gap-4 w-full">
-        {fileList!.map(
+        {initialFileList!.map(
           ({
             dataSourceId,
             title,
@@ -81,32 +97,39 @@ function FileSection({ fileList }: Props) {
     )
   }
 
-  // const tableView = () => {
-  //   return (
-  //     <CustomTable
-  //       columns={ArchiveColumn}
-  //       data={fileList}
-  //     />
-  //   )
-  // }
+  const tableView = () => {
+    const tableData: ArchiveColumnType[] = initialFileList!.map(item => ({
+      id: item.dataSourceId.toString(),
+      title: item.title,
+      category: item.category,
+      createdAt: item.createdAt,
+      origin: item.source
+    }))
+
+    return (
+      <CustomTable
+        columns={ArchiveColumn}
+        data={tableData}
+      />
+    )
+  }
 
   return (
     <>
       <FileHeader
+        sortKey={sortKey}
+        direction={direction}
         isChecked={checkedCardList.length > 0}
         isTableView={viewMode === 'list'}
         onChangeView={onSwitchViewMode}
-        onSortChange={(key, direction) => {
-          // setSortKey(key)
-          // setSortDirection(direction)
-        }}
+        handleSortClick={handleSortClick}
         onAllCheck={onAllCheck}
       />
-      {/* <div className="flex items-center justify-center">
-        {viewMode === 'list' ? tableView() : fileCardView()}
-      </div> */}
-      {/* {viewMode === 'list' ? tableView() : fileCardView()} */}
-      {fileList ? fileCardView() : <p>등록된 파일 정보가 없습니다</p>}
+
+      {viewMode === 'list' ? tableView() : fileCardView()}
+      {initialPageInfo.totalPages >= 1 && (
+        <Pagination totalPages={initialPageInfo.totalPages} />
+      )}
     </>
   )
 }

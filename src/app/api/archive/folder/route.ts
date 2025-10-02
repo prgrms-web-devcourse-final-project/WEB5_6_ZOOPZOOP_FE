@@ -6,10 +6,12 @@ import {
 } from '@/entities/archive/folder/api/folder.server'
 import { createCookieHeader, withAuth } from '@/shared/lib/api-route'
 
+//폴더 조회
 export const GET = withAuth(async () => {
   return await fetchArchiveFolderServer()
 })
 
+// 폴더 생성
 export const POST = withAuth(async (token, request) => {
   const payload = await request.json()
 
@@ -18,6 +20,7 @@ export const POST = withAuth(async (token, request) => {
   })
 })
 
+// 폴더 이름 변경
 export const PATCH = withAuth(async (token: string, request: Request) => {
   const url = new URL(request.url)
   const folderIdParam = url.searchParams.get('folderId')
@@ -35,6 +38,7 @@ export const PATCH = withAuth(async (token: string, request: Request) => {
   return response
 })
 
+// 폴더 삭제
 export const DELETE = withAuth(async (token, request) => {
   const { folderId } = await request.json()
   return await deleteArchiveFolderServer(folderId, {

@@ -5,6 +5,7 @@ import FolderItem from './FolderItem'
 import { FolderData } from '@/entities/archive/folder'
 import { useUserStore } from '@/entities/user'
 import { useModalStore } from '@/shared/lib'
+import { useParams } from 'next/navigation'
 
 interface Props {
   data: FolderData[]
@@ -12,24 +13,13 @@ interface Props {
 
 function FolderGrid({ data }: Props) {
   const [clickedFolderId, setClickedFolderId] = useState<number | null>(null)
+  const { folder } = useParams()
 
-  // const selectedIndex = data.findIndex(item => item.folderName === folder)
+  const clickedFolder = folder ? decodeURIComponent(String(folder)) : ''
+
   // 사용자 이름
   const user = useUserStore(state => state.user)
   const useName = user?.name.split('#')[0] ?? '사용자 닉네임'
-
-  // 선택된 폴더는 사용자 이름 바로 옆에 위치
-  // const reorderedData = useMemo(() => {
-  //   if (!selectedFolder) return data
-  //   const index = data.findIndex(item => item.folderName === selectedFolder)
-  //   if (index > 0) {
-  //     const newData = [...data]
-  //     const [selected] = newData.splice(index, 1)
-  //     newData.unshift(selected)
-  //     return newData
-  //   }
-  //   return data
-  // }, [data, selectedFolder])
 
   const isModalOpen = useModalStore(s => s.isOpen)
   useEffect(() => {
@@ -60,8 +50,9 @@ function FolderGrid({ data }: Props) {
         isActive={false}
         onClick={handleClicked}
       />
+
       {data.map(({ folderName, folderId }) => {
-        const isActive = clickedFolderId === folderId
+        const isActive = clickedFolder === folderName
 
         return (
           <FolderItem

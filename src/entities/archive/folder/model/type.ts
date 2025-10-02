@@ -1,9 +1,7 @@
 export type FolderResponse = {
   status: string
   msg: string
-  data: {
-    folders: FolderData[]
-  }
+  data: FolderData[]
 }
 
 export type FolderPatchResponse = {
