@@ -1,6 +1,8 @@
+'use client'
+
 import { SortButton } from '@/features/archive/sort'
 import type { SortDirection } from '@tanstack/react-table'
-import { ChevronDown, Folder } from 'lucide-react'
+import { Folder } from 'lucide-react'
 import { useCallback } from 'react'
 
 interface Props {
@@ -23,11 +25,6 @@ function FolderHeader({ onSortChange, direction }: Props) {
           aria-hidden="true"
         />
         <p className="text-lg font-bold text-gray-darker">폴더</p>
-        <ChevronDown
-          size={20}
-          className="text-gray-dark"
-          aria-hidden="true"
-        />
       </div>
 
       <div className="flex gap-2">

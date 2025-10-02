@@ -1,22 +1,31 @@
 import { create } from 'zustand'
 
 type ModalType =
-  | 'url-upload'
-  | 'archive-select'
-  | 'alarm'
-  | 'create-space'
-  | 'create-folder'
+  | { type: 'url-upload' }
+  | { type: 'archive-select' }
+  | { type: 'alarm' }
+  | { type: 'create-space' }
+  | { type: 'create-folder' }
+  | { type: 'move-file' }
+  | { type: 'delete-account' }
+  | {
+      type: 'rename-folder'
+      props: {
+        folderId: number
+        folderName: string
+      }
+    }
 
 interface ModalStore {
-  type: ModalType | null
+  modal: ModalType | null
   isOpen: boolean
-  openModal: (type: ModalType) => void
+  openModal: (modal: ModalType) => void
   closeModal: () => void
 }
 
 export const useModalStore = create<ModalStore>(set => ({
-  type: null,
+  modal: null,
   isOpen: false,
-  openModal: type => set({ type, isOpen: true }),
-  closeModal: () => set({ type: null, isOpen: false })
+  openModal: modal => set({ modal, isOpen: true }),
+  closeModal: () => set({ modal: null, isOpen: false })
 }))

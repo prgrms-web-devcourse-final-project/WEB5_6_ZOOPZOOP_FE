@@ -1,19 +1,25 @@
+import { NextFetchOptions } from '../types'
+
 const API_BASE_URL = process.env.API_URL || ''
 
 const createFetchOptions = (
   method: string,
   data?: unknown,
-  options?: RequestInit
-): RequestInit => ({
-  method,
-  credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-    ...options?.headers
-  },
-  body: data ? JSON.stringify(data) : undefined,
-  ...options
-})
+  options?: NextFetchOptions
+): NextFetchOptions => {
+  const { headers, ...restOptions } = options || {}
+
+  const isFormData = data instanceof FormData
+  return {
+    method,
+    headers: {
+      ...(!isFormData && { 'Content-Type': 'application/json' }),
+      ...headers
+    },
+    body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
+    ...restOptions
+  }
+}
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
@@ -36,25 +42,26 @@ export const httpClient = {
     method: string,
     endpoint: string,
     data?: unknown,
-    options?: RequestInit
+    options?: NextFetchOptions
   ): Promise<T> {
     const { ...fetchOptions } = options || {}
     const url = `${API_BASE_URL}${endpoint}`
 
     const requestOptions = createFetchOptions(method, data, fetchOptions)
+
     const response = await fetch(url, requestOptions)
 
     return handleResponse<T>(response)
   },
 
-  async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  async get<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
     return this.request<T>('GET', endpoint, undefined, options)
   },
 
   async post<T>(
     endpoint: string,
     data?: unknown,
-    options?: RequestInit
+    options?: NextFetchOptions
   ): Promise<T> {
     return this.request<T>('POST', endpoint, data, options)
   },
@@ -62,7 +69,7 @@ export const httpClient = {
   async put<T>(
     endpoint: string,
     data?: unknown,
-    options?: RequestInit
+    options?: NextFetchOptions
   ): Promise<T> {
     return this.request<T>('PUT', endpoint, data, options)
   },
@@ -70,12 +77,12 @@ export const httpClient = {
   async patch<T>(
     endpoint: string,
     data?: unknown,
-    options?: RequestInit
+    options?: NextFetchOptions
   ): Promise<T> {
     return this.request<T>('PATCH', endpoint, data, options)
   },
 
-  async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  async delete<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
     return this.request<T>('DELETE', endpoint, undefined, options)
   }
 }

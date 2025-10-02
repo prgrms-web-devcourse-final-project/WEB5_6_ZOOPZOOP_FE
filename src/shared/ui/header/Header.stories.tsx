@@ -5,14 +5,10 @@ import { LucideIcon, Settings, Plus } from 'lucide-react'
 // --- 더미 버튼 예시 ---
 const buttons: Button[] = [
   {
-    label: '추가',
-    icon: Plus,
-    onClick: () => {}
+    label: '폴더 생성'
   },
   {
-    label: '설정',
-    icon: Settings,
-    onClick: () => {}
+    label: '업로드'
   }
 ]
 
@@ -56,9 +52,7 @@ export const OneButton: Story = {
     title: '버튼 1개만 있는 헤더',
     buttons: [
       {
-        label: '설정',
-        icon: Settings as LucideIcon,
-        onClick: () => {}
+        label: '폴더 생성'
       }
     ],
     searchBar: {
