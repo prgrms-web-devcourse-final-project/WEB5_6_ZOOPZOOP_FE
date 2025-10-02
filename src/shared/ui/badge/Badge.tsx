@@ -1,6 +1,23 @@
 import { tw } from '@/shared/lib'
+export type BadgeCategory =
+  | 'POLITICS'
+  | 'ECONOMY'
+  | 'SOCIETY'
+  | 'IT'
+  | 'SCIENCE'
+  | 'CULTURE'
+  | 'SPORTS'
+  | 'ENVIRONMENT'
+  | 'HISTORY'
+  | 'WORLD'
 
-const BadgeList = {
+type BadgeConfig = {
+  name: string
+  color: string
+  textColor: string
+}
+
+const BadgeList: Record<BadgeCategory, BadgeConfig> = {
   POLITICS: {
     name: '정치',
     color: 'bg-[#EFF6FF]',
