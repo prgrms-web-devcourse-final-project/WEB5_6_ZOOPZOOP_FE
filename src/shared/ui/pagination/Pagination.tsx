@@ -14,11 +14,11 @@ import {
 } from '../shadcn/pagination'
 
 interface Props {
-  totalPages: number
+  totalPages?: number
   maxVisiblePages?: number
 }
 
-const Pagination = ({ totalPages, maxVisiblePages = 5 }: Props) => {
+const Pagination = ({ totalPages = 1, maxVisiblePages = 5 }: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 

@@ -7,13 +7,15 @@ const createFetchOptions = (
   data?: unknown,
   options?: NextFetchOptions
 ): NextFetchOptions => {
-  const { headers, ...restOptions } = options || {}
+  const { headers, token, ...restOptions } = options || {}
 
   const isFormData = data instanceof FormData
+
   return {
     method,
     headers: {
       ...(!isFormData && { 'Content-Type': 'application/json' }),
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...headers
     },
     body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,

@@ -1,5 +1,4 @@
-import { Avatar } from '../../avatar'
-import RemainingAvatar from '../../avatar/RemainingAvatar'
+import { Avatar, RemainingAvatar } from '@/shared/ui'
 
 interface Props {
   contributors: number[] // 임시 타입

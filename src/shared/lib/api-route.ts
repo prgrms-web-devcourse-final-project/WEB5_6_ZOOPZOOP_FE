@@ -45,3 +45,12 @@ export const withAuth = <T>(handler: AuthHandler<T>) => {
     return NextResponse.json(await handler(token, request))
   }
 }
+
+// 쿠키가 필요한 통신인 경우
+export const requireAuth = async <T>(handler: AuthHandler<T>) => {
+  const token = await getAccessToken()
+
+  if (!token) return { status: 401, data: null, msg: '토큰 없음, 인증 필요' }
+
+  return await handler(token)
+}
