@@ -2,7 +2,6 @@
 
 import { useModalStore } from '@/shared/lib'
 import { useShallow } from 'zustand/shallow'
-import { DeleteAccountModal } from '@/features/auth/ui/DeleteAccountModal'
 import {
   AlarmModal,
   ArchiveSelectModal,
@@ -12,6 +11,7 @@ import {
 import { CreateSpaceModal } from '@/features/space'
 import { MoveFileModal } from '@/shared/ui/modal/archive/move-file/MoveFileModal'
 import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
+import { DeleteAccountModal } from '@/features/auth'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))

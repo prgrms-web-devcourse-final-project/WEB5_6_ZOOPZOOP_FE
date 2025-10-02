@@ -33,7 +33,7 @@ function Header({ title, buttons, searchBar }: Props) {
     }
     router.push(`/archive/search?q=${encodeURIComponent(query)}`)
     setQuery('')
-  }, [searchBar, query])
+  }
 
   const searchHeader = useCallback(() => {
     return (

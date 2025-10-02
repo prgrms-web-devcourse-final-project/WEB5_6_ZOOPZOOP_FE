@@ -28,13 +28,16 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 
   // 성공이면 그대로 반환
   if (response.ok) {
-    return result as T
+    return {
+      ...result,
+      status: Number(result.status)
+    } as T
   }
 
   // 백엔드가 { status, data, msg } 형식으로 보낸다면
   return {
     data: null,
-    status: response.status,
+    status: Number(response.status),
     msg: result.msg || '알 수 없는 오류'
   } as T
 }

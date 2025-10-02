@@ -30,7 +30,7 @@ export const GET = async (request: Request) => {
 }
 // 파일 업로드
 export const POST = withAuth(async (token, request) => {
-  const payload = await request.json()
+  const payload = await request?.json()
 
   return await postArchiveFileServer(payload, {
     headers: createCookieHeader(token)

@@ -1,7 +1,7 @@
 'use client'
 
 import { Loader2, LogOut } from 'lucide-react'
-import { useLogout } from '../model/hooks/useLogout'
+import { useLogout } from '../hooks/useLogout'
 
 const LogoutButton = () => {
   const { isLoading, logout } = useLogout()

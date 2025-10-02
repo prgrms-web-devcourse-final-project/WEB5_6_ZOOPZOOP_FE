@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
-import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useModalStore } from '@/shared/lib'
 import { Plus } from 'lucide-react'
 import ActionButton from '@/shared/ui/header/ActionButton'
-import { SearchBar } from '@/shared/ui/header'
 
 interface Props {
   title: string
@@ -27,7 +24,7 @@ function SpaceHeader({ title, showButton = true }: Props) {
               label="스페이스 생성"
               icon={Plus}
               onClick={() => {
-                openModal('create-space')
+                openModal({ type: 'create-space' })
               }}
             />
           </div>

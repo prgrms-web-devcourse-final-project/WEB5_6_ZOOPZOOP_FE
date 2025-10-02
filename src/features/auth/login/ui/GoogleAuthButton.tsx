@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { AuthButton } from '@/shared/ui/button'
 import GoogleLogo from '../assets/googleLogo.svg'
-import { redirectToOAuth } from '../model/action'
 import { SocialProvider } from '../model/type'
+import { redirectToOAuth } from '../model/action'
 
 const GoogleAuthButton = () => {
   const handleOAuthLogin = async () => {

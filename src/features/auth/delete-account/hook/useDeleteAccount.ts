@@ -3,9 +3,9 @@ import { useState } from 'react'
 
 import { useUserStore } from '@/entities/user'
 import { useModalStore } from '@/shared/lib'
-import { useDeleteAccountMutation } from '../../api/useDeleteAccountMutation'
 import { useQueryClient } from '@tanstack/react-query'
 import { PATH } from '@/shared/constants'
+import { useDeleteAccountMutation } from './useDeleteAccountMutation'
 
 export const useDeleteAccount = () => {
   const router = useRouter()

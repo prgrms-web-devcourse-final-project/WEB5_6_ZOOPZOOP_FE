@@ -7,10 +7,9 @@ import { NavItem } from '@/shared/routes'
 interface Props {
   subItem: NavItem
   isSubMenuOpen: boolean
-  isDashboard: boolean
 }
 
-function SubNavItem({ subItem, isSubMenuOpen, isDashboard }: Props) {
+function SubNavItem({ subItem, isSubMenuOpen }: Props) {
   const { icon, href, label } = subItem
   const Icon = icon
 

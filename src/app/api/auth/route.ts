@@ -5,7 +5,7 @@ import {
   requireAuth,
   withAuth
 } from '@/shared/lib/api-route'
-import { logoutUserServer } from '@/features/auth/api/auth.server'
+import { logoutUserServer } from '@/features/auth/logout/api/auth.server'
 import { deleteAccountServer } from '@/entities/user'
 import { NextResponse } from 'next/server'
 
