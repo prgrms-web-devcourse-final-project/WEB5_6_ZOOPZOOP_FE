@@ -104,7 +104,7 @@ const FlowDashboardContent = () => {
           zoomOnScroll={false}
           className={isCreating ? 'cursor-crosshair' : ''}>
           <MiniMap position="top-right" />
-          <Controls />
+
           <Background
             variant={BackgroundVariant.Dots}
             gap={12}

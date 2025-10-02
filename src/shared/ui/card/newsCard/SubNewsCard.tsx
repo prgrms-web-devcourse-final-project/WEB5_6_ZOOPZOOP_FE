@@ -22,7 +22,7 @@ export const SubNewsCard = ({
   createdAt
 }: Props) => {
   return (
-    <div className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100">
+    <div className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100 relative">
       <div className="flex gap-5 h-full">
         <div
           className="w-21 h-21 flex-shrink-0 cursor-pointer rounded-lg overflow-hidden"
@@ -51,7 +51,7 @@ export const SubNewsCard = ({
         <div className="flex flex-col gap-1 justify-center">
           <div className="flex items-center gap-2">
             {category && <Badge name={category} />}
-            <p className="text-xs text-gray-normal">
+            <p className="text-xs text-gray-normal absolute right-2.5 top-2.5">
               {dayjs(createdAt).isValid()
                 ? dayjs(createdAt).format('MM.DD HH:mm')
                 : '발행일 정보 없음'}
