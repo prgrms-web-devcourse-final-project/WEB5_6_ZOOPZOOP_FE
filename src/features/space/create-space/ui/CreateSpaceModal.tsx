@@ -20,8 +20,8 @@ export const CreateSpaceModal = ({
 
   const handleCreateSpace = () => {
     if (!inputRef?.current) return
-    const spaceName = inputRef.current.value.trim()
 
+    const spaceName = inputRef.current.value.trim()
     if (!spaceName) return
 
     mutate(spaceName)

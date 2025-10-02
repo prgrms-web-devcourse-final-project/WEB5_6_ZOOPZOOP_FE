@@ -17,9 +17,9 @@ export const getInitialSpaceList = async (
     })
   })
 
-  if (response.status !== '200') {
-    throw new Error(response.msg)
-  }
+  // if (response.status !== 201) {
+  //   throw new Error(response.msg)
+  // }
 
   return response.data
 }

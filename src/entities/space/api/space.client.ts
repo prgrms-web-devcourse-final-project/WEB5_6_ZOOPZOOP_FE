@@ -2,6 +2,7 @@ import { httpClient } from '@/shared/lib'
 import {
   CreateSpaceResponse,
   FetchSpaceListParams,
+  SpacePagination,
   SpacePaginationAPIResponse
 } from '../model/type'
 
@@ -10,7 +11,7 @@ export const fetchSpaceListClient = async ({
   page = 0,
   size = 8,
   sort = []
-}: FetchSpaceListParams): Promise<SpacePaginationAPIResponse | null> => {
+}: FetchSpaceListParams): Promise<SpacePagination | null> => {
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('size', size.toString())
@@ -32,12 +33,12 @@ export const fetchSpaceListClient = async ({
 // 스페이스 생성
 export const postSpaceClient = async (
   payload: string
-): Promise<CreateSpaceResponse | null> => {
+): Promise<{ name: string } | null> => {
   const response = await httpClient.post<CreateSpaceResponse>(
     '/api/space',
     payload
   )
-  if (response.status !== 201) {
+  if (response.status << 12) {
     throw new Error(response.msg)
   }
 

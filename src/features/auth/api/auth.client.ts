@@ -7,7 +7,7 @@ export const logoutUserClient = async (): Promise<void> => {
 
   const { status } = response
 
-  if (status !== '200') {
+  if (status !== 200) {
     throw new Error('로그아웃 실패')
   }
 }

@@ -1,4 +1,4 @@
-import { APIResponse, NextFetchOptions } from '../types'
+import { NextFetchOptions } from '../types'
 
 const API_BASE_URL = process.env.API_URL || ''
 
@@ -23,14 +23,12 @@ const createFetchOptions = (
   }
 }
 
-const handleResponse = async <T>(
-  response: Response
-): Promise<APIResponse<T>> => {
+const handleResponse = async <T>(response: Response): Promise<T> => {
   const result = await response.json()
 
   // 성공이면 그대로 반환
   if (response.ok) {
-    return result
+    return result as T
   }
 
   // 백엔드가 { status, data, msg } 형식으로 보낸다면
@@ -38,7 +36,7 @@ const handleResponse = async <T>(
     data: null,
     status: response.status,
     msg: result.msg || '알 수 없는 오류'
-  }
+  } as T
 }
 
 export const httpClient = {
@@ -47,7 +45,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  ): Promise<T> {
     const { ...fetchOptions } = options || {}
     const url = `${API_BASE_URL}${endpoint}`
 
@@ -58,10 +56,7 @@ export const httpClient = {
     return handleResponse<T>(response)
   },
 
-  async get<T>(
-    endpoint: string,
-    options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  async get<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
     return this.request<T>('GET', endpoint, undefined, options)
   },
 
@@ -69,7 +64,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('POST', endpoint, data, options)
   },
 
@@ -77,7 +72,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('PUT', endpoint, data, options)
   },
 
@@ -85,14 +80,11 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  ): Promise<T> {
     return this.request<T>('PATCH', endpoint, data, options)
   },
 
-  async delete<T>(
-    endpoint: string,
-    options?: NextFetchOptions
-  ): Promise<APIResponse<T>> {
+  async delete<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
     return this.request<T>('DELETE', endpoint, undefined, options)
   }
 }

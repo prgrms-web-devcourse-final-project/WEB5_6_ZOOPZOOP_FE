@@ -10,7 +10,7 @@ import {
 export const fetchSpaceListServer = async (
   { page = 0, size = 8, sort = [] }: FetchSpaceListParams,
   options?: NextFetchOptions
-) => {
+): Promise<SpacePaginationAPIResponse> => {
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('size', size.toString())
@@ -29,7 +29,7 @@ export const fetchSpaceListServer = async (
 export const postSpaceServer = async (
   payload: string,
   options?: NextFetchOptions
-) => {
+): Promise<CreateSpaceResponse> => {
   return await httpClient.post<CreateSpaceResponse>(
     '/api/v1/space',
     { name: payload },

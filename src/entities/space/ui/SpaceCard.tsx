@@ -1,13 +1,7 @@
 import { formatDate } from '@/shared/lib/formatter'
 import SpaceCardThumbnail from './SpaceCardThumbnail'
-import ContributorList from './ContributorList'
-import { Space } from '../model'
-
-interface Props {
-  title: string
-  createdAt: Date
-  contributors: number[]
-}
+// import ContributorList from './ContributorList'
+import { Space } from '../model/type'
 
 /**
  * 스페이드 카드 레아이웃

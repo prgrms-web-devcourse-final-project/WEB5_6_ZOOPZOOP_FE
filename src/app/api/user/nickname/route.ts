@@ -1,6 +1,6 @@
+import { NextResponse } from 'next/server'
 import { updateNicknameServer } from '@/entities/user'
 import { requireAuth } from '@/shared/lib/api-route'
-import { NextResponse } from 'next/server'
 
 export const PUT = async (request: Request) => {
   try {

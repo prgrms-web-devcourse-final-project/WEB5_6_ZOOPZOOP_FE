@@ -15,6 +15,7 @@ export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
         size: pagination.size,
         sort: pagination.sort
       }),
-    initialData: initialData
+    initialData: initialData,
+    staleTime: 60
   })
 }
