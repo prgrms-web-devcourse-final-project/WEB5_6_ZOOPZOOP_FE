@@ -1,48 +1,65 @@
 import { tw } from '@/shared/lib'
+export type BadgeCategory =
+  | 'POLITICS'
+  | 'ECONOMY'
+  | 'SOCIETY'
+  | 'IT'
+  | 'SCIENCE'
+  | 'CULTURE'
+  | 'SPORTS'
+  | 'ENVIRONMENT'
+  | 'HISTORY'
+  | 'WORLD'
 
-const BadgeList = {
-  정치: {
+type BadgeConfig = {
+  name: string
+  color: string
+  textColor: string
+}
+
+const BadgeList: Record<BadgeCategory, BadgeConfig> = {
+  POLITICS: {
     name: '정치',
     color: 'bg-[#EFF6FF]',
     textColor: 'text-[#1D4ED8]'
   },
-  경제: {
+  ECONOMY: {
     name: '경제',
     color: 'bg-[#F0FDF4]',
     textColor: 'text-[#166534]'
   },
-  사회: {
+  SOCIETY: {
     name: '사회',
     color: 'bg-[#FEF3C7]',
     textColor: 'text-[#92400E]'
   },
   IT: { name: 'IT', color: 'bg-[#F3E8FF]', textColor: 'text-[#7C2D92]' },
-  과학: {
+  SCIENCE: {
     name: '과학',
     color: 'bg-[#E0F2FE]',
     textColor: 'text-[#0369A1]'
   },
-  문화: {
+  CULTURE: {
     name: '문화',
     color: 'bg-[#FAE8FF]',
     textColor: 'text-[#A21CAF]'
   },
-  스포츠: {
+  SPORTS: {
     name: '스포츠',
     color: 'bg-[#FEF2F2]',
     textColor: 'text-[#991B1B]'
   },
-  환경: {
+  ENVIRONMENT: {
     name: '환경',
     color: 'bg-[#ECFDF5]',
     textColor: 'text-[#047857]'
   },
-  역사: {
+  HISTORY: {
     name: '역사',
     color: 'bg-[#F5F3FF]',
     textColor: 'text-[#4C1D95]'
   },
-  세계: {
+  WORLD: {
     name: '세계',
     color: 'bg-[#EFF6FF]',
     textColor: 'text-[#1E3A8A]'

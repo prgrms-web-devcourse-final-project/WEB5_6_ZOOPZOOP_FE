@@ -7,7 +7,7 @@ const DeleteAccountButton = () => {
   const openModal = useModalStore(state => state.openModal)
 
   const handleOpenModal = () => {
-    openModal('delete-account')
+    openModal({ type: 'delete-account' })
   }
 
   return (

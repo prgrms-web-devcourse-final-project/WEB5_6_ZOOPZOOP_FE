@@ -4,9 +4,17 @@ import { useState } from 'react'
 import { ModalLayout } from '../ModalLayout'
 import { FolderNameInput } from './FolderNameInput'
 import { FolderActionButtons } from './FolderActionButtons'
+import { useModalStore } from '@/shared/lib'
+
+import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
 
 export const CreateFolderModal = () => {
   const [folderName, setFolderName] = useState('')
+  const closeModal = useModalStore(s => s.closeModal)
+  const { addFolder } = useArchiveFolders()
+  const handleCreate = () => {
+    addFolder.mutate(folderName)
+  }
 
   return (
     <ModalLayout size="md">
@@ -18,8 +26,8 @@ export const CreateFolderModal = () => {
         />
       </div>
       <FolderActionButtons
-        onCancel={() => {}}
-        onCreate={() => {}}
+        onCancel={closeModal}
+        onCreate={handleCreate}
         isCreating={false}
         disabled={!folderName.trim()}
       />
