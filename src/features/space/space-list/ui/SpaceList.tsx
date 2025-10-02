@@ -1,3 +1,5 @@
+'use client'
+
 import { SpaceCard, SpacePagination } from '@/entities/space'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { useSearchParams } from 'next/navigation'

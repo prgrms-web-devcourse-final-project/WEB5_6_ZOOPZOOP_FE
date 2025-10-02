@@ -30,3 +30,5 @@ export type SpacePagination = Pagination<'spaces', Space>
 
 // 스페이스 페이지 API 네이션
 export type SpacePaginationAPIResponse = APIResponse<SpacePagination>
+
+export type CreateSpaceResponse = APIResponse<{ name: string }>

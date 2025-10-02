@@ -1,6 +1,10 @@
 import { httpClient } from '@/shared/lib'
 import { NextFetchOptions } from '@/shared/types'
-import { FetchSpaceListParams, SpacePaginationAPIResponse } from '../model/type'
+import {
+  CreateSpaceResponse,
+  FetchSpaceListParams,
+  SpacePaginationAPIResponse
+} from '../model/type'
 
 // 스페이스 목록 조회
 export const fetchSpaceListServer = async (
@@ -17,6 +21,18 @@ export const fetchSpaceListServer = async (
 
   return await httpClient.get<SpacePaginationAPIResponse>(
     `/api/v1/space?${params.toString()}`,
+    options
+  )
+}
+
+// 스페이스 생성
+export const postSpaceServer = async (
+  payload: string,
+  options?: NextFetchOptions
+) => {
+  return await httpClient.post<CreateSpaceResponse>(
+    '/api/v1/space',
+    { name: payload },
     options
   )
 }

@@ -1,4 +1,4 @@
-import { NextFetchOptions } from '../types'
+import { APIResponse, NextFetchOptions } from '../types'
 
 const API_BASE_URL = process.env.API_URL || ''
 
@@ -23,20 +23,22 @@ const createFetchOptions = (
   }
 }
 
-const handleResponse = async <T>(response: Response): Promise<T> => {
-  if (!response.ok) {
-    switch (response.status) {
-      case 401:
-        throw new Error('인증이 필요합니다')
-      case 403:
-        throw new Error('권한이 없습니다')
-      case 404:
-        throw new Error('요청한 리소스를 찾을 수 없습니다')
-      case 500:
-        throw new Error('서버 내부 오류가 발생했습니다')
-    }
+const handleResponse = async <T>(
+  response: Response
+): Promise<APIResponse<T>> => {
+  const result = await response.json()
+
+  // 성공이면 그대로 반환
+  if (response.ok) {
+    return result
   }
-  return response.json()
+
+  // 백엔드가 { status, data, msg } 형식으로 보낸다면
+  return {
+    data: null,
+    status: response.status,
+    msg: result.msg || '알 수 없는 오류'
+  }
 }
 
 export const httpClient = {
@@ -45,7 +47,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<T> {
+  ): Promise<APIResponse<T>> {
     const { ...fetchOptions } = options || {}
     const url = `${API_BASE_URL}${endpoint}`
 
@@ -56,7 +58,10 @@ export const httpClient = {
     return handleResponse<T>(response)
   },
 
-  async get<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
+  async get<T>(
+    endpoint: string,
+    options?: NextFetchOptions
+  ): Promise<APIResponse<T>> {
     return this.request<T>('GET', endpoint, undefined, options)
   },
 
@@ -64,7 +69,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<T> {
+  ): Promise<APIResponse<T>> {
     return this.request<T>('POST', endpoint, data, options)
   },
 
@@ -72,7 +77,7 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<T> {
+  ): Promise<APIResponse<T>> {
     return this.request<T>('PUT', endpoint, data, options)
   },
 
@@ -80,11 +85,14 @@ export const httpClient = {
     endpoint: string,
     data?: unknown,
     options?: NextFetchOptions
-  ): Promise<T> {
+  ): Promise<APIResponse<T>> {
     return this.request<T>('PATCH', endpoint, data, options)
   },
 
-  async delete<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
+  async delete<T>(
+    endpoint: string,
+    options?: NextFetchOptions
+  ): Promise<APIResponse<T>> {
     return this.request<T>('DELETE', endpoint, undefined, options)
   }
 }

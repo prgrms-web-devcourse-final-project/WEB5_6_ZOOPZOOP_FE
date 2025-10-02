@@ -1,6 +1,6 @@
 // 기본 통신
 export interface APIResponse<T> {
-  status: string
+  status: number
   msg: string
   data: T | null
 }
