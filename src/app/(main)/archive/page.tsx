@@ -5,13 +5,17 @@ import Header, { Button } from '@/shared/ui/header/Header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
 
+const DEFAULT_PAGE_SIZE = 8
+const ROOT_FOLDER_ID = 0
+const INITIAL_PAGE = 0
+
 export default async function Archive() {
   const { data } = await fetchArchiveFolderServer()
 
   const fileResponse = await fetchArchiveFilesByPageServer({
-    page: 0,
-    size: 8,
-    folderId: 0
+    page: INITIAL_PAGE,
+    size: DEFAULT_PAGE_SIZE,
+    folderId: ROOT_FOLDER_ID
   })
 
   const buttons: Button[] = [
