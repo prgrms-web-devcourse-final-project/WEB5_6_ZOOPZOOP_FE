@@ -17,6 +17,7 @@ export const NewsGrid = ({ news }: Props) => {
           createdAt={item.pubDate}
           link={item.link}
           imageUrl={`/api/og-image?url=${encodeURIComponent(item.link)}`}
+          type="base"
         />
       ))}
     </div>

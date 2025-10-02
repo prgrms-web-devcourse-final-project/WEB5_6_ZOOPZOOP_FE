@@ -30,22 +30,27 @@ const EditProfileImage = ({ profileUrl }: Props) => {
       </h3>
       <div className="flex justify-center flex-col gap-2">
         <label
-          className="relative cursor-pointer group"
+          className="cursor-pointer group flex justify-center"
           htmlFor={inputId}>
-          <Image
-            src={displayUrl}
-            alt="사용자 프로필 사진"
-            width={300}
-            height={300}
-            priority
-            className="object-cover rounded-full size-64 transition-opacity group-hover:opacity-75"
-          />
-          <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-            {isUploading ? (
-              <Loader2 className="w-8 h-8 text-white animate-spin" />
-            ) : (
-              <Camera className="w-8 h-8 text-white" />
-            )}
+          <div className="relative size-64">
+            <Image
+              src={
+                displayUrl ||
+                'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default-profile'
+              }
+              alt="사용자 프로필 사진"
+              width={300}
+              height={300}
+              priority
+              className="object-cover rounded-full size-64 transition-opacity group-hover:opacity-75"
+            />
+            <div className="absolute inset-0  flex items-center justify-center rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+              {isUploading ? (
+                <Loader2 className="w-8 h-8 text-white animate-spin" />
+              ) : (
+                <Camera className="w-8 h-8 text-white" />
+              )}
+            </div>
           </div>
           <input
             ref={inputRef}

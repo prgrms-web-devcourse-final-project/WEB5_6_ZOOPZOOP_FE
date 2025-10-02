@@ -18,6 +18,7 @@ const KakaoAuthButton = () => {
       icon={
         <Image
           src={KakaoLogo}
+          className="w-6 h-auto"
           alt="카카오 아이콘"
           width={24}
           height={24}

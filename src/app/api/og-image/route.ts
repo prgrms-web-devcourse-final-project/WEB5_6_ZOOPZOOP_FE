@@ -1,4 +1,3 @@
-// src/app/api/og-image/route.ts
 import { NextResponse } from 'next/server'
 import * as cheerio from 'cheerio'
 
