@@ -3,6 +3,7 @@ import './globals.css'
 import { QueryProvider } from '@/app/_providers'
 import { GlobalModal } from '@/shared/ui/modal'
 import AuthProvider from '@/app/_providers/auth-provider'
+import { ToastProvider } from '@/app/_providers/toast-provider'
 
 export const metadata: Metadata = {
   title: {
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="ko-KR">
       <body className="antialiased">
         <main>
+          <ToastProvider />
           <QueryProvider>
             <AuthProvider>
               {children}
