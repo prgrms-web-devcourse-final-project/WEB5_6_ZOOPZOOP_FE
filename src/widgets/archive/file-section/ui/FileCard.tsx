@@ -13,8 +13,8 @@ interface Props {
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
-  isSelected: boolean
   tags: string[]
+  isSelected: boolean
   onSelect: (cardId: number) => void
 }
 

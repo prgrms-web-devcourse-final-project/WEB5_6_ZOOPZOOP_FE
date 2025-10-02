@@ -28,7 +28,7 @@ export const ArchiveColumn: ColumnDef<ArchiveColumnType>[] = [
     accessorKey: 'title',
     header: '파일 선택',
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex  items-center gap-2">
         <Badge name={row.getValue('category')} />
         <p className="text-base text-gray-darker">{row.getValue('title')}</p>
       </div>

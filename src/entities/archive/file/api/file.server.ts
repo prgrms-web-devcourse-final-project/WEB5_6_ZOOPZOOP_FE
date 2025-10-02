@@ -2,9 +2,51 @@ import { NextFetchOptions } from '@/shared/types'
 import { FileGetResponse, FilePostResponse } from '../model/type'
 import { httpClient } from '@/shared/lib'
 import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
+import {
+  SearchGetResponse,
+  SearchQuery
+} from '@/features/archive/search-file/model/type'
 
-// 파일 조회
-export const fetchArchiveFilesServer = async (folderId: number | null) => {
+// 아카이브 페이지 내 파일 조회
+export const fetchArchiveFilesByPageServer = async ({
+  folderId,
+  page,
+  size
+}: SearchQuery): Promise<SearchGetResponse> => {
+  const token = await getAccessToken()
+  const response = await httpClient.get<SearchGetResponse>(
+    `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}`,
+    {
+      headers: createCookieHeader(token!),
+      next: { revalidate: 30 }
+    }
+  )
+
+  return response
+}
+
+// 아카이브 휴지통 파일 조회
+export const fetchArchiveTrashFilesServer = async ({
+  isActive,
+  folderId,
+  page,
+  size
+}: SearchQuery): Promise<SearchGetResponse> => {
+  const token = await getAccessToken()
+  const response = await httpClient.get<SearchGetResponse>(
+    `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}&isActive=${isActive}`,
+    {
+      headers: createCookieHeader(token!),
+      next: { revalidate: 30 }
+    }
+  )
+  return response
+}
+
+// 폴더 내 파일 조회
+export const fetchArchiveFilesByFolderServer = async (
+  folderId: number | null
+) => {
   const token = await getAccessToken()
 
   const response = await httpClient.get<FileGetResponse>(

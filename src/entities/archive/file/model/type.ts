@@ -23,6 +23,7 @@ export interface FileData {
   createdAt: string
   summary: string
   sourceUrl: string
+  source: string
   imageUrl: string
   tags: string[]
   category: string
