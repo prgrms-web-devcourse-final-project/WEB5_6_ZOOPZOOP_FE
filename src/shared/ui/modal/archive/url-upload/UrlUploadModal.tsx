@@ -20,7 +20,7 @@ export const UrlUploadModal = () => {
   const router = useRouter()
   // 폴더 구조 가져오기
   const { foldersQuery } = useArchiveFolders()
-  const folderList = foldersQuery.data?.data.folders
+  const folderList = foldersQuery.data?.data
 
   const handlePost = async () => {
     await postArchiveFileClient(selectedFolder, urlRef.current!.value!)
