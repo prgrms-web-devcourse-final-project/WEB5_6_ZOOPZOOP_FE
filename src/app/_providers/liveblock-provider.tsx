@@ -18,7 +18,12 @@ const initialNodes = [
       category: 'input',
       title: '입력 노드',
       content: '기본 입력 노드입니다',
-      createdAt: '2025-01-01'
+      createdAt: '2025-01-01',
+      link: '',
+      user: {
+        name: '',
+        profileUrl: ''
+      }
     }
   }
 ]
