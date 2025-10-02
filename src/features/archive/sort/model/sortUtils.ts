@@ -1,5 +1,5 @@
 import { SortDirection } from '@tanstack/react-table'
-import { FileItem, SortKey } from './sortType'
+import { FileItem, SortKey } from './type'
 
 // 한글 여부 체크 함수
 function isKorean(text: string) {
