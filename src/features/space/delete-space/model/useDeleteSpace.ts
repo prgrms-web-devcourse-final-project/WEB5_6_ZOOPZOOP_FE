@@ -1,11 +1,13 @@
 import { useDeleteSpaceMutation } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
 import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export const useDeleteSpace = () => {
   const [confirmText, setConfirmText] = useState<string>('')
   const closeModal = useModalStore(state => state.closeModal)
+  const router = useRouter()
   const queryClient = useQueryClient()
 
   const { deleteSpace, isDeleting } = useDeleteSpaceMutation({
@@ -13,6 +15,7 @@ export const useDeleteSpace = () => {
       queryClient.invalidateQueries({ queryKey: ['space'] })
       // 팝업 닫기
       closeModal()
+      router.push('/space?page=1')
     },
     onError: error => {
       // eslint-disable-next-line no-console

@@ -34,7 +34,7 @@ export const useEditSpaceName = () => {
 
     editSpaceName({
       spaceId: currentSpace.spaceId,
-      name: newName.trim() // ✅ 공백 제거
+      name: newName.trim()
     })
   }
 
