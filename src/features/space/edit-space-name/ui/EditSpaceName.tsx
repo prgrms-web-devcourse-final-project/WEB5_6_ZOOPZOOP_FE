@@ -1,8 +1,10 @@
 'use client'
 
 import { Loader2 } from 'lucide-react'
+import { useEditSpaceName } from '../model/useEditSpaceName'
 
 const EditSpaceName = () => {
+  const { isUpdating, onChange, onSubmit, newName } = useEditSpaceName()
   return (
     <div>
       <label
@@ -14,19 +16,19 @@ const EditSpaceName = () => {
         <input
           className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-accent focus:border-orange-accent"
           id="nickname"
-          value={'스페이스 이름'}
-          onChange={() => {}}
+          value={newName}
+          onChange={onChange}
         />
         <button
           className={`px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-200 ${
-            false
+            isUpdating
               ? 'border-gray-200 text-gray-400 cursor-not-allowed'
               : 'border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer'
           }`}
           type="button"
-          onClick={() => {}}
-          disabled={false}>
-          {false ? (
+          onClick={onSubmit}
+          disabled={isUpdating}>
+          {isUpdating ? (
             <div className="flex-center gap-2">
               <Loader2
                 className="animate-spin"

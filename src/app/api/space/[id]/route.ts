@@ -1,5 +1,6 @@
 import {
   deleteSpaceServer,
+  editSpaceNameServer,
   fetchSpaceServer
 } from '@/entities/space/api/space.server'
 import { requireAuth } from '@/shared/lib/api-route'
@@ -38,6 +39,29 @@ export const DELETE = async (
 
     const response = await requireAuth(
       async token => await deleteSpaceServer(id, { token })
+    )
+
+    revalidateTag('space')
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg: error instanceof Error ? error.message : '요청 처리 중 오류 발생'
+    })
+  }
+}
+
+export const PUT = async (
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  try {
+    const payload = await request.json()
+    const { id } = await params
+
+    const response = await requireAuth(
+      async token => await editSpaceNameServer(id, payload, { token })
     )
 
     revalidateTag('space')

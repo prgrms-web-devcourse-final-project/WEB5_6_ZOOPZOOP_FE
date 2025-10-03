@@ -7,7 +7,8 @@ import { SpacePagination } from './type'
 import {
   deleteSpaceClient,
   fetchSpaceListClient,
-  postSpaceClient
+  postSpaceClient,
+  updateSpaceNameClient
 } from '../api/space.client'
 
 export interface SpaceQuery {
@@ -72,5 +73,36 @@ export const useDeleteSpaceMutation = (
   return {
     deleteSpace: mutate,
     isDeleting: isPending
+  }
+}
+
+type EditSpaceResponse = {
+  name: string
+}
+
+// 스페이스 이름 수정
+export const useEditSpaceNameMutation = (
+  options: Omit<
+    UseMutationOptions<
+      EditSpaceResponse,
+      Error,
+      {
+        spaceId: number
+        name: string
+      }
+    >,
+    'mutationFn' | 'mutationKey'
+  >
+) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['edit-space'],
+    mutationFn: ({ name, spaceId }: { spaceId: number; name: string }) =>
+      updateSpaceNameClient(spaceId, name),
+    ...options
+  })
+
+  return {
+    editSpaceName: mutate,
+    isUpdating: isPending
   }
 }

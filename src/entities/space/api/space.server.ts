@@ -5,7 +5,8 @@ import {
   DeleteSpaceResponse,
   FetchSpaceListParams,
   SpaceResponse,
-  SpacePaginationAPIResponse
+  SpacePaginationAPIResponse,
+  EditSpaceNameResponse
 } from '../model/type'
 
 // 스페이스 목록 조회
@@ -56,7 +57,20 @@ export const fetchSpaceServer = async (
   options?: NextFetchOptions
 ): Promise<SpaceResponse> => {
   return await httpClient.get<SpaceResponse>(
-    `//api/v1/space/${spaceId}`,
+    `/api/v1/space/${spaceId}`,
+    options
+  )
+}
+
+// 스페이스 이름 수정
+export const editSpaceNameServer = async (
+  spaceId: string,
+  payload: { name: string },
+  options?: NextFetchOptions
+) => {
+  return await httpClient.put<EditSpaceNameResponse>(
+    `/api/v1/space/${spaceId}`,
+    payload,
     options
   )
 }

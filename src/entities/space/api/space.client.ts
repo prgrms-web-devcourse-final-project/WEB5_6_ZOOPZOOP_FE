@@ -6,7 +6,8 @@ import {
   Space,
   SpaceResponse,
   SpacePagination,
-  SpacePaginationAPIResponse
+  SpacePaginationAPIResponse,
+  EditSpaceNameResponse
 } from '../model/type'
 
 // 스페이스 조회
@@ -72,4 +73,21 @@ export const fetchSpaceClient = async (
   }
 
   return response.data
+}
+
+export const updateSpaceNameClient = async (
+  spaceId: number,
+  payload: string
+): Promise<{ name: string }> => {
+  const response = await httpClient.put<EditSpaceNameResponse>(
+    `/api/space/${spaceId}`,
+    { name: payload }
+  )
+  const { data: name, status, msg } = response
+
+  if (status !== 200 || !name) {
+    throw new Error(msg)
+  }
+
+  return name
 }

@@ -1,9 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useSpaceStore } from '@/entities/space/model/store'
 import { useModalStore } from '@/shared/lib'
-import { Plus } from 'lucide-react'
 import ActionButton from '@/shared/ui/header/ActionButton'
+import { Plus } from 'lucide-react'
 
 interface Props {
   title: string
@@ -11,12 +11,17 @@ interface Props {
 }
 
 function SpaceHeader({ title, showButton = true }: Props) {
+  const { currentSpace } = useSpaceStore()
+
   const openModal = useModalStore(s => s.openModal)
-  const router = useRouter()
+
+  // const router = useRouter()
 
   return (
     <header className="bg-gray-dark-active p-6 w-full">
-      <h1 className="text-white font-bold text-2xl mb-7">{title}</h1>
+      <h1 className="text-white font-bold text-2xl mb-7">
+        {currentSpace?.spaceName || title}
+      </h1>
       {showButton ? (
         <div className="flex justify-between">
           <div className="flex gap-3">

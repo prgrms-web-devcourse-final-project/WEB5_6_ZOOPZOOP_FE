@@ -48,3 +48,6 @@ export type CreateSpaceResponse = APIResponse<{ name: string }>
 
 // 스페이스 삭제 반환
 export type DeleteSpaceResponse = APIResponse<void>
+
+// 스페이스 이름 변경 반환
+export type EditSpaceNameResponse = APIResponse<{ name: string }>
