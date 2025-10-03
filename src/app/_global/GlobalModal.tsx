@@ -30,7 +30,7 @@ export const GlobalModal = () => {
     case 'create-folder':
       return <CreateFolderModal />
     case 'move-file':
-      return <MoveFileModal />
+      return <MoveFileModal {...modal.prop} />
     case 'delete-account':
       return <DeleteAccountModal />
     case 'rename-folder':

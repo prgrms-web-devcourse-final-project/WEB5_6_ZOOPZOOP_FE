@@ -1,1 +1,1 @@
-export { default as HoveredCard } from './ui/HoveredCard'
+export { HoveredCard } from './ui/HoveredCard'

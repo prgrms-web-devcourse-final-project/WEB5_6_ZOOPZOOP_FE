@@ -1,21 +1,14 @@
+import { APIResponse } from '@/shared/types'
 import { FolderData } from '../../folder'
 
-export interface FileGetResponse {
-  status: number
-  msg: string
-  data: {
-    files: FileData[]
-    folders: FolderData[]
-  }
-}
+export type FileGetResponse = APIResponse<{
+  files: FileData[]
+  folders: FolderData[]
+}>
 
-export interface FilePostResponse {
-  status: number
-  msg: string
-  data: {
-    dataSourceId: number
-  }
-}
+export type FilePostResponse = APIResponse<{
+  dataSourceId: number
+}>
 
 export interface FileData {
   dataSourceId: number
@@ -29,10 +22,35 @@ export interface FileData {
   category: string
 }
 
-export type ArchiveColumnType = {
-  id: string
-  title: string
-  category: string
-  createdAt: string
-  origin: string
+export interface PageInfo {
+  page: number
+  size: number
+  totalElements: number
+  totalPages: number
+  first: boolean
+  last: boolean
+  sorted: string
+}
+
+export interface UseArchiveFilesByPageOptions {
+  folderId: number
+  page: number
+  size: number
+  enabled?: boolean
+}
+
+export interface SearchGetResponse {
+  status: number
+  msg: string
+  data: FileData[]
+  pageInfo: PageInfo
+}
+
+export interface FileSearchParams {
+  folderId?: number
+  page: number
+  size: number
+  title?: string
+  isActive?: boolean
+  sort?: string
 }

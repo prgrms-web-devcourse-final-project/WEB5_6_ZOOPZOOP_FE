@@ -1,66 +1,46 @@
 import { NextFetchOptions } from '@/shared/types'
-import { FileGetResponse, FilePostResponse } from '../model/type'
-import { httpClient } from '@/shared/lib'
-import { createCookieHeader, getAccessToken } from '@/shared/lib/api-route'
 import {
+  FileGetResponse,
+  FilePostResponse,
   SearchGetResponse,
-  SearchQuery
-} from '@/features/archive/search-file/model/type'
+  FileSearchParams
+} from '../model/type'
+import { httpClient } from '@/shared/lib'
 
 // 아카이브 페이지 내 파일 조회
-export const fetchArchiveFilesByPageServer = async ({
-  folderId,
-  page,
-  size
-}: SearchQuery): Promise<SearchGetResponse> => {
-  const token = await getAccessToken()
-  const response = await httpClient.get<SearchGetResponse>(
+export const fetchArchiveFilesByPageServer = async (
+  { folderId, page, size }: FileSearchParams,
+  options?: NextFetchOptions
+): Promise<SearchGetResponse> => {
+  return await httpClient.get<SearchGetResponse>(
     `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}`,
-    {
-      headers: createCookieHeader(token!),
-      next: { revalidate: 30 }
-    }
+    options
   )
-
-  return response
 }
 
 // 아카이브 휴지통 파일 조회
-export const fetchArchiveTrashFilesServer = async ({
-  isActive,
-  folderId,
-  page,
-  size
-}: SearchQuery): Promise<SearchGetResponse> => {
-  const token = await getAccessToken()
-  const response = await httpClient.get<SearchGetResponse>(
+export const fetchArchiveTrashFilesServer = async (
+  { isActive, folderId, page, size }: FileSearchParams,
+  options?: NextFetchOptions
+): Promise<SearchGetResponse> => {
+  return await httpClient.get<SearchGetResponse>(
     `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}&isActive=${isActive}`,
-    {
-      headers: createCookieHeader(token!),
-      next: { revalidate: 30 }
-    }
+    options
   )
-  return response
 }
 
 // 폴더 내 파일 조회
 export const fetchArchiveFilesByFolderServer = async (
-  folderId: number | null
+  folderId: number | null,
+  options: NextFetchOptions
 ) => {
-  const token = await getAccessToken()
-
-  const response = await httpClient.get<FileGetResponse>(
+  return await httpClient.get<FileGetResponse>(
     `/api/v1/archive/folder/${folderId}/files`,
-    {
-      headers: createCookieHeader(token!),
-      next: { revalidate: 30 }
-    }
+    options
   )
-
-  return response
 }
 
-// 파일 등록
+// 파일 업로드 (등록)
 export const postArchiveFileServer = async (
   payload: {
     folderId: number | null
@@ -71,7 +51,7 @@ export const postArchiveFileServer = async (
   return httpClient.post<FilePostResponse>(`/api/v1/archive`, payload, options)
 }
 
-//파일 단건 삭제 - 영구인가..?
+//파일 단건 삭제 (영구 삭제)
 export const deleteOneArchiveFileServer = async (
   dataSourceId: number,
   options: NextFetchOptions
@@ -82,12 +62,30 @@ export const deleteOneArchiveFileServer = async (
   )
 }
 
-//파일 다건 삭제
+//파일 다건 삭제 (영구 삭제)
 export const deleteManyArchiveFileServer = async (
-  dataSourceId: number,
+  payload: {
+    dataSourceId: number[]
+  },
   options: NextFetchOptions
 ) => {
-  return httpClient.delete<FilePostResponse>(`/api/v1/archive/delete`, options)
+  return httpClient.delete<FilePostResponse>(
+    `/api/v1/archive/delete`,
+    payload,
+    options
+  )
 }
 
-// 파일 이동 -update
+// 파일 수정
+export const editArchiveFileServer = async (
+  payload: {
+    dataSourceId: number[]
+  },
+  options: NextFetchOptions
+) => {
+  return httpClient.put<FilePostResponse>(
+    `/api/v1/archive/move`,
+    payload,
+    options
+  )
+}

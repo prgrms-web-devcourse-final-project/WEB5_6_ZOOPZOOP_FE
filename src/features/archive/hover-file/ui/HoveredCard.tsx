@@ -1,62 +1,55 @@
-import { tw } from '@/shared/lib'
+// HoveredCard.tsx
 import { Checkbox } from '@/shared/ui'
 import Link from 'next/link'
+import { tw } from '@/shared/lib'
 
 interface Props {
   id: number
-  isHover: boolean
-  isSelected: boolean
   title: string
   summary: string
   sourceUrl: string
   tags: string[]
+  isSelected: boolean
+  isHover: boolean
   onSelect: (cardId: number) => void
 }
 
-function HoveredCard({
+export function HoveredCard({
   id,
-  isSelected,
-  isHover,
   title,
   summary,
   sourceUrl,
   tags,
+  isSelected,
+  isHover,
   onSelect
 }: Props) {
   return (
     <div
+      style={{ height: '100%' }}
       className={tw(
-        'absolute inset-0 z-20 transform transition-all duration-200 ease-in-out',
+        'absolute top-0 left-0 w-full z-20 transition-all duration-300 ease-in-out',
         isHover
-          ? 'opacity-100 scale-105 -translate-x-5 -translate-y-2'
+          ? 'opacity-100 scale-105 pointer-events-auto'
           : 'opacity-0 scale-95 pointer-events-none'
       )}>
-      <div className="flex-1 flex flex-col w-75 min-h-75  bg-white rounded-md shadow-sm p-4 ring-3 ring-green-normal text-gray-darker text-base ">
-        <Checkbox
-          className="text-orange-accent size-5 mb-3"
-          checked={isSelected}
-          onCheckedChange={() => onSelect(id)}
-          aria-label={`${title} 자료 선택`}
-          id={`checkbox-${id}`}
-        />
+      <div className="flex flex-col w-full min-h-full bg-white rounded-sm shadow-2xl p-4 text-gray-darker text-base ">
         <div className="flex flex-wrap gap-1 mb-2">
-          {tags.map((item, index) => (
+          {tags.map((tag, index) => (
             <p
-              className="text-base  text-gray-darker"
-              key={index}>
-              # {item}
+              key={index}
+              className="text-base text-green-normal">
+              #{tag}
             </p>
           ))}
         </div>
 
-        <div className="flex-1 mb-2 ">
-          <p className="text-lg text-black">{summary}</p>
+        <div className="flex-1 mb-2">
+          <p className="text-base text-black">{summary}</p>
         </div>
 
         <Link href={sourceUrl}>
-          <button
-            type="button"
-            className="text-center text-base underline underline-offset-1 py-1 cursor-pointer hover:text-green-normal">
+          <button className="text-center text-base underline underline-offset-1 py-1 cursor-pointer hover:text-green-normal">
             자세히 보기
           </button>
         </Link>
@@ -64,4 +57,3 @@ function HoveredCard({
     </div>
   )
 }
-export default HoveredCard

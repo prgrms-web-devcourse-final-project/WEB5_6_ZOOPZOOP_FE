@@ -87,7 +87,11 @@ export const httpClient = {
     return this.request<T>('PATCH', endpoint, data, options)
   },
 
-  async delete<T>(endpoint: string, options?: NextFetchOptions): Promise<T> {
-    return this.request<T>('DELETE', endpoint, undefined, options)
+  async delete<T>(
+    endpoint: string,
+    data?: unknown,
+    options?: NextFetchOptions
+  ): Promise<T> {
+    return this.request<T>('DELETE', endpoint, data, options)
   }
 }

@@ -5,17 +5,23 @@ import {
   postArchiveFolderClient,
   deleteArchiveFolderClient,
   patchArchiveFolderClient
-} from '../../api/folder.client'
+} from '../api/folder.client'
 
-export const useArchiveFolders = () => {
-  const queryClient = useQueryClient()
-
+// 폴더 조회
+export const useGetArchiveFoldersQuery = () => {
   const foldersQuery = useQuery({
     queryKey: ['archiveFolders'],
     queryFn: fetchArchiveFolderClient,
     staleTime: 1000 * 60
   })
+  return {
+    foldersQuery
+  }
+}
 
+// 폴더 생성
+export const usePostArchiveFolderQuery = () => {
+  const queryClient = useQueryClient()
   const addFolder = useMutation({
     mutationFn: (folderName: string) => postArchiveFolderClient(folderName),
     onSuccess: () => {
@@ -23,6 +29,14 @@ export const useArchiveFolders = () => {
     }
   })
 
+  return {
+    addFolder
+  }
+}
+
+// 폴더 삭제
+export const useDeleteArchiveFolderQuery = () => {
+  const queryClient = useQueryClient()
   const deleteFolder = useMutation({
     mutationFn: (folderId: number) => deleteArchiveFolderClient(folderId),
     onSuccess: () => {
@@ -30,6 +44,14 @@ export const useArchiveFolders = () => {
     }
   })
 
+  return {
+    deleteFolder
+  }
+}
+
+//폴더 이름 수정
+export const useEditArchiveFolderNameQuery = () => {
+  const queryClient = useQueryClient()
   const updateFolderName = useMutation({
     mutationFn: ({
       folderId,
@@ -44,9 +66,6 @@ export const useArchiveFolders = () => {
   })
 
   return {
-    foldersQuery,
-    addFolder,
-    deleteFolder,
     updateFolderName
   }
 }

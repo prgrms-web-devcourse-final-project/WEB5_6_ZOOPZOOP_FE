@@ -1,6 +1,5 @@
-import { fetchArchiveFilesByPageServer } from '@/entities/archive/file/api/file.server'
-import { fetchArchiveFolderServer } from '@/entities/archive/folder/api/folder.server'
-
+import { getInitialFileList } from '@/entities/archive/file/api/file.ssr'
+import { getInitialFolderList } from '@/entities/archive/folder/api/folder.ssr'
 import Header, { Button } from '@/shared/ui/header/Header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
@@ -10,9 +9,8 @@ const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 0
 
 export default async function Archive() {
-  const { data } = await fetchArchiveFolderServer()
-
-  const fileResponse = await fetchArchiveFilesByPageServer({
+  const { data } = await getInitialFolderList()
+  const fileResponse = await getInitialFileList({
     page: INITIAL_PAGE,
     size: DEFAULT_PAGE_SIZE,
     folderId: ROOT_FOLDER_ID
@@ -28,20 +26,20 @@ export default async function Archive() {
   ]
 
   return (
-    <>
+    <div>
       <Header
         title="내 아카이브"
         buttons={buttons}
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
-      <div className="flex flex-col p-6 gap-4">
-        {/* TODO : 김정주 */}
+      <div className="w-full flex flex-col p-8 gap-4 ">
         <FolderSection folderList={data ?? []} />
         <FileSection
+          folderId={ROOT_FOLDER_ID}
           initialFileList={(fileResponse && fileResponse.data) ?? []}
           initialPageInfo={fileResponse && fileResponse.pageInfo}
         />
       </div>
-    </>
+    </div>
   )
 }

@@ -5,13 +5,12 @@ import { ModalLayout } from '../ModalLayout'
 import { FolderNameInput } from './FolderNameInput'
 import { FolderActionButtons } from './FolderActionButtons'
 import { useModalStore } from '@/shared/lib'
-
-import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
+import { usePostArchiveFolderQuery } from '@/entities/archive/folder'
 
 export const CreateFolderModal = () => {
   const [folderName, setFolderName] = useState('')
   const closeModal = useModalStore(s => s.closeModal)
-  const { addFolder } = useArchiveFolders()
+  const { addFolder } = usePostArchiveFolderQuery()
   const handleCreate = () => {
     addFolder.mutate(folderName)
   }
