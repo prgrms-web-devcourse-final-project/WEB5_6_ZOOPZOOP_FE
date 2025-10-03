@@ -5,6 +5,7 @@ import Pagination from '@/shared/ui/pagination/Pagination'
 import { useSearchParams } from 'next/navigation'
 import { useSpaceQuery } from '../hook/useSpaceQuery'
 import SpaceContextMenu from './SpaceContextMenu'
+import { postDashboardJWTClient } from '@/entities/dashboard'
 
 interface Props {
   initialData: SpacePagination
@@ -17,6 +18,10 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
     pagination: { currentPage },
     initialData: currentPage === initialPage ? initialData : undefined
   })
+
+  const handleDashboardAccess = async (spaceId: string) => {
+    await postDashboardJWTClient(spaceId)
+  }
 
   if (isPending) return null
 
@@ -37,6 +42,7 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
                   spaceId={space.id}
                   position={position}
                   onClose={onClose}
+                  handleDashboardAccess={handleDashboardAccess}
                   onEdit={() => {}}
                   onDelete={() => {}}
                 />

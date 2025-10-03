@@ -1,2 +1,3 @@
 export { useDashboardStore } from './model/dashboard.store'
-export { fetchSpaceFolderServer } from './api/archive.server'
+export { postDashboardJWTServer } from './api/dashboard.server'
+export { postDashboardJWTClient } from './api/dashboard.client'

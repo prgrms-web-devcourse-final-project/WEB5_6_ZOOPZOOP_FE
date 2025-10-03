@@ -9,6 +9,7 @@ interface Props {
   onClose?: () => void
   onEdit: () => void
   onDelete: () => void
+  handleDashboardAccess: (spaceId: string) => void
 }
 
 const SpaceContextMenu = ({
@@ -16,7 +17,8 @@ const SpaceContextMenu = ({
   onEdit,
   spaceId,
   onClose,
-  position
+  position,
+  handleDashboardAccess
 }: Props) => {
   useEffect(() => {
     if (!onClose) return
@@ -28,7 +30,11 @@ const SpaceContextMenu = ({
   const menuItems = [
     { label: '이름 수정', onClick: () => console.log('수정') },
     { label: '팀원 초대', onClick: () => console.log('삭제') },
-    { label: '삭제', onClick: () => console.log('삭제') }
+    { label: '삭제', onClick: () => console.log('삭제') },
+    {
+      label: '대시보드 접속',
+      onClick: () => handleDashboardAccess(spaceId.toString())
+    }
   ]
 
   return (
