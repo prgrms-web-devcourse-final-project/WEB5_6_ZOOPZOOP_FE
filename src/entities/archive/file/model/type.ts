@@ -1,7 +1,7 @@
 import { FolderData } from '../../folder'
 
 export interface FileGetResponse {
-  status: string
+  status: number
   msg: string
   data: {
     files: FileData[]
@@ -10,7 +10,7 @@ export interface FileGetResponse {
 }
 
 export interface FilePostResponse {
-  status: string
+  status: number
   msg: string
   data: {
     dataSourceId: number

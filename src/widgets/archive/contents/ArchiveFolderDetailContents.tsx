@@ -23,7 +23,8 @@ export default function ArchiveFolderDetailContents() {
   const { foldersQuery } = useArchiveFolders()
 
   const folderName = folder ? decodeURIComponent(String(folder)) : ''
-  const selectedFolder = foldersQuery.data?.data.find(
+  // TODO : 김정주
+  const selectedFolder = foldersQuery.data?.data?.find(
     f => f.folderName === folderName
   )
 

@@ -1,20 +1,26 @@
 import { updateProfileImageServer } from '@/entities/user'
-import { createCookieHeader, withAuth } from '@/shared/lib/api-route'
+import { requireAuth } from '@/shared/lib/api-route'
+import { NextResponse } from 'next/server'
 
-export const PUT = withAuth(async (token, request) => {
-  const formData = await request.formData()
-  const file = formData.get('file') as File
-  // File을 Buffer 또는 Blob으로 변환
-  const fileBuffer = await file.arrayBuffer()
-  const blob = new Blob([fileBuffer], { type: file.type })
+export const PUT = async (request: Request) => {
+  try {
+    const formData = await request.formData()
+    const file = formData.get('file') as File
+    const fileBuffer = await file.arrayBuffer()
+    const blob = new Blob([fileBuffer], { type: file.type })
+    const backendFormData = new FormData()
+    backendFormData.append('file', blob, file.name)
 
-  const backendFormData = new FormData()
-  // Blob과 함께 파일명도 전달
-  backendFormData.append('file', blob, file.name)
+    const response = await requireAuth(
+      async token => await updateProfileImageServer(backendFormData, { token })
+    )
 
-  return await updateProfileImageServer(backendFormData, {
-    headers: {
-      ...createCookieHeader(token)
-    }
-  })
-})
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg: error instanceof Error ? error.message : '요청 처리 중 오류 발생'
+    })
+  }
+}
