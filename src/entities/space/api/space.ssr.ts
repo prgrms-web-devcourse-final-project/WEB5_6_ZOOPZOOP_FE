@@ -13,7 +13,7 @@ export const getInitialSpaceList = async (
   const response = await requireAuth(async token => {
     return fetchSpaceListServer(params, {
       token,
-      next: { revalidate: 60, tags: ['space'] }
+      next: { tags: ['space'] }
     })
   })
   if (response.status !== 200) {

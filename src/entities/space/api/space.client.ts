@@ -21,7 +21,7 @@ export const fetchSpaceListClient = async ({
   })
 
   const response = await httpClient.get<SpacePaginationAPIResponse>(
-    `/api/spaces?${params.toString()}&includeMembers=true`
+    `/api/space?${params.toString()}&includeMembers=true`
   )
 
   if (response.status !== 200) {

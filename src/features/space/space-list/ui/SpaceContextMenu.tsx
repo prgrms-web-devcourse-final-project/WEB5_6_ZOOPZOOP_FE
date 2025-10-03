@@ -4,6 +4,7 @@
 import { useEffect } from 'react'
 
 interface Props {
+  title: string
   spaceId: number
   position: { x: number; y: number }
   onClose?: () => void
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const SpaceContextMenu = ({
+  title,
   onDelete,
   onEdit,
   spaceId,
@@ -34,7 +36,10 @@ const SpaceContextMenu = ({
   return (
     <div
       style={{ top: position.y, left: position.x }}
-      className="fixed shadow-lg rounded-md py-2 min-w-[150px] z-50 bg-gray-darker">
+      className="fixed shadow-lg rounded-md py-2 w-52 z-50 bg-gray-darker">
+      <h3 className="text-white p-1 pb-2 text-center text-sm border-b border-b-gray-normal truncate">
+        {title}
+      </h3>
       {menuItems.map((item, index) => (
         <button
           key={index}

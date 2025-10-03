@@ -1,40 +1,32 @@
 import { formatISODate } from '@/shared/lib/formatter'
 import SpaceCardThumbnail from './SpaceCardThumbnail'
 // import ContributorList from './ContributorList'
-import { MenuState, Space } from '../model/type'
-import { useState } from 'react'
+import { Space } from '../model'
 
 interface Props extends Space {
-  renderContextMenu?: (props: {
-    position: { x: number; y: number }
-    onClose: () => void
-  }) => React.ReactNode
+  onContextMenu: (x: number, y: number) => void
+  renderContextMenu?: () => React.ReactNode
 }
 
 const SpaceCard = ({
   name,
   thumbnailUrl,
   createDate,
-  renderContextMenu
+  renderContextMenu,
+  onContextMenu
 }: Props) => {
-  const [menuState, setMenuState] = useState<MenuState>({
-    isOpen: false,
-    x: 0,
-    y: 0
-  })
   // 날짜 포멧
   const formattedData = formatISODate(createDate)
 
-  // 핸들 컨택스트 메뉴
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault()
-    setMenuState({ isOpen: true, x: e.clientX, y: e.clientY })
+    onContextMenu(e.clientX, e.clientY) // ← SpaceList로 전달
   }
 
   return (
     <>
       <li
-        className="flex flex-col border border-[#D9D9D9] rounded-lg cursor-pointer transition-all duration-200 hover:ring-3 hover:ring-orange-accent"
+        className="flex flex-col border border-[#D9D9D9] rounded-lg cursor-pointer transition-all duration-200 hover:ring-3 hover:ring-orange-accent min-w-52"
         onContextMenu={handleContextMenu}>
         {/* 카드 썸네일 */}
         <SpaceCardThumbnail
@@ -54,12 +46,7 @@ const SpaceCard = ({
           {/* <ContributorList contributors={contributors} /> */}
         </div>
       </li>
-      {renderContextMenu &&
-        menuState.isOpen &&
-        renderContextMenu({
-          position: { x: menuState.x, y: menuState.y },
-          onClose: () => setMenuState(prev => ({ ...prev, isOpen: false }))
-        })}
+      {renderContextMenu && renderContextMenu()}
     </>
   )
 }
