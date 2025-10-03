@@ -1,14 +1,19 @@
 /* eslint-disable no-console */
 import { postSpaceClient } from '@/entities/space'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
 const useCreateSpace = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
   return useMutation({
     mutationKey: ['create-space'],
     mutationFn: (payload: string) => postSpaceClient(payload),
     onSuccess: () => {
-      // 성공 로직
-      console.log('성공')
+      queryClient.invalidateQueries({ queryKey: ['space'] })
+
+      router.push('/space/?page=1')
+      router.refresh()
     },
     onError: error => {
       // 에러 로직

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 
 interface SpaceQuery {
   pagination: { currentPage: number; size?: number; sort?: string[] }
-  initialData: SpacePagination
+  initialData?: SpacePagination
 }
 
 export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {

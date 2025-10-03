@@ -8,11 +8,11 @@ import {
 
 // 스페이스 목록 조회
 export const fetchSpaceListServer = async (
-  { page = 0, size = 8, sort = [] }: FetchSpaceListParams,
+  { page = 0, size = 15, sort = [] }: FetchSpaceListParams,
   options?: NextFetchOptions
 ): Promise<SpacePaginationAPIResponse> => {
   const params = new URLSearchParams()
-  params.append('page', page.toString())
+  params.append('page', (page - 1).toString())
   params.append('size', size.toString())
 
   sort.forEach(s => {

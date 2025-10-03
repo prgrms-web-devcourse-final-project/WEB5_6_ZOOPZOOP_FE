@@ -1,20 +1,11 @@
 'use client'
 
-import { useRef, useState } from 'react'
-
-import { CreateModalHeader } from './CreateSpaceHeader'
-import { InputSpaceName } from './SpaceNameInput'
-import { InviteMember } from './MemberInvitation'
+import { useRef } from 'react'
 import { ModalLayout } from '@/shared/ui'
 import useCreateSpace from '../hook/useCreateSpace'
+import { InputSpaceName } from './SpaceNameInput'
 
-export const CreateSpaceModal = ({
-  initialStep = 1
-}: {
-  initialStep?: number
-}) => {
-  const [step, setStep] = useState(initialStep)
-
+export const CreateSpaceModal = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const { mutate } = useCreateSpace()
 
@@ -29,15 +20,11 @@ export const CreateSpaceModal = ({
 
   return (
     <ModalLayout size="md">
-      <CreateModalHeader step={step} />
-      {step === 1 && (
-        <InputSpaceName
-          setStep={setStep}
-          inputRef={inputRef}
-          onCreate={handleCreateSpace}
-        />
-      )}
-      {step === 2 && <InviteMember />}
+      <h1 className="text-2xl font-bold">스페이스 생성</h1>
+      <InputSpaceName
+        inputRef={inputRef}
+        onCreate={handleCreateSpace}
+      />
     </ModalLayout>
   )
 }

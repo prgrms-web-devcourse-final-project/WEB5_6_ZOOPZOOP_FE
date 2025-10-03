@@ -9,7 +9,7 @@ import {
 // 스페이스 조회
 export const fetchSpaceListClient = async ({
   page = 0,
-  size = 8,
+  size = 15,
   sort = []
 }: FetchSpaceListParams): Promise<SpacePagination | null> => {
   const params = new URLSearchParams()
@@ -21,7 +21,7 @@ export const fetchSpaceListClient = async ({
   })
 
   const response = await httpClient.get<SpacePaginationAPIResponse>(
-    `/api/spaces?${params.toString()}`
+    `/api/spaces?${params.toString()}&includeMembers=true`
   )
 
   if (response.status !== 200) {

@@ -16,10 +16,9 @@ export const getInitialSpaceList = async (
       next: { revalidate: 60, tags: ['space'] }
     })
   })
-
-  // if (response.status !== 201) {
-  //   throw new Error(response.msg)
-  // }
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
 
   return response.data
 }

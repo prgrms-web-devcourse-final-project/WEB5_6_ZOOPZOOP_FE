@@ -14,7 +14,7 @@ export interface Space {
   name: string
   thumbnailUrl: string
   authority: Authority
-  createDate: Date
+  createDate: string
   members: SpaceMember[]
 }
 
@@ -32,3 +32,10 @@ export type SpacePagination = Pagination<'spaces', Space>
 export type SpacePaginationAPIResponse = APIResponse<SpacePagination>
 
 export type CreateSpaceResponse = APIResponse<{ name: string }>
+
+// context menu 타입
+export interface MenuState {
+  isOpen: boolean
+  x: number
+  y: number
+}
