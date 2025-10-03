@@ -1,18 +1,18 @@
 import { formatISODate } from '@/shared/lib/formatter'
 import SpaceCardThumbnail from './SpaceCardThumbnail'
 // import ContributorList from './ContributorList'
-import { Space } from '../model'
+import { SpaceCard as SpaceCardType } from '../model'
 
-interface Props extends Space {
+interface Props extends SpaceCardType {
   onContextMenu: (x: number, y: number) => void
-  renderContextMenu?: () => React.ReactNode
+  contextMenu?: React.ReactNode
 }
 
 const SpaceCard = ({
   name,
   thumbnailUrl,
   createDate,
-  renderContextMenu,
+  contextMenu,
   onContextMenu
 }: Props) => {
   // 날짜 포멧
@@ -46,7 +46,7 @@ const SpaceCard = ({
           {/* <ContributorList contributors={contributors} /> */}
         </div>
       </li>
-      {renderContextMenu && renderContextMenu()}
+      {contextMenu && <>{contextMenu}</>}
     </>
   )
 }

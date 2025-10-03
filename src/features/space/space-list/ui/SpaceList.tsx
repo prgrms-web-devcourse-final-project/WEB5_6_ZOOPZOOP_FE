@@ -4,8 +4,7 @@ import { SpaceCard, SpacePagination } from '@/entities/space'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import SpaceContextMenu from './SpaceContextMenu'
 import { useFetchSpace } from '../model/useFetchSpace'
-import { useEffect, useState } from 'react'
-import { Position } from '@/shared/types'
+import { useContextMenu } from '../model/useContextMenu'
 
 interface Props {
   initialData: SpacePagination
@@ -13,32 +12,9 @@ interface Props {
 }
 const SpaceList = ({ initialData, initialPage }: Props) => {
   const { spaces, isLoading } = useFetchSpace({ initialData, initialPage })
-  const [activeMenu, setActiveMenu] = useState<{
-    spaceId: number | null
-    position: Position
-  }>({ spaceId: null, position: { x: 0, y: 0 } })
 
-  const handleContextMenu = (spaceId: number, x: number, y: number) => {
-    setActiveMenu({ spaceId, position: { x, y } })
-  }
-
-  const closeMenu = () => {
-    setActiveMenu({ spaceId: null, position: { x: 0, y: 0 } })
-  }
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setActiveMenu({ spaceId: null, position: { x: 0, y: 0 } })
-      }
-    }
-
-    if (activeMenu.spaceId) {
-      document.addEventListener('keydown', handleKeyDown)
-    }
-
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [activeMenu.spaceId])
+  // 컨택스트 메뉴
+  const { closeMenu, handleContextMenu, activeMenu } = useContextMenu()
 
   if (isLoading) return null
 
@@ -52,19 +28,15 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
               {...space}
               key={space.id}
               onContextMenu={(x, y) => handleContextMenu(space.id, x, y)}
-              renderContextMenu={
-                activeMenu.spaceId === space.id
-                  ? () => (
-                      <SpaceContextMenu
-                        title={space.name}
-                        spaceId={space.id}
-                        position={activeMenu.position}
-                        onClose={closeMenu}
-                        onEdit={() => {}}
-                        onDelete={() => {}}
-                      />
-                    )
-                  : undefined
+              contextMenu={
+                activeMenu.spaceId === space.id ? (
+                  <SpaceContextMenu
+                    title={space.name}
+                    spaceId={space.id}
+                    position={activeMenu.position}
+                    onClose={closeMenu}
+                  />
+                ) : undefined
               }
             />
           ))}

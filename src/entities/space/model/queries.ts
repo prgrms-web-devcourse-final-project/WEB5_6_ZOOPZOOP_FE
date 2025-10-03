@@ -4,7 +4,11 @@ import {
   useQuery
 } from '@tanstack/react-query'
 import { SpacePagination } from './type'
-import { fetchSpaceListClient, postSpaceClient } from '../api/space.client'
+import {
+  deleteSpaceClient,
+  fetchSpaceListClient,
+  postSpaceClient
+} from '../api/space.client'
 
 export interface SpaceQuery {
   pagination: { currentPage: number; size?: number; sort?: string[] }
@@ -49,5 +53,24 @@ export const useCreateSpaceMutation = (
   return {
     createSpace: mutate,
     isCreating: isPending
+  }
+}
+
+// 스페이스 삭제
+export const useDeleteSpaceMutation = (
+  options: Omit<
+    UseMutationOptions<void, Error, number>,
+    'mutationFn' | 'mutationKey'
+  >
+) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['delete-space'],
+    mutationFn: (spaceId: number) => deleteSpaceClient(spaceId),
+    ...options
+  })
+
+  return {
+    deleteSpace: mutate,
+    isDeleting: isPending
   }
 }

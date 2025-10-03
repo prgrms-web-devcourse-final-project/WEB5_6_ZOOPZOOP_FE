@@ -1,7 +1,10 @@
 import { httpClient } from '@/shared/lib'
 import {
   CreateSpaceResponse,
+  DeleteSpaceResponse,
   FetchSpaceListParams,
+  Space,
+  SpaceResponse,
   SpacePagination,
   SpacePaginationAPIResponse
 } from '../model/type'
@@ -41,6 +44,30 @@ export const postSpaceClient = async (
     payload
   )
   if (response.status !== 201) {
+    throw new Error(response.msg)
+  }
+
+  return response.data
+}
+
+// 스페이스 삭제
+export const deleteSpaceClient = async (spaceId: number): Promise<void> => {
+  const response = await httpClient.delete<DeleteSpaceResponse>(
+    `/api/space/${spaceId}`
+  )
+
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+}
+
+// 스페이스 단건 조회
+export const fetchSpaceClient = async (
+  spaceId: number
+): Promise<Space | null> => {
+  const response = await httpClient.get<SpaceResponse>(`/api/space/${spaceId}`)
+
+  if (response.status !== 200) {
     throw new Error(response.msg)
   }
 
