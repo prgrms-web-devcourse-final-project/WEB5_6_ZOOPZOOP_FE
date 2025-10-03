@@ -10,7 +10,7 @@ import {
 export const fetchUserServer = async (
   options: NextFetchOptions
 ): Promise<UserResponse> => {
-  return httpClient.get<UserResponse>('/api/v1/member/me', options)
+  return await httpClient.get<UserResponse>('/api/v1/member/me', options)
 }
 
 // 업데이트 닉네임
@@ -36,7 +36,7 @@ export const deleteAccountServer = async (
 export const updateProfileImageServer = async (
   formData: FormData,
   options: NextFetchOptions
-) => {
+): Promise<UpdateProfileImageResponse> => {
   return httpClient.put<UpdateProfileImageResponse>(
     '/api/v1/member/edit/image',
     formData,

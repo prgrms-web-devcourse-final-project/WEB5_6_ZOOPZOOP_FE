@@ -1,3 +1,3 @@
-export { GoogleAuthButton, KakaoAuthButton, LogoutButton } from './ui'
-
-export { logoutUserServer } from './api/auth.server'
+export { DeleteAccountButton, DeleteAccountModal } from './delete-account'
+export { GoogleAuthButton, KakaoAuthButton } from './login'
+export { LogoutButton } from './logout'

@@ -10,7 +10,7 @@ const Hero = () => {
             'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/big-logo'
           }
           alt="ZOOPZOOP logo"
-          className="w-auto"
+          className="w-auto h-[300px]"
           width={300}
           height={200}
           priority

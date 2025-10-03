@@ -5,11 +5,11 @@ import { useShallow } from 'zustand/shallow'
 import { UrlUploadModal } from './archive/url-upload/UrlUploadModal'
 import { ArchiveSelectModal } from './archive/archive-select/ArchiveSelectModal'
 import { AlarmModal } from './alarm/AlarmModal'
-import { CreateSpaceModal } from './create-space/CreateSpaceModal'
 import { CreateFolderModal } from './create-folder/CreateFolderModal'
-import { DeleteAccountModal } from '@/features/auth/ui/DeleteAccountModal'
 import { MoveFileModal } from './archive/move-file/MoveFileModal'
 import { RenameFolderModal } from './rename-folder/RenameFolderModal'
+import { CreateSpaceModal } from '@/features/space'
+import { DeleteAccountModal } from '@/features/auth'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
