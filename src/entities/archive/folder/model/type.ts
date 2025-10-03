@@ -1,16 +1,16 @@
-export type FolderResponse = {
-  status: string
-  msg: string
-  data: FolderData[]
-}
+import { APIResponse } from '@/shared/types'
 
-export type FolderPatchResponse = {
-  status: string
-  msg: string
-  data: {
-    folderName: string
-  }
-}
+export type FolderResponse = APIResponse<FolderData[]>
+
+// export type FolderResponse = {
+//   status: string
+//   msg: string
+//   data: FolderData[]
+// }
+
+export type FolderPatchResponse = APIResponse<{
+  folderName: string
+}>
 
 export interface FolderData {
   folderId: number
