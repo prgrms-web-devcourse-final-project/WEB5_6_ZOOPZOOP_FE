@@ -1,32 +1,46 @@
-'use client'
-import { Header } from '@/shared/ui/header'
-import { Button } from '@/shared/ui/header/Header'
-import { Plus, Upload } from 'lucide-react'
+import { fetchArchiveFilesByPageServer } from '@/entities/archive/file/api/file.server'
+import { fetchArchiveFolderServer } from '@/entities/archive/folder/api/folder.server'
 
-export default function Archive() {
+import Header, { Button } from '@/shared/ui/header/Header'
+import { FileSection } from '@/widgets/archive/file-section'
+import { FolderSection } from '@/widgets/archive/folder-section'
+
+const DEFAULT_PAGE_SIZE = 8
+const ROOT_FOLDER_ID = 0
+const INITIAL_PAGE = 0
+
+export default async function Archive() {
+  const { data } = await fetchArchiveFolderServer()
+
+  const fileResponse = await fetchArchiveFilesByPageServer({
+    page: INITIAL_PAGE,
+    size: DEFAULT_PAGE_SIZE,
+    folderId: ROOT_FOLDER_ID
+  })
+
   const buttons: Button[] = [
     {
-      label: '파일 생성',
-      icon: Plus,
-      onClick: () => {
-        // TODO: 파일 생성 기능 구현
-      }
+      label: '폴더 생성'
     },
     {
-      label: '파일 업로드',
-      icon: Upload,
-      onClick: () => {
-        // TODO: 파일 업로드 기능 구현
-      }
+      label: '파일 업로드'
     }
   ]
+
   return (
-    <div>
+    <>
       <Header
-        title="아카이브"
+        title="내 아카이브"
         buttons={buttons}
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
-    </div>
+      <div className="flex flex-col p-6 gap-4">
+        <FolderSection folderList={data} />
+        <FileSection
+          initialFileList={(fileResponse && fileResponse.data) ?? []}
+          initialPageInfo={fileResponse && fileResponse.pageInfo}
+        />
+      </div>
+    </>
   )
 }

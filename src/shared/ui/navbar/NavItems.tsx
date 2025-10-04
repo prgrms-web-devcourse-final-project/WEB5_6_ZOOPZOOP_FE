@@ -5,6 +5,7 @@ import SubNavItem from './SubNavItem'
 interface Props {
   item: MainNav
   pathName: string
+
   isExpanded: boolean
 }
 

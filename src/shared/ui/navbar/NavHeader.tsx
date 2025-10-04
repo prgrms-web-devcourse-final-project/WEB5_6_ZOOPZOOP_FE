@@ -4,6 +4,7 @@ import { tw } from '@/shared/lib'
 
 interface Props {
   user: User | null
+
   isExpanded: boolean
   toggleNavbar: () => void
 }

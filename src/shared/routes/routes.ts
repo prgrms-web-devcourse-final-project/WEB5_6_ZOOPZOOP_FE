@@ -35,8 +35,7 @@ export const navItems: MainNav[] = [
     count: 123,
     children: [
       {
-        /* TODO: 루트 변경 */
-        href: PATH.ARCHIVE.ROOT,
+        href: PATH.ARCHIVE.TRASH,
         label: '휴지통',
         icon: Trash2
       }
