@@ -9,7 +9,7 @@ export const fetchNews = async (): Promise<NewsResponse> => {
 
 export const fetchNewsByKeywords = async (
   keywords: string
-): Promise<NewsResponse> => {
+): Promise<NewsResponse | null> => {
   return httpClient.post<NewsResponse>(
     `/api/v1/news/keywords`,
     {

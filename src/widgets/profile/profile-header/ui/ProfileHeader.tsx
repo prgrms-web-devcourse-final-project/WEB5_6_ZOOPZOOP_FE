@@ -24,7 +24,7 @@ const ProfileHeader = () => {
               {/* provider 타입 */}
               <ProviderInfo provider={user.provider} />
               {/* 가입일 */}
-              <JoinDateInfo />
+              <JoinDateInfo createAt={user.createAt} />
             </div>
           </div>
         ) : (

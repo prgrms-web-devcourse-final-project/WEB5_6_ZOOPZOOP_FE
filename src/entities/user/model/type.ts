@@ -3,7 +3,7 @@ import { APIResponse } from '@/shared/types'
 export interface User {
   name: string
   profileUrl: string
-  createAt: Date
+  createAt: string
   provider: string
 }
 

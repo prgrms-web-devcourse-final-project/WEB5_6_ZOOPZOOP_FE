@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const LoginPage = () => {
   return (
-    <section className="h-screen flex-center flex-col gap-6">
+    <section className="h-screen flex justify-center items-center flex-col gap-6 pb-30">
       <Hero />
       <OAuthButtonGroup />
     </section>

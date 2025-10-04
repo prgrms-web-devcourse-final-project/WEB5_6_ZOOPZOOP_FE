@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import FileHeader from './FileHeader'
 import { SortDirection } from '@tanstack/react-table'
 import { SortKey } from '@/features/archive/sort'
@@ -127,7 +127,7 @@ function FileSection({ initialFileList, initialPageInfo }: Props) {
       />
 
       {viewMode === 'list' ? tableView() : fileCardView()}
-      {initialPageInfo.totalPages >= 1 && (
+      {initialPageInfo.totalPages >= 0 && (
         <Pagination totalPages={initialPageInfo.totalPages} />
       )}
     </>

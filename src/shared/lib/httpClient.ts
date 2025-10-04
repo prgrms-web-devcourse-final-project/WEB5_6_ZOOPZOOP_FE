@@ -7,13 +7,15 @@ const createFetchOptions = (
   data?: unknown,
   options?: NextFetchOptions
 ): NextFetchOptions => {
-  const { headers, ...restOptions } = options || {}
+  const { headers, token, ...restOptions } = options || {}
 
   const isFormData = data instanceof FormData
+
   return {
     method,
     headers: {
       ...(!isFormData && { 'Content-Type': 'application/json' }),
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...headers
     },
     body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
@@ -22,19 +24,22 @@ const createFetchOptions = (
 }
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
-  if (!response.ok) {
-    switch (response.status) {
-      case 401:
-        throw new Error('인증이 필요합니다')
-      case 403:
-        throw new Error('권한이 없습니다')
-      case 404:
-        throw new Error('요청한 리소스를 찾을 수 없습니다')
-      case 500:
-        throw new Error('서버 내부 오류가 발생했습니다')
-    }
+  const result = await response.json()
+
+  // 성공이면 그대로 반환
+  if (response.ok) {
+    return {
+      ...result,
+      status: Number(result.status)
+    } as T
   }
-  return response.json()
+
+  // 백엔드가 { status, data, msg } 형식으로 보낸다면
+  return {
+    data: null,
+    status: Number(response.status),
+    msg: result.msg || '알 수 없는 오류'
+  } as T
 }
 
 export const httpClient = {

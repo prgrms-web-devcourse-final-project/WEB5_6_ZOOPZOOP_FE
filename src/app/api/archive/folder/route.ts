@@ -13,7 +13,7 @@ export const GET = withAuth(async () => {
 
 // 폴더 생성
 export const POST = withAuth(async (token, request) => {
-  const payload = await request.json()
+  const payload = await request?.json()
 
   return await postArchiveFolderServer(payload, {
     headers: createCookieHeader(token)
@@ -21,14 +21,14 @@ export const POST = withAuth(async (token, request) => {
 })
 
 // 폴더 이름 변경
-export const PATCH = withAuth(async (token: string, request: Request) => {
-  const url = new URL(request.url)
+export const PATCH = withAuth(async (token, request) => {
+  const url = new URL(request!.url)
   const folderIdParam = url.searchParams.get('folderId')
   const folderId = folderIdParam ? parseInt(folderIdParam, 10) : null
 
   if (!folderId) throw new Error('folderId is required')
 
-  const payload = await request.json()
+  const payload = await request!.json()
   const response = await patchArchiveFolderServer(
     folderId,
     { folderName: payload.folderName },
@@ -40,7 +40,7 @@ export const PATCH = withAuth(async (token: string, request: Request) => {
 
 // 폴더 삭제
 export const DELETE = withAuth(async (token, request) => {
-  const { folderId } = await request.json()
+  const { folderId } = await request!.json()
   return await deleteArchiveFolderServer(folderId, {
     headers: createCookieHeader(token)
   })
