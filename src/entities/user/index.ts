@@ -10,5 +10,9 @@ export {
   deleteAccountServer,
   updateProfileImageServer
 } from './api/user.server'
-export { useUserStore, useUserQuery } from './model'
+export {
+  useUserStore,
+  useUserQuery,
+  useUpdateProfileImageMutation
+} from './model'
 export type * from './model'

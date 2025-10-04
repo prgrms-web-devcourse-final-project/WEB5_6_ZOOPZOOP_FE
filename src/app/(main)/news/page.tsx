@@ -43,7 +43,7 @@ export default async function News() {
                 key={category.keywords}
                 category={category.keywords}
                 categoryKor={category.categoryKor}
-                news={news?.slice(0, 4)}
+                news={news?.slice(0, 4) ?? []}
               />
             )
           })}
