@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useModalStore } from '@/shared/lib'
 import { Plus } from 'lucide-react'
 import ActionButton from '@/shared/ui/header/ActionButton'
@@ -12,7 +12,14 @@ interface Props {
 
 function SpaceHeader({ title, showButton = true }: Props) {
   const openModal = useModalStore(s => s.openModal)
-  const router = useRouter()
+
+  const pathname = usePathname()
+
+  const isDashboard = pathname.includes('/dashboard')
+
+  if (isDashboard) {
+    return null
+  }
 
   return (
     <header className="bg-gray-dark-active p-6 w-full">
