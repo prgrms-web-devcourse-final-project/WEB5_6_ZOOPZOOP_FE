@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { RefObject, useRef, useState } from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -48,21 +48,14 @@ const FlowDashboardContent = () => {
 
   const handlePaneClick = (event: React.MouseEvent) => {
     if (isCreating) {
-      const reactFlowBounds = (event.target as Element)
-        .closest('.react-flow')
-        ?.getBoundingClientRect()
+      const flowPosition = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY
+      })
 
-      if (reactFlowBounds) {
-        const flowPosition = screenToFlowPosition({
-          x: event.clientX - reactFlowBounds.left,
-          y: event.clientY - reactFlowBounds.top
-        })
-
-        setNewCommentPosition(flowPosition)
-      }
+      setNewCommentPosition(flowPosition)
     }
   }
-
   return (
     <div className="flex w-full h-screen relative">
       <FlowSidebar />
@@ -125,6 +118,7 @@ const FlowDashboardContent = () => {
           setIsCreating={setIsCreating}
           newCommentPosition={newCommentPosition}
           setNewCommentPosition={setNewCommentPosition}
+          containerRef={flowContainerRef as RefObject<HTMLDivElement>}
         />
       </div>
     </div>
