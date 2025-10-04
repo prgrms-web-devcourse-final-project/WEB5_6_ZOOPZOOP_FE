@@ -1,5 +1,10 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 import {
+  useMutation,
+  UseMutationOptions,
+  useQuery
+} from '@tanstack/react-query'
+import {
+  fetchUserInfoByNameClient,
   updateNicknameClient,
   updateProfileImageClient
 } from '../api/user.client'
@@ -33,4 +38,13 @@ export const useUpdateNicknameMutation = (
     updateNickname: mutate,
     isUpdating: isPending
   }
+}
+
+// 유저 정보 조회 by nickname
+export const useFetchUserInfoByNicknameQuery = (name: string) => {
+  return useQuery({
+    queryKey: ['user', name],
+    queryFn: () => fetchUserInfoByNameClient(name),
+    enabled: !!name
+  })
 }

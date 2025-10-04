@@ -2,6 +2,8 @@ import { httpClient } from '@/shared/lib'
 import {
   Nickname,
   Profile,
+  SearchUser,
+  SearchUserResponse,
   UpdateNicknameResponse,
   UpdateProfileImageResponse,
   User,
@@ -63,4 +65,20 @@ export const updateProfileImageClient = async (
     throw new Error('프로필 이미지 업데이트 실패')
   }
   return response.data
+}
+
+// 유저 정보 검색 by nickname
+export const fetchUserInfoByNameClient = async (
+  name: string
+): Promise<SearchUser> => {
+  const encodedName = encodeURIComponent(name)
+  const { data, msg, status } = await httpClient.get<SearchUserResponse>(
+    `/api/user/nickname?name=${encodedName}`
+  )
+
+  if (status !== 200 || !data) {
+    throw new Error(msg)
+  }
+
+  return data
 }

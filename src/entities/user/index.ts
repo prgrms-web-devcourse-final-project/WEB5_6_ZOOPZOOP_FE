@@ -2,7 +2,8 @@ export {
   fetchUserClient,
   updateNicknameClient,
   deleteAccountClient,
-  updateProfileImageClient
+  updateProfileImageClient,
+  fetchUserInfoByNameClient
 } from './api/user.client'
 export {
   fetchUserServer,

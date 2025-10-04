@@ -56,9 +56,7 @@ export default function NavHeader({ user, isExpanded, toggleNavbar }: Props) {
         </div>
 
         {isExpanded && (
-          <p className="text-base">
-            {user ? user.name.split('#')[0] : '사용자'}
-          </p>
+          <p className="text-base">{user ? user.name : '사용자'}</p>
         )}
       </div>
     </header>

@@ -3,7 +3,7 @@ import { Separator } from '@/shared/ui/shadcn/separator'
 import {
   SpaceDangerSection,
   SpaceInfo,
-  SpaceMemberTable
+  SpaceMemberManagement
 } from '@/widgets/space'
 
 interface Props {
@@ -20,7 +20,7 @@ const SpaceManagementPage = async ({ params }: Props) => {
       <SpaceInfo />
       <Separator className="my-10" />
       {/* 스페이스 맴버 테이블 */}
-      <SpaceMemberTable members={members.members} />
+      <SpaceMemberManagement members={members.members} />
       <Separator className="my-10" />
       {/* 스페이스 삭제 및 탈퇴 */}
       <SpaceDangerSection />
