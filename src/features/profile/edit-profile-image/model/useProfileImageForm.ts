@@ -1,19 +1,16 @@
 import { useRef, useState } from 'react'
-import { useProfileImageMutation } from '../api/useProfileImageMutation'
-import { useUserStore } from '@/entities/user'
+import { useUpdateProfileImageMutation, useUserStore } from '@/entities/user'
 
 export const useProfileImageForm = (profileUrl: string) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // 스토어
   const updateUser = useUserStore(state => state.updateUser)
 
-  // 파생 상태
-  const isChanged = previewUrl !== null
-  const displayUrl = previewUrl || profileUrl
-
-  const { mutate, isPending } = useProfileImageMutation({
+  // tanstack query
+  const { updateProfileImage, isUploading } = useUpdateProfileImageMutation({
     onSuccess: data => {
       setPreviewUrl(null)
       setSelectedFile(null)
@@ -24,10 +21,14 @@ export const useProfileImageForm = (profileUrl: string) => {
     }
   })
 
+  // 파생 상태
+  const isChanged = previewUrl !== null
+  const displayUrl = previewUrl || profileUrl
+
   // 업로드 핸들러
   const handleUpload = () => {
     if (!selectedFile) return
-    mutate(selectedFile)
+    updateProfileImage(selectedFile)
   }
 
   // 이미지 선택
@@ -63,7 +64,7 @@ export const useProfileImageForm = (profileUrl: string) => {
     onUpload: handleUpload,
     handleCancel,
     inputRef,
-    isUploading: isPending,
+    isUploading,
     displayUrl,
     isChanged
   }

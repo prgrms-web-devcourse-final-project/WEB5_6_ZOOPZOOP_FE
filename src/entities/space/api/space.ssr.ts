@@ -1,6 +1,6 @@
 import { requireAuth } from '@/shared/lib/api-route'
-import { fetchSpaceListServer } from './space.server'
-import { FetchSpaceListParams, SpacePagination } from '../model/type'
+import { fetchSpaceListServer, fetchSpaceServer } from './space.server'
+import { FetchSpaceListParams, Space, SpacePagination } from '../model/type'
 
 // 서버 컴포넌트  API 호출 함수
 
@@ -13,9 +13,26 @@ export const getInitialSpaceList = async (
   const response = await requireAuth(async token => {
     return fetchSpaceListServer(params, {
       token,
-      next: { revalidate: 60, tags: ['space'] }
+      next: { tags: ['spaceList'] }
     })
   })
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+
+  return response.data
+}
+
+// space info ssr
+export const getSpaceInfo = async (id: string): Promise<Space | null> => {
+  const response = await requireAuth(
+    async token =>
+      await fetchSpaceServer(id, {
+        token,
+        next: { revalidate: 60, tags: ['spaceInfo'] }
+      })
+  )
+
   if (response.status !== 200) {
     throw new Error(response.msg)
   }

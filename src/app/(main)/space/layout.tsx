@@ -8,7 +8,7 @@ export default function SpaceLayout({
   return (
     <>
       <SpaceHeader title="내 스페이스" />
-      <div className="w-full p-8">{children}</div>
+      <div className="p-8 w-full">{children}</div>
     </>
   )
 }

@@ -1,46 +1,54 @@
 /* eslint-disable no-console */
 'use client'
 
-import { useEffect } from 'react'
+import { useOnClickOutside } from '@/shared/hooks'
+import { useModalStore } from '@/shared/lib'
+import { useRef } from 'react'
 
 interface Props {
+  title: string
   spaceId: number
   position: { x: number; y: number }
   onClose?: () => void
-  onEdit: () => void
-  onDelete: () => void
   handleDashboardAccess: (spaceId: string) => void
 }
 
 const SpaceContextMenu = ({
-  onDelete,
-  onEdit,
+  title,
   spaceId,
   onClose,
   position,
   handleDashboardAccess
 }: Props) => {
-  useEffect(() => {
-    if (!onClose) return
-    const handleClick = () => onClose()
-    document.addEventListener('click', handleClick)
-    return () => document.removeEventListener('click', handleClick)
-  }, [onClose])
+  const menuRef = useRef<HTMLDivElement>(null)
+  const openModal = useModalStore(state => state.openModal)
+
+  useOnClickOutside(menuRef, () => onClose?.())
 
   const menuItems = [
     { label: '이름 수정', onClick: () => console.log('수정') },
     { label: '팀원 초대', onClick: () => console.log('삭제') },
-    { label: '삭제', onClick: () => console.log('삭제') },
     {
       label: '대시보드 접속',
       onClick: () => handleDashboardAccess(spaceId.toString())
+    },
+    {
+      label: '삭제',
+      onClick: () => {
+        openModal({ type: 'delete-space', props: { spaceId: spaceId, title } })
+        onClose?.()
+      }
     }
   ]
 
   return (
     <div
+      ref={menuRef}
       style={{ top: position.y, left: position.x }}
-      className="fixed shadow-lg rounded-md py-2 min-w-[150px] z-50 bg-gray-darker">
+      className="fixed shadow-lg rounded-md py-2 w-52 z-50 bg-gray-darker">
+      <h3 className="text-white p-1 pb-2 text-center text-sm border-b border-b-gray-normal truncate">
+        {title}
+      </h3>
       {menuItems.map((item, index) => (
         <button
           key={index}

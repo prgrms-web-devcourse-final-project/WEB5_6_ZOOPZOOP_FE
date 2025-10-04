@@ -1,14 +1,13 @@
-import { updateNicknameClient, useUserStore } from '@/entities/user'
-import { useMutation } from '@tanstack/react-query'
+import { useUserStore } from '@/entities/user'
+import { useUpdateNicknameMutation } from '@/entities/user/model/queries'
+import { useState } from 'react'
 
-const useUpdateNickname = () => {
-  // 이 훅에서 바로 전역 상태 관리 훅을 호출하면 결합도가 올라가서 재사용성이 떨어진다.
-  // 그렇다고 tanstack query와 zustand 함수를 분리하고 또 조합 훅을 만들어서 또 다시 합친다?
-  // 컴포넌트 단위에서 둘다 호출한다?
-  // 뭐가 맞는건지 잘 모르겠음
+export const useUpdateNickname = (nickname: string) => {
+  const [newNickname, setNewNickname] = useState(nickname)
   const updateUser = useUserStore(state => state.updateUser)
-  return useMutation({
-    mutationFn: (nickname: string) => updateNicknameClient(nickname),
+
+  // tanstack query
+  const { isUpdating, updateNickname } = useUpdateNicknameMutation({
     onSuccess: ({ name }) => {
       // 성공 로직
       updateUser({ name })
@@ -17,5 +16,25 @@ const useUpdateNickname = () => {
       // 실패 로직
     }
   })
+
+  // 파생
+  const isChanged = newNickname.trim() !== nickname
+  const isDisabled = isUpdating || !isChanged
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewNickname(e.target.value)
+  }
+
+  const handleEditNickname = () => {
+    if (!isChanged) return
+    updateNickname(newNickname)
+  }
+
+  return {
+    isDisabled,
+    newNickname,
+    isUpdating,
+    onEditNickname: handleEditNickname,
+    onChange: handleChange
+  }
 }
-export default useUpdateNickname
