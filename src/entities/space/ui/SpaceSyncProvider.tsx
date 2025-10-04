@@ -19,5 +19,5 @@ export const SpaceSyncProvider = ({ spaceInfo }: Props) => {
     return () => setCurrentSpace(null)
   }, [spaceInfo, setCurrentSpace])
 
-  return null // UI 렌더링 안 함
+  return null
 }

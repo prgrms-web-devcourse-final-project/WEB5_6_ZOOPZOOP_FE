@@ -1,12 +1,5 @@
+import { Member } from '@/entities/member'
 import { APIResponse, Authority, Pagination } from '@/shared/types'
-
-// 스페이스 맴버 타입
-export interface SpaceMember {
-  id: number
-  name: string
-  profileUrl: string
-  authority: Authority
-}
 
 // 스페이스 인포
 export interface Space {
@@ -25,7 +18,7 @@ export interface SpaceCard {
   thumbnailUrl: string
   authority: Authority
   createDate: string
-  members: SpaceMember[]
+  members: Member[]
 }
 
 // 페이지 네이션 파라미터

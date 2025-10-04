@@ -27,7 +27,10 @@ export const getInitialSpaceList = async (
 export const getSpaceInfo = async (id: string): Promise<Space | null> => {
   const response = await requireAuth(
     async token =>
-      await fetchSpaceServer(id, { token, next: { tags: ['spaceInfo'] } })
+      await fetchSpaceServer(id, {
+        token,
+        next: { revalidate: 60, tags: ['spaceInfo'] }
+      })
   )
 
   if (response.status !== 200) {
