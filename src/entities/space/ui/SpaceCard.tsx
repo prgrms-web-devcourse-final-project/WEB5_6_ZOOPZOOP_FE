@@ -4,7 +4,6 @@ import { formatISODate } from '@/shared/lib/formatter'
 import SpaceCardThumbnail from './SpaceCardThumbnail'
 // import ContributorList from './ContributorList'
 import { SpaceCard as SpaceCardType } from '../model'
-import { useRouter } from 'next/navigation'
 
 interface Props extends SpaceCardType {
   onContextMenu: (x: number, y: number) => void
@@ -21,7 +20,6 @@ const SpaceCard = ({
   handleDashboardAccess,
   onContextMenu
 }: Props) => {
-  const router = useRouter()
   // 날짜 포멧
   const formattedData = formatISODate(createDate)
 

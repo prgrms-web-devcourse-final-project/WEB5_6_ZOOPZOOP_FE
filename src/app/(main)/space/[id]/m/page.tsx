@@ -1,6 +1,10 @@
 import { getSpaceMemberList } from '@/entities/member/api/member.ssr'
-import { SpaceInfo } from '@/widgets/space'
-import SpaceMemberTable from '@/widgets/space/space-member-table/ui/SpaceMemberTable'
+import { Separator } from '@/shared/ui/shadcn/separator'
+import {
+  SpaceDangerSection,
+  SpaceInfo,
+  SpaceMemberTable
+} from '@/widgets/space'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -11,9 +15,15 @@ const SpaceManagementPage = async ({ params }: Props) => {
   const members = await getSpaceMemberList(id)
 
   return (
-    <div className="flex-center p-8">
+    <div className="flex-center flex-col p-8 max-w-[1200px] m-auto">
+      {/* 스페이스 인포 */}
       <SpaceInfo />
-      <SpaceMemberTable members={members} />
+      <Separator className="my-10" />
+      {/* 스페이스 맴버 테이블 */}
+      <SpaceMemberTable members={members.members} />
+      <Separator className="my-10" />
+      {/* 스페이스 삭제 및 탈퇴 */}
+      <SpaceDangerSection />
     </div>
   )
 }

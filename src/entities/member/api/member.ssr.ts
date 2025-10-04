@@ -7,7 +7,7 @@ export const getSpaceMemberList = async (id: string): Promise<SpaceMember> => {
     async token =>
       await fetchSpaceMemberServer(id, {
         token,
-        next: { revalidate: 60, tags: ['space-member'] }
+        next: { revalidate: 60, tags: ['space-m'] }
       })
   )
 
