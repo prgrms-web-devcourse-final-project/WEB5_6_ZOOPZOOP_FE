@@ -18,12 +18,13 @@ import { FlowSidebar } from '../../flow-sidebar'
 
 import { Cursor } from './Cursor'
 import { CommentOverlay, FlowItemContainer } from '../../flow-item'
+import { DashboardFile } from '@/entities/dashboard'
 
 const nodeTypes = {
   custom: CustomFlowNode
 }
 
-const FlowDashboardContent = () => {
+const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   const {
     nodes,
     edges,
@@ -58,7 +59,7 @@ const FlowDashboardContent = () => {
   }
   return (
     <div className="flex w-full h-screen relative">
-      <FlowSidebar />
+      <FlowSidebar file={file} />
       <div
         className="flex-1 relative overflow-hidden"
         ref={flowContainerRef}
@@ -125,10 +126,10 @@ const FlowDashboardContent = () => {
   )
 }
 
-export const FlowDashboard = () => {
+export const FlowDashboard = ({ file }: { file: DashboardFile[] }) => {
   return (
     <ReactFlowProvider>
-      <FlowDashboardContent />
+      <FlowDashboardContent file={file} />
     </ReactFlowProvider>
   )
 }

@@ -7,3 +7,5 @@ export {
 } from './api/archive.server'
 
 export { fetchDashboardFolderClient } from './api/archive.client'
+
+export type { DashboardFile, DashboardFolder } from './model/type'

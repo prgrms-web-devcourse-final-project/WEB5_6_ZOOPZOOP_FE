@@ -2,10 +2,12 @@ import { fetchDashboardFolderServer } from '@/entities/dashboard'
 import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
-export const GET = async () => {
+export const GET = async (request: Request) => {
+  const payload = await request.json()
+
   try {
     const response = await requireAuth(
-      async token => await fetchDashboardFolderServer({ token })
+      async token => await fetchDashboardFolderServer(payload, { token })
     )
     return NextResponse.json(response)
   } catch (error) {

@@ -1,9 +1,9 @@
 import { httpClient } from '@/shared/lib'
 import { FetchDashboardFolderResponse } from '../model/type'
 
-export const fetchDashboardFolderClient = async () => {
+export const fetchDashboardFolderClient = async (payload: string) => {
   const response = await httpClient.get<FetchDashboardFolderResponse>(
-    '/api/dashboard/folder'
+    `/api/dashboard/folder?spaceId=${payload}`
   )
 
   if (response.status !== 200) {
