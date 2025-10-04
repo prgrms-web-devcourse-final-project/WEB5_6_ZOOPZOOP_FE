@@ -1,4 +1,5 @@
 import { Room } from '@/app/_providers'
+import { fetchDashboardFolderClient } from '@/entities/dashboard'
 import { FlowDashboard } from '@/widgets/dashboard'
 import { Metadata } from 'next'
 
@@ -15,6 +16,8 @@ export default async function Page({
   const { id } = await params
 
   const roomId = `space_${id}`
+
+  const folder = await fetchDashboardFolderClient()
 
   return (
     <Room roomId={roomId}>
