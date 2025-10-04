@@ -40,7 +40,13 @@ export function Room({
   return (
     <LiveblocksProvider
       authEndpoint="/api/liveblocks-auth"
-      throttle={16}>
+      throttle={16}
+      resolveUsers={async ({ userIds }) => {
+        return userIds.map(userId => ({
+          name: userId.replace('user-', ''),
+          avatar: undefined
+        }))
+      }}>
       <RoomProvider
         id={roomId}
         initialPresence={{ cursor: null }}
