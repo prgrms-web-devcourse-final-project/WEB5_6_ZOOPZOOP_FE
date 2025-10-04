@@ -3,16 +3,19 @@ import { useModalStore } from '@/shared/lib'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useState } from 'react'
 import { useAddMembersMutation } from './queries'
+import { useRouter } from 'next/navigation'
 
 export const useInviteMembers = () => {
   const userInfo = useUserStore(state => state.user)
   const closeModal = useModalStore(state => state.closeModal)
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
+  const router = useRouter()
 
   // tanstack query
   const { handleAddMembers, isAdding } = useAddMembersMutation({
     onSuccess: () => {
       showSuccessToast('초대 전송 완료')
+      router.refresh()
       clearMembers()
       closeModal()
     },

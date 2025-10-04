@@ -13,13 +13,15 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 import { createMemberColumns } from '../model/columns'
+import { ActiveType } from '../model/type'
 
 interface Props {
   members: Member[]
+  activeType: ActiveType
 }
 
-export const MemberTable = ({ members }: Props) => {
-  const columns = createMemberColumns()
+export const MemberTable = ({ members, activeType }: Props) => {
+  const columns = createMemberColumns(activeType)
 
   const table = useReactTable<Member>({
     data: members,
@@ -35,7 +37,7 @@ export const MemberTable = ({ members }: Props) => {
             {headerGroup.headers.map(header => (
               <TableHead
                 key={header.id}
-                className="px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider text-center"
+                className="text-center px-6 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider"
                 style={{ width: header.getSize() }}>
                 {flexRender(
                   header.column.columnDef.header,

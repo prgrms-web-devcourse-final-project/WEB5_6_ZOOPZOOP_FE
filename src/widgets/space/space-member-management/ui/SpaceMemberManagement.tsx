@@ -2,17 +2,17 @@
 
 import { Member } from '@/entities/member'
 import { useMemo, useState } from 'react'
-import { MemberTabs } from './MemberTabs'
 import { MemberTable } from './MemberTable'
+import { MemberTabs } from './MemberTabs'
+import { ActiveType } from '../model/type'
 
 interface Props {
   members: Member[]
-  pendingMembers?: Member[]
+  pendingMembers: Member[]
 }
 
 export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
-  const [activeTab, setActiveTab] = useState<'members' | 'pending'>('members')
-
+  const [activeTab, setActiveTab] = useState<ActiveType>('members')
   const currentMembers = useMemo(() => {
     return activeTab === 'members' ? members : pendingMembers
   }, [activeTab, members, pendingMembers])
@@ -28,7 +28,10 @@ export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
           pendingCount={pendingMembers?.length}
         />
 
-        <MemberTable members={currentMembers!} />
+        <MemberTable
+          members={currentMembers}
+          activeType={activeTab}
+        />
       </div>
     </section>
   )

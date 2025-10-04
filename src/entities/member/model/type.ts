@@ -12,4 +12,12 @@ export interface SpaceMember {
   members: Member[]
 }
 
+export interface SpacePendingMember {
+  spaceName: string
+  invitedUsers: Member[]
+}
+
+// 스페이스 초대 response
 export type SpaceMemberResponse = APIResponse<SpaceMember>
+// 스페이스 초대 요청 중인 user list response
+export type SpacePendingMemberResponse = APIResponse<SpacePendingMember>
