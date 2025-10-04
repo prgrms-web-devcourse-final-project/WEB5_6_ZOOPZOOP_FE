@@ -13,9 +13,11 @@ export default async function Space({ searchParams }: Props) {
   if (!initialData) return null
 
   return (
-    <SpaceList
-      initialData={initialData}
-      initialPage={currentPage}
-    />
+    <div className="p-8">
+      <SpaceList
+        initialData={initialData}
+        initialPage={currentPage}
+      />
+    </div>
   )
 }

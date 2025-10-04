@@ -29,13 +29,14 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
   if (isLoading) return null
 
   return (
-    <section className="inline-flex flex-col gap-5 min-h-[calc(100vh-214px)]">
+    <section className="flex flex-col gap-5 min-h-[calc(100vh-214px)]">
       <h2 className="sr-only">내 스페이스 목록</h2>
       <ul className="grid gap-5 flex-1 grid-cols-1 min-[480px]:grid-cols-2 min-[896px]:grid-cols-3 min-[1312px]:grid-cols-4 min-[1728px]:grid-cols-5 auto-rows-min">
         {spaces &&
           spaces.spaces.map(space => (
             <SpaceCard
               {...space}
+              handleDashboardAccess={handleDashboardAccess}
               key={space.id}
               onContextMenu={(x, y) => handleContextMenu(space.id, x, y)}
               contextMenu={

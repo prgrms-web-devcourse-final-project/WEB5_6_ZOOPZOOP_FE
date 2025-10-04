@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 interface Props extends SpaceCardType {
   onContextMenu: (x: number, y: number) => void
   contextMenu?: React.ReactNode
+  handleDashboardAccess: (spaceId: string) => void
 }
 
 const SpaceCard = ({
@@ -17,6 +18,7 @@ const SpaceCard = ({
   thumbnailUrl,
   createDate,
   contextMenu,
+  handleDashboardAccess,
   onContextMenu
 }: Props) => {
   const router = useRouter()
@@ -34,7 +36,7 @@ const SpaceCard = ({
         className="flex flex-col border border-[#D9D9D9] rounded-lg cursor-pointer transition-all duration-200 hover:ring-3 hover:ring-orange-accent min-w-52"
         onContextMenu={handleContextMenu}
         onClick={() => {
-          router.push(`/space/${id}/m`)
+          handleDashboardAccess(id.toString())
         }}>
         {/* 카드 썸네일 */}
         <SpaceCardThumbnail

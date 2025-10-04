@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 'use client'
 
 import { useOnClickOutside } from '@/shared/hooks'
 import { useModalStore } from '@/shared/lib'
+import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 
 interface Props {
@@ -20,17 +20,20 @@ const SpaceContextMenu = ({
   position,
   handleDashboardAccess
 }: Props) => {
+  const router = useRouter()
   const menuRef = useRef<HTMLDivElement>(null)
   const openModal = useModalStore(state => state.openModal)
 
   useOnClickOutside(menuRef, () => onClose?.())
 
   const menuItems = [
-    { label: '이름 수정', onClick: () => console.log('수정') },
-    { label: '팀원 초대', onClick: () => console.log('삭제') },
     {
-      label: '대시보드 접속',
+      label: '대시보드 열기',
       onClick: () => handleDashboardAccess(spaceId.toString())
+    },
+    {
+      label: '스페이스 관리 열기',
+      onClick: () => router.push(`/space/${spaceId}/m`)
     },
     {
       label: '삭제',
