@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -44,6 +44,8 @@ const FlowDashboardContent = () => {
     y: number
   } | null>(null)
 
+  const flowContainerRef = useRef<HTMLDivElement | null>(null)
+
   const handlePaneClick = (event: React.MouseEvent) => {
     if (isCreating) {
       const reactFlowBounds = (event.target as Element)
@@ -63,30 +65,34 @@ const FlowDashboardContent = () => {
 
   return (
     <div className="flex w-full h-screen relative">
-      {others
-        .filter(other => other.presence?.cursor !== null)
-        .map(({ connectionId, presence, info }) => {
-          if (!presence.cursor) return null
-          const screenPosition = flowToScreenPosition({
-            x: presence.cursor.x,
-            y: presence.cursor.y
-          })
-
-          return (
-            <Cursor
-              key={connectionId}
-              x={screenPosition.x}
-              y={screenPosition.y}
-              name={info?.name}
-              color={`hsl(${(connectionId.toString().charCodeAt(0) * 137.5) % 360}, 70%, 50%)`}
-            />
-          )
-        })}
       <FlowSidebar />
       <div
         className="flex-1 relative overflow-hidden"
+        ref={flowContainerRef}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}>
+        {others
+          .filter(other => other.presence?.cursor !== null)
+          .map(({ connectionId, presence, info }) => {
+            if (!presence.cursor) return null
+            const screenPosition = flowToScreenPosition({
+              x: presence.cursor.x,
+              y: presence.cursor.y
+            })
+            const bounds = flowContainerRef.current?.getBoundingClientRect()
+            const x = bounds ? screenPosition.x - bounds.left : screenPosition.x
+            const y = bounds ? screenPosition.y - bounds.top : screenPosition.y
+
+            return (
+              <Cursor
+                key={connectionId}
+                x={x}
+                y={y}
+                name={info?.name}
+                color={`hsl(${(connectionId.toString().charCodeAt(0) * 137.5) % 360}, 70%, 50%)`}
+              />
+            )
+          })}
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -99,12 +105,10 @@ const FlowDashboardContent = () => {
           onDrop={onDrop}
           onDragOver={onDragOver}
           onPaneClick={handlePaneClick}
-          minZoom={0.6}
-          maxZoom={0.6}
           zoomOnScroll={false}
           className={isCreating ? 'cursor-crosshair' : ''}>
           <MiniMap position="top-right" />
-
+          <Controls />
           <Background
             variant={BackgroundVariant.Dots}
             gap={12}
