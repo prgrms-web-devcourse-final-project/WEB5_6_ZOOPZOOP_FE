@@ -1,6 +1,7 @@
 import { Liveblocks } from '@liveblocks/node'
 import { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
+import { fetchUserServer } from '@/entities/user'
 
 const liveblocks = new Liveblocks({
   secret: process.env.NEXT_LIVEBLOCKS_SECRET_KEY as string
@@ -9,14 +10,28 @@ const liveblocks = new Liveblocks({
 export async function POST(request: NextRequest) {
   try {
     const { room } = await request.json()
+    const cookieStore = await cookies()
 
-    const cookieStore = cookies()
+    const accessToken = cookieStore.get('accessToken')?.value
 
-    const user = {
-      id: `user-${Math.random().toString(36).substr(2, 9)}`,
-      name: '디모',
-      avatar:
-        'https://static.wikia.nocookie.net/pokemon/images/8/8e/%EB%94%B0%EB%9D%BC%ED%81%90_%EA%B3%B5%EC%8B%9D_%EC%9D%BC%EB%9F%AC%EC%8A%A4%ED%8A%B8.png/revision/latest/scale-to-width-down/1200?cb=20170804054502&path-prefix=ko'
+    if (!accessToken) {
+      return new Response('Unauthorized', { status: 401 })
+    }
+
+    let user
+    try {
+      const userResponse = await fetchUserServer({ token: accessToken })
+      if (userResponse.status === 200 && userResponse.data) {
+        user = {
+          id: `user-${userResponse.data.name}`,
+          name: userResponse.data.name,
+          avatar: userResponse.data.profileUrl
+        }
+      } else {
+        throw new Error('사용자 정보 조회 실패')
+      }
+    } catch {
+      return new Response('Failed to fetch user info', { status: 403 })
     }
 
     const session = liveblocks.prepareSession(user.id, {
@@ -26,6 +41,7 @@ export async function POST(request: NextRequest) {
       }
     })
 
+    // 특정 방에 대한 권한 부여
     if (room) {
       session.allow(room, session.FULL_ACCESS)
     }

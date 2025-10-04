@@ -29,6 +29,7 @@ const initialNodes = [
 ]
 
 const initialEdges: Edge[] = []
+
 export function Room({
   children,
   roomId = 'my-room'

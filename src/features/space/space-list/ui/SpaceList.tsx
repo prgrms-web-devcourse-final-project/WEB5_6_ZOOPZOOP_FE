@@ -2,7 +2,7 @@
 
 import { SpaceCard, SpacePagination } from '@/entities/space'
 import Pagination from '@/shared/ui/pagination/Pagination'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useSpaceQuery } from '../hook/useSpaceQuery'
 import SpaceContextMenu from './SpaceContextMenu'
 import { postDashboardJWTClient } from '@/entities/dashboard'
@@ -13,6 +13,9 @@ interface Props {
 }
 const SpaceList = ({ initialData, initialPage }: Props) => {
   const searchParams = useSearchParams()
+
+  const router = useRouter()
+
   const currentPage = Number(searchParams.get('page')) || 1
   const { data: spaceList, isPending } = useSpaceQuery({
     pagination: { currentPage },
@@ -21,6 +24,7 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
 
   const handleDashboardAccess = async (spaceId: string) => {
     await postDashboardJWTClient(spaceId)
+    router.push(`/space/${spaceId}/dashboard`)
   }
 
   if (isPending) return null
