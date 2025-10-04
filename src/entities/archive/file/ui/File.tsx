@@ -11,8 +11,8 @@ interface Props {
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
-  isSelected: boolean
-  onSelect: (cardId: number) => void
+  // isSelected: boolean
+  // onSelect: (cardId: number) => void
 }
 
 /**
@@ -27,22 +27,14 @@ const File = ({
   id,
   imageUrl,
   sourceUrl,
-  ownerProfileUrl,
-  isSelected,
-  onSelect
+  ownerProfileUrl
+  // isSelected,
+  // onSelect
 }: Props) => {
   const formattedDate = formatDate(new Date(createdAt))
 
   return (
     <>
-      <Checkbox
-        className="text-orange-accent size-5"
-        checked={isSelected}
-        onCheckedChange={() => onSelect(id)}
-        aria-label={`${title} 자료 선택`}
-        id={`checkbox-${id}`}
-      />
-
       {/* 썸네일 이미지 */}
       <FileThumbnail
         imageUrl={imageUrl}

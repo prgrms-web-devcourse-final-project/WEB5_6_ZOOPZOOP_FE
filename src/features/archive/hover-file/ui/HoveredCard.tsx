@@ -9,9 +9,9 @@ interface Props {
   summary: string
   sourceUrl: string
   tags: string[]
-  isSelected: boolean
   isHover: boolean
-  onSelect: (cardId: number) => void
+  // isSelected: boolean
+  // onSelect: (cardId: number) => void
 }
 
 export function HoveredCard({
@@ -20,9 +20,9 @@ export function HoveredCard({
   summary,
   sourceUrl,
   tags,
-  isSelected,
-  isHover,
-  onSelect
+  isHover
+  // isSelected,
+  // onSelect
 }: Props) {
   return (
     <div

@@ -20,8 +20,7 @@ export const Default: Story = {
     createdAt: '2024-03-15',
     imageUrl: 'https://via.placeholder.com/250x108',
     sourceUrl: 'https://example.com/react-guide',
-    ownerProfileUrl: 'https://github.com/shadcn.png',
-    isSelected: false
+    ownerProfileUrl: 'https://github.com/shadcn.png'
   }
 }
 
@@ -33,8 +32,7 @@ export const Selected: Story = {
     createdAt: '2024-03-10',
     imageUrl: 'https://via.placeholder.com/250x108',
     sourceUrl: 'https://nextjs.org/docs',
-    ownerProfileUrl: 'https://github.com/shadcn.png',
-    isSelected: true
+    ownerProfileUrl: 'https://github.com/shadcn.png'
   }
 }
 
@@ -45,8 +43,7 @@ export const PersonalArchive: Story = {
     category: 'Language',
     createdAt: '2024-03-05',
     imageUrl: 'https://via.placeholder.com/250x108',
-    sourceUrl: 'https://typescript.org',
-    isSelected: false
+    sourceUrl: 'https://typescript.org'
   }
 }
 
@@ -57,8 +54,7 @@ export const PersonalArchiveSelected: Story = {
     category: 'Language',
     createdAt: '2024-03-01',
     imageUrl: '',
-    sourceUrl: 'https://css-tricks.com',
-    isSelected: true
+    sourceUrl: 'https://css-tricks.com'
   }
 }
 
@@ -79,8 +75,6 @@ export const SelectionComparison: Story = {
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
           summary="정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다."
-          isSelected={false}
-          onSelect={() => {}}
         />
       </div>
       <div>
@@ -95,8 +89,6 @@ export const SelectionComparison: Story = {
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
-          isSelected={true}
-          onSelect={() => {}}
         />
       </div>
     </div>
