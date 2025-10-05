@@ -17,11 +17,11 @@ export const fetchSpaceListServer = async (
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
   params.append('size', size.toString())
+  params.append('includeMembers', true.toString())
 
   sort.forEach(s => {
     params.append('sort', s)
   })
-
   return await httpClient.get<SpacePaginationAPIResponse>(
     `/api/v1/space?${params.toString()}`,
     options

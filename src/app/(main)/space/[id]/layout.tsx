@@ -1,5 +1,5 @@
 import { getSpaceInfo } from '@/entities/space/api/space.ssr'
-import { SpaceSyncProvider } from '@/entities/space/ui'
+import { SpaceSyncProvider } from '@/entities/space'
 
 export default async function SpaceDetailLayout({
   children,

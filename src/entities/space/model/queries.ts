@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useMutation,
   UseMutationOptions,
   useQuery
@@ -17,7 +18,7 @@ export interface SpaceQuery {
 }
 // 스페이스 목록 조회
 export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
-  const { data, isPending } = useQuery({
+  const { data, isPending, isFetching } = useQuery({
     queryKey: ['space', pagination.currentPage],
     queryFn: () =>
       fetchSpaceListClient({
@@ -25,12 +26,14 @@ export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
         size: pagination.size,
         sort: pagination.sort
       }),
-    initialData: initialData
+    initialData: initialData,
+    placeholderData: keepPreviousData
   })
 
   return {
     spaces: data,
-    isLoading: isPending
+    isPending,
+    isFetching
   }
 }
 

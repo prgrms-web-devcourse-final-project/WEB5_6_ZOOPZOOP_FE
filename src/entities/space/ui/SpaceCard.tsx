@@ -25,7 +25,7 @@ const SpaceCard = ({
 
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault()
-    onContextMenu(e.clientX, e.clientY) // ← SpaceList로 전달
+    onContextMenu(e.clientX, e.clientY)
   }
 
   return (

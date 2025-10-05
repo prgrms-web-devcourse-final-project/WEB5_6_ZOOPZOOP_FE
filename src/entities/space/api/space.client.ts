@@ -19,6 +19,7 @@ export const fetchSpaceListClient = async ({
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('size', size.toString())
+  params.append('includeMembers', true.toString())
 
   sort.forEach(s => {
     params.append('sort', s)
@@ -27,7 +28,6 @@ export const fetchSpaceListClient = async ({
   const response = await httpClient.get<SpacePaginationAPIResponse>(
     `/api/space?${params.toString()}&includeMembers=true`
   )
-
   if (response.status !== 200) {
     throw new Error(response.msg)
   }

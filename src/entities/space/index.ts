@@ -5,4 +5,4 @@ export { fetchSpaceListClient, postSpaceClient } from './api/space.client'
 export * from './model'
 
 // ui
-export { SpaceCard } from './ui'
+export { SpaceCard, SpaceCardSkeleton, SpaceSyncProvider } from './ui'
