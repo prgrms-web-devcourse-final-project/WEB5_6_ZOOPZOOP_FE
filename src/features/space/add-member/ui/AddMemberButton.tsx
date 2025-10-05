@@ -18,7 +18,7 @@ const AddMemberButton = () => {
     <Button
       size="sm"
       onClick={handleOpenModal}>
-      <Users2 /> Member
+      <Users2 /> Add Member
     </Button>
   )
 }
