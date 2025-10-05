@@ -20,8 +20,8 @@ export const useCreateSpace = () => {
       showSuccessToast(`'${data?.name}' 스페이스 생성 완료`)
       closeModal()
     },
-    onError: () => {
-      showErrorToast(`스페이스 생성 실패 다시 시도해주세요.`)
+    onError: error => {
+      showErrorToast(error.message)
     }
   })
 
