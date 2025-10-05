@@ -1,11 +1,11 @@
-import { ColumnDef } from '@tanstack/react-table'
 import { Member } from '@/entities/member'
-import { Avatar } from '@/shared/ui'
-import { Button } from '@/shared/ui/shadcn/button'
-import { Loader2, Trash2 } from 'lucide-react'
 import ChangeAuthorityDropDown from '@/features/space/change-authority/ui/ChangeAuthorityDropDown'
-import { ActiveType } from './type'
+import { Avatar } from '@/shared/ui'
 import { Badge } from '@/shared/ui/shadcn/badge'
+import { Button } from '@/shared/ui/shadcn/button'
+import { ColumnDef } from '@tanstack/react-table'
+import { Loader2, Trash2 } from 'lucide-react'
+import { ActiveType } from './type'
 
 export const createMemberColumns = (
   activeType: ActiveType = 'members'
@@ -45,7 +45,7 @@ export const createMemberColumns = (
         maxSize: 150,
         cell: info => {
           const member = info.row.original
-          return <ChangeAuthorityDropDown />
+          return <ChangeAuthorityDropDown role={member.authority} />
         }
       },
       {
@@ -53,8 +53,7 @@ export const createMemberColumns = (
         header: '탈퇴',
         size: 80,
         maxSize: 80,
-        cell: info => {
-          const member = info.row.original
+        cell: () => {
           return (
             <Button
               size="sm"
@@ -74,7 +73,7 @@ export const createMemberColumns = (
       header: '상태',
       size: 80,
       maxSize: 80,
-      cell: info => {
+      cell: () => {
         return (
           <Badge
             variant="secondary"
