@@ -29,6 +29,9 @@ export const MemberTable = ({ members, activeType }: Props) => {
     getCoreRowModel: getCoreRowModel()
   })
 
+  const rows = table.getRowModel().rows
+  const isEmpty = rows.length === 0
+
   return (
     <Table className="w-full">
       <TableHeader className="bg-gray-50">
@@ -50,17 +53,27 @@ export const MemberTable = ({ members, activeType }: Props) => {
       </TableHeader>
 
       <TableBody className="bg-white divide-y divide-gray-200">
-        {table.getRowModel().rows.map(row => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <TableCell
-                key={cell.id}
-                className="px-6 py-2 whitespace-nowrap">
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
-            ))}
+        {isEmpty ? (
+          <TableRow>
+            <TableCell
+              colSpan={columns.length}
+              className="text-center py-3.5 text-gray-500">
+              맴버가 없습니다
+            </TableCell>
           </TableRow>
-        ))}
+        ) : (
+          rows.map(row => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <TableCell
+                  key={cell.id}
+                  className="px-6 py-2 whitespace-nowrap">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))
+        )}
       </TableBody>
     </Table>
   )
