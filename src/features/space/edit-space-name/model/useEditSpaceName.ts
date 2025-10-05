@@ -1,5 +1,6 @@
 import { useEditSpaceNameMutation } from '@/entities/space/model/queries'
 import { useSpaceStore } from '@/entities/space/model/store'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useEffect, useState } from 'react'
 
 export const useEditSpaceName = () => {
@@ -15,8 +16,11 @@ export const useEditSpaceName = () => {
   const { editSpaceName, isUpdating } = useEditSpaceNameMutation({
     onSuccess: ({ name }) => {
       updateSpace({ spaceName: name })
+      showSuccessToast(`'${name}'으로 수정 완료`)
     },
-    onError: () => {}
+    onError: error => {
+      showErrorToast(error.message)
+    }
   })
 
   const isDisabled =
