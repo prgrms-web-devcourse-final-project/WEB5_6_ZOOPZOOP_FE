@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { useCreateSpaceMutation } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
@@ -13,16 +13,15 @@ export const useCreateSpace = () => {
 
   // tanstack query
   const { createSpace, isCreating } = useCreateSpaceMutation({
-    onSuccess: () => {
+    onSuccess: data => {
+      // space 목록 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['space'] })
-
-      router.push('/space/?page=1')
+      router.refresh()
+      showSuccessToast(`'${data?.name}' 스페이스 생성 완료`)
       closeModal()
     },
-    onError: error => {
-      // 에러 로직
-      console.log('error', error)
-      console.log('실패')
+    onError: () => {
+      showErrorToast(`스페이스 생성 실패 다시 시도해주세요.`)
     }
   })
 
