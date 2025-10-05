@@ -1,3 +1,3 @@
 export type * from './type'
-export { useAddMember } from './useAddMember'
+export { useInviteMembers } from './useInviteMembers'
 export { useAddMembersMutation } from './queries'
