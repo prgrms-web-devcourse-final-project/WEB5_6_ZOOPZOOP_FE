@@ -8,12 +8,7 @@ import { useModalStore } from '@/shared/lib'
 import ActionButton from '@/shared/ui/header/ActionButton'
 import { Plus } from 'lucide-react'
 
-interface Props {
-  title: string
-  showButton?: boolean
-}
-
-function SpaceHeader({ title, showButton = true }: Props) {
+function SpaceHeader() {
   const { currentSpace } = useSpaceStore()
 
   const openModal = useModalStore(s => s.openModal)
@@ -22,6 +17,9 @@ function SpaceHeader({ title, showButton = true }: Props) {
 
   const isDashboard = pathname.includes('/dashboard')
 
+  // 스페이스 메인 페이지일 경우 스페이스 생성 버튼 show
+  const showCreateButton = pathname === '/space'
+
   if (isDashboard) {
     return null
   }
@@ -29,9 +27,9 @@ function SpaceHeader({ title, showButton = true }: Props) {
   return (
     <header className="bg-gray-dark-active p-6 w-full">
       <h1 className="text-white font-bold text-2xl mb-7">
-        {currentSpace?.spaceName || title}
+        {currentSpace?.spaceName || '내 스페이스'}
       </h1>
-      {showButton ? (
+      {showCreateButton ? (
         <div className="flex justify-between">
           <div className="flex gap-3">
             <ActionButton
