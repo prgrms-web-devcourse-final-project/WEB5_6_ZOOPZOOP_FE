@@ -50,7 +50,7 @@ export const createMemberColumns = (
       },
       {
         id: 'actions',
-        header: '탈퇴',
+        header: '퇴출',
         size: 80,
         maxSize: 80,
         cell: () => {
