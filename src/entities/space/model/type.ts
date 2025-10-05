@@ -26,6 +26,7 @@ export interface FetchSpaceListParams {
   page?: number
   size?: number
   sort?: string[]
+  includeMembers?: boolean
 }
 
 // 스페이스 인포 반환 타입
