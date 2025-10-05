@@ -4,6 +4,7 @@ import { formatISODate } from '@/shared/lib/formatter'
 import SpaceCardThumbnail from './SpaceCardThumbnail'
 // import ContributorList from './ContributorList'
 import { SpaceCard as SpaceCardType } from '../model'
+import ContributorList from './ContributorList'
 
 interface Props extends SpaceCardType {
   onContextMenu: (x: number, y: number) => void
@@ -13,6 +14,7 @@ interface Props extends SpaceCardType {
 
 const SpaceCard = ({
   id,
+  members,
   name,
   thumbnailUrl,
   createDate,
@@ -51,7 +53,7 @@ const SpaceCard = ({
               {formattedData}
             </time>
           </div>
-          {/* <ContributorList contributors={contributors} /> */}
+          <ContributorList members={members} />
         </div>
       </li>
       {contextMenu && <>{contextMenu}</>}
