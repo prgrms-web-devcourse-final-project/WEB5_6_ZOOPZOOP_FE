@@ -17,7 +17,6 @@ export interface SpaceCard {
   name: string
   thumbnailUrl: string
   authority: Authority
-  createDate: string
   members: Member[]
 }
 
