@@ -59,7 +59,10 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   }
   return (
     <div className="flex w-full h-screen relative">
-      <FlowSidebar file={file} />
+      <FlowSidebar
+        file={file}
+        nodes={nodes}
+      />
       <div
         className="flex-1 relative overflow-hidden"
         ref={flowContainerRef}
