@@ -2,21 +2,21 @@ import { APIResponse } from '@/shared/types'
 
 export type CreateDashboardJWTResponse = APIResponse<{ token: string }>
 
-export type DashboardFolder = {
-  folderName: string
+export interface DashboardFolder {
   folderId: number
+  folderName: string
+  files?: DashboardFile[]
 }
 
-export type DashboardFile = {
+export interface DashboardFile {
   dataSourceId: number
   title: string
-  createdAt: string
   summary: string
   sourceUrl: string
-  source: string
-  imageUrl: string
-  tags: string[]
-  category: string
+  imageUrl?: string
+  category?: string
+  tags?: string[]
+  createdAt: string
 }
 
 export type FetchDashboardFolderResponse = APIResponse<DashboardFolder[]>
