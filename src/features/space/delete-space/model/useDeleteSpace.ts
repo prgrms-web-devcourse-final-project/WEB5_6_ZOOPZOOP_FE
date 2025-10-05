@@ -1,5 +1,6 @@
 import { useDeleteSpaceMutation } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -13,13 +14,12 @@ export const useDeleteSpace = () => {
   const { deleteSpace, isDeleting } = useDeleteSpaceMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['space'] })
-      // 팝업 닫기
       closeModal()
       router.push('/space?page=1')
+      showSuccessToast('스페이스 삭제 완료')
     },
     onError: error => {
-      // eslint-disable-next-line no-console
-      console.error('에러', error)
+      showErrorToast(error.message)
     }
   })
 
