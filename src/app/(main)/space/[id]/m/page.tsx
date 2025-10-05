@@ -3,11 +3,7 @@ import {
   getSpacePendingMemberList
 } from '@/entities/member/api/member.ssr'
 import { Separator } from '@/shared/ui/shadcn/separator'
-import {
-  SpaceDangerSection,
-  SpaceInfo,
-  SpaceMemberManagement
-} from '@/widgets/space'
+import { SpaceDangerSection, SpaceInfo, SpaceMemberManagement } from '@/widgets'
 
 interface Props {
   params: Promise<{ id: string }>

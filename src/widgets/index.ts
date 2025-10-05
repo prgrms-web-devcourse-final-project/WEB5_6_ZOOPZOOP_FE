@@ -4,5 +4,5 @@ export {
   SpaceDangerSection,
   SpaceHeader,
   SpaceInfo,
-  SpaceMemberTable
+  SpaceMemberManagement
 } from './space'
