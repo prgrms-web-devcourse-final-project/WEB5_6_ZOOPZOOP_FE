@@ -15,6 +15,13 @@ type ModalType =
         folderName: string
       }
     }
+  | {
+      type: 'delete-space'
+      props: {
+        spaceId: number
+        title: string
+      }
+    }
 
 interface ModalStore {
   modal: ModalType | null

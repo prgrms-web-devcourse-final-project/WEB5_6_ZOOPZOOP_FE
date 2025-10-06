@@ -61,8 +61,8 @@ export const navItems: MainNav[] = [
       },
       {
         /* TODO: 루트 변경 */
-        href: PATH.SPACE.ROOT,
-        label: '팀원 관리',
+        href: PATH.SPACE.MANAGEMENT,
+        label: '스페이스 관리',
         icon: Users
       },
       {

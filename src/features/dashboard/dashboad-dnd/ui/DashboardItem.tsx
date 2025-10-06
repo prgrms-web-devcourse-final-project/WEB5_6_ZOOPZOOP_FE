@@ -2,23 +2,13 @@
 
 import { SubNewsCard } from '@/shared/ui/card'
 import { useDnD } from '../model/useDnD'
+import { DashboardFile } from '@/entities/dashboard'
 
 interface Props {
-  title: string
-  content: string
-  createdAt: string
-  nodeType: string
-  imageUrl?: string
-  category?: string
+  file: DashboardFile
 }
 
-export const DashboardItem = ({
-  title,
-  content,
-  createdAt,
-  imageUrl,
-  category
-}: Props) => {
+export const DashboardItem = ({ file }: Props) => {
   const { onDragStart } = useDnD()
 
   return (
@@ -26,21 +16,21 @@ export const DashboardItem = ({
       draggable
       onDragStart={event =>
         onDragStart(event, {
-          title,
-          link: '',
-          imageUrl,
-          category,
-          description: content,
-          pubDate: createdAt
+          title: file.title,
+          link: file.sourceUrl,
+          imageUrl: file.imageUrl,
+          category: file.category,
+          description: file.summary,
+          pubDate: file.createdAt
         })
       }
       className="cursor-grab active:cursor-grabbing">
       <SubNewsCard
-        title={title}
-        content={content}
-        createdAt={createdAt}
-        imageUrl={imageUrl}
-        category={category}
+        title={file.title}
+        content={file.summary}
+        createdAt={file.createdAt}
+        imageUrl={file.imageUrl}
+        category={file.category}
       />
     </div>
   )

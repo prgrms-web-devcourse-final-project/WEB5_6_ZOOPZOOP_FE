@@ -8,11 +8,15 @@ import { revalidateTag } from 'next/cache'
 
 // 스페이스 등록
 export const POST = async (request: Request) => {
-  const payload = await request.json()
-
   try {
+    const payload = await request.json()
+
     const response = await requireAuth(
-      async token => await postSpaceServer(payload, { token })
+      async token =>
+        await postSpaceServer(payload, {
+          token,
+          next: { tags: ['space'] }
+        })
     )
 
     // 서버 케시 삭제

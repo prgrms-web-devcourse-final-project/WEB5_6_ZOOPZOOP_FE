@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
 import { Handle, Position } from '@xyflow/react'
-import { Avatar } from '@radix-ui/react-avatar'
 
 interface Props {
   title: string
@@ -18,6 +17,7 @@ interface Props {
     name: string
     profileUrl: string
   }
+  selected?: boolean
 }
 
 export const BaseNewsCard = ({
@@ -28,11 +28,14 @@ export const BaseNewsCard = ({
   link,
   createdAt,
   type,
-  user
+  user,
+  selected
 }: Props) => {
   return (
     <div
-      className={`w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow `}>
+      className={`group w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-xl transition-all duration-200 ${
+        selected ? 'ring-2 ring-green-normal ring-offset-2' : ''
+      }`}>
       <div
         className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'}`}
         onClick={() => {
@@ -72,7 +75,7 @@ export const BaseNewsCard = ({
           <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
         </div>
         {type === 'flow' && (
-          <div className=" absolute bottom-4 right-4 flex items-center gap-2">
+          <div className="absolute bottom-4 right-4 flex items-center gap-2">
             <Image
               src={user?.profileUrl || ''}
               alt={user?.name || ''}
@@ -84,17 +87,57 @@ export const BaseNewsCard = ({
           </div>
         )}
       </div>
+
       {type === 'flow' && (
         <>
           <Handle
-            type="target"
+            type="source"
             position={Position.Top}
-            className="!w-6 !h-6 !bg-teal-500"
+            id="top"
+            className="!w-5 !h-5 !rounded-full !border-2 !border-white !bg-green-normal transition-all duration-200 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
           />
           <Handle
             type="source"
             position={Position.Bottom}
-            className="!w-6 !h-6 !bg-teal-500"
+            id="bottom"
+            className="!w-5 !h-5 !rounded-full !border-2 !border-white !bg-green-normal transition-all duration-200 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
+          />
+          <Handle
+            type="source"
+            position={Position.Left}
+            id="left"
+            className="!w-5 !h-5 !rounded-full !border-2 !border-white !bg-green-normal transition-all duration-200 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
+          />
+          <Handle
+            type="source"
+            position={Position.Right}
+            id="right"
+            className="!w-5 !h-5 !rounded-full !border-2 !border-white !bg-green-normal transition-all duration-200 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100"
+          />
+
+          <Handle
+            type="target"
+            position={Position.Top}
+            id="top-target"
+            className="opacity-0"
+          />
+          <Handle
+            type="target"
+            position={Position.Bottom}
+            id="bottom-target"
+            className="opacity-0"
+          />
+          <Handle
+            type="target"
+            position={Position.Left}
+            id="left-target"
+            className="opacity-0"
+          />
+          <Handle
+            type="target"
+            position={Position.Right}
+            id="right-target"
+            className="opacity-0"
           />
         </>
       )}

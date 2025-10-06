@@ -8,7 +8,7 @@ import {
   CreateFolderModal,
   UrlUploadModal
 } from '@/shared/ui/modal'
-import { CreateSpaceModal } from '@/features/space'
+import { CreateSpaceModal, DeleteSpaceModal } from '@/features/space'
 import { MoveFileModal } from '@/shared/ui/modal/archive/move-file/MoveFileModal'
 import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
 import { DeleteAccountModal } from '@/features/auth'
@@ -35,6 +35,8 @@ export const GlobalModal = () => {
       return <DeleteAccountModal />
     case 'rename-folder':
       return <RenameFolderModal {...modal.props} />
+    case 'delete-space':
+      return <DeleteSpaceModal {...modal.props} />
     default:
       return null
   }

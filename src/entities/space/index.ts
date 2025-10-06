@@ -2,7 +2,7 @@
 export { fetchSpaceListClient, postSpaceClient } from './api/space.client'
 
 // 타입
-export type * from './model/type'
+export * from './model'
 
 // ui
 export { SpaceCard } from './ui'
