@@ -10,12 +10,13 @@ interface Props {
 }
 
 const DeleteSpaceModal = ({ spaceId, title }: Props) => {
-  const { isDeleting, onDelete, confirmText, setConfirmText, isDeleteEnabled } =
-    useDeleteSpace()
-
-  const handleDelete = () => {
-    onDelete(spaceId)
-  }
+  const {
+    isDeleting,
+    handleDelete,
+    confirmText,
+    setConfirmText,
+    isDeleteEnabled
+  } = useDeleteSpace()
 
   return (
     <ModalLayout size="sm">
@@ -45,7 +46,7 @@ const DeleteSpaceModal = ({ spaceId, title }: Props) => {
 
         <div className="flex gap-3">
           <button
-            onClick={handleDelete}
+            onClick={() => handleDelete(spaceId)}
             disabled={isDeleting || !isDeleteEnabled(title)}
             type="button"
             className="flex-center gap-2 w-full py-2 text-white bg-red-600 rounded-md disabled-hover:bg-red-700 disabled:opacity-50 cursor-pointer">

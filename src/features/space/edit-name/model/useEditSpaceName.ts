@@ -32,7 +32,8 @@ export const useEditSpaceName = () => {
     setNewName(e.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
     if (isDisabled) return
 
     mutateEditSpaceName({

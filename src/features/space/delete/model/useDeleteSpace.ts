@@ -31,7 +31,7 @@ export const useDeleteSpace = () => {
   return {
     isDeleting,
     confirmText,
-    onDelete: mutateDeleteSpace,
+    handleDelete: mutateDeleteSpace,
     setConfirmText,
     isDeleteEnabled
   }

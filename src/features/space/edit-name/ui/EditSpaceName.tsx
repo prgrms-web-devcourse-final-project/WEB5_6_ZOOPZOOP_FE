@@ -4,9 +4,10 @@ import { Loader2 } from 'lucide-react'
 import { useEditSpaceName } from '../model/useEditSpaceName'
 
 const EditSpaceName = () => {
-  const { isUpdating, onChange, onSubmit, newName } = useEditSpaceName()
+  const { isUpdating, onChange, onSubmit, newName, isDisabled } =
+    useEditSpaceName()
   return (
-    <div>
+    <form onSubmit={onSubmit}>
       <label
         className="block text-sm font-medium text-gray-700 mb-2"
         htmlFor="nickname">
@@ -20,14 +21,9 @@ const EditSpaceName = () => {
           onChange={onChange}
         />
         <button
-          className={`px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-200 ${
-            isUpdating
-              ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-              : 'border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer'
-          }`}
-          type="button"
-          onClick={onSubmit}
-          disabled={isUpdating}>
+          className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md transition-colors duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+          type="submit"
+          disabled={isUpdating || isDisabled}>
           {isUpdating ? (
             <div className="flex-center gap-2">
               <Loader2
@@ -41,7 +37,7 @@ const EditSpaceName = () => {
           )}
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 export default EditSpaceName
