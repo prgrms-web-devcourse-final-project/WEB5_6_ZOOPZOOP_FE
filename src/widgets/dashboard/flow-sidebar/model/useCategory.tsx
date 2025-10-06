@@ -12,6 +12,7 @@ export const useCategory = ({
   file: DashboardFile[]
 }) => {
   const [category, setCategory] = useState('미생성')
+  const [search, setSearch] = useState('')
 
   const data = useMemo(() => {
     if (category === '미생성') {
@@ -25,5 +26,16 @@ export const useCategory = ({
     )
   }, [file, category, nodes])
 
-  return { category, setCategory, data }
+  const filteredData = useMemo(() => {
+    return data.filter(item => item.title.includes(search))
+  }, [data, search])
+
+  return {
+    category,
+    setCategory,
+    data,
+    search,
+    setSearch,
+    filteredData
+  }
 }

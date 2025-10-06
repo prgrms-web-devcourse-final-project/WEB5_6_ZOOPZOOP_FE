@@ -10,23 +10,38 @@ interface Props {
 }
 
 export const FlowSidebar = ({ file, nodes }: Props) => {
-  const { category, setCategory, data } = useCategory({ nodes, file })
+  const { category, setCategory, data, search, setSearch, filteredData } =
+    useCategory({
+      nodes,
+      file
+    })
 
   return (
     <div className="w-90 h-[100vh] bg-white border-r border-gray-dark p-4 flex flex-col gap-3">
       <h1 className="text-2xl font-bold">스페이스 관리</h1>
-      <SearchArchive />
+      <SearchArchive
+        search={search}
+        setSearch={setSearch}
+      />
       <FlowCategory
         category={category}
         setCategory={setCategory}
       />
-      <div className="overflow-y-auto">
-        {data.map(item => (
-          <DashboardItem
-            key={item.dataSourceId}
-            file={item}
-          />
-        ))}
+      <div className="overflow-y-auto flex flex-col gap-2">
+        {(() => {
+          const displayData = search === '' ? data : filteredData
+
+          if (search !== '' && displayData.length === 0) {
+            return <p className="text-gray-500">검색 결과가 없습니다.</p>
+          }
+
+          return displayData.map(item => (
+            <DashboardItem
+              key={item.dataSourceId}
+              file={item}
+            />
+          ))
+        })()}
       </div>
     </div>
   )
