@@ -4,13 +4,13 @@ import { SpaceCard, SpacePagination } from '@/entities/space'
 import Pagination from '@/shared/ui/pagination/Pagination'
 
 import { postDashboardJWTClient } from '@/entities/dashboard'
-import SpaceContextMenu from './SpaceContextMenu'
 
 import { useRouter } from 'next/navigation'
 import { useContextMenu } from '../model/useContextMenu'
 import { useFetchSpace } from '../model/useFetchSpace'
 import EmptyList from './EmptyList'
 import PendingListSkeleton from './PendingListSkeleton'
+import SpaceContextMenu from './ContextMenu'
 
 interface Props {
   initialData: SpacePagination

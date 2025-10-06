@@ -1,5 +1,5 @@
 import { getInitialSpaceList } from '@/entities/space/api/space.ssr'
-import { SpaceList } from '@/features/space/space-list'
+import { SpaceList } from '@/features/space/list'
 
 interface Props {
   searchParams: Promise<{ page?: string }>

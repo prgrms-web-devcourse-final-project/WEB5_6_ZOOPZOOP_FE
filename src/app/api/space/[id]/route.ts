@@ -52,6 +52,7 @@ export const DELETE = async (
   }
 }
 
+// 스페이스 이름 변경
 export const PUT = async (
   request: Request,
   { params }: { params: Promise<{ id: string }> }

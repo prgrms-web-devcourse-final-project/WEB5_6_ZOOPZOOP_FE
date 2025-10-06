@@ -1,5 +1,5 @@
 import { Member } from '@/entities/member'
-import ChangeAuthorityDropDown from '@/features/space/change-authority/ui/ChangeAuthorityDropDown'
+import ChangeAuthorityDropDown from '@/features/space/member/update-authority/ui/ChangeAuthorityDropDown'
 import { Avatar } from '@/shared/ui'
 import { Badge } from '@/shared/ui/shadcn/badge'
 import { Button } from '@/shared/ui/shadcn/button'
