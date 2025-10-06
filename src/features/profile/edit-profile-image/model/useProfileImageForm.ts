@@ -11,17 +11,18 @@ export const useProfileImageForm = (profileUrl: string) => {
   const updateUser = useUserStore(state => state.updateUser)
 
   // tanstack query
-  const { updateProfileImage, isUploading } = useUpdateProfileImageMutation({
-    onSuccess: data => {
-      setPreviewUrl(null)
-      setSelectedFile(null)
-      updateUser(data)
-      showSuccessToast('프로필 수정 완료')
-    },
-    onError: () => {
-      showErrorToast('업로드에 실패했습니다.')
-    }
-  })
+  const { mutateUpdateProfileImage, isUploading } =
+    useUpdateProfileImageMutation({
+      onSuccess: data => {
+        setPreviewUrl(null)
+        setSelectedFile(null)
+        updateUser(data)
+        showSuccessToast('프로필 수정 완료')
+      },
+      onError: () => {
+        showErrorToast('업로드에 실패했습니다.')
+      }
+    })
 
   // 파생 상태
   const isChanged = previewUrl !== null
