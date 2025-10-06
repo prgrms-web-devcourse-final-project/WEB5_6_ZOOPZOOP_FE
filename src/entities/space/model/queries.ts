@@ -12,7 +12,7 @@ import {
   updateSpaceNameClient
 } from '../api/space.client'
 
-export interface SpaceQuery {
+interface SpaceQuery {
   pagination: { currentPage: number; size?: number; sort?: string[] }
   initialData?: SpacePagination
 }

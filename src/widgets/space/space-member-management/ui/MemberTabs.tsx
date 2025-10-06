@@ -1,6 +1,6 @@
 'use client'
 
-import { AddMemberButton } from '@/features/space/member/add'
+import { AddMemberButton } from '@/features/space'
 import { useState } from 'react'
 
 type TabType = 'members' | 'pending'

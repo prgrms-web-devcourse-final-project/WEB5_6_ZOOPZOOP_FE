@@ -1,6 +1,6 @@
 'use client'
 
-import { useSpaceStore } from '@/entities/space/model/store'
+import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
 
 const DeleteSpaceButton = () => {

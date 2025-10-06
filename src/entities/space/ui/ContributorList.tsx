@@ -1,4 +1,4 @@
-import { Member } from '@/entities/member'
+import { Member } from '@/entities/space/member'
 import { Avatar, RemainingAvatar } from '@/shared/ui'
 
 interface Props {

@@ -2,8 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-import { useSpaceStore } from '@/entities/space/model/store'
-
+import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
 import ActionButton from '@/shared/ui/header/ActionButton'
 import { Plus } from 'lucide-react'

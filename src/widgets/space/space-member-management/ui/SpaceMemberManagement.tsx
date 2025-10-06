@@ -1,10 +1,10 @@
 'use client'
 
-import { Member } from '@/entities/member'
+import { Member } from '@/entities/space'
 import { useMemo, useState } from 'react'
+import { ActiveType } from '../model/type'
 import { MemberTable } from './MemberTable'
 import { MemberTabs } from './MemberTabs'
-import { ActiveType } from '../model/type'
 
 interface Props {
   members: Member[]

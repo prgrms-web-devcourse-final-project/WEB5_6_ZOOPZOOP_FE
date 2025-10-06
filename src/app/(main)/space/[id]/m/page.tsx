@@ -1,7 +1,7 @@
 import {
   getSpaceMemberList,
   getSpacePendingMemberList
-} from '@/entities/member/api/member.ssr'
+} from '@/entities/space/member/api/member.ssr'
 import { Separator } from '@/shared/ui/shadcn/separator'
 import { SpaceDangerSection, SpaceInfo, SpaceMemberManagement } from '@/widgets'
 

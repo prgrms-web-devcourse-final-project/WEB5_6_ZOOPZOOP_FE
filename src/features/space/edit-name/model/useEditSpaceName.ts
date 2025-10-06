@@ -1,5 +1,4 @@
-import { useEditSpaceNameMutation } from '@/entities/space/model/queries'
-import { useSpaceStore } from '@/entities/space/model/store'
+import { useEditSpaceNameMutation, useSpaceStore } from '@/entities/space'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useEffect, useState } from 'react'
 

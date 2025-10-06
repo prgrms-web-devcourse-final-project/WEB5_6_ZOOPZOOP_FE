@@ -1,4 +1,4 @@
-import { updateMemberAuthorityServer } from '@/entities/member/api/member.server'
+import { updateMemberAuthorityServer } from '@/entities/space/member/api/member.server'
 import { addSpaceMemberServer } from '@/features/space/member/add/api/member.server'
 import { requireAuth } from '@/shared/lib/api-route'
 import { revalidateTag } from 'next/cache'
