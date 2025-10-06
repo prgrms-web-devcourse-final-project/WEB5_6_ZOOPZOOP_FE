@@ -16,11 +16,13 @@ const DeleteSpaceModal = ({ spaceId, title }: Props) => {
     confirmText,
     setConfirmText,
     isDeleteEnabled
-  } = useDeleteSpace()
+  } = useDeleteSpace(spaceId)
 
   return (
     <ModalLayout size="sm">
-      <div className="relative bg-white rounded-lg max-w-sm w-full mx-4 p-2">
+      <form
+        className="relative bg-white rounded-lg max-w-sm w-full mx-4 p-2"
+        onSubmit={handleDelete}>
         <h3 className="text-xl font-medium text-gray-900 mb-0.5">
           스페이스 영구 삭제
         </h3>
@@ -46,9 +48,8 @@ const DeleteSpaceModal = ({ spaceId, title }: Props) => {
 
         <div className="flex gap-3">
           <button
-            onClick={() => handleDelete(spaceId)}
             disabled={isDeleting || !isDeleteEnabled(title)}
-            type="button"
+            type="submit"
             className="flex-center gap-2 w-full py-2 text-white bg-red-600 rounded-md disabled-hover:bg-red-700 disabled:opacity-50 cursor-pointer">
             {isDeleting ? (
               <>
@@ -60,7 +61,7 @@ const DeleteSpaceModal = ({ spaceId, title }: Props) => {
             )}
           </button>
         </div>
-      </div>
+      </form>
     </ModalLayout>
   )
 }

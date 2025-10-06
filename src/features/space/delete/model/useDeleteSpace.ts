@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export const useDeleteSpace = () => {
+export const useDeleteSpace = (spaceId: number) => {
   const [confirmText, setConfirmText] = useState<string>('')
   const closeModal = useModalStore(state => state.closeModal)
   const router = useRouter()
@@ -28,10 +28,15 @@ export const useDeleteSpace = () => {
     return confirmText.trim() === title.trim()
   }
 
+  const handleDelete = (e: React.FormEvent) => {
+    e.preventDefault()
+    mutateDeleteSpace(spaceId)
+  }
+
   return {
     isDeleting,
     confirmText,
-    handleDelete: mutateDeleteSpace,
+    handleDelete,
     setConfirmText,
     isDeleteEnabled
   }
