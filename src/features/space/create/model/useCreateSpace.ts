@@ -25,7 +25,8 @@ export const useCreateSpace = () => {
     }
   })
 
-  const handleCreateSpace = () => {
+  const handleCreateSpace = (e: React.FormEvent) => {
+    e.preventDefault()
     if (!inputRef?.current) return
 
     const spaceName = inputRef.current.value.trim()
@@ -36,7 +37,7 @@ export const useCreateSpace = () => {
 
   return {
     inputRef,
-    onCreate: handleCreateSpace,
+    handleCreateSpace,
     isCreating
   }
 }
