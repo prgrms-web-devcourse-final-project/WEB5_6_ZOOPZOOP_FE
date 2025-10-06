@@ -5,7 +5,7 @@ interface Props {
   news: News[]
 }
 export const NewsGrid = ({ news }: Props) => {
-  const limitedNews = news.slice(0, 20)
+  const limitedNews = news.slice(0, 18)
 
   return (
     <div className="flex flex-wrap gap-4">
