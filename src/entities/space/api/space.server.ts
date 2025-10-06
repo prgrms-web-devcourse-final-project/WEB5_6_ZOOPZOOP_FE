@@ -71,13 +71,13 @@ export const fetchSpaceServer = async (
 
 // 스페이스 이름 수정
 export const editSpaceNameServer = async (
-  spaceId: string,
-  payload: { name: string },
+  payload: { name: string; spaceId: string },
   options?: NextFetchOptions
 ) => {
+  const { spaceId, ...restPayload } = payload
   return await httpClient.put<EditSpaceNameResponse>(
     `/api/v1/space/${spaceId}`,
-    payload,
+    restPayload,
     options
   )
 }

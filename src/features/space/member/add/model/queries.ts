@@ -11,9 +11,7 @@ export const useAddMembersMutation = (
 ) => {
   const { mutate, isPending } = useMutation({
     mutationKey: ['add-member'],
-
-    mutationFn: ({ memberNames, spaceId }) =>
-      addSpaceMemberClient({ memberNames, spaceId }),
+    mutationFn: payload => addSpaceMemberClient(payload),
     ...options
   })
 
