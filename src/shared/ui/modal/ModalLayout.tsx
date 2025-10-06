@@ -3,7 +3,7 @@ import { X } from 'lucide-react'
 
 interface Props {
   children: React.ReactNode
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
 }
 
 export const ModalLayout = ({ children, size }: Props) => {
@@ -20,7 +20,8 @@ export const ModalLayout = ({ children, size }: Props) => {
         className={tw(
           'bg-white rounded-2xl flex-center flex-col relative gap-5',
           size === 'sm' && 'w-[386px] p-4',
-          size === 'md' && 'w-[500px] p-7.5'
+          size === 'md' && 'w-[500px] p-7.5',
+          size === 'lg' && 'w-[1000px] p-7.5'
         )}
         onClick={e => e.stopPropagation()}>
         <button
