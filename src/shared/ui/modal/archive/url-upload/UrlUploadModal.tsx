@@ -44,8 +44,9 @@ export const UrlUploadModal = () => {
               <ArchiveFolder
                 key={item.folderId}
                 type="folder"
+                mode="select"
                 data={{ id: item.folderId, name: item.folderName }}
-                onSelect={handleSelectFolder}
+                onFolderSelect={handleSelectFolder}
                 isSelected={selectedFolder === item.folderId}
               />
             ))}
@@ -75,6 +76,7 @@ export const UrlUploadModal = () => {
         />
       </div>
       <FolderActionButtons
+        label="업로드"
         onCancel={closeModal}
         onCreate={handlePost}
         isCreating={false}

@@ -39,6 +39,7 @@ export const RenameFolderModal = ({ folderId, folderName }: Props) => {
         />
       </div>
       <FolderActionButtons
+        label="수정"
         onCancel={closeModal}
         onCreate={handleRename}
         isCreating={false}

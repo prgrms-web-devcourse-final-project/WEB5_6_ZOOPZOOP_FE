@@ -3,11 +3,13 @@ interface FolderActionButtonsProps {
   onCreate: () => void
   isCreating?: boolean
   disabled?: boolean
+  label: string
 }
 
 export const FolderActionButtons = ({
   onCancel,
   onCreate,
+  label,
   isCreating = false,
   disabled = false
 }: FolderActionButtonsProps) => {
@@ -23,7 +25,7 @@ export const FolderActionButtons = ({
         onClick={onCreate}
         disabled={disabled || isCreating}
         className="bg-green-normal w-full text-white rounded-md py-3 px-3 text-base disabled:opacity-50">
-        {isCreating ? '생성 중...' : '생성'}
+        {isCreating ? `${label} 중...` : label}
       </button>
     </div>
   )

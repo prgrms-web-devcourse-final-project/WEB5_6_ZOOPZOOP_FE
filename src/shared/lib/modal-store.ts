@@ -1,4 +1,3 @@
-import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { create } from 'zustand'
 
 type ModalType =
@@ -9,9 +8,6 @@ type ModalType =
   | { type: 'create-folder' }
   | {
       type: 'move-file'
-      prop: {
-        checkedList: CheckedFile[]
-      }
     }
   | { type: 'delete-account' }
   | {

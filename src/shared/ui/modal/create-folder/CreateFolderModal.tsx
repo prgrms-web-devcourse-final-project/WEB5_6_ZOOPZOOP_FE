@@ -25,6 +25,7 @@ export const CreateFolderModal = () => {
         />
       </div>
       <FolderActionButtons
+        label="생성"
         onCancel={closeModal}
         onCreate={handleCreate}
         isCreating={false}
