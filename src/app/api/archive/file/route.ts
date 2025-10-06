@@ -61,8 +61,9 @@ export const POST = async (request: Request) => {
 }
 
 // 단건 파일 이동
-export const PUT = async (request: Request) => {
+export const PATCH = async (request: Request) => {
   const payload = await request.json()
+
   try {
     const response = await requireAuth(
       async token =>
@@ -70,6 +71,7 @@ export const PUT = async (request: Request) => {
           headers: createCookieHeader(token)
         })
     )
+
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

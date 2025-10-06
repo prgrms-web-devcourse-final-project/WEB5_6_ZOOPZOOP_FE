@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-
-import { UseArchiveFilesByPageOptions } from './type'
+import { FileData, FileSearchParams, SearchGetResponse } from './type'
 import {
   fetchArchiveFilesByFolderClient,
   fetchArchiveFilesByPageClient
@@ -11,7 +10,7 @@ export const useArchiveFilesByFolderQuery = (
   options?: { enabled?: boolean }
 ) => {
   const filesQuery = useQuery({
-    queryKey: ['archiveFiles', folderId],
+    queryKey: ['archiveFilesFolder', folderId],
     queryFn: () => fetchArchiveFilesByFolderClient(folderId),
     staleTime: 1000 * 60,
     enabled: options?.enabled
@@ -20,18 +19,29 @@ export const useArchiveFilesByFolderQuery = (
   return { filesQuery }
 }
 
-export const useArchiveFilesByPageQuery = ({
-  folderId,
-  page,
-  size,
-  enabled = true
-}: UseArchiveFilesByPageOptions) => {
-  const filesQuery = useQuery({
-    queryKey: ['archiveFiles', 'page', folderId, page, size],
-    queryFn: () => fetchArchiveFilesByPageClient({ folderId, page, size }),
-    staleTime: 1000 * 60,
-    enabled
-  })
+// initial data 받아서 모든 쿼리 다 받아야됨
+interface PageQuery {
+  query: FileSearchParams
+  initialData?: SearchGetResponse
+}
 
-  return { filesQuery }
+export const useArchiveFilesByPageQuery = ({
+  query,
+  initialData
+}: PageQuery) => {
+  const { folderId, page, sort, size, keyword, isActive } = query
+  return useQuery({
+    queryKey: ['archiveFilesPage', folderId, page, sort], //쿼리 키를 다르게 설정
+    queryFn: () =>
+      fetchArchiveFilesByPageClient({
+        folderId,
+        page,
+        size,
+        keyword,
+        sort,
+        isActive
+      }),
+    staleTime: 1000 * 60,
+    initialData: initialData
+  })
 }

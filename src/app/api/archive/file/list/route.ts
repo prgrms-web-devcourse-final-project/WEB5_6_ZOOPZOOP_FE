@@ -9,15 +9,31 @@ import { NextResponse } from 'next/server'
 //페이지 내 파일 조회
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url)
+
   const folderId = searchParams.get('folderId')
   const page = searchParams.get('page')
   const size = searchParams.get('size')
+
+  const keyword = searchParams.get('keyword') ?? undefined
+  const sort = searchParams.get('sort') ?? undefined
+  const isActive = searchParams.get('isActive') ?? undefined
+
   try {
-    const response = await fetchArchiveFilesByPageServer({
-      folderId: Number(folderId),
-      page: Number(page),
-      size: Number(size)
-    })
+    const response = await requireAuth(async token =>
+      fetchArchiveFilesByPageServer(
+        {
+          folderId: Number(folderId),
+          page: Number(page),
+          size: Number(size),
+          isActive: isActive === 'true', // 문자열을 boolean으로 변환
+          keyword: keyword,
+          sort: sort
+        },
+        {
+          headers: createCookieHeader(token)
+        }
+      )
+    )
 
     return NextResponse.json(response)
   } catch (error) {
@@ -33,7 +49,7 @@ export const GET = async (request: Request) => {
 }
 
 // 다건 파일 이동
-export const PUT = async (request: Request) => {
+export const PATCH = async (request: Request) => {
   const payload = await request.json()
   try {
     const response = await requireAuth(

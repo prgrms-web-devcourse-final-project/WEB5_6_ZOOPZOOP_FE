@@ -1,4 +1,4 @@
-import { APIResponse } from '@/shared/types'
+import { APIResponse, Pagination } from '@/shared/types'
 import { FolderData } from '../../folder'
 
 export type FileGetResponse = APIResponse<{
@@ -10,10 +10,16 @@ export type FilePostResponse = APIResponse<{
   dataSourceId: number
 }>
 
+export interface SearchGetResponse {
+  status: number
+  msg: string
+  data: { items: FileData[]; pageInfo: PageInfo }
+}
+
 export interface FileData {
   dataSourceId: number
   title: string
-  createdAt: string
+  dataCreatedDate: string
   summary: string
   sourceUrl: string
   source: string
@@ -32,25 +38,11 @@ export interface PageInfo {
   sorted: string
 }
 
-export interface UseArchiveFilesByPageOptions {
+export interface FileSearchParams {
   folderId: number
   page: number
   size: number
-  enabled?: boolean
-}
-
-export interface SearchGetResponse {
-  status: number
-  msg: string
-  data: FileData[]
-  pageInfo: PageInfo
-}
-
-export interface FileSearchParams {
-  folderId?: number
-  page: number
-  size: number
-  title?: string
   isActive?: boolean
   sort?: string
+  keyword?: string
 }
