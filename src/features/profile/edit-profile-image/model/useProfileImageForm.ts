@@ -31,7 +31,7 @@ export const useProfileImageForm = (profileUrl: string) => {
   // 업로드 핸들러
   const handleUpload = () => {
     if (!selectedFile) return
-    updateProfileImage(selectedFile)
+    mutateUpdateProfileImage(selectedFile)
   }
 
   // 이미지 선택
