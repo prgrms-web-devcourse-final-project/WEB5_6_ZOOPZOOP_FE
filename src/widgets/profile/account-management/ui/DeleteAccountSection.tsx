@@ -1,4 +1,4 @@
-import { DeleteAccountButton } from '@/features/auth/ui'
+import { DeleteAccountButton } from '@/features/auth'
 import { AlertTriangle } from 'lucide-react'
 
 const DeleteAccountSection = () => {

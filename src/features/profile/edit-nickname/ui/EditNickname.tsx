@@ -1,27 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import useUpdateNickname from '../model/useEditNickname'
+import { useUpdateNickname } from '../model/useEditNickname'
 
 interface Props {
   nickname: string
 }
 
 const EditNickname = ({ nickname }: Props) => {
-  const [newNickname, setNewNickname] = useState(nickname)
-  const { mutate: updateNickname, isPending } = useUpdateNickname()
-  const isChanged = newNickname.trim() !== nickname
-  const isDisabled = isPending || !isChanged
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewNickname(e.target.value)
-  }
-
-  const handleEditNickname = () => {
-    if (!isChanged) return
-    updateNickname(newNickname)
-  }
+  const { newNickname, isDisabled, onChange, onEditNickname, isUpdating } =
+    useUpdateNickname(nickname)
 
   return (
     <div>
@@ -36,7 +24,7 @@ const EditNickname = ({ nickname }: Props) => {
           id="nickname"
           placeholder="닉네임을 입력하세요"
           value={newNickname.split('#')[0]}
-          onChange={handleChange}
+          onChange={onChange}
         />
         <button
           className={`px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-200 ${
@@ -45,9 +33,9 @@ const EditNickname = ({ nickname }: Props) => {
               : 'border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer'
           }`}
           type="button"
-          onClick={handleEditNickname}
+          onClick={onEditNickname}
           disabled={isDisabled}>
-          {isPending ? (
+          {isUpdating ? (
             <div className="flex-center gap-2">
               <Loader2
                 className="animate-spin"
