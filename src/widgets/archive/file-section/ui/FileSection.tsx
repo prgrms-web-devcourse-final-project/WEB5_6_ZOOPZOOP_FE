@@ -1,110 +1,77 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import FileHeader from './FileHeader'
-import { SortDirection } from '@tanstack/react-table'
-import { SortKey } from '@/features/archive/sort'
-import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
-import { type FileData } from '@/entities/archive/file'
-import Pagination from '@/shared/ui/pagination/Pagination'
-import { CheckedFile } from '@/features/archive/move-file/model/type'
-import { PageInfo } from '@/entities/archive/file/model/type'
 import TableView from './TableView'
 import CardView from './CardView'
+import Pagination from '@/shared/ui/pagination/Pagination'
+import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
+
+import { SortDirection, SortKey } from '@/features/archive/sort'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
+import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
+import { SearchGetResponse } from '@/entities/archive/file/model/type'
 
 interface Props {
-  folderId: number
-  initialFileList: FileData[]
-  initialPageInfo: PageInfo
-  currentPage: number
+  initialFileData: SearchGetResponse
+  initialPage: number
 }
 
-function FileSection({
-  initialFileList,
-  initialPageInfo,
-  folderId,
-  currentPage
-}: Props) {
+function FileSection({ initialFileData, initialPage }: Props) {
+  const searchParams = useSearchParams()
   const { viewMode, onSwitchViewMode } = useFileViewMode()
-  const [checkedCardList, setCheckedCardList] = useState<CheckedFile[]>([])
-  const [sortKey, setSortKey] = useState<SortKey>('이름')
-  const [direction, setDirection] = useState<SortDirection>('asc')
 
-  const isNonePagination = initialPageInfo.totalPages === 0
+  const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({
+    key: 'createdAt',
+    direction: 'desc'
+  })
 
-  // 정렬된 파일 데이터 불러오기
+  const currentPage = Number(searchParams.get('page')) || 1
+  const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
+
+  const { data: filesQuery } = useArchiveFilesByPageQuery({
+    query: {
+      folderId: 0,
+      page: currentPage,
+      isActive: false,
+      size: 8,
+      sort: `${sort.key},${sort.direction}`
+    },
+    initialData: currentPage === initialPage ? initialFileData : undefined
+  })
+  const fileList = filesQuery?.data.items || []
 
   const handleSortClick = (key: SortKey, newDirection: SortDirection) => {
-    setSortKey(key)
-    setDirection(newDirection)
-  }
-
-  /* 체크박스 컨트롤 */
-  const handleCheckbox = (fileId: number) => {
-    setCheckedCardList(prev => {
-      const existing = prev.find(item => item.folderId === folderId)
-      if (existing) {
-        const alreadySelected = existing.fileId.includes(fileId)
-        return prev.map(item =>
-          item.folderId === folderId
-            ? {
-                ...item,
-                fileId: alreadySelected
-                  ? item.fileId.filter(id => id !== fileId)
-                  : [...item.fileId, fileId]
-              }
-            : item
-        )
-      } else {
-        return [...prev, { folderId, fileId: [fileId] }]
-      }
+    setSort({
+      key,
+      direction: newDirection
     })
   }
-
-  const onAllCheck = () => {
-    const allIds = initialFileList.map(item => item.dataSourceId)
-
-    setCheckedCardList(prev => {
-      const existing = prev.find(item => item.folderId === folderId)
-      if (existing && existing.fileId.length === allIds.length) {
-        // 이미 다 선택된 경우 → 해제
-        return prev.filter(item => item.folderId !== folderId)
-      } else {
-        // 전체 선택
-        const filtered = prev.filter(item => item.folderId !== folderId)
-        return [...filtered, { folderId, fileId: allIds }]
-      }
-    })
-  }
-
-  const currentCheckedIds =
-    checkedCardList.find(item => item.folderId === folderId)?.fileId ?? []
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       <FileHeader
-        sortKey={sortKey}
-        direction={direction}
-        isChecked={currentCheckedIds.length > 0}
+        sortKey={sort.key}
+        direction={sort.direction}
         isTableView={viewMode === 'list'}
         onChangeView={onSwitchViewMode}
         handleSortClick={handleSortClick}
-        onAllCheck={onAllCheck}
-        checkedCardList={checkedCardList}
       />
-
-      {viewMode === 'list' ? (
-        <TableView fileList={initialFileList} />
-      ) : (
-        <CardView fileList={initialFileList} />
-      )}
-
+      <div className="flex-1">
+        {viewMode === 'list' ? (
+          <TableView fileList={fileList} />
+        ) : (
+          <CardView fileList={fileList} />
+        )}
+      </div>
       {isNonePagination ? (
         <p>등록된 파일이 없습니다</p>
       ) : (
-        <Pagination totalPages={initialPageInfo.totalPages} />
+        <Pagination totalPages={initialFileData.data.pageInfo.totalPages} />
       )}
-    </>
+    </div>
   )
 }
+
 export default FileSection

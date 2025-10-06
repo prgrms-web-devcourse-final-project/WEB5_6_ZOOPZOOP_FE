@@ -15,7 +15,7 @@ function SortButton({ label, direction = 'none', onClick }: Props) {
         onClick={onClick}
         aria-label={`${label} 정렬: ${direction === 'asc' ? '오름차순' : direction === 'desc' ? '내림차순' : '해제'}`}
         className="flex gap-2 items-center text-base rounded-sm p-1 cursor-pointer hover:bg-gray-light-active">
-        <p>{label}</p>
+        <p>{label === 'title' ? '이름' : '날짜'}</p>
         {direction === 'asc' && (
           <ArrowUp
             size={14}

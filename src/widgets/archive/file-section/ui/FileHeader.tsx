@@ -12,10 +12,8 @@ interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
-  isChecked: boolean
-  checkedCardList: CheckedFile[]
+
   onChangeView: () => void
-  onAllCheck: () => void
   handleSortClick: (key: SortKey, direction: SortDirection) => void
 }
 
@@ -23,10 +21,9 @@ function FileHeader({
   sortKey,
   direction,
   isTableView,
-  checkedCardList,
+
   onChangeView,
-  handleSortClick,
-  onAllCheck
+  handleSortClick
 }: Props) {
   return (
     <div className="flex  justify-between">
@@ -41,7 +38,7 @@ function FileHeader({
         <CopyToSpaceButton />
 
         {/* 파일 이동 버튼 */}
-        <MoveFileButton checkedFileList={checkedCardList} />
+        <MoveFileButton />
 
         {/* 파일 삭제 버튼 */}
         <DeleteFileButton />
@@ -49,23 +46,23 @@ function FileHeader({
 
       <div className="flex gap-2">
         <SortButton
-          label="이름"
-          direction={sortKey === '이름' ? direction : 'none'}
+          label="title"
+          direction={sortKey === 'title' ? direction : 'none'}
           onClick={() =>
             handleSortClick(
-              '이름',
-              sortKey === '이름' && direction === 'asc' ? 'desc' : 'asc'
+              'title',
+              sortKey === 'title' && direction === 'asc' ? 'desc' : 'asc'
             )
           }
         />
 
         <SortButton
-          label="날짜"
-          direction={sortKey === '날짜' ? direction : 'none'} // 이름 정렬할때 - 표시
+          label="createdAt"
+          direction={sortKey === 'createdAt' ? direction : 'none'} // title 정렬할때 - 표시
           onClick={() =>
             handleSortClick(
-              '날짜',
-              sortKey === '날짜' && direction === 'asc' ? 'desc' : 'asc'
+              'createdAt',
+              sortKey === 'createdAt' && direction === 'asc' ? 'desc' : 'asc'
             )
           }
         />

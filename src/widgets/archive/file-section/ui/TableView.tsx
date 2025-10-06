@@ -11,15 +11,17 @@ function TableView({ fileList }: Props) {
     id: item.dataSourceId.toString(),
     title: item.title,
     category: item.category,
-    createdAt: item.createdAt,
+    createdAt: item.dataCreatedDate,
     origin: item.source
   }))
 
   return (
-    <CustomTable
-      columns={ArchiveColumn}
-      data={tableData}
-    />
+    <div className="w-full">
+      <CustomTable
+        columns={ArchiveColumn}
+        data={tableData}
+      />
+    </div>
   )
 }
 

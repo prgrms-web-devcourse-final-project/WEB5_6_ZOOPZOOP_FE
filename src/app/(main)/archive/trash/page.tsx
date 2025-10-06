@@ -26,11 +26,11 @@ async function ArchiveTrashPage() {
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
       <div className="flex flex-col p-6 gap-4">
-        <FileSection
+        {/* <FileSection
           folderId={ROOT_FOLDER_ID}
           initialFileList={(fileResponse && fileResponse.data) ?? []}
           initialPageInfo={fileResponse.pageInfo}
-        />
+        /> */}
       </div>
     </div>
   )

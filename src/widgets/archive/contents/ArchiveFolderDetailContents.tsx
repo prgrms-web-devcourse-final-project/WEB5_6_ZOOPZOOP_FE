@@ -6,7 +6,7 @@ import { Header } from '@/shared/ui/header'
 import { Button } from '@/shared/ui/header/Header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 
 const buttons: Button[] = [
   {
@@ -18,22 +18,24 @@ const buttons: Button[] = [
 ]
 
 export default function ArchiveFolderDetailContents() {
+  const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
   const { folder } = useParams()
   const { foldersQuery } = useGetArchiveFoldersQuery()
 
   const folderName = folder ? decodeURIComponent(String(folder)) : ''
-  // TODO : 김정주
+
   const selectedFolder = foldersQuery.data?.data?.find(
     f => f.folderName === folderName
   )
 
-  const { filesQuery } = useArchiveFilesByPageQuery({
-    folderId: Number(selectedFolder?.folderId),
-    page: 0,
-    size: 20,
-    enabled: !!selectedFolder
+  const { data: fileList } = useArchiveFilesByPageQuery({
+    query: {
+      folderId: Number(selectedFolder?.folderId),
+      page: currentPage,
+      size: 8
+    }
   })
-  if (!filesQuery.data?.data) return <p>등록된 파일이 없습니다.</p>
 
   return (
     <div>
@@ -47,13 +49,14 @@ export default function ArchiveFolderDetailContents() {
         <FolderSection
           folderList={(foldersQuery && foldersQuery.data?.data) ?? []}
         />
-        {selectedFolder && (
+
+        {/* {selectedFolder && (
           <FileSection
             folderId={selectedFolder.folderId}
             initialFileList={filesQuery?.data?.data ?? []}
-            initialPageInfo={filesQuery?.data?.pageInfo}
+            initialPageInfo={filesQuery.data?.pageInfo!}
           />
-        )}
+        )} */}
       </div>
     </div>
   )

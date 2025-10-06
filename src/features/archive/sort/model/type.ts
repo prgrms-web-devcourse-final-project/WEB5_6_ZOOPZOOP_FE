@@ -1,4 +1,4 @@
-export type SortKey = '이름' | '날짜'
+export type SortKey = 'title' | 'createdAt'
 export type SortDirection = 'asc' | 'desc'
 
 export interface FileItem {
