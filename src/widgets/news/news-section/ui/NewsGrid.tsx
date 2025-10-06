@@ -3,9 +3,10 @@ import { BaseNewsCard } from '@/shared/ui/card'
 
 interface Props {
   news: News[]
+  page: number
 }
-export const NewsGrid = ({ news }: Props) => {
-  const limitedNews = news.slice(0, 18)
+export const NewsGrid = ({ news, page }: Props) => {
+  const limitedNews = news.slice((page - 1) * 18, page * 18)
 
   return (
     <div className="flex flex-wrap gap-4">
