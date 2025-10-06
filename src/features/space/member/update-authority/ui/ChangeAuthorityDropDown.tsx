@@ -13,24 +13,34 @@ import {
 import { spaceMemberAuthority } from '../model/constant'
 import { getAuthorityLabel } from '../model/util'
 
+import { useUpdateAuthority } from '../model/useUpdateAuthority'
 import DropdownItem from './DropdownItem'
+import { useSpaceStore } from '@/entities/space'
+import { Loader2 } from 'lucide-react'
 
 interface Props {
   role: Authority
+  memberId: number
 }
 
-const ChangeAuthorityDropDown = ({ role }: Props) => {
+const ChangeAuthorityDropDown = ({ role, memberId }: Props) => {
+  const currentSpace = useSpaceStore(state => state.currentSpace)
+  const { handleSelect, isUpdating } = useUpdateAuthority()
+
   const displayRole = getAuthorityLabel(role)
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          className="px-3 py-1 rounded-sm"
-          variant="outline"
-          size="sm">
-          Role : {displayRole}
-        </Button>
+        <div className="flex-center gap-1 ">
+          <Button
+            className="px-3 py-1 rounded-sm"
+            variant="outline"
+            size="sm">
+            Role : {displayRole}
+          </Button>
+          {isUpdating && <Loader2 className="animate-spin" />}
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-72"
@@ -40,10 +50,18 @@ const ChangeAuthorityDropDown = ({ role }: Props) => {
         <DropdownMenuGroup className="px-1">
           {spaceMemberAuthority.map((authority, index) => (
             <DropdownItem
-              key={index}
+              key={authority.role}
               authority={authority}
               index={index}
               role={role}
+              onSelect={() => {
+                if (!currentSpace) return
+                handleSelect({
+                  memberId,
+                  newAuthority: authority.role,
+                  spaceId: currentSpace?.spaceId
+                })
+              }}
             />
           ))}
         </DropdownMenuGroup>

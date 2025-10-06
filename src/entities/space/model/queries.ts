@@ -55,7 +55,7 @@ export const useCreateSpaceMutation = (
   })
 
   return {
-    createSpace: mutate,
+    mutateCreateSpace: mutate,
     isCreating: isPending
   }
 }
@@ -74,7 +74,7 @@ export const useDeleteSpaceMutation = (
   })
 
   return {
-    deleteSpace: mutate,
+    mutateDeleteSpace: mutate,
     isDeleting: isPending
   }
 }
@@ -105,7 +105,7 @@ export const useEditSpaceNameMutation = (
   })
 
   return {
-    editSpaceName: mutate,
+    mutateEditSpaceName: mutate,
     isUpdating: isPending
   }
 }

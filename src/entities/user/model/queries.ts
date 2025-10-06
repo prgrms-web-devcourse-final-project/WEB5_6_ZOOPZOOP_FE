@@ -20,7 +20,7 @@ export const useUpdateProfileImageMutation = (
   })
 
   return {
-    updateProfileImage: mutate,
+    mutateUpdateProfileImage: mutate,
     isUploading: isPending
   }
 }
@@ -35,7 +35,7 @@ export const useUpdateNicknameMutation = (
   })
 
   return {
-    updateNickname: mutate,
+    mutateUpdateNickname: mutate,
     isUpdating: isPending
   }
 }

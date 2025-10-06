@@ -43,6 +43,7 @@ export const PUT = async (
   try {
     const { id } = await params
     const payload = await request.json()
+
     const response = await requireAuth(
       async token =>
         await updateMemberAuthorityServer(

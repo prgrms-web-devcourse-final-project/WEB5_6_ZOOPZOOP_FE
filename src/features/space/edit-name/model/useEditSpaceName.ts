@@ -12,7 +12,7 @@ export const useEditSpaceName = () => {
     }
   }, [currentSpace?.spaceName])
 
-  const { editSpaceName, isUpdating } = useEditSpaceNameMutation({
+  const { mutateEditSpaceName, isUpdating } = useEditSpaceNameMutation({
     onSuccess: ({ name }) => {
       updateSpace({ spaceName: name })
       showSuccessToast(`'${name}'으로 수정 완료`)
@@ -35,7 +35,7 @@ export const useEditSpaceName = () => {
   const handleSubmit = () => {
     if (isDisabled) return
 
-    editSpaceName({
+    mutateEditSpaceName({
       spaceId: currentSpace.spaceId,
       name: newName.trim()
     })

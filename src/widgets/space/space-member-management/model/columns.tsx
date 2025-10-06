@@ -45,7 +45,12 @@ export const createMemberColumns = (
         maxSize: 150,
         cell: info => {
           const member = info.row.original
-          return <ChangeAuthorityDropDown role={member.authority} />
+          return (
+            <ChangeAuthorityDropDown
+              role={member.authority}
+              memberId={member.id}
+            />
+          )
         }
       },
       {

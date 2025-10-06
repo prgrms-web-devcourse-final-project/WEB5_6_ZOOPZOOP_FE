@@ -12,7 +12,7 @@ export const useCreateSpace = () => {
   const closeModal = useModalStore(state => state.closeModal)
 
   // tanstack query
-  const { createSpace, isCreating } = useCreateSpaceMutation({
+  const { mutateCreateSpace, isCreating } = useCreateSpaceMutation({
     onSuccess: data => {
       // space 목록 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['space'] })
@@ -31,7 +31,7 @@ export const useCreateSpace = () => {
     const spaceName = inputRef.current.value.trim()
     if (!spaceName) return
 
-    createSpace(spaceName)
+    mutateCreateSpace(spaceName)
   }
 
   return {

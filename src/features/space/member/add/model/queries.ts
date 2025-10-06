@@ -16,7 +16,7 @@ export const useAddMembersMutation = (
   })
 
   return {
-    handleAddMembers: mutate,
+    mutateAddMembers: mutate,
     isAdding: isPending
   }
 }

@@ -11,7 +11,7 @@ export const useDeleteSpace = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
 
-  const { deleteSpace, isDeleting } = useDeleteSpaceMutation({
+  const { mutateDeleteSpace, isDeleting } = useDeleteSpaceMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['space'] })
       closeModal()
@@ -31,7 +31,7 @@ export const useDeleteSpace = () => {
   return {
     isDeleting,
     confirmText,
-    onDelete: deleteSpace,
+    onDelete: mutateDeleteSpace,
     setConfirmText,
     isDeleteEnabled
   }

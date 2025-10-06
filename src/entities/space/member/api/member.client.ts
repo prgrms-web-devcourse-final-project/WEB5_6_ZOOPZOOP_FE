@@ -13,7 +13,7 @@ export const updateMemberAuthorityClient = async (
 
   const { data, msg, status } =
     await httpClient.put<SpaceAuthorityChangeResponse>(
-      `/api/space/member/${spaceId}`,
+      `/api/space/${spaceId}/member`,
       restPayload
     )
 

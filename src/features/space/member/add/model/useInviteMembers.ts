@@ -12,7 +12,7 @@ export const useInviteMembers = () => {
   const router = useRouter()
 
   // tanstack query
-  const { handleAddMembers, isAdding } = useAddMembersMutation({
+  const { mutateAddMembers, isAdding } = useAddMembersMutation({
     onSuccess: () => {
       showSuccessToast('초대 전송 완료')
       router.refresh()
@@ -51,7 +51,7 @@ export const useInviteMembers = () => {
     if (selectedMembers.length === 0) {
       return showErrorToast('초대할 멤버를 선택해주세요')
     }
-    handleAddMembers({ memberNames: selectedMembers, spaceId })
+    mutateAddMembers({ memberNames: selectedMembers, spaceId })
   }
 
   return {

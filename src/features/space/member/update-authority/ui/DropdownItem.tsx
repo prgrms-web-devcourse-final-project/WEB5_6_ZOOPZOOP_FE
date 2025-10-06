@@ -6,17 +6,21 @@ import {
 import { Check } from 'lucide-react'
 import { spaceMemberAuthority } from '../model/constant'
 import { AuthorityType } from '../model/type'
+
 interface Props {
   authority: AuthorityType
   index: number
   role: Authority
+  onSelect: () => void
 }
-const DropdownItem = ({ authority, index, role }: Props) => {
+const DropdownItem = ({ authority, index, role, onSelect }: Props) => {
   const currentRole = role === authority.role
 
   return (
     <>
-      <DropdownMenuItem className="cursor-pointer flex items-start">
+      <DropdownMenuItem
+        className="cursor-pointer flex items-start"
+        onClick={onSelect}>
         <div className="h-full w-5">
           {currentRole && <Check className="text-green-500 size-5" />}
         </div>
