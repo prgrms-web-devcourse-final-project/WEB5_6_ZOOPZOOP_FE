@@ -34,6 +34,11 @@ const categories = [
     id: 6,
     name: '스포츠',
     href: '/news/sports'
+  },
+  {
+    id: 7,
+    name: '추천',
+    href: '/news/recommend'
   }
 ]
 

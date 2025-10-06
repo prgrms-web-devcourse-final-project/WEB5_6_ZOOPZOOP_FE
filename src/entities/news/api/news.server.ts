@@ -1,5 +1,6 @@
 import { httpClient } from '@/shared/lib'
-import { NewsResponse } from '../model/type'
+import { NewsResponse, RecommendedNewsResponse } from '../model/type'
+import { NextFetchOptions } from '@/shared/types'
 
 export const fetchNews = async (): Promise<NewsResponse> => {
   return httpClient.get<NewsResponse>('/api/v1/news', {
@@ -18,5 +19,15 @@ export const fetchNewsByKeywords = async (
     {
       next: { revalidate: 300, tags: [`news-${keywords}`] }
     }
+  )
+}
+
+export const fetchRecommendedNews = async (
+  payload: string,
+  options?: NextFetchOptions
+): Promise<RecommendedNewsResponse> => {
+  return httpClient.get<RecommendedNewsResponse>(
+    `/api/v1/news/recommends/personal/${payload}`,
+    options
   )
 }
