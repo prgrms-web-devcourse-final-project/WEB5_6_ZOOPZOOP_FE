@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
 import { Handle, Position } from '@xyflow/react'
+import { BookmarkPlus } from 'lucide-react'
 
 interface Props {
   title: string
@@ -18,6 +19,7 @@ interface Props {
     profileUrl: string
   }
   selected?: boolean
+  onSave?: () => void
 }
 
 export const BaseNewsCard = ({
@@ -29,35 +31,49 @@ export const BaseNewsCard = ({
   createdAt,
   type,
   user,
-  selected
+  selected,
+  onSave
 }: Props) => {
   return (
     <div
-      className={`group w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-xl transition-all duration-200 ${
+      className={`group w-[320px] h-[371px] rounded-lg shadow-md bg-white hover:shadow-xl transition-all duration-200 relative ${
         selected ? 'ring-2 ring-green-normal ring-offset-2' : ''
       }`}>
-      <div
-        className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'}`}
-        onClick={() => {
-          if (!link) return
-          window.open(link, '_blank', 'noopener,noreferrer')
-        }}>
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="news"
-            width={360}
-            height={200}
-            className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
-            onError={e => {
-              e.currentTarget.style.display = 'none'
+      <div className="relative">
+        {type === 'base' && (
+          <button
+            onClick={e => {
+              e.stopPropagation()
+              onSave?.()
             }}
-          />
-        ) : (
-          <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-500">이미지 없음</span>
-          </div>
+            className="absolute top-2 right-2 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+            <BookmarkPlus size={16} />
+          </button>
         )}
+
+        <div
+          className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'} relative`}
+          onClick={() => {
+            if (!link) return
+            window.open(link, '_blank', 'noopener,noreferrer')
+          }}>
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt="news"
+              width={360}
+              height={200}
+              className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+              onError={e => {
+                e.currentTarget.style.display = 'none'
+              }}
+            />
+          ) : (
+            <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">이미지 없음</span>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="p-4 flex flex-col gap-3">
@@ -69,21 +85,28 @@ export const BaseNewsCard = ({
           </p>
         </div>
         <div className="flex flex-col gap-1">
-          <h3 className="text-lg font-bold line-clamp-1 leading-tight cursor-pointer hover:text-green-normal transition-colors">
+          <h3
+            className="text-lg font-bold line-clamp-1 leading-tight cursor-pointer hover:text-green-normal transition-colors"
+            onClick={() => {
+              if (!link) return
+              window.open(link, '_blank', 'noopener,noreferrer')
+            }}>
             {title}
           </h3>
           <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
         </div>
-        {type === 'flow' && (
+
+        {/* flow 타입일 때만 유저 정보 표시 */}
+        {type === 'flow' && user && (
           <div className="absolute bottom-4 right-4 flex items-center gap-2">
             <Image
-              src={user?.profileUrl || ''}
-              alt={user?.name || ''}
+              src={user.profileUrl}
+              alt={user.name}
               width={20}
               height={20}
               className="rounded-full"
             />
-            <p className="text-xs text-gray-normal">{user?.name}</p>
+            <p className="text-xs text-gray-normal">{user.name}</p>
           </div>
         )}
       </div>
