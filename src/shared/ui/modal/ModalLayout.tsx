@@ -1,3 +1,5 @@
+'use client'
+
 import { tw, useModalStore } from '@/shared/lib'
 import { X } from 'lucide-react'
 import { useEffect, useState } from 'react'
