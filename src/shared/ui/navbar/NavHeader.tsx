@@ -47,7 +47,7 @@ export default function NavHeader({
         )}
       </div>
       {/* 사용자 프로필 영역 */}
-      <div className="flex items-center">
+      <div className="flex items-center overflow-hidden">
         <div className="overflow-hidden rounded-full border-1 size-10 flex-shrink-0">
           <Image
             src={
@@ -61,6 +61,7 @@ export default function NavHeader({
             className="object-cover w-full h-full"
           />
         </div>
+
         {isExpanded && (
           <div className="flex justify-between items-center flex-1 pl-2">
             <p className="text-sm font-medium text-gray-700 truncate">

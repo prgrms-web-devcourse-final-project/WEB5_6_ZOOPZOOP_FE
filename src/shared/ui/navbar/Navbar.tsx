@@ -37,7 +37,7 @@ function Navbar({ notificationSlot }: Props) {
         slot={notificationSlot}
       />
       {/* 메뉴 리스트 */}
-      <ul className="flex flex-col gap-2 items-center">
+      <ul className="flex flex-col gap-1 items-center">
         {navItems.map(item => (
           <NavItems
             pathName={pathName}

@@ -9,14 +9,17 @@ interface Props {
 }
 
 function NavItems({ item, pathName, isExpanded }: Props) {
-  const isMainMenuOpen = pathName.startsWith(item.href)
+  const isMainMenuOpen =
+    pathName !== item.href && pathName.startsWith(item.href)
+
+  const isActive = pathName.startsWith(item.href)
 
   return (
     <>
       <MainNavItem
-        isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
         isExpanded={isExpanded}
+        isActive={isActive}
       />
 
       {item.children && (
@@ -26,14 +29,12 @@ function NavItems({ item, pathName, isExpanded }: Props) {
           overflow-hidden transition-all duration-300
           ${isMainMenuOpen && isExpanded ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}
         `}>
-          {item.children.map((child, idx) => {
-            return (
-              <SubNavItem
-                key={idx}
-                subItem={child}
-              />
-            )
-          })}
+          {item.children.map((child, idx) => (
+            <SubNavItem
+              key={idx}
+              subItem={child}
+            />
+          ))}
         </ul>
       )}
     </>
