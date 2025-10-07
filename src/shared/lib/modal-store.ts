@@ -10,6 +10,7 @@ type ModalType =
       type: 'move-file'
     }
   | { type: 'delete-account' }
+  | { type: 'go-to-trash' }
   | {
       type: 'rename-folder'
       props: {
