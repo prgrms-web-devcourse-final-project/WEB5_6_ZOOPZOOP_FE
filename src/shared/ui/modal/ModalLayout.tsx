@@ -1,8 +1,5 @@
-'use client'
-
 import { tw, useModalStore } from '@/shared/lib'
 import { X } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 interface Props {
   children: React.ReactNode
@@ -11,15 +8,6 @@ interface Props {
 
 export const ModalLayout = ({ children, size }: Props) => {
   const closeModal = useModalStore(s => s.closeModal)
-
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    return () => setMounted(false)
-  }, [])
-
-  if (!mounted) return null
 
   return (
     <div
