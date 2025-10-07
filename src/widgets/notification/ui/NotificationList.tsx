@@ -19,7 +19,7 @@ const NotificationList = ({ onClose, triggerRef }: Props) => {
   return (
     <div
       ref={notificationRef}
-      className="absolute top-5 left-5 shadow-lg w-80 bg-white rounded-lg border border-slate-200 overflow-hidden">
+      className="absolute top-5 left-5 shadow-lg w-80 bg-white rounded-lg border border-slate-200 overflow-hidden z-20">
       <div className="px-4 py-3 border-b border-slate-100">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-semibold text-slate-800">알림</h3>
