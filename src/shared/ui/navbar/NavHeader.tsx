@@ -1,47 +1,54 @@
 import { User } from '@/entities/user'
 import Image from 'next/image'
-import { tw } from '@/shared/lib'
+import { ChevronsLeft } from 'lucide-react'
 
 interface Props {
   user: User | null
-
+  slot: React.ReactNode
   isExpanded: boolean
   toggleNavbar: () => void
 }
 
-export default function NavHeader({ user, isExpanded, toggleNavbar }: Props) {
+export default function NavHeader({
+  user,
+  isExpanded,
+  slot,
+  toggleNavbar
+}: Props) {
   return (
-    <header className="mb-2 flex flex-col">
+    <header className="w-full mb-2 pb-2 flex flex-col border-b border-gray-100">
       {/* 로고 영역 */}
-      {isExpanded ? (
-        <Image
-          src="https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/logo"
-          alt="logo"
-          width={100}
-          height={40}
-          className="mb-4 w-32 h-auto"
-          priority
-        />
-      ) : (
-        <button
-          className="text-green-normal font-bold text-2xl text-center p-1 w-10 h-10 rounded-md border mx-auto mb-4 cursor-pointer"
-          type="button"
-          onClick={toggleNavbar}>
-          쯉
-        </button>
-      )}
+      <div className="h-10 mb-4 flex items-center justify-between">
+        {isExpanded ? (
+          <Image
+            src="https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/logo"
+            alt="logo"
+            width={100}
+            height={40}
+            className="p-1 w-36"
+            priority
+          />
+        ) : (
+          <button
+            className="text-green-normal font-bold text-2xl text-center p-1 w-10 h-10 rounded-md border cursor-pointer"
+            type="button"
+            onClick={toggleNavbar}>
+            쯉
+          </button>
+        )}
 
+        {isExpanded && (
+          <button
+            onClick={toggleNavbar}
+            className="hover:bg-gray-100 rounded-sm p-1"
+            aria-label="메뉴 닫기">
+            <ChevronsLeft size={24} />
+          </button>
+        )}
+      </div>
       {/* 사용자 프로필 영역 */}
-      <div
-        className={tw(
-          'flex items-center gap-2 px-1 py-1',
-          isExpanded && 'rounded-md bg-green-light px-3 py-2'
-        )}>
-        <div
-          className={tw(
-            'overflow-hidden rounded-full border-1',
-            isExpanded ? 'w-7 h-7' : 'w-10 h-10 mx-auto'
-          )}>
+      <div className="flex items-center overflow-hidden">
+        <div className="rounded-full border-1 size-10 flex-shrink-0">
           <Image
             src={
               user
@@ -56,9 +63,12 @@ export default function NavHeader({ user, isExpanded, toggleNavbar }: Props) {
         </div>
 
         {isExpanded && (
-          <p className="text-base">
-            {user ? user.name.split('#')[0] : '사용자'}
-          </p>
+          <div className="flex justify-between items-center flex-1 pl-2">
+            <p className="text-sm font-medium text-gray-700 truncate">
+              {user?.name ?? '사용자'}
+            </p>
+            {slot}
+          </div>
         )}
       </div>
     </header>

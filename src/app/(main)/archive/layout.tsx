@@ -13,5 +13,5 @@ export default function ArchiveLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return <div className="w-full">{children}</div>
 }

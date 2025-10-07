@@ -31,7 +31,7 @@ export const createCookieHeader = (
   Cookie: `accessToken=${accessToken}; ${sessionId ? 'sessionId=' + sessionId : ''} `
 })
 
-// 쿠키가 필요한 통신인 경우
+// 쿠키가 필요한 통신인 경우 => TODO 다 걷어내고 requireAuth로 변경
 export const withAuth = <T>(handler: AuthHandler<T>) => {
   return async (request: Request): Promise<NextResponse<APIResponse<T>>> => {
     const token = await getAccessToken()

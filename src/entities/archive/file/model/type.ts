@@ -1,26 +1,25 @@
+import { APIResponse, Pagination } from '@/shared/types'
 import { FolderData } from '../../folder'
 
-export interface FileGetResponse {
-  status: number
-  msg: string
-  data: {
-    files: FileData[]
-    folders: FolderData[]
-  }
-}
+export type FileGetResponse = APIResponse<{
+  files: FileData[]
+  folders: FolderData[]
+}>
 
-export interface FilePostResponse {
+export type FilePostResponse = APIResponse<{
+  dataSourceId: number
+}>
+
+export interface SearchGetResponse {
   status: number
   msg: string
-  data: {
-    dataSourceId: number
-  }
+  data: { items: FileData[]; pageInfo: PageInfo }
 }
 
 export interface FileData {
   dataSourceId: number
   title: string
-  createdAt: string
+  dataCreatedDate: string
   summary: string
   sourceUrl: string
   source: string
@@ -29,10 +28,21 @@ export interface FileData {
   category: string
 }
 
-export type ArchiveColumnType = {
-  id: string
-  title: string
-  category: string
-  createdAt: string
-  origin: string
+export interface PageInfo {
+  page: number
+  size: number
+  totalElements: number
+  totalPages: number
+  first: boolean
+  last: boolean
+  sorted: string
+}
+
+export interface FileSearchParams {
+  folderId: number
+  page: number
+  size: number
+  isActive?: boolean
+  sort?: string
+  keyword?: string
 }

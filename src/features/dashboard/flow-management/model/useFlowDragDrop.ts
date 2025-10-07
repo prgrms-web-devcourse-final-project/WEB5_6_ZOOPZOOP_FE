@@ -3,6 +3,7 @@
 import { useCallback } from 'react'
 import { useReactFlow, Node } from '@xyflow/react'
 import { useDnD } from '../../dashboad-dnd'
+import { useUserStore } from '@/entities/user'
 
 interface UseFlowDragDropProps {
   setNodes: (updater: (nodes: Node[]) => Node[]) => void
@@ -12,6 +13,7 @@ interface UseFlowDragDropProps {
 export const useFlowDragDrop = ({ setNodes, nodes }: UseFlowDragDropProps) => {
   const { screenToFlowPosition } = useReactFlow()
   const { type, onDragOver } = useDnD()
+  const user = useUserStore(state => state.user)
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {
@@ -30,13 +32,18 @@ export const useFlowDragDrop = ({ setNodes, nodes }: UseFlowDragDropProps) => {
         id: String(nodes.length + 1) + Math.random(),
         type: 'custom',
         position,
+
         data: {
           imageUrl: type.imageUrl,
           category: type.category,
           title: `새로운 ${type.title}`,
           content: `${type.title} 컨텐츠`,
           link: type.link,
-          createdAt: new Date().toISOString().split('T')[0]
+          createdAt: new Date().toISOString().split('T')[0],
+          user: {
+            name: user?.name,
+            profileUrl: user?.profileUrl
+          }
         }
       }
 

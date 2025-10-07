@@ -1,4 +1,5 @@
 import { fetchNewsByKeywords } from '@/entities/news'
+import Pagination from '@/shared/ui/pagination/Pagination'
 
 import { NewsGrid } from '@/widgets/news/news-section'
 import { notFound } from 'next/navigation'
@@ -21,9 +22,11 @@ const categoryList = {
 }
 
 export default async function NewsCategory({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ category: string }>
+  searchParams: Promise<{ page: string }>
 }) {
   const { category } = await params
   const keywords = categoryList[category as keyof typeof categoryList]
@@ -32,15 +35,26 @@ export default async function NewsCategory({
   }
   const news = await fetchNewsByKeywords(keywords)
 
+  const { page } = await searchParams
+  const currentPage = Number(page) || 1
+
   return (
     <div className="w-full flex flex-col p-10 min-h-[calc(100vh-72px)]">
       <div className="flex-1">
         <h1 className="text-2xl font-bold mb-6">뉴스</h1>
         {news && news?.data?.items?.length > 0 ? (
-          <NewsGrid news={news.data.items} />
+          <NewsGrid
+            news={news.data.items}
+            page={currentPage}
+          />
         ) : (
           <div className="text-center text-gray-500">검색 결과가 없습니다.</div>
         )}
+      </div>
+      <div className="mt-8">
+        <Pagination
+          totalPages={news?.data.total ? Math.ceil(news.data.total / 18) : 1}
+        />
       </div>
     </div>
   )

@@ -1,7 +1,18 @@
 /* type ------------------------------------ */
-export type { FolderData } from './model/type'
+export type { FolderData, CreateFolder } from './model/type'
 
 /* api -------------------------------------*/
-export { postArchiveFolderServer } from './api/folder.server'
+export {
+  fetchArchiveFolderClient,
+  postArchiveFolderClient,
+  patchArchiveFolderClient,
+  deleteArchiveFolderClient
+} from './api/folder.client'
 
-export { postArchiveFolderClient } from './api/folder.client'
+/* queries -------------------------------------*/
+export {
+  useGetArchiveFoldersQuery,
+  usePostArchiveFolderQuery,
+  useDeleteArchiveFolderQuery,
+  useEditArchiveFolderNameQuery
+} from './model/queries'

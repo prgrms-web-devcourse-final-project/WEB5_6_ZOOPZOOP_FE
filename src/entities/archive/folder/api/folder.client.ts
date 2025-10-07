@@ -1,22 +1,31 @@
 'use client'
 
 import { httpClient } from '@/shared/lib'
-import { FolderResponse } from '../model/type'
+import { FolderPatchResponse, FolderResponse } from '../model/type'
 
 // 폴더 조회
 export const fetchArchiveFolderClient = async (): Promise<FolderResponse> => {
   const response = await httpClient.get<FolderResponse>(`/api/archive/folder`)
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+
   return response
 }
 
 // 폴더 생성
 export const postArchiveFolderClient = async (
-  payload: string
+  folderName: string
 ): Promise<FolderResponse> => {
-  const response = httpClient.post<FolderResponse>(`/api/archive/folder`, {
-    folderName: payload
-  })
-
+  const response = await httpClient.post<FolderResponse>(
+    `/api/archive/folder`,
+    {
+      folderName
+    }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
   return response
 }
 
@@ -25,18 +34,28 @@ export const patchArchiveFolderClient = async (
   folderId: number,
   folderName: string
 ) => {
-  const response = await httpClient.patch(
+  const response = await httpClient.patch<FolderPatchResponse>(
     `/api/archive/folder?folderId=${folderId}`,
     {
       folderName
     }
   )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
   return response
 }
 
 //폴더 삭제
 export const deleteArchiveFolderClient = async (folderId: number) => {
-  return await httpClient.delete<FolderResponse>(`/api/archive/folder`, {
-    body: JSON.stringify({ folderId })
-  })
+  const response = await httpClient.delete<FolderResponse>(
+    `/api/archive/folder`,
+    {
+      body: JSON.stringify({ folderId })
+    }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
 }

@@ -52,6 +52,7 @@ export const DELETE = async (
   }
 }
 
+// 스페이스 이름 변경
 export const PUT = async (
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -61,7 +62,8 @@ export const PUT = async (
     const { id } = await params
 
     const response = await requireAuth(
-      async token => await editSpaceNameServer(id, payload, { token })
+      async token =>
+        await editSpaceNameServer({ spaceId: id, ...payload }, { token })
     )
 
     revalidateTag('space')

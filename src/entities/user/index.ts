@@ -2,7 +2,8 @@ export {
   fetchUserClient,
   updateNicknameClient,
   deleteAccountClient,
-  updateProfileImageClient
+  updateProfileImageClient,
+  fetchUserInfoByNameClient
 } from './api/user.client'
 export {
   fetchUserServer,
@@ -13,6 +14,8 @@ export {
 export {
   useUserStore,
   useUserQuery,
-  useUpdateProfileImageMutation
+  useUpdateProfileImageMutation,
+  useFetchUserInfoByNicknameQuery,
+  useUpdateNicknameMutation
 } from './model'
 export type * from './model'

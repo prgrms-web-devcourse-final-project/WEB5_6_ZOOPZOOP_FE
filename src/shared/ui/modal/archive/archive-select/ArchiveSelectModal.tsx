@@ -28,7 +28,8 @@ export const ArchiveSelectModal = () => {
             key={item.id}
             type="file"
             data={item}
-            onSelect={handleSelectFolder}
+            mode="select"
+            onFolderSelect={handleSelectFolder}
             isSelected={selectedFolder === item.id}
           />
         ))}
@@ -36,9 +37,9 @@ export const ArchiveSelectModal = () => {
       <div className="w-full flex flex-col gap-2.5">
         <FileUploadZone />
         <div className="flex flex-col gap-2.5">
+          {/* <SelectItem />
           <SelectItem />
-          <SelectItem />
-          <SelectItem />
+          <SelectItem /> */}
         </div>
       </div>
     </ModalLayout>

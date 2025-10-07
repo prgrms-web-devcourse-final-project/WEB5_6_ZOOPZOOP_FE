@@ -6,7 +6,7 @@ interface Props {
 const RemainingAvatar = ({ count }: Props) => {
   return (
     <AvatarContainer className="border-2 border-white">
-      <AvatarFallback className="text-sm bg-orange-accent text-white">
+      <AvatarFallback className="text-xs bg-orange-accent text-white">
         +{count}
       </AvatarFallback>
     </AvatarContainer>

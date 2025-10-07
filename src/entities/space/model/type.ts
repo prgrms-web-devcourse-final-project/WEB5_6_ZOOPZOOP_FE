@@ -1,4 +1,4 @@
-import { Member } from '@/entities/member'
+import { Member } from '@/entities/space/member'
 import { APIResponse, Authority, Pagination } from '@/shared/types'
 
 // 스페이스 인포
@@ -17,7 +17,6 @@ export interface SpaceCard {
   name: string
   thumbnailUrl: string
   authority: Authority
-  createDate: string
   members: Member[]
 }
 
@@ -26,6 +25,7 @@ export interface FetchSpaceListParams {
   page?: number
   size?: number
   sort?: string[]
+  includeMembers?: boolean
 }
 
 // 스페이스 인포 반환 타입

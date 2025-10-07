@@ -6,3 +6,4 @@ export { ArchiveSelectModal } from './archive/archive-select/ArchiveSelectModal'
 export { UrlUploadModal } from './archive/url-upload/UrlUploadModal'
 
 export { ModalLayout } from './ModalLayout'
+export { ArchiveFolder } from './archive/archive-select/ArchiveFolderTree'

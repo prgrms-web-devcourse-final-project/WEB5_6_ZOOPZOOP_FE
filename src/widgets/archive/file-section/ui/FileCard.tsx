@@ -14,8 +14,8 @@ interface Props {
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
   tags: string[]
-  isSelected: boolean
-  onSelect: (cardId: number) => void
+  // isSelected: boolean
+  // onSelect: (cardId: number) => void
 }
 
 /**
@@ -31,10 +31,11 @@ const FileCard = ({
   imageUrl,
   sourceUrl,
   ownerProfileUrl,
-  isSelected,
+
   summary,
-  tags,
-  onSelect
+  tags
+  // isSelected,
+  // onSelect
 }: Props) => {
   const [isHover, setIsHover] = useState(false)
 
@@ -43,8 +44,8 @@ const FileCard = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       className={tw(
-        'w-10/12 h-75 p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative',
-        isSelected && 'ring-3 ring-orange-accent'
+        'w-10/12 p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative'
+        // isSelected && 'ring-3 ring-orange-accent'
       )}>
       <File
         id={id}
@@ -53,19 +54,19 @@ const FileCard = ({
         createdAt={createdAt}
         imageUrl={imageUrl}
         sourceUrl={sourceUrl}
-        isSelected={isSelected}
         ownerProfileUrl={ownerProfileUrl}
-        onSelect={onSelect}
+        // isSelected={isSelected}
+        // onSelect={onSelect}
       />
       <HoveredCard
         id={id}
         tags={tags}
-        isSelected={isSelected}
         sourceUrl={sourceUrl}
         title={title}
         isHover={isHover}
-        onSelect={onSelect}
         summary={summary}
+        // isSelected={isSelected}
+        // onSelect={onSelect}
       />
     </article>
   )

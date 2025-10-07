@@ -8,8 +8,6 @@ import {
 } from '@liveblocks/react/suspense'
 import { Edge } from '@xyflow/react'
 
-const LIVEBLOCKS_KEY = process.env.NEXT_PUBLIC_LIVEBLOCKS_KEY
-
 const initialNodes = [
   {
     id: 'n1',
@@ -20,20 +18,37 @@ const initialNodes = [
       category: 'input',
       title: '입력 노드',
       content: '기본 입력 노드입니다',
-      createdAt: '2025-01-01'
+      createdAt: '2025-01-01',
+      link: '',
+      user: {
+        name: '',
+        profileUrl: ''
+      }
     }
   }
 ]
 
 const initialEdges: Edge[] = []
 
-export function Room({ children }: { children: ReactNode }) {
+export function Room({
+  children,
+  roomId = 'my-room'
+}: {
+  children: ReactNode
+  roomId?: string
+}) {
   return (
     <LiveblocksProvider
-      publicApiKey={LIVEBLOCKS_KEY as string}
-      throttle={16}>
+      authEndpoint="/api/liveblocks-auth"
+      throttle={16}
+      resolveUsers={async ({ userIds }) => {
+        return userIds.map(userId => ({
+          name: userId.replace('user-', ''),
+          avatar: undefined
+        }))
+      }}>
       <RoomProvider
-        id="my-room"
+        id={roomId}
         initialPresence={{ cursor: null }}
         initialStorage={{
           nodes: initialNodes,
