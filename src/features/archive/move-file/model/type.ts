@@ -11,3 +11,9 @@ export type ManyFileMove = {
   dataSourceId: number[]
   folderId: number
 }
+
+export type SelectedFile = {
+  folderId: number
+  folderName: string
+  files: { fileId: number; fileName: string }[]
+}
