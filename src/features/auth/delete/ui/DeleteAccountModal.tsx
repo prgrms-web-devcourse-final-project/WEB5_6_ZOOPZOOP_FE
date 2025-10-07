@@ -39,6 +39,7 @@ const DeleteAccountModal = () => {
             disabled={isDeleting}
             placeholder="삭제"
             className="w-full px-3 py-2 border rounded-md focus-visible:border-red-500"
+            autoFocus
           />
         </div>
 
