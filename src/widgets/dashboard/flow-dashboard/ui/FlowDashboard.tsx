@@ -24,6 +24,20 @@ const nodeTypes = {
   custom: CustomFlowNode
 }
 
+const defaultEdgeOptions = {
+  style: {
+    strokeWidth: 3,
+    stroke: '#666'
+  }
+}
+
+const connectionLineStyle = {
+  strokeWidth: 3,
+  stroke: '#666',
+  strokeDasharray: '8,4',
+  animation: 'dashdraw 0.5s linear infinite'
+}
+
 const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   const {
     nodes,
@@ -94,6 +108,8 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          defaultEdgeOptions={defaultEdgeOptions}
+          connectionLineStyle={connectionLineStyle} // 연결 중인 선 스타일
           fitView
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
