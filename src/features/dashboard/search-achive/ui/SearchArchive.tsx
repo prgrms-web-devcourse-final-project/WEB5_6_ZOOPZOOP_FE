@@ -1,14 +1,18 @@
 import { SearchBar } from '@/shared/ui/header'
 
-export const SearchArchive = () => {
+interface Props {
+  search: string
+  setSearch: (search: string) => void
+}
+
+export const SearchArchive = ({ search, setSearch }: Props) => {
   return (
     <div className="w-full">
       <SearchBar
         className="!w-full"
         placeholder="자료 검색"
-        value=""
-        onChange={() => {}}
-        onEnter={() => {}}
+        value={search}
+        onChange={setSearch}
       />
     </div>
   )
