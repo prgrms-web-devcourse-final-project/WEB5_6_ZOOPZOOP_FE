@@ -1,13 +1,13 @@
 import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/queries'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { useMoveFileModalState } from '@/features/archive/move-file/model/useMoveFileModalState'
-import SelectFileSection from '@/features/archive/move-file/ui/modal/SelectFileSection'
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { ChevronsRight, Folder, Trash2Icon } from 'lucide-react'
+import { ChevronsRight, Folder } from 'lucide-react'
 import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
+import { SelectFileSection } from '@/features/archive/move-file'
 
 function MoveToTrashModal() {
   const { selectedFolder, selectedFiles, handleSelectFolder, onSelectFiles } =

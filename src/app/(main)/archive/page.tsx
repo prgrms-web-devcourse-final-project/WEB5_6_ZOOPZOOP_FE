@@ -21,7 +21,8 @@ export default async function Archive({ searchParams }: Props) {
   const initialFileData = await getInitialFileList({
     page: currentPage,
     size: DEFAULT_PAGE_SIZE,
-    folderId: ROOT_FOLDER_ID
+    folderId: ROOT_FOLDER_ID,
+    isActive: true
   })
 
   const buttons: Button[] = [
@@ -43,6 +44,7 @@ export default async function Archive({ searchParams }: Props) {
       <div className="w-full flex flex-col p-8 gap-4 ">
         <FolderSection folderList={folderList ?? []} />
         <FileSection
+          mode="archive"
           initialFileData={initialFileData && initialFileData}
           initialPage={currentPage}
         />

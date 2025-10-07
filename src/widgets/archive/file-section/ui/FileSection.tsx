@@ -1,35 +1,26 @@
 'use client'
 
-import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import FileHeader from './FileHeader'
 import TableView from './TableView'
 import CardView from './CardView'
 import Pagination from '@/shared/ui/pagination/Pagination'
-import { useFileViewMode } from '@/features/archive/switch-file-view/model/useSwitchFileView'
-
-import { SortDirection, SortKey } from '@/features/archive/sort'
-import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
+import { useSortFile, useSwitchFileView } from '@/features/archive'
 
 interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
+  mode: 'archive' | 'trash'
 }
 
-function FileSection({ initialFileData, initialPage }: Props) {
+function FileSection({ initialFileData, initialPage, mode }: Props) {
   const searchParams = useSearchParams()
-  const { viewMode, onSwitchViewMode } = useFileViewMode()
-
-  const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({
-    key: 'createdAt',
-    direction: 'desc'
-  })
-
+  const { viewMode, onSwitchViewMode } = useSwitchFileView()
+  const { sort, handleSortClick } = useSortFile()
   const currentPage = Number(searchParams.get('page')) || 1
   const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
-
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
       folderId: 0,
@@ -42,16 +33,12 @@ function FileSection({ initialFileData, initialPage }: Props) {
   })
   const fileList = filesQuery?.data.items || []
 
-  const handleSortClick = (key: SortKey, newDirection: SortDirection) => {
-    setSort({
-      key,
-      direction: newDirection
-    })
-  }
+  // mode에 따라 파일 선태
 
   return (
     <div className="flex flex-col gap-2">
       <FileHeader
+        mode={mode}
         sortKey={sort.key}
         direction={sort.direction}
         isTableView={viewMode === 'list'}

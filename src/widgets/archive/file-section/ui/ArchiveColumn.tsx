@@ -13,25 +13,6 @@ export interface ArchiveColumnType {
 // 컬럼 정의
 export const ArchiveColumn: ColumnDef<ArchiveColumnType>[] = [
   {
-    id: 'select', // 체크박스 컬럼 id
-    header: ({ table }) => (
-      <input
-        type="checkbox"
-        className="checkbox"
-        checked={table.getIsAllPageRowsSelected()}
-        onChange={table.getToggleAllPageRowsSelectedHandler()}
-      />
-    ),
-    cell: ({ row }) => (
-      <input
-        type="checkbox"
-        className="checkbox"
-        checked={row.getIsSelected()}
-        onChange={row.getToggleSelectedHandler()}
-      />
-    )
-  },
-  {
     accessorKey: 'title',
     header: '파일 선택',
     cell: ({ row }) => (
