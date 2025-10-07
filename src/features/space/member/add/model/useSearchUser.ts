@@ -1,4 +1,4 @@
-import { useFetchUserInfoByNicknameQuery } from '@/entities/user/model/queries'
+import { useFetchUserInfoByNicknameQuery } from '@/entities/user'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { useState } from 'react'
 

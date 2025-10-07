@@ -6,3 +6,6 @@ export {
   SpaceInfo,
   SpaceMemberManagement
 } from './space'
+
+// 알림 위젯
+export { NotificationBell } from './notification'

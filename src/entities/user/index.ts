@@ -14,6 +14,8 @@ export {
 export {
   useUserStore,
   useUserQuery,
-  useUpdateProfileImageMutation
+  useUpdateProfileImageMutation,
+  useFetchUserInfoByNicknameQuery,
+  useUpdateNicknameMutation
 } from './model'
 export type * from './model'
