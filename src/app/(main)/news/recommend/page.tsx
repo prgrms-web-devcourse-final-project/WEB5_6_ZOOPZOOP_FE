@@ -17,7 +17,7 @@ export default async function Recommend({
 }: {
   searchParams: Promise<{ page: string }>
 }) {
-  const { data } = await fetchArchiveFolderServer()
+  const { data } = await fetchArchiveFolderServer({})
 
   const { page } = await searchParams
 
