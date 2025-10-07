@@ -17,7 +17,7 @@ export const FlowSidebar = ({ file, nodes }: Props) => {
     })
 
   return (
-    <div className="w-90 h-[100vh] bg-white border-r border-gray-dark p-4 flex flex-col gap-3">
+    <div className="w-90 h-[100vh] bg-white border-r-1 p-4 flex flex-col gap-3">
       <h1 className="text-2xl font-bold">스페이스 관리</h1>
       <SearchArchive
         search={search}
