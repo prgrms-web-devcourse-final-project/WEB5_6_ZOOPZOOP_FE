@@ -1,7 +1,14 @@
-import { ArchiveColumnType } from '@/entities/archive/file'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowRight, Calendar } from 'lucide-react'
+
+export interface ArchiveColumnType {
+  id: string
+  title: string
+  category: string
+  createdAt: string
+  origin: string
+}
 
 // 컬럼 정의
 export const ArchiveColumn: ColumnDef<ArchiveColumnType>[] = [

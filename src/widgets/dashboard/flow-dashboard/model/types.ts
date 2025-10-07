@@ -5,6 +5,10 @@ export interface FlowNodeData {
   category: string
   imageUrl: string
   link: string
+  user: {
+    name: string
+    profileUrl: string
+  }
 }
 
 export interface FlowNode {

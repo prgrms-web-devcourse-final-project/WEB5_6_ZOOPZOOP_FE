@@ -1,35 +1,33 @@
 'use client'
 
 import { tw } from '@/shared/lib'
-import Link from 'next/link'
+import { matchPath } from '@/shared/lib/path'
 import { NavItem } from '@/shared/routes'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface Props {
   subItem: NavItem
-  isSubMenuOpen: boolean
 }
 
-function SubNavItem({ subItem, isSubMenuOpen }: Props) {
-  const { icon, href, label } = subItem
-  const Icon = icon
+function SubNavItem({ subItem }: Props) {
+  const { icon: Icon, href, label } = subItem
+  const pathname = usePathname()
+  const isActive = matchPath(pathname, href)
 
   return (
     <li>
       <Link
         href={href}
         className={tw(
-          'flex items-center gap-4 px-3 py-2 rounded-r-md rounded-br-md  text-base  hover:bg-gray-100',
-          !isSubMenuOpen
-            ? 'bg-white text-dark'
-            : 'bg-green-light-active font-bold text-black'
+          'flex items-center gap-4 px-3 py-2 rounded-r-md rounded-br-md text-sm font-medium hover:bg-green-normal hover:text-white text-black',
+          !isActive ? 'bg-white' : 'bg-green-normal text-white'
         )}>
-        {Icon && (
-          <Icon
-            size={20}
-            className={tw(!isSubMenuOpen ? 'text-dark' : 'text-black')}
-          />
-        )}
-        <p className="">{label}</p>
+        <Icon
+          size={20}
+          className={tw(!isActive ? 'text-dark' : 'text-white')}
+        />
+        <p className="whitespace-nowrap">{label}</p>
       </Link>
     </li>
   )

@@ -19,5 +19,5 @@ export default function ArchiveFolderLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return <div className="w-full">{children}</div>
 }

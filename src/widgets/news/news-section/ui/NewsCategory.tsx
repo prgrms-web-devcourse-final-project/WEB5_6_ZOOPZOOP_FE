@@ -30,6 +30,7 @@ export const NewsCategory = async ({ category, news, categoryKor }: Props) => {
               imageUrl={`/api/og-image?url=${encodeURIComponent(item.link)}`}
               createdAt={item.pubDate}
               link={item.link}
+              type="base"
             />
           ))}
         </div>

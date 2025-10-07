@@ -5,33 +5,36 @@ import SubNavItem from './SubNavItem'
 interface Props {
   item: MainNav
   pathName: string
-
   isExpanded: boolean
 }
 
 function NavItems({ item, pathName, isExpanded }: Props) {
-  const isMainMenuOpen = pathName.startsWith(item.href)
+  const isMainMenuOpen =
+    pathName !== item.href && pathName.startsWith(item.href)
+
+  const isActive = pathName.startsWith(item.href)
 
   return (
     <>
       <MainNavItem
-        isMainMenuOpen={isMainMenuOpen}
         mainItem={item}
         isExpanded={isExpanded}
+        isActive={isActive}
       />
 
-      {isMainMenuOpen && item.children && isExpanded && (
-        <ul className="flex flex-col gap-1 border-l-2 ml-4 border-green-normal">
-          {item.children.map((child, idx) => {
-            const isSubMenuOpen = pathName === child.href
-            return (
-              <SubNavItem
-                key={idx}
-                isSubMenuOpen={isSubMenuOpen}
-                subItem={child}
-              />
-            )
-          })}
+      {item.children && (
+        <ul
+          className={`
+          flex flex-col gap-1 border-l-2 border-gray-200 w-5/6
+          overflow-hidden transition-all duration-300
+          ${isMainMenuOpen && isExpanded ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}
+        `}>
+          {item.children.map((child, idx) => (
+            <SubNavItem
+              key={idx}
+              subItem={child}
+            />
+          ))}
         </ul>
       )}
     </>

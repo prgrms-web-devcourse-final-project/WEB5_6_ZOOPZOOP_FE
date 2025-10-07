@@ -1,13 +1,12 @@
 'use client'
 
-import { useArchiveFilesByPage } from '@/entities/archive/file/model/hook/useFilesByPage'
-import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
+import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
+import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { Header } from '@/shared/ui/header'
 import { Button } from '@/shared/ui/header/Header'
-import Pagination from '@/shared/ui/pagination/Pagination'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 
 const buttons: Button[] = [
   {
@@ -19,25 +18,27 @@ const buttons: Button[] = [
 ]
 
 export default function ArchiveFolderDetailContents() {
+  const searchParams = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
   const { folder } = useParams()
-  const { foldersQuery } = useArchiveFolders()
+  const { foldersQuery } = useGetArchiveFoldersQuery()
 
   const folderName = folder ? decodeURIComponent(String(folder)) : ''
-  // TODO : 김정주
+
   const selectedFolder = foldersQuery.data?.data?.find(
     f => f.folderName === folderName
   )
 
-  const { filesQuery } = useArchiveFilesByPage({
-    folderId: Number(selectedFolder?.folderId),
-    page: 0,
-    size: 20,
-    enabled: !!selectedFolder
+  const { data: fileList } = useArchiveFilesByPageQuery({
+    query: {
+      folderId: Number(selectedFolder?.folderId),
+      page: currentPage,
+      size: 8
+    }
   })
-  if (!filesQuery.data?.data) return <p>등록된 파일이 없습니다.</p>
 
   return (
-    <>
+    <div>
       <Header
         title={folderName}
         buttons={buttons}
@@ -45,12 +46,18 @@ export default function ArchiveFolderDetailContents() {
       />
 
       <div className="flex flex-col p-6 gap-4">
-        <FolderSection folderList={foldersQuery.data?.data ?? []} />
-        <FileSection
-          initialFileList={filesQuery.data?.data ?? []}
-          initialPageInfo={filesQuery.data.pageInfo}
+        <FolderSection
+          folderList={(foldersQuery && foldersQuery.data?.data) ?? []}
         />
+
+        {/* {selectedFolder && (
+          <FileSection
+            folderId={selectedFolder.folderId}
+            initialFileList={filesQuery?.data?.data ?? []}
+            initialPageInfo={filesQuery.data?.pageInfo!}
+          />
+        )} */}
       </div>
-    </>
+    </div>
   )
 }

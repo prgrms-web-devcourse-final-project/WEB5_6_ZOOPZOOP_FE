@@ -1,4 +1,4 @@
-import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
+import { useDeleteArchiveFolderQuery } from '@/entities/archive/folder'
 import { useModalStore } from '@/shared/lib'
 import { MoreVertical } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -11,7 +11,7 @@ interface Props {
 }
 
 function ToggleButton({ id, folderName, isClicked, onClick }: Props) {
-  const { deleteFolder } = useArchiveFolders()
+  const { deleteFolder } = useDeleteArchiveFolderQuery()
   const router = useRouter()
   const openModal = useModalStore(s => s.openModal)
 

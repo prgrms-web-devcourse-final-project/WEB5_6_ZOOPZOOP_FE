@@ -33,6 +33,7 @@ export const MajorNews = async () => {
               imageUrl={`/api/og-image?url=${encodeURIComponent(item.link)}`}
               createdAt={item.pubDate}
               link={item.link}
+              type="base"
             />
           ))}
         </div>

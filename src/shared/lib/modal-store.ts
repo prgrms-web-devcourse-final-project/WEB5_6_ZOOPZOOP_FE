@@ -6,8 +6,17 @@ type ModalType =
   | { type: 'alarm' }
   | { type: 'create-space' }
   | { type: 'create-folder' }
-  | { type: 'move-file' }
+  | {
+      type: 'move-file'
+    }
   | { type: 'delete-account' }
+  | { type: 'go-to-trash' }
+  | {
+      type: 'add-member'
+      props: {
+        spaceId: number
+      }
+    }
   | {
       type: 'rename-folder'
       props: {

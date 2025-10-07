@@ -12,22 +12,23 @@ import {
 
 // 스페이스 조회
 export const fetchSpaceListClient = async ({
-  page = 0,
+  page = 1,
   size = 15,
-  sort = []
+  sort = [],
+  includeMembers = true
 }: FetchSpaceListParams): Promise<SpacePagination | null> => {
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('size', size.toString())
+  params.append('includeMembers', includeMembers.toString())
 
   sort.forEach(s => {
     params.append('sort', s)
   })
 
   const response = await httpClient.get<SpacePaginationAPIResponse>(
-    `/api/space?${params.toString()}&includeMembers=true`
+    `/api/space?${params.toString()}`
   )
-
   if (response.status !== 200) {
     throw new Error(response.msg)
   }

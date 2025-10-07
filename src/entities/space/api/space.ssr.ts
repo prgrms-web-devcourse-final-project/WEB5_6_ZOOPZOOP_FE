@@ -16,6 +16,7 @@ export const getInitialSpaceList = async (
       next: { tags: ['spaceList'] }
     })
   })
+
   if (response.status !== 200) {
     throw new Error(response.msg)
   }

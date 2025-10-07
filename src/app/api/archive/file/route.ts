@@ -1,42 +1,111 @@
 import {
+  deleteOneArchiveFileServer,
   fetchArchiveFilesByFolderServer,
   postArchiveFileServer
 } from '@/entities/archive/file/api/file.server'
-import { createCookieHeader, withAuth } from '@/shared/lib/api-route'
+import { moveOneArchiveFileServer } from '@/features/archive/move-file/api/moveFile.server'
+import { createCookieHeader, requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
 //폴더 내 파일 조회
 export const GET = async (request: Request) => {
   try {
-    const url = new URL(request.url)
-    const folderIdParam = url.searchParams.get('folderId')
-    const folderId = folderIdParam ? parseInt(folderIdParam, 10) : null
-
-    if (folderIdParam && isNaN(folderId!)) {
+    const { searchParams } = new URL(request.url)
+    const folderId = Number(searchParams.get('folderId'))
+    if (isNaN(folderId)) {
       return NextResponse.json(
         { error: '유효하지 않은 폴더 ID입니다' },
         { status: 400 }
       )
     }
-
-    const response = await fetchArchiveFilesByFolderServer(folderId)
+    const response = await requireAuth(
+      async token =>
+        await fetchArchiveFilesByFolderServer(folderId, {
+          headers: createCookieHeader(token)
+        })
+    )
     return NextResponse.json(response)
   } catch (error) {
-    return NextResponse.json(
-      { error: '파일을 불러오는 중 오류가 발생했습니다' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '파일 조회 중 오류 발생' }
+    })
   }
 }
+
 // 파일 업로드
-export const POST = withAuth(async (token, request) => {
-  const payload = await request?.json()
+export const POST = async (request: Request) => {
+  const payload = await request.json()
+  try {
+    const response = await requireAuth(
+      async token =>
+        await postArchiveFileServer(payload, {
+          headers: createCookieHeader(token)
+        })
+    )
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '파일 업로드 중 오류 발생' }
+    })
+  }
+}
 
-  return await postArchiveFileServer(payload, {
-    headers: createCookieHeader(token)
-  })
-})
+// 단건 파일 이동
+export const PATCH = async (request: Request) => {
+  const payload = await request.json()
 
-// TODO: 단건/다건 삭제 구현 필요
-// TODO: 휴지통 이동 기능 구현 => 파일 임시 삭제 == 휴지통으로 이동,
+  try {
+    const response = await requireAuth(
+      async token =>
+        await moveOneArchiveFileServer(payload, {
+          headers: createCookieHeader(token)
+        })
+    )
+
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '파일 이동 중 오류 발생' }
+    })
+  }
+}
+
+//파일 단건 삭제 (영구 삭제)
+export const DELETE = async (request: Request) => {
+  const payload = await request.json()
+  try {
+    const response = await requireAuth(
+      async token =>
+        await deleteOneArchiveFileServer(payload, {
+          headers: createCookieHeader(token)
+        })
+    )
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '다건 파일 삭제 중 오류 발생' }
+    })
+  }
+}
+
 // TODO: 파일 복구 기능 구현 => 휴지통에서 아카이브로 이동

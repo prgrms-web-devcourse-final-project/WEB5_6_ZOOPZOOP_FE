@@ -8,7 +8,8 @@ import { FolderActionButtons } from '../../create-folder/FolderActionButtons'
 import { useModalStore } from '@/shared/lib'
 import { postArchiveFileClient } from '@/entities/archive/file/api/file.client'
 import { useRouter } from 'next/navigation'
-import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
+import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
+import { showSuccessToast } from '@/shared/ui/toast/Toast'
 
 export const UrlUploadModal = () => {
   const urlRef = useRef<HTMLInputElement>(null)
@@ -19,11 +20,12 @@ export const UrlUploadModal = () => {
   }
   const router = useRouter()
   // 폴더 구조 가져오기
-  const { foldersQuery } = useArchiveFolders()
+  const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data
 
   const handlePost = async () => {
     await postArchiveFileClient(selectedFolder, urlRef.current!.value!)
+    showSuccessToast('파일 업로드 성공')
     closeModal()
     router.refresh()
   }
@@ -44,8 +46,9 @@ export const UrlUploadModal = () => {
               <ArchiveFolder
                 key={item.folderId}
                 type="folder"
+                mode="select"
                 data={{ id: item.folderId, name: item.folderName }}
-                onSelect={handleSelectFolder}
+                onFolderSelect={handleSelectFolder}
                 isSelected={selectedFolder === item.folderId}
               />
             ))}
@@ -63,11 +66,6 @@ export const UrlUploadModal = () => {
               : '현재 폴더 위치'
           }
         /> */}
-        <div className="border border-gray-light rounded-md py-3 px-3 text-base bg-gray-light">
-          {selectedFolder
-            ? `내 아카이브/${folderList?.find(f => f.folderId === selectedFolder)?.folderName}`
-            : '내 아카이브'}
-        </div>
       </div>
 
       <div className="w-full flex flex-col gap-2.5">
@@ -80,6 +78,7 @@ export const UrlUploadModal = () => {
         />
       </div>
       <FolderActionButtons
+        label="업로드"
         onCancel={closeModal}
         onCreate={handlePost}
         isCreating={false}

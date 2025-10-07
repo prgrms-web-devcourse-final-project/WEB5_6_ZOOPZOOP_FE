@@ -1,3 +1,5 @@
+import { APIResponse } from '@/shared/types'
+
 export interface NewsResponse {
   status: string
   msg: string
@@ -15,3 +17,10 @@ export interface News {
   imageUrl?: string
   category?: string
 }
+
+export interface RecommendedNews {
+  total: number
+  items: News[]
+}
+
+export type RecommendedNewsResponse = APIResponse<RecommendedNews>

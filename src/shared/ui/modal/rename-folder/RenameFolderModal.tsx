@@ -5,7 +5,7 @@ import { ModalLayout } from '../ModalLayout'
 import { useModalStore } from '@/shared/lib'
 import { FolderNameInput } from '../create-folder/FolderNameInput'
 import { FolderActionButtons } from '../create-folder/FolderActionButtons'
-import { useArchiveFolders } from '@/entities/archive/folder/model/hook/useFolders'
+import { useEditArchiveFolderNameQuery } from '@/entities/archive/folder'
 
 interface Props {
   folderId: number
@@ -15,7 +15,7 @@ interface Props {
 export const RenameFolderModal = ({ folderId, folderName }: Props) => {
   const [newFolderName, setFolderName] = useState(folderName)
   const closeModal = useModalStore(s => s.closeModal)
-  const { updateFolderName } = useArchiveFolders()
+  const { updateFolderName } = useEditArchiveFolderNameQuery()
 
   const handleRename = () => {
     updateFolderName.mutate(
@@ -39,6 +39,7 @@ export const RenameFolderModal = ({ folderId, folderName }: Props) => {
         />
       </div>
       <FolderActionButtons
+        label="수정"
         onCancel={closeModal}
         onCreate={handleRename}
         isCreating={false}

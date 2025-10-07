@@ -9,11 +9,17 @@ declare global {
         id: string
         type: string
         position: { x: number; y: number }
+
         data: {
           imageUrl: string
           category: string
           title: string
           content: string
+          link: string
+          user: {
+            name: string
+            profileUrl: string
+          }
         }
       }[]
 

@@ -1,6 +1,7 @@
 import { httpClient } from '@/shared/lib'
 import { DeleteAccountResponse, NextFetchOptions } from '@/shared/types'
 import {
+  SearchUserResponse,
   UpdateNicknameResponse,
   UpdateProfileImageResponse,
   UserResponse
@@ -40,6 +41,17 @@ export const updateProfileImageServer = async (
   return httpClient.put<UpdateProfileImageResponse>(
     '/api/v1/member/edit/image',
     formData,
+    options
+  )
+}
+
+// 스페이스 초대할 유저 검색
+export const fetchUserInfoByNameServer = async (
+  name: string,
+  options?: NextFetchOptions
+): Promise<SearchUserResponse> => {
+  return httpClient.get<SearchUserResponse>(
+    `/api/v1/member?name=${name}`,
     options
   )
 }

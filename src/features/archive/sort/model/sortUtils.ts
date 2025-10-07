@@ -14,7 +14,7 @@ export function sortFiles(
   return [...files].sort((a, b) => {
     let compareValue = 0
 
-    if (sortBy === '이름') {
+    if (sortBy === 'title') {
       const aIsKo = isKorean(a.name)
       const bIsKo = isKorean(b.name)
 
@@ -28,7 +28,7 @@ export function sortFiles(
           a.name.localeCompare(b.name, 'ko') ||
           a.name.localeCompare(b.name, 'en')
       }
-    } else if (sortBy === '날짜') {
+    } else if (sortBy === 'createdAt') {
       compareValue = new Date(a.date).getTime() - new Date(b.date).getTime()
     }
 
