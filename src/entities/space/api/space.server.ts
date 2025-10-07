@@ -11,12 +11,19 @@ import {
 
 // 스페이스 목록 조회
 export const fetchSpaceListServer = async (
-  { page = 0, size = 15, sort = [] }: FetchSpaceListParams,
+  {
+    page = 1,
+    size = 15,
+    sort = [],
+    includeMembers = true
+  }: FetchSpaceListParams,
   options?: NextFetchOptions
 ): Promise<SpacePaginationAPIResponse> => {
   const params = new URLSearchParams()
+  // 백엔드는 0 base 인덱스이기 때문에  - 1을 해준다.
   params.append('page', (page - 1).toString())
   params.append('size', size.toString())
+  params.append('includeMembers', includeMembers.toString())
 
   sort.forEach(s => {
     params.append('sort', s)
@@ -64,13 +71,13 @@ export const fetchSpaceServer = async (
 
 // 스페이스 이름 수정
 export const editSpaceNameServer = async (
-  spaceId: string,
-  payload: { name: string },
+  payload: { name: string; spaceId: string },
   options?: NextFetchOptions
 ) => {
+  const { spaceId, ...restPayload } = payload
   return await httpClient.put<EditSpaceNameResponse>(
     `/api/v1/space/${spaceId}`,
-    payload,
+    restPayload,
     options
   )
 }

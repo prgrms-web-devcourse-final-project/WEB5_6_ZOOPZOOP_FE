@@ -8,11 +8,11 @@ interface Props {
 }
 
 const EditNickname = ({ nickname }: Props) => {
-  const { newNickname, isDisabled, onChange, onEditNickname, isUpdating } =
+  const { newNickname, isDisabled, handleChange, handleSubmit, isUpdating } =
     useUpdateNickname(nickname)
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <label
         className="block text-sm font-medium text-gray-700 mb-2"
         htmlFor="nickname">
@@ -24,16 +24,11 @@ const EditNickname = ({ nickname }: Props) => {
           id="nickname"
           placeholder="닉네임을 입력하세요"
           value={newNickname.split('#')[0]}
-          onChange={onChange}
+          onChange={handleChange}
         />
         <button
-          className={`px-4 py-2 border text-sm font-medium rounded-md transition-colors duration-200 ${
-            isDisabled
-              ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-              : 'border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer'
-          }`}
-          type="button"
-          onClick={onEditNickname}
+          className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md transition-colors duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+          type="submit"
           disabled={isDisabled}>
           {isUpdating ? (
             <div className="flex-center gap-2">
@@ -48,7 +43,7 @@ const EditNickname = ({ nickname }: Props) => {
           )}
         </button>
       </div>
-    </div>
+    </form>
   )
 }
 export default EditNickname

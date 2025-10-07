@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useMutation,
   UseMutationOptions,
   useQuery
@@ -11,13 +12,13 @@ import {
   updateSpaceNameClient
 } from '../api/space.client'
 
-export interface SpaceQuery {
+interface SpaceQuery {
   pagination: { currentPage: number; size?: number; sort?: string[] }
   initialData?: SpacePagination
 }
 // 스페이스 목록 조회
 export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
-  const { data, isPending } = useQuery({
+  const { data, isPending, isFetching } = useQuery({
     queryKey: ['space', pagination.currentPage],
     queryFn: () =>
       fetchSpaceListClient({
@@ -25,12 +26,14 @@ export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
         size: pagination.size,
         sort: pagination.sort
       }),
-    initialData: initialData
+    initialData: initialData,
+    placeholderData: keepPreviousData
   })
 
   return {
     spaces: data,
-    isLoading: isPending
+    isPending,
+    isFetching
   }
 }
 
@@ -52,7 +55,7 @@ export const useCreateSpaceMutation = (
   })
 
   return {
-    createSpace: mutate,
+    mutateCreateSpace: mutate,
     isCreating: isPending
   }
 }
@@ -71,7 +74,7 @@ export const useDeleteSpaceMutation = (
   })
 
   return {
-    deleteSpace: mutate,
+    mutateDeleteSpace: mutate,
     isDeleting: isPending
   }
 }
@@ -102,7 +105,7 @@ export const useEditSpaceNameMutation = (
   })
 
   return {
-    editSpaceName: mutate,
+    mutateEditSpaceName: mutate,
     isUpdating: isPending
   }
 }

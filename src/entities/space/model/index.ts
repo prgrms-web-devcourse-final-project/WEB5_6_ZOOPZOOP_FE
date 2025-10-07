@@ -2,10 +2,10 @@
 export {
   useSpaceQuery,
   useCreateSpaceMutation,
-  useDeleteSpaceMutation
+  useDeleteSpaceMutation,
+  useEditSpaceNameMutation
 } from './queries'
-
+// 전역 상태 관리 훅
+export { useSpaceStore } from './store'
 // 타입
 export type * from './type'
-
-// 훅

@@ -9,6 +9,12 @@ type ModalType =
   | { type: 'move-file' }
   | { type: 'delete-account' }
   | {
+      type: 'add-member'
+      props: {
+        spaceId: number
+      }
+    }
+  | {
       type: 'rename-folder'
       props: {
         folderId: number

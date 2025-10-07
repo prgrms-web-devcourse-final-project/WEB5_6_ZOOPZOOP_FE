@@ -1,9 +1,15 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 import {
+  useMutation,
+  UseMutationOptions,
+  useQuery
+} from '@tanstack/react-query'
+import {
+  fetchUserClient,
+  fetchUserInfoByNameClient,
   updateNicknameClient,
   updateProfileImageClient
 } from '../api/user.client'
-import { Nickname, Profile } from './type'
+import { Nickname, Profile, User } from './type'
 
 // 유저 프로필 이미지 업데이트
 export const useUpdateProfileImageMutation = (
@@ -15,7 +21,7 @@ export const useUpdateProfileImageMutation = (
   })
 
   return {
-    updateProfileImage: mutate,
+    mutateUpdateProfileImage: mutate,
     isUploading: isPending
   }
 }
@@ -30,7 +36,30 @@ export const useUpdateNicknameMutation = (
   })
 
   return {
-    updateNickname: mutate,
+    mutateUpdateNickname: mutate,
     isUpdating: isPending
   }
+}
+
+// 유저 정보 조회 by nickname
+export const useFetchUserInfoByNicknameQuery = (name: string) => {
+  return useQuery({
+    queryKey: ['user', name],
+    queryFn: () => fetchUserInfoByNameClient(name),
+    enabled: !!name
+  })
+}
+
+interface UserQuery {
+  enabled?: boolean
+}
+
+// 유저 자신의 데이터 정보 패칭
+export const useUserQuery = ({ enabled = true }: UserQuery) => {
+  return useQuery<User>({
+    queryKey: ['user', 'me'],
+    queryFn: fetchUserClient,
+    refetchOnWindowFocus: false,
+    enabled
+  })
 }

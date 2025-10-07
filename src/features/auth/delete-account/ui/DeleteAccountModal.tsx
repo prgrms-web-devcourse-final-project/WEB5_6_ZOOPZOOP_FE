@@ -6,16 +6,18 @@ import { useDeleteAccount } from '../hook/useDeleteAccount'
 const DeleteAccountModal = () => {
   const {
     confirmText,
-    isLoading,
     isDeleteEnabled,
-    onDelete,
     onClose,
+    handleDelete,
+    isDeleting,
     setConfirmText
   } = useDeleteAccount()
 
   return (
     <ModalLayout>
-      <div className="relative bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 p-6">
+      <form
+        className="relative bg-white rounded-lg shadow-lg max-w-sm w-full mx-4 p-6"
+        onSubmit={handleDelete}>
         <h3 className="text-lg font-medium text-gray-900 mb-2">
           계정을 삭제하시겠습니까?
         </h3>
@@ -34,7 +36,7 @@ const DeleteAccountModal = () => {
             type="text"
             value={confirmText}
             onChange={e => setConfirmText(e.target.value)}
-            disabled={isLoading}
+            disabled={isDeleting}
             placeholder="삭제"
             className="w-full px-3 py-2 border rounded-md focus-visible:border-red-500"
           />
@@ -43,20 +45,19 @@ const DeleteAccountModal = () => {
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            disabled={isLoading}
+            disabled={isDeleting}
             type="button"
             className="flex-1 py-2 text-gray-700 border rounded-md hover:bg-gray-50 cursor-pointer">
             취소
           </button>
           <button
-            onClick={onDelete}
-            disabled={!isDeleteEnabled || isLoading}
+            disabled={!isDeleteEnabled || isDeleting}
             type="button"
             className="flex-1 py-2 text-white bg-red-600 rounded-md disabled-hover:bg-red-700 disabled:opacity-50 cursor-pointer">
-            {isLoading ? '삭제 중...' : '삭제'}
+            {isDeleting ? '삭제 중...' : '삭제'}
           </button>
         </div>
-      </div>
+      </form>
     </ModalLayout>
   )
 }
