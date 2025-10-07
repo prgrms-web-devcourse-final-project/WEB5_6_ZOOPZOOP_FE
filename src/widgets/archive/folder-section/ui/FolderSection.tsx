@@ -7,7 +7,7 @@ import { SortDirection } from '@tanstack/react-table'
 import { getSortedFolders } from '@/features/archive/sort'
 import { FolderData } from '@/entities/archive/folder/model/type'
 
-const SORT_KEY = '이름'
+const SORT_KEY = 'title'
 
 interface Props {
   folderList: FolderData[]

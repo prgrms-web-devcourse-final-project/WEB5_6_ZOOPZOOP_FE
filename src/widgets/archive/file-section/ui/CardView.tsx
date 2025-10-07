@@ -13,7 +13,7 @@ function CardView({ fileList }: Props) {
           dataSourceId,
           title,
           category,
-          createdAt,
+          dataCreatedDate,
           imageUrl,
           sourceUrl,
           tags,
@@ -26,7 +26,7 @@ function CardView({ fileList }: Props) {
             summary={summary}
             title={title}
             category={category}
-            createdAt={createdAt}
+            createdAt={dataCreatedDate}
             imageUrl={imageUrl}
             sourceUrl={sourceUrl}
             //   isSelected={isSelected}
