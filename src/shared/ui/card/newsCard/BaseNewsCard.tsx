@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
 import { Handle, Position } from '@xyflow/react'
-import { BookmarkPlus } from 'lucide-react'
+import { BookmarkPlus, Loader2 } from 'lucide-react'
 
 interface Props {
   title: string
@@ -20,6 +20,7 @@ interface Props {
   }
   selected?: boolean
   onSave?: () => void
+  loading?: boolean
 }
 
 export const BaseNewsCard = ({
@@ -32,7 +33,8 @@ export const BaseNewsCard = ({
   type,
   user,
   selected,
-  onSave
+  onSave,
+  loading
 }: Props) => {
   return (
     <div
@@ -43,11 +45,19 @@ export const BaseNewsCard = ({
         {type === 'base' && (
           <button
             onClick={e => {
+              if (loading) return
               e.stopPropagation()
               onSave?.()
             }}
             className="absolute top-2 right-2 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
-            <BookmarkPlus size={16} />
+            {loading ? (
+              <Loader2
+                size={16}
+                className="animate-spin"
+              />
+            ) : (
+              <BookmarkPlus size={16} />
+            )}
           </button>
         )}
 
