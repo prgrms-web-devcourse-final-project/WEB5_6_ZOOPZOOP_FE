@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   description: '삭제된 파일과 폴더를 관리하는 휴지통 페이지'
 }
 
-const DEFAULT_PAGE_SIZE = 8
+const DEFAULT_PAGE_SIZE = 12
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 0
 
 async function ArchiveTrashPage() {
-  const fileResponse = await getInitialFileList({
+  const initialFileData = await getInitialFileList({
     page: INITIAL_PAGE,
     size: DEFAULT_PAGE_SIZE,
     folderId: ROOT_FOLDER_ID
@@ -26,11 +26,10 @@ async function ArchiveTrashPage() {
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
       <div className="flex flex-col p-6 gap-4">
-        {/* <FileSection
-          folderId={ROOT_FOLDER_ID}
-          initialFileList={(fileResponse && fileResponse.data) ?? []}
-          initialPageInfo={fileResponse.pageInfo}
-        /> */}
+        <FileSection
+          initialFileData={initialFileData && initialFileData}
+          initialPage={INITIAL_PAGE}
+        />
       </div>
     </div>
   )

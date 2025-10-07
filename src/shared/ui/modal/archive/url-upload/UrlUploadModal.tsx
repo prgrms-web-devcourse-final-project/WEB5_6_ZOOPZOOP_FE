@@ -9,6 +9,7 @@ import { useModalStore } from '@/shared/lib'
 import { postArchiveFileClient } from '@/entities/archive/file/api/file.client'
 import { useRouter } from 'next/navigation'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
+import { showSuccessToast } from '@/shared/ui/toast/Toast'
 
 export const UrlUploadModal = () => {
   const urlRef = useRef<HTMLInputElement>(null)
@@ -24,6 +25,7 @@ export const UrlUploadModal = () => {
 
   const handlePost = async () => {
     await postArchiveFileClient(selectedFolder, urlRef.current!.value!)
+    showSuccessToast('파일 업로드 성공')
     closeModal()
     router.refresh()
   }

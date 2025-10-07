@@ -4,9 +4,7 @@ import { SortButton, SortKey } from '@/features/archive/sort'
 import { SwitchFileViewButton } from '@/features/archive/switch-file-view'
 import MoveFileButton from '@/features/archive/move-file/ui/MoveFileButton'
 import CopyToSpaceButton from '@/features/archive/copy-file/ui/CopyToSpaceButton'
-
-import { DeleteFileButton } from '@/features/archive/delete-file'
-import { CheckedFile } from '@/features/archive/move-file/model/type'
+import { MoveToTrashButton } from '@/features/archive/move-to-trash-file'
 
 interface Props {
   sortKey: SortKey
@@ -41,7 +39,7 @@ function FileHeader({
         <MoveFileButton />
 
         {/* 파일 삭제 버튼 */}
-        <DeleteFileButton />
+        <MoveToTrashButton />
       </div>
 
       <div className="flex gap-2">

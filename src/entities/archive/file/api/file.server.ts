@@ -9,22 +9,22 @@ import { httpClient } from '@/shared/lib'
 
 // 아카이브 페이지 내 파일 조회
 export const fetchArchiveFilesByPageServer = async (
-  { folderId, page, size }: FileSearchParams,
+  { folderId, page, size, isActive, sort, keyword }: FileSearchParams,
   options?: NextFetchOptions
 ): Promise<SearchGetResponse> => {
-  return await httpClient.get<SearchGetResponse>(
-    `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}`,
-    options
-  )
-}
+  const params = new URLSearchParams()
+  params.append('page', (page - 1).toString())
+  params.append('folderId', folderId.toString())
+  params.append('size', size.toString())
 
-// 아카이브 휴지통 파일 조회
-export const fetchArchiveTrashFilesServer = async (
-  { isActive, folderId, page, size }: FileSearchParams,
-  options?: NextFetchOptions
-): Promise<SearchGetResponse> => {
+  if (sort) params.append('sort', sort)
+  if (isActive !== undefined) params.append('isActive', isActive.toString())
+  if (keyword && keyword.trim() !== '') {
+    params.append('keyword', keyword)
+  }
+
   return await httpClient.get<SearchGetResponse>(
-    `/api/v1/archive?page=${page}&size=${size}&folderId=${folderId}&isActive=${isActive}`,
+    `/api/v1/archive?${params.toString()}`,
     options
   )
 }
@@ -48,7 +48,11 @@ export const postArchiveFileServer = async (
   },
   options: NextFetchOptions
 ): Promise<FilePostResponse> => {
-  return httpClient.post<FilePostResponse>(`/api/v1/archive`, payload, options)
+  return await httpClient.post<FilePostResponse>(
+    `/api/v1/archive`,
+    { folderId: payload.folderId, sourceUrl: payload.sourceUrl },
+    options
+  )
 }
 
 //파일 단건 삭제 (영구 삭제)
@@ -56,7 +60,7 @@ export const deleteOneArchiveFileServer = async (
   dataSourceId: number,
   options: NextFetchOptions
 ) => {
-  return httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<FilePostResponse>(
     `/api/v1/archive/${dataSourceId}`,
     options
   )
@@ -69,7 +73,7 @@ export const deleteManyArchiveFileServer = async (
   },
   options: NextFetchOptions
 ) => {
-  return httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<FilePostResponse>(
     `/api/v1/archive/delete`,
     payload,
     options
@@ -83,7 +87,7 @@ export const editArchiveFileServer = async (
   },
   options: NextFetchOptions
 ) => {
-  return httpClient.put<FilePostResponse>(
+  return await httpClient.put<FilePostResponse>(
     `/api/v1/archive/move`,
     payload,
     options
