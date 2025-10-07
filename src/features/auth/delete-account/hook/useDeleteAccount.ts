@@ -16,7 +16,7 @@ export const useDeleteAccount = () => {
 
   const isDeleteEnabled = confirmText === '계정 영구 삭제'
 
-  const { mutate, isPending } = useDeleteAccountMutation({
+  const { isDeleting, mutateDeleteAccount } = useDeleteAccountMutation({
     onSuccess: () => {
       clearUser()
       queryClient.invalidateQueries({ queryKey: ['user'] })
@@ -31,10 +31,15 @@ export const useDeleteAccount = () => {
     }
   })
 
+  const handleDelete = (e: React.FormEvent) => {
+    e.preventDefault()
+    mutateDeleteAccount()
+  }
+
   return {
-    onDelete: () => mutate(),
+    handleDelete,
     onClose: closeModal,
-    isLoading: isPending,
+    isDeleting,
     setConfirmText,
     confirmText,
     isDeleteEnabled

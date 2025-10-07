@@ -25,7 +25,7 @@ export const ModalLayout = ({ children, size }: Props) => {
         )}
         onClick={e => e.stopPropagation()}>
         <button
-          className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-900"
+          className="absolute top-4 right-4 cursor-pointer text-gray-500 hover:text-gray-900 z-50"
           type="button"
           aria-label="팝업창 닫기">
           <X

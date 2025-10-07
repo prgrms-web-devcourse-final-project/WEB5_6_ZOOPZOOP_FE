@@ -1,5 +1,7 @@
 'use client'
 
+import { tw } from '@/shared/lib'
+
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 
@@ -9,6 +11,7 @@ interface Props {
   onChange: (value: string) => void
   onEnter?: () => void
   ariaLabel?: string
+  className?: string
 }
 
 function SearchBar({
@@ -16,14 +19,17 @@ function SearchBar({
   value,
   ariaLabel,
   onChange,
-  onEnter
+  onEnter,
+  className
 }: Props) {
   const [isComposing, setIsComposing] = useState(false)
 
   return (
     <div
-      className="group bg-white flex items-center gap-2 rounded-full px-3 py-2 text-base text-gray-dark 
-      w-50% md:w-96 border-2 focus-within:border-2 focus-within:border-orange-accent ">
+      className={tw(
+        'group bg-white flex items-center gap-2 rounded-full px-3 py-2 text-base text-gray-dark max-w-50% md:w-96 border-2 focus-within:border-2 focus-within:border-orange-accent',
+        className
+      )}>
       <Search className="w-4 text-gray-500 group-focus-within:text-orange-accent" />
       <input
         type="search"

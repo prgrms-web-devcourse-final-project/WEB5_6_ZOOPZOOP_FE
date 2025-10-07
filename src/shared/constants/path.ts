@@ -11,7 +11,8 @@ export const PATH = {
     TRASH: '/archive/trash'
   },
   SPACE: {
-    ROOT: '/space'
+    ROOT: '/space',
+    MANAGEMENT: '/space/:id/m'
   },
   PROFILE: {
     ROOT: '/profile'

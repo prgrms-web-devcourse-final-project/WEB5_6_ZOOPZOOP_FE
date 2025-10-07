@@ -1,23 +1,34 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+
+import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
-import { Plus } from 'lucide-react'
 import ActionButton from '@/shared/ui/header/ActionButton'
+import { Plus } from 'lucide-react'
 
-interface Props {
-  title: string
-  showButton?: boolean
-}
+function SpaceHeader() {
+  const { currentSpace } = useSpaceStore()
 
-function SpaceHeader({ title, showButton = true }: Props) {
   const openModal = useModalStore(s => s.openModal)
-  const router = useRouter()
+
+  const pathname = usePathname()
+
+  const isDashboard = pathname.includes('/dashboard')
+
+  // 스페이스 메인 페이지일 경우 스페이스 생성 버튼 show
+  const showCreateButton = pathname === '/space'
+
+  if (isDashboard) {
+    return null
+  }
 
   return (
     <header className="bg-gray-dark-active p-6 w-full">
-      <h1 className="text-white font-bold text-2xl mb-7">{title}</h1>
-      {showButton ? (
+      <h1 className="text-white font-bold text-2xl mb-7">
+        {currentSpace?.spaceName || '내 스페이스'}
+      </h1>
+      {showCreateButton ? (
         <div className="flex justify-between">
           <div className="flex gap-3">
             <ActionButton

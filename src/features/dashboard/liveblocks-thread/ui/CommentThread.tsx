@@ -46,7 +46,7 @@ export const CommentThread = ({
             ${
               isResolved
                 ? 'bg-green-100 border-green-500 text-green-600'
-                : 'bg-white border-green-normal text-green-normal'
+                : 'bg-white border-blue-500 text-blue-600'
             }
           `}>
           <LuMessageCircle className="w-4 h-4" />
@@ -85,7 +85,7 @@ export const CommentThread = ({
           </div>
 
           {/* 댓글 목록 */}
-          <div className="max-h-60 overflow-y-auto p-4">
+          <div className="max-h-[600px] overflow-y-auto p-4">
             <Thread thread={thread} />
           </div>
         </div>

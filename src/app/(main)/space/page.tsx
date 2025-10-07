@@ -1,5 +1,5 @@
 import { getInitialSpaceList } from '@/entities/space/api/space.ssr'
-import { SpaceList } from '@/features/space/space-list'
+import { SpaceList } from '@/features/space/list'
 
 interface Props {
   searchParams: Promise<{ page?: string }>
@@ -13,9 +13,11 @@ export default async function Space({ searchParams }: Props) {
   if (!initialData) return null
 
   return (
-    <SpaceList
-      initialData={initialData}
-      initialPage={currentPage}
-    />
+    <div className="p-8">
+      <SpaceList
+        initialData={initialData}
+        initialPage={currentPage}
+      />
+    </div>
   )
 }

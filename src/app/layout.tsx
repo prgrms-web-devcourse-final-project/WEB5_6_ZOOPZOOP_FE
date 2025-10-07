@@ -3,6 +3,7 @@ import AuthProvider from '@/app/_providers/auth-provider'
 import { ToastProvider } from '@/app/_providers/toast-provider'
 import type { Metadata } from 'next'
 import './globals.css'
+
 import { GlobalModal } from './_global/GlobalModal'
 
 export const metadata: Metadata = {

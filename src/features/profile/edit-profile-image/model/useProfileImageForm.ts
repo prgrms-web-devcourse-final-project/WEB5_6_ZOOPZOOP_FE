@@ -1,33 +1,37 @@
 import { useRef, useState } from 'react'
-import { useProfileImageMutation } from '../api/useProfileImageMutation'
-import { useUserStore } from '@/entities/user'
+import { useUpdateProfileImageMutation, useUserStore } from '@/entities/user'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 
 export const useProfileImageForm = (profileUrl: string) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // 스토어
   const updateUser = useUserStore(state => state.updateUser)
+
+  // tanstack query
+  const { mutateUpdateProfileImage, isUploading } =
+    useUpdateProfileImageMutation({
+      onSuccess: data => {
+        setPreviewUrl(null)
+        setSelectedFile(null)
+        updateUser(data)
+        showSuccessToast('프로필 수정 완료')
+      },
+      onError: () => {
+        showErrorToast('업로드에 실패했습니다.')
+      }
+    })
 
   // 파생 상태
   const isChanged = previewUrl !== null
   const displayUrl = previewUrl || profileUrl
 
-  const { mutate, isPending } = useProfileImageMutation({
-    onSuccess: data => {
-      setPreviewUrl(null)
-      setSelectedFile(null)
-      updateUser(data)
-    },
-    onError: () => {
-      alert('업로드에 실패했습니다.')
-    }
-  })
-
   // 업로드 핸들러
   const handleUpload = () => {
     if (!selectedFile) return
-    mutate(selectedFile)
+    mutateUpdateProfileImage(selectedFile)
   }
 
   // 이미지 선택
@@ -63,7 +67,7 @@ export const useProfileImageForm = (profileUrl: string) => {
     onUpload: handleUpload,
     handleCancel,
     inputRef,
-    isUploading: isPending,
+    isUploading,
     displayUrl,
     isChanged
   }

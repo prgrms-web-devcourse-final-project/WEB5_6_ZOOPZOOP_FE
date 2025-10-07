@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
+import { BookmarkPlus } from 'lucide-react'
 
 interface Props {
   title: string
@@ -11,6 +12,7 @@ interface Props {
   category?: string
   link?: string
   createdAt: string
+  onSave?: () => void
 }
 
 export const MainNewsCard = ({
@@ -19,16 +21,25 @@ export const MainNewsCard = ({
   imageUrl,
   category,
   link,
-  createdAt
+  createdAt,
+  onSave
 }: Props) => {
   return (
     <div className="w-full max-w-[520px] rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow">
       <div
-        className="w-full h-[280px] cursor-pointer rounded-t-lg overflow-hidden"
+        className="w-full h-[280px] cursor-pointer rounded-t-lg overflow-hidden relative"
         onClick={() => {
           if (!link) return
           window.open(link, '_blank', 'noopener,noreferrer')
         }}>
+        <button
+          onClick={e => {
+            e.stopPropagation()
+            onSave?.()
+          }}
+          className="absolute top-2 right-2 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+          <BookmarkPlus size={16} />
+        </button>
         {imageUrl ? (
           <Image
             src={imageUrl}

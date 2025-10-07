@@ -8,11 +8,15 @@ import { revalidateTag } from 'next/cache'
 
 // 스페이스 등록
 export const POST = async (request: Request) => {
-  const payload = await request.json()
-
   try {
+    const payload = await request.json()
+
     const response = await requireAuth(
-      async token => await postSpaceServer(payload, { token })
+      async token =>
+        await postSpaceServer(payload, {
+          token,
+          next: { tags: ['space'] }
+        })
     )
 
     // 서버 케시 삭제
@@ -31,21 +35,20 @@ export const POST = async (request: Request) => {
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url)
 
-  const page = searchParams.get('page') || '0'
-  const size = searchParams.get('size') || '9'
+  const page = searchParams.get('page')
+  const size = searchParams.get('size')
   const sort = searchParams.getAll('sort')
   const includeMembers = searchParams.get('includeMembers')
 
   try {
     const response = await requireAuth(async token => {
-      const params = new URLSearchParams()
-      params.append('page', page)
-      params.append('size', size)
-      sort.forEach(s => params.append('sort', s))
-      if (includeMembers) params.append('includeMembers', includeMembers)
-
       return await fetchSpaceListServer(
-        { page: Number(page), size: Number(size), sort },
+        {
+          page: Number(page),
+          size: Number(size),
+          sort,
+          includeMembers: Boolean(includeMembers)
+        },
         { token }
       )
     })

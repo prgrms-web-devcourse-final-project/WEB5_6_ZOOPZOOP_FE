@@ -12,10 +12,23 @@ type ModalType =
   | { type: 'delete-account' }
   | { type: 'go-to-trash' }
   | {
+      type: 'add-member'
+      props: {
+        spaceId: number
+      }
+    }
+  | {
       type: 'rename-folder'
       props: {
         folderId: number
         folderName: string
+      }
+    }
+  | {
+      type: 'delete-space'
+      props: {
+        spaceId: number
+        title: string
       }
     }
 

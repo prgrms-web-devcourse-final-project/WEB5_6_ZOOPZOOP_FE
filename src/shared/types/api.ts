@@ -19,6 +19,11 @@ export interface NextFetchOptions extends RequestInit {
   cache?: 'force-cache' | 'no-store'
 }
 
+// 리스트 데이터
+export type ListPayload<K extends string, T> = {
+  [key in K]: T[]
+}
+
 // 페이지네이션 데이터
 export type Pagination<K extends string, T> = {
   [key in K]: T[]
