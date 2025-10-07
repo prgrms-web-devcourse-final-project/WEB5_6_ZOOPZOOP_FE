@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
+import { BookmarkPlus } from 'lucide-react'
 
 interface Props {
   title: string
@@ -11,6 +12,8 @@ interface Props {
   category?: string
   link?: string
   createdAt: string
+  onSave?: () => void
+  type: 'base' | 'flow'
 }
 
 export const SubNewsCard = ({
@@ -19,11 +22,23 @@ export const SubNewsCard = ({
   imageUrl,
   category,
   link,
-  createdAt
+  createdAt,
+  onSave,
+  type
 }: Props) => {
   return (
     <div className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100 relative">
       <div className="flex gap-5 h-full">
+        {type === 'base' && (
+          <button
+            onClick={e => {
+              e.stopPropagation()
+              onSave?.()
+            }}
+            className="absolute top-1 left-1 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+            <BookmarkPlus size={16} />
+          </button>
+        )}
         <div
           className="w-21 h-21 flex-shrink-0 cursor-pointer rounded-lg overflow-hidden"
           onClick={() => {

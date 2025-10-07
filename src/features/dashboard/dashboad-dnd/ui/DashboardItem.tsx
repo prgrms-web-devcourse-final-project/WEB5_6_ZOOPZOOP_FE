@@ -31,6 +31,7 @@ export const DashboardItem = ({ file }: Props) => {
         createdAt={file.createdAt}
         imageUrl={file.imageUrl}
         category={file.category}
+        type="flow"
       />
     </div>
   )

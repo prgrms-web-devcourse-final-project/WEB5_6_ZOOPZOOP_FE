@@ -14,28 +14,35 @@ export const FlowItemContainer = ({
   }
 
   return (
-    <div className="w-[435px] h-[96px] flex-center gap-10 bg-[#F9FAFB] border border-gray-dark shadow-md rounded-md p-4 absolute bottom-6 right-[50%] translate-x-[50%]">
+    <div className="absolute bottom-6 left-6">
       <button
         onClick={handleCommentClick}
-        className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
-          isCreating ? 'bg-green-100' : 'hover:bg-gray-100'
-        }`}>
+        className={`
+          flex items-center gap-2 px-4 py-2.5
+          bg-white border rounded-full shadow-lg
+          transition-all duration-200 hover:scale-105
+          ${
+            isCreating
+              ? 'border-green-normal bg-green-50 shadow-green-200'
+              : 'border-gray-200 hover:border-gray-300 hover:shadow-xl'
+          }
+        `}>
         <div
-          className={`flex-center w-12.5 h-12.5 bg-white border rounded-full ${
-            isCreating ? 'border-green-normal' : 'border-gray-light'
-          }`}>
+          className={`
+            flex-center w-8 h-8 rounded-full transition-colors
+            ${isCreating ? 'bg-green-normal' : 'bg-gray-100'}
+          `}>
           <LuMessageCircle
-            className={`w-6 h-6 ${
-              isCreating ? 'text-green-normal' : 'text-gray-normal'
-            }`}
+            className={`w-5 h-5 ${isCreating ? 'text-white' : 'text-gray-600'}`}
           />
         </div>
-        <p
-          className={`text-sm font-medium ${
-            isCreating ? 'text-green-normal' : 'text-gray-dark'
-          }`}>
-          {isCreating ? '댓글 모드' : '댓글'}
-        </p>
+        <span
+          className={`
+            text-sm font-semibold
+            ${isCreating ? 'text-green-normal' : 'text-gray-700'}
+          `}>
+          {isCreating ? '댓글 추가 중...' : '댓글 추가'}
+        </span>
       </button>
     </div>
   )
