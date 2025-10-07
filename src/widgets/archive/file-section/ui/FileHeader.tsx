@@ -1,16 +1,23 @@
 import { Columns3, File, TextAlignJustifyIcon } from 'lucide-react'
-import { SortDirection } from '@tanstack/react-table'
-import { SortButton, SortKey } from '@/features/archive/sort'
+
 import { SwitchFileViewButton } from '@/features/archive/switch-file-view'
 import MoveFileButton from '@/features/archive/move-file/ui/MoveFileButton'
-import CopyToSpaceButton from '@/features/archive/copy-file/ui/CopyToSpaceButton'
-import { MoveToTrashButton } from '@/features/archive/move-to-trash-file'
+
+import RestoreButton from '@/features/archive/restore-file/ui/RestoreButton'
+import {
+  SortButton,
+  SortKey,
+  CopyToSpaceButton,
+  DeleteFileButton,
+  MoveToTrashButton,
+  SortDirection
+} from '@/features/archive'
 
 interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
-
+  mode: 'archive' | 'trash'
   onChangeView: () => void
   handleSortClick: (key: SortKey, direction: SortDirection) => void
 }
@@ -19,7 +26,7 @@ function FileHeader({
   sortKey,
   direction,
   isTableView,
-
+  mode,
   onChangeView,
   handleSortClick
 }: Props) {
@@ -32,14 +39,24 @@ function FileHeader({
         />
         <p className="text-lg font-bold text-gray-darker ml-2 mr-1">파일</p>
 
-        {/* 스페이스로 복사 버튼 */}
-        <CopyToSpaceButton />
+        {mode === 'archive' && (
+          <>
+            {/* 스페이스로 복사 버튼 */}
+            <CopyToSpaceButton />
 
-        {/* 파일 이동 버튼 */}
-        <MoveFileButton />
+            {/* 파일 이동 버튼 */}
+            <MoveFileButton />
 
-        {/* 파일 삭제 버튼 */}
-        <MoveToTrashButton />
+            {/* 파일 삭제 버튼 */}
+            <MoveToTrashButton />
+          </>
+        )}
+        {mode === 'trash' && (
+          <>
+            <RestoreButton />
+            <DeleteFileButton />
+          </>
+        )}
       </div>
 
       <div className="flex gap-2">

@@ -21,11 +21,11 @@ export const fetchArchiveFilesByFolderClient = async (
 
 // 페이지 안에 있는 파일 조회
 export const fetchArchiveFilesByPageClient = async ({
-  folderId = 0,
-  page = 1,
-  size = 8,
-  sort = 'createdAt,asc',
-  isActive = false,
+  folderId,
+  page,
+  size,
+  sort,
+  isActive = true,
   keyword = ''
 }: FileSearchParams) => {
   const params = new URLSearchParams()
