@@ -1,15 +1,20 @@
 import { User } from '@/entities/user'
 import Image from 'next/image'
-import { Bell, ChevronsLeft } from 'lucide-react'
+import { ChevronsLeft } from 'lucide-react'
 
 interface Props {
   user: User | null
-
+  slot: React.ReactNode
   isExpanded: boolean
   toggleNavbar: () => void
 }
 
-export default function NavHeader({ user, isExpanded, toggleNavbar }: Props) {
+export default function NavHeader({
+  user,
+  isExpanded,
+  slot,
+  toggleNavbar
+}: Props) {
   return (
     <header className="w-full mb-2 pb-2 flex flex-col border-b border-gray-100">
       {/* 로고 영역 */}
@@ -61,11 +66,7 @@ export default function NavHeader({ user, isExpanded, toggleNavbar }: Props) {
             <p className="text-sm font-medium text-gray-700 truncate">
               {user?.name ?? '사용자'}
             </p>
-            <button
-              className="p-2 rounded-lg hover:bg-gray-100"
-              aria-label="알림">
-              <Bell className="w-5 h-5 text-gray-600" />
-            </button>
+            {slot}
           </div>
         )}
       </div>

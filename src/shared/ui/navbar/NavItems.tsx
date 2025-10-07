@@ -31,7 +31,6 @@ function NavItems({ item, pathName, isExpanded }: Props) {
               <SubNavItem
                 key={idx}
                 subItem={child}
-                isExpanded={isExpanded}
               />
             )
           })}

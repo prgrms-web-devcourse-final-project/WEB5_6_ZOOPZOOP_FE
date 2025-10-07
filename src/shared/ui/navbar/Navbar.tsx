@@ -8,7 +8,11 @@ import { usePathname } from 'next/navigation'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
 
-function Navbar() {
+interface Props {
+  notificationSlot?: React.ReactNode
+}
+
+function Navbar({ notificationSlot }: Props) {
   const pathName = usePathname()
   const user = useUserStore(state => state.user)
 
@@ -30,6 +34,7 @@ function Navbar() {
         user={user}
         isExpanded={isExpanded}
         toggleNavbar={toggleNavbar}
+        slot={notificationSlot}
       />
       {/* 메뉴 리스트 */}
       <ul className="flex flex-col gap-2 items-center">
