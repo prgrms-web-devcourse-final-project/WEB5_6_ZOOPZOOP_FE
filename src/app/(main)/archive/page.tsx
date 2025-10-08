@@ -44,6 +44,7 @@ export default async function Archive({ searchParams }: Props) {
       <div className="w-full flex flex-col p-8 gap-4 ">
         <FolderSection folderList={folderList ?? []} />
         <FileSection
+          folderId={ROOT_FOLDER_ID}
           mode="archive"
           initialFileData={initialFileData && initialFileData}
           initialPage={currentPage}
