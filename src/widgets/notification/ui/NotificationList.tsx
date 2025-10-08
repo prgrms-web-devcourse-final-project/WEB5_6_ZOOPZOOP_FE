@@ -26,11 +26,11 @@ const NotificationList = () => {
             {invitations.length > 0 ? (
               invitations.map(invite => (
                 <InvitationItem
-                  key={invite.id}
-                  name={invite.name}
-                  thumbnailUrl={invite.thumbnailUrl}
-                  acceptAction={<AcceptButton inviteId={invite.id} />}
-                  cancelAction={<CancelButton inviteId={invite.id} />}
+                  key={invite.inviteId}
+                  spaceName={invite.spaceName}
+                  spaceThumbnailUrl={invite.spaceThumbnailUrl}
+                  acceptAction={<AcceptButton inviteId={invite.inviteId} />}
+                  cancelAction={<CancelButton inviteId={invite.inviteId} />}
                 />
               ))
             ) : (

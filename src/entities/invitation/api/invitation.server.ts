@@ -1,5 +1,9 @@
 import { httpClient } from '@/shared/lib'
-import { AcceptInviteResponse, InvitationsResponse } from '../model'
+import {
+  AcceptInviteResponse,
+  CancelInviteResponse,
+  InvitationsResponse
+} from '../model'
 import { NextFetchOptions } from '@/shared/types'
 
 // 알림 리스트 서버 함수
@@ -16,6 +20,18 @@ export const acceptInvitationsServer = async (
 ): Promise<AcceptInviteResponse> => {
   return await httpClient.post<AcceptInviteResponse>(
     `/api/v1/invite/${payload}/accept`,
+    {},
+    options
+  )
+}
+
+// 알림 거절
+export const cancelInvitationsServer = async (
+  payload: string,
+  options: NextFetchOptions
+): Promise<CancelInviteResponse> => {
+  return await httpClient.post<CancelInviteResponse>(
+    `/api/v1/invite/${payload}/reject`,
     {},
     options
   )

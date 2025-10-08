@@ -1,4 +1,4 @@
-import { Invitation, useAcceptInvitationMutation } from '@/entities/invitation'
+import { Invitation, useCancelInvitationMutation } from '@/entities/invitation'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -6,27 +6,29 @@ interface MutationContext {
   prevInvitations: Invitation[]
 }
 
-export const useAcceptInvitation = () => {
+export const useCancelInvitation = () => {
   const queryClient = useQueryClient()
-  // tanstack query
-  const { acceptInvitationMutate, isAccepting } = useAcceptInvitationMutation({
+
+  const { cancelInvitationMutate, isCanceling } = useCancelInvitationMutation({
     onMutate: async inviteId => {
       await queryClient.cancelQueries({ queryKey: ['invitations'] })
 
-      const prevInvitations = queryClient.getQueryData<Invitation[]>([
+      const preInvitations = queryClient.getQueryData<Invitation[]>([
         'invitations'
       ])
-      if (prevInvitations) {
-        const newInvitations = prevInvitations.filter(
+
+      if (preInvitations) {
+        const newInvitations = preInvitations.filter(
           invitation => invitation.inviteId !== inviteId
         )
-
         queryClient.setQueryData(['invitations'], newInvitations)
       }
-      return { prevInvitations }
+
+      return { preInvitations }
     },
-    onSuccess: () => {
-      showSuccessToast('스페이스 초대를 수락했습니다')
+    onSuccess: data => {
+      showSuccessToast(`'${data?.name}' 초대를 거절했습니다.`)
+
       queryClient.invalidateQueries({ queryKey: ['space'] })
     },
     onError: (error, _, onMutateResult) => {
@@ -42,7 +44,7 @@ export const useAcceptInvitation = () => {
   })
 
   return {
-    handleAccept: acceptInvitationMutate,
-    isAccepting
+    handleCancel: cancelInvitationMutate,
+    isCanceling
   }
 }

@@ -1,4 +1,5 @@
 export {
   fetchInvitationsClient,
-  acceptInvitationClient
+  acceptInvitationClient,
+  cancelInvitationClient
 } from './invitation.client'
