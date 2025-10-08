@@ -14,9 +14,10 @@ interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
   mode: 'archive' | 'trash'
+  folderId: number
 }
 
-function FileSection({ initialFileData, initialPage, mode }: Props) {
+function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   const searchParams = useSearchParams()
   const queryKeyword = searchParams.get('q') || ''
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
@@ -25,7 +26,7 @@ function FileSection({ initialFileData, initialPage, mode }: Props) {
   const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
-      folderId: 0,
+      folderId,
       page: currentPage,
       isActive: false,
       size: 8,
