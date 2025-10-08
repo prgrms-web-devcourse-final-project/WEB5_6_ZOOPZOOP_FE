@@ -39,7 +39,7 @@ export interface PageInfo {
 }
 
 export interface FileSearchParams {
-  folderId: number
+  folderId?: number
   page: number
   size: number
   isActive?: boolean

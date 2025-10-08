@@ -4,7 +4,7 @@ import {
   postArchiveFileServer
 } from '@/entities/archive/file/api/file.server'
 import { moveOneArchiveFileServer } from '@/features/archive/move-file/api/moveFile.server'
-import { createCookieHeader, requireAuth } from '@/shared/lib/api-route'
+import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
 //폴더 내 파일 조회
@@ -21,7 +21,7 @@ export const GET = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await fetchArchiveFilesByFolderServer(folderId, {
-          headers: createCookieHeader(token)
+          token
         })
     )
     return NextResponse.json(response)
@@ -44,7 +44,7 @@ export const POST = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await postArchiveFileServer(payload, {
-          headers: createCookieHeader(token)
+          token
         })
     )
     return NextResponse.json(response)
@@ -68,7 +68,7 @@ export const PATCH = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await moveOneArchiveFileServer(payload, {
-          headers: createCookieHeader(token)
+          token
         })
     )
 
@@ -99,7 +99,7 @@ export const DELETE = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await deleteOneArchiveFileServer(dataSourceId, {
-          headers: createCookieHeader(token)
+          token
         })
     )
     return NextResponse.json(response)

@@ -45,10 +45,12 @@ const File = ({
       )}
 
       {/* 썸네일 이미지 */}
-      <FileThumbnail
-        imageUrl={imageUrl}
-        title={title}
-      />
+      <div className="flex justify-center">
+        <FileThumbnail
+          imageUrl={imageUrl}
+          title={title}
+        />
+      </div>
 
       {/* 카테고리 */}
       <Badge name={category} />

@@ -31,9 +31,9 @@ export const fetchArchiveFilesByPageClient = async ({
 }: FileSearchParams) => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
-  params.append('folderId', folderId.toString())
   params.append('size', size.toString())
 
+  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
   if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
