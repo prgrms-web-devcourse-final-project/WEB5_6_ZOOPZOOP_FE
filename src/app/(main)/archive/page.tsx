@@ -16,7 +16,7 @@ export default async function Archive({ searchParams }: Props) {
   const params = await searchParams
   const currentPage = Number(params?.page) || INITIAL_PAGE
 
-  const { data: folderList } = await getInitialFolderList() // 폴더 정보
+  const { data: folderList } = await getInitialFolderList()
 
   const initialFileData = await getInitialFileList({
     page: currentPage,
