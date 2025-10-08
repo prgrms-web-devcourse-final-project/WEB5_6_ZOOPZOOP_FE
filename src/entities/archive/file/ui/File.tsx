@@ -11,8 +11,9 @@ interface Props {
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
-  // isSelected: boolean
-  // onSelect: (cardId: number) => void
+  mode: 'archive' | 'trash'
+  isSelected: boolean
+  onSelect: (cardId: number) => void
 }
 
 /**
@@ -25,23 +26,33 @@ const File = ({
   category,
   createdAt,
   id,
+  mode,
   imageUrl,
   sourceUrl,
-  ownerProfileUrl
-  // isSelected,
-  // onSelect
+  ownerProfileUrl,
+  isSelected,
+  onSelect
 }: Props) => {
   const formattedDate = formatDate(new Date(createdAt))
 
   return (
     <>
-      {/* 썸네일 이미지 */}
-      <FileThumbnail
-        imageUrl={imageUrl}
-        title={title}
-      />
-      {/* 카테고리 */}
+      {mode === 'trash' && (
+        <Checkbox
+          checked={isSelected}
+          onClick={() => onSelect(id)}
+        />
+      )}
 
+      {/* 썸네일 이미지 */}
+      <div className="flex justify-center">
+        <FileThumbnail
+          imageUrl={imageUrl}
+          title={title}
+        />
+      </div>
+
+      {/* 카테고리 */}
       <Badge name={category} />
       {/* 카드 제목 */}
       <FileCardTitle

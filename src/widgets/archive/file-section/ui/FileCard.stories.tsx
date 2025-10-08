@@ -75,6 +75,9 @@ export const SelectionComparison: Story = {
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
           summary="정치 분야 기사 요약. SSD 관련 기술이 정치·정책과 연결된 맥락을 설명합니다."
+          mode="trash"
+          isSelected={true}
+          onSelect={() => {}}
         />
       </div>
       <div>
@@ -89,6 +92,9 @@ export const SelectionComparison: Story = {
           imageUrl="https://via.placeholder.com/250x108"
           sourceUrl="https://example.com"
           ownerProfileUrl="https://github.com/shadcn.png"
+          mode="archive"
+          isSelected={true}
+          onSelect={() => {}}
         />
       </div>
     </div>

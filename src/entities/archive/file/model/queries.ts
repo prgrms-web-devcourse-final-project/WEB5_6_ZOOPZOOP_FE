@@ -1,6 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
-import { FileData, FileSearchParams, SearchGetResponse } from './type'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { FileSearchParams, SearchGetResponse } from './type'
 import {
+  deleteManyArchiveFileClient,
+  deleteOneArchiveFileClient,
   fetchArchiveFilesByFolderClient,
   fetchArchiveFilesByPageClient
 } from '../api/file.client'
@@ -44,4 +46,28 @@ export const useArchiveFilesByPageQuery = ({
     staleTime: 1000 * 60,
     initialData: initialData
   })
+}
+
+export const useDeleteOneArchiveFileQuery = () => {
+  const queryClient = useQueryClient()
+  const deleteOneFile = useMutation({
+    mutationFn: (dataSourceId: number) =>
+      deleteOneArchiveFileClient(dataSourceId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveDelete'] })
+    }
+  })
+  return { deleteOneFile }
+}
+
+export const useDeleteManyArchiveFileQuery = () => {
+  const queryClient = useQueryClient()
+  const deleteManyFile = useMutation({
+    mutationFn: (dataSourceId: number[]) =>
+      deleteManyArchiveFileClient(dataSourceId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveDelete'] })
+    }
+  })
+  return { deleteManyFile }
 }

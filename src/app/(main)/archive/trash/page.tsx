@@ -9,14 +9,13 @@ export const metadata: Metadata = {
 }
 
 const DEFAULT_PAGE_SIZE = 12
-const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 0
 
 async function ArchiveTrashPage() {
   const initialFileData = await getInitialFileList({
     page: INITIAL_PAGE,
     size: DEFAULT_PAGE_SIZE,
-    folderId: ROOT_FOLDER_ID
+    isActive: false
   })
 
   return (
@@ -27,6 +26,7 @@ async function ArchiveTrashPage() {
       />
       <div className="flex flex-col p-6 gap-4">
         <FileSection
+          mode="trash"
           initialFileData={initialFileData && initialFileData}
           initialPage={INITIAL_PAGE}
         />

@@ -1,4 +1,4 @@
-import { NextFetchOptions } from '@/shared/types'
+import { APIResponse, NextFetchOptions } from '@/shared/types'
 import {
   FileGetResponse,
   FilePostResponse,
@@ -14,9 +14,9 @@ export const fetchArchiveFilesByPageServer = async (
 ): Promise<SearchGetResponse> => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
-  params.append('folderId', folderId.toString())
-  params.append('size', size.toString())
 
+  params.append('size', size.toString())
+  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
   if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
@@ -73,9 +73,9 @@ export const deleteManyArchiveFileServer = async (
   },
   options: NextFetchOptions
 ) => {
-  return await httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<APIResponse<null>>(
     `/api/v1/archive/delete`,
-    payload,
+    { dataSourceId: payload.dataSourceId },
     options
   )
 }

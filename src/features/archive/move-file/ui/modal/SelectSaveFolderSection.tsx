@@ -4,14 +4,15 @@ import { LuFolder } from 'react-icons/lu'
 
 interface Props {
   folderList: FolderData[]
+  location: string
   saveFolder: FolderData | undefined
-
   selectedSaveFolder: number | null
   onFolderSelect: (folderId: number) => void
 }
 
 function SelectSaveFolderSection({
   folderList,
+  location,
   selectedSaveFolder,
   saveFolder,
   onFolderSelect
@@ -21,7 +22,7 @@ function SelectSaveFolderSection({
       <h2 className=" text-lg font-bold">이동할 위치 선택</h2>
       <div className="flex items-center gap-2 text-base">
         <LuFolder size={20} />
-        <p>내 아카이브</p>
+        <p>{location}</p>
       </div>
       <div className="h-[300px] overflow-y-auto mb-5">
         {folderList.map(folder => (
@@ -39,7 +40,7 @@ function SelectSaveFolderSection({
       <div className="w-full flex flex-col gap-2.5">
         {saveFolder && (
           <div className="border border-gray-light rounded-md py-3 px-3 text-base bg-gray-light">
-            `내 아카이브/${saveFolder.folderName}`
+            {location}/{saveFolder.folderName}
           </div>
         )}
       </div>

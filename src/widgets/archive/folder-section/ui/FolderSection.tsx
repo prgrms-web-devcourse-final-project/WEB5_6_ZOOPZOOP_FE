@@ -4,8 +4,8 @@ import { useMemo, useState } from 'react'
 import FolderGrid from './FolderGrid'
 import FolderHeader from './FolderHeader'
 import { SortDirection } from '@tanstack/react-table'
-import { getSortedFolders } from '@/features/archive/sort'
 import { FolderData } from '@/entities/archive/folder/model/type'
+import { getSortedFolders } from '@/features/archive'
 
 const SORT_KEY = 'title'
 
