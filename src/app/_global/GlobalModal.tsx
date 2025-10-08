@@ -16,8 +16,13 @@ import {
 
 import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
 import { DeleteAccountModal } from '@/features/auth'
-import { MoveFileModal } from '@/features/archive/move-file/ui/modal/MoveFileModal'
-import MoveToTrashModal from '@/features/archive/move-to-trash-file/ui/modal/GotoTrashModal'
+
+import {
+  DeleteFileModal,
+  RestoreFileModal,
+  MoveFileModal,
+  MoveToTrashModal
+} from '@/features/archive'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -41,6 +46,10 @@ export const GlobalModal = () => {
       return <MoveToTrashModal />
     case 'delete-account':
       return <DeleteAccountModal />
+    case 'delete-file':
+      return <DeleteFileModal {...modal.props} />
+    case 'restore-file':
+      return <RestoreFileModal {...modal.props} />
     case 'rename-folder':
       return <RenameFolderModal {...modal.props} />
     case 'delete-space':
