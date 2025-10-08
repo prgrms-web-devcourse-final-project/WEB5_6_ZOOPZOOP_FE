@@ -1,19 +1,21 @@
-'use client'
-
-import { LuFolder } from 'react-icons/lu'
-import { useModalStore } from '@/shared/lib'
 import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/queries'
-import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
-import { ChevronsRight } from 'lucide-react'
+import {
+  FolderData,
+  useGetArchiveFoldersQuery
+} from '@/entities/archive/folder'
+import { fetchSpaceListClient, useSpaceQuery } from '@/entities/space'
+import { SelectFileSection } from '@/features/archive/move-file'
+
+import { useMoveFileModalState } from '@/features/archive/move-file/model/useMoveFileModalState'
+import SelectSaveFolderSection from '@/features/archive/move-file/ui/modal/SelectSaveFolderSection'
+import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
+import { ChevronsRight } from 'lucide-react'
+import { useCopyToSpaceAction } from '../../model/useCopyToSpaceAction'
+import { useFetchAllSpacesQuery } from '../../model/queries'
 
-import SelectFileSection from './SelectFileSection'
-import SelectSaveFolderSection from './SelectSaveFolderSection'
-import { useMoveFileModalState } from '../../model/useMoveFileModalState'
-import { useMoveFileAction } from '../../model/useMoveFileAction'
-
-export const MoveFileModal = () => {
+function CopyToSpaceModal() {
   const {
     selectedFolder,
     selectedSaveFolder,
@@ -27,12 +29,21 @@ export const MoveFileModal = () => {
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data || []
   const saveFolder = folderList.find(f => f.folderId === selectedSaveFolder)
-
-  // 선택한 폴더에 대한 파일 조회
   const { filesQuery } = useArchiveFilesByFolderQuery(selectedFolder!, {
     enabled: !!selectedFolder
   })
-  const { handleMoveFiles } = useMoveFileAction()
+  const { spaces } = useFetchAllSpacesQuery()
+  const spaceList: FolderData[] =
+    spaces?.spaces
+      //  권한이 ADMIN 또는 READ_WRITE인 항목만 필터링
+      .filter(
+        item => item.authority === 'ADMIN' || item.authority === 'READ_WRITE'
+      )
+      // FolderData 형태로 변환
+      .map(item => ({
+        folderId: item.id,
+        folderName: item.name
+      })) ?? []
 
   const filesForArchiveFolder =
     filesQuery.data?.files.map(file => ({
@@ -40,12 +51,12 @@ export const MoveFileModal = () => {
       name: file.title
     })) || []
 
-  // api 연동
+  const { handleCopyToSpace } = useCopyToSpaceAction()
 
   return (
     <ModalLayout size="lg">
       <div className=" w-full flex flex-col gap-2 min-h-[600px] ">
-        <h1 className="text-2xl font-bold text-center">파일 이동</h1>
+        <h1 className="text-2xl font-bold text-center">스페이스에 복사</h1>
         <div className="flex justify-between">
           {/* 파일 위치 */}
           <div className=" w-1/2 flex flex-col gap-2.5 ">
@@ -65,9 +76,10 @@ export const MoveFileModal = () => {
               className="text-green-normal"
             />
           </div>
+          {/* 스페이스 영역 */}
           <SelectSaveFolderSection
-            location="내 아카이브"
-            folderList={folderList}
+            location={'내 스페이스'}
+            folderList={spaceList}
             saveFolder={saveFolder}
             selectedSaveFolder={selectedSaveFolder}
             onFolderSelect={handleSelectSaveFolder}
@@ -77,12 +89,13 @@ export const MoveFileModal = () => {
         {/* 버튼 */}
         <FolderActionButtons
           onCancel={closeModal}
-          onCreate={() => handleMoveFiles(selectedFiles)}
+          onCreate={() => handleCopyToSpace(selectedSaveFolder, selectedFiles)}
           isCreating={false}
           label={'이동'}
-          disabled={!saveFolder}
+          disabled={false}
         />
       </div>
     </ModalLayout>
   )
 }
+export default CopyToSpaceModal
