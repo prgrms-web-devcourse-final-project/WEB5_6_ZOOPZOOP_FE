@@ -87,11 +87,18 @@ export const PATCH = async (request: Request) => {
 
 //파일 단건 삭제 (영구 삭제)
 export const DELETE = async (request: Request) => {
-  const payload = await request.json()
   try {
+    const { searchParams } = new URL(request.url)
+    const dataSourceId = Number(searchParams.get('dataSourceId'))
+    if (isNaN(dataSourceId)) {
+      return NextResponse.json(
+        { error: '유효하지 않은 폴더 ID입니다' },
+        { status: 400 }
+      )
+    }
     const response = await requireAuth(
       async token =>
-        await deleteOneArchiveFileServer(payload, {
+        await deleteOneArchiveFileServer(dataSourceId, {
           headers: createCookieHeader(token)
         })
     )
@@ -103,9 +110,7 @@ export const DELETE = async (request: Request) => {
       msg:
         error instanceof Error
           ? error.message
-          : { error: '다건 파일 삭제 중 오류 발생' }
+          : { error: '단건 파일 삭제 중 오류 발생' }
     })
   }
 }
-
-// TODO: 파일 복구 기능 구현 => 휴지통에서 아카이브로 이동

@@ -1,4 +1,4 @@
-import { NextFetchOptions } from '@/shared/types'
+import { APIResponse, NextFetchOptions } from '@/shared/types'
 import {
   FileGetResponse,
   FilePostResponse,
@@ -60,7 +60,7 @@ export const deleteOneArchiveFileServer = async (
   dataSourceId: number,
   options: NextFetchOptions
 ) => {
-  return await httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<APIResponse<null>>(
     `/api/v1/archive/${dataSourceId}`,
     options
   )
@@ -73,9 +73,9 @@ export const deleteManyArchiveFileServer = async (
   },
   options: NextFetchOptions
 ) => {
-  return await httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<APIResponse<null>>(
     `/api/v1/archive/delete`,
-    payload,
+    { dataSourceId: payload.dataSourceId },
     options
   )
 }
