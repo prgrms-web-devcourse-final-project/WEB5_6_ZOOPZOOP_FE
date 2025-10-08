@@ -7,7 +7,11 @@ import CardView from './CardView'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
-import { useSortFile, useSwitchFileView } from '@/features/archive'
+import {
+  useSelectFiles,
+  useSortFile,
+  useSwitchFileView
+} from '@/features/archive'
 import { useState } from 'react'
 
 interface Props {
@@ -20,8 +24,16 @@ interface Props {
 function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   const searchParams = useSearchParams()
   const queryKeyword = searchParams.get('q') || ''
+
+  //파일 뷰 선택
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
+
+  // 파일 정렬
   const { sort, handleSortClick } = useSortFile()
+
+  // 파일 전체 선택
+  const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
+
   const currentPage = Number(searchParams.get('page')) || 1
   const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
   const { data: filesQuery } = useArchiveFilesByPageQuery({
@@ -37,28 +49,6 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   })
   const fileList = filesQuery?.data.items || []
 
-  // mode에 따라 파일 선택
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
-
-  const handleSelect = (cardId: number) => {
-    setSelectedIds(
-      prev =>
-        prev.includes(cardId)
-          ? prev.filter(id => id !== cardId) // 이미 있으면 해제
-          : [...prev, cardId] // 없으면 추가
-    )
-  }
-
-  const handleSelectAll = () => {
-    if (selectedIds.length === fileList.length) {
-      // 이미 전체 선택된 상태면 → 전체 해제
-      setSelectedIds([])
-    } else {
-      // 전체 선택
-      setSelectedIds(fileList.map(file => file.dataSourceId))
-    }
-  }
-
   return (
     <div className="flex flex-col gap-2">
       <FileHeader
@@ -69,7 +59,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
         selectedIds={selectedIds}
         onChangeView={onSwitchViewMode}
         handleSortClick={handleSortClick}
-        handleSelectAll={handleSelectAll}
+        handleSelectAll={() => handleSelectAll(fileList)}
       />
       <div className="flex-1">
         {viewMode === 'list' ? (
