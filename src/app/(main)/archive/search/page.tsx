@@ -32,7 +32,7 @@ export default async function ArchiveSearchPage({ searchParams }: Props) {
         title={`${query}`}
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
-      <div className="flex flex-col p-6 gap-4">
+      <div className="w-full flex flex-col p-8 gap-4 ">
         <FileSection
           folderId={ROOT_FOLDER_ID}
           mode="archive"
