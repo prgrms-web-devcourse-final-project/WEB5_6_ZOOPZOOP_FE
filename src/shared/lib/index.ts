@@ -11,4 +11,4 @@ export { useModalStore } from './modal-store'
 export { delay } from './delay'
 
 // API 클라이언트
-export { httpClient } from './httpClient'
+export { httpClient } from './http-client'

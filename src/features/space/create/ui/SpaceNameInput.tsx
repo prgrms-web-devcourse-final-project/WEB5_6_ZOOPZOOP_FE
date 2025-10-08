@@ -29,6 +29,7 @@ export const InputSpaceName = ({ inputRef, onCreate, isCreating }: Props) => {
                      disabled:bg-gray-50 disabled:cursor-not-allowed"
           placeholder="스페이스 이름을 입력해 주세요"
           disabled={isCreating}
+          autoFocus
         />
       </div>
       <button

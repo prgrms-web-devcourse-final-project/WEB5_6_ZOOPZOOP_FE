@@ -58,6 +58,7 @@ export const InviteMember = ({ spaceId }: Props) => {
           aria-controls={shouldShowDropdown ? 'search-results' : undefined}
           value={searchTerm}
           onChange={handleInputChange}
+          autoFocus
         />
         <LuSearch
           aria-hidden="true"

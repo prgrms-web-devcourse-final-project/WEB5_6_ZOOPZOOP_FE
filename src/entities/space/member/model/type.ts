@@ -35,3 +35,14 @@ export type SpaceAuthorityChangeRequest = {
   newAuthority: Authority
   memberId: number
 }
+
+export interface AddMember {
+  memberNames: string[]
+}
+
+export interface AddMemberRequest {
+  memberNames: string[]
+  spaceId: number
+}
+
+export type AddMemberResponse = APIResponse<AddMember>
