@@ -33,7 +33,7 @@ export const useArchiveFilesByPageQuery = ({
 }: PageQuery) => {
   const { folderId, page, sort, size, keyword, isActive } = query
   return useQuery({
-    queryKey: ['archiveFilesPage', folderId, page, sort], //쿼리 키를 다르게 설정
+    queryKey: ['archiveFilesPage', folderId, page, sort, keyword], //쿼리 키를 다르게 설정
     queryFn: () =>
       fetchArchiveFilesByPageClient({
         folderId,
