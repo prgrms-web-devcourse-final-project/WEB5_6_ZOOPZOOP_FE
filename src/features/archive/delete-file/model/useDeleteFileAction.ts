@@ -3,7 +3,11 @@ import {
   useDeleteOneArchiveFileQuery
 } from '@/entities/archive/file/model/queries'
 import { useModalStore } from '@/shared/lib'
-import { showInfoToast, showSuccessToast } from '@/shared/ui/toast/Toast'
+import {
+  showErrorToast,
+  showInfoToast,
+  showSuccessToast
+} from '@/shared/ui/toast/Toast'
 
 export const useDeleteFileAction = () => {
   const closeModal = useModalStore(s => s.closeModal)
@@ -11,36 +15,36 @@ export const useDeleteFileAction = () => {
   const { deleteManyFile } = useDeleteManyArchiveFileQuery()
 
   const handleDelete = (dataSourceId: number[]) => {
-    //     if (dataSourceId.length === 1) {
-    //       deleteOneFile.mutate(dataSourceId[0], {
-    //         onSuccess: res => {
-    //           if (res?.status === 200) {
-    //             showSuccessToast('파일 삭제 성공')
-    //           } else {
-    //             showInfoToast('파일 삭제 중 오류가 발생했습니다')
-    //           }
-    //           closeModal()
-    //         },
-    //         onError: err => {
-    //           showInfoToast('파일 삭제 실패')
+    //   if (dataSourceId.length === 1) {
+    //     deleteOneFile.mutate(dataSourceId[0], {
+    //       onSuccess: res => {
+    //         if (res?.status === 200) {
+    //           showSuccessToast('파일 삭제 성공')
+    //         } else {
+    //           showInfoToast('파일 삭제 중 오류가 발생했습니다')
     //         }
-    //       })
-    //     } else {
-    //       deleteManyFile.mutate(dataSourceId, {
-    //         onSuccess: res => {
-    //           if (res?.status === 200) {
-    //             showSuccessToast('파일 삭제 성공')
-    //           } else {
-    //             showInfoToast('파일 삭제 중 오류가 발생했습니다')
-    //           }
-    //           closeModal()
-    //         },
-    //         onError: err => {
-    //           showInfoToast('파일 삭제 실패')
+    //         closeModal()
+    //       },
+    //       onError: err => {
+    //         showInfoToast('파일 삭제 실패')
+    //       }
+    //     })
+    //   } else {
+    //     deleteManyFile.mutate(dataSourceId, {
+    //       onSuccess: res => {
+    //         if (res?.status === 200) {
+    //           showSuccessToast('파일 삭제 성공')
+    //         } else {
+    //           showInfoToast('파일 삭제 중 오류가 발생했습니다')
     //         }
-    //       })
-    //     }
+    //         closeModal()
+    //       },
+    //       onError: err => {
+    //         showInfoToast('파일 삭제 실패')
+    //       }
+    //     })
     //   }
+    // }
 
     deleteManyFile.mutate(dataSourceId, {
       onSuccess: res => {
@@ -52,7 +56,7 @@ export const useDeleteFileAction = () => {
         closeModal()
       },
       onError: err => {
-        showInfoToast('파일 삭제 실패')
+        showErrorToast('파일 삭제 실패')
       }
     })
   }
