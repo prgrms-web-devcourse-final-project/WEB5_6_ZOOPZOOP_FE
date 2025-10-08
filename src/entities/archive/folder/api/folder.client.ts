@@ -50,9 +50,7 @@ export const patchArchiveFolderClient = async (
 export const deleteArchiveFolderClient = async (folderId: number) => {
   const response = await httpClient.delete<FolderResponse>(
     `/api/archive/folder`,
-    {
-      body: JSON.stringify({ folderId })
-    }
+    folderId
   )
   if (response.status !== 200) {
     throw new Error(response.msg)

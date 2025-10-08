@@ -73,7 +73,8 @@ export const deleteOneArchiveFileClient = async (
   dataSourceId: number
 ): Promise<APIResponse<null>> => {
   const response = await httpClient.delete<APIResponse<null>>(
-    `/api/archive/file?dataSourceId=${dataSourceId}`
+    `/api/archive/file?dataSourceId=${dataSourceId}`,
+    {}
   )
   if (response.status !== 200) {
     throw new Error(response.msg)
