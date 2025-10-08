@@ -2,6 +2,7 @@ import { softDeleteArchiveFileServer } from '@/features/archive/move-to-trash-fi
 import { createCookieHeader, requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
+// 자료 임시 삭제 -> 휴지통으로 이동
 export const PATCH = async (request: Request) => {
   const payload = await request.json()
 

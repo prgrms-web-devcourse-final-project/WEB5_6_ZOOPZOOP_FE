@@ -5,24 +5,24 @@ import { tw } from '@/shared/lib'
 
 interface Props {
   id: number
-  title: string
+  mode: 'archive' | 'trash'
   summary: string
   sourceUrl: string
   tags: string[]
   isHover: boolean
-  // isSelected: boolean
-  // onSelect: (cardId: number) => void
+  isSelected: boolean
+  onSelect: (cardId: number) => void
 }
 
 export function HoveredCard({
   id,
-  title,
+  mode,
   summary,
   sourceUrl,
   tags,
-  isHover
-  // isSelected,
-  // onSelect
+  isHover,
+  isSelected,
+  onSelect
 }: Props) {
   return (
     <div
@@ -34,6 +34,12 @@ export function HoveredCard({
           : 'opacity-0 scale-95 pointer-events-none'
       )}>
       <div className="flex flex-col w-full min-h-full bg-white rounded-sm shadow-2xl p-4 text-gray-darker text-base ">
+        {mode === 'trash' && (
+          <Checkbox
+            checked={isSelected}
+            onClick={() => onSelect(id)}
+          />
+        )}
         <div className="flex flex-wrap gap-1 mb-2">
           {tags.map((tag, index) => (
             <p
