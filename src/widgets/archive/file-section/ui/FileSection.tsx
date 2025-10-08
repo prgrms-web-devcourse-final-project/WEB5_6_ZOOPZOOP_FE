@@ -14,27 +14,30 @@ interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
   mode: 'archive' | 'trash'
+  folderId: number
 }
 
-function FileSection({ initialFileData, initialPage, mode }: Props) {
+function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   const searchParams = useSearchParams()
+  const queryKeyword = searchParams.get('q') || ''
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
   const { sort, handleSortClick } = useSortFile()
   const currentPage = Number(searchParams.get('page')) || 1
   const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
-      folderId: 0,
+      folderId,
       page: currentPage,
       isActive: false,
       size: 8,
-      sort: `${sort.key},${sort.direction}`
+      sort: `${sort.key},${sort.direction}`,
+      keyword: queryKeyword
     },
     initialData: currentPage === initialPage ? initialFileData : undefined
   })
   const fileList = filesQuery?.data.items || []
 
-  // mode에 따라 파일 선태
+  // mode에 따라 파일 선택
   const [selectedIds, setSelectedIds] = useState<number[]>([])
 
   const handleSelect = (cardId: number) => {
