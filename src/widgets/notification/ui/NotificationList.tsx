@@ -1,11 +1,15 @@
 'use client'
 
-import { useFetchNotifications } from '@/features/notification'
+import {
+  AcceptButton,
+  CancelButton,
+  useFetchInvitations
+} from '@/features/invitation'
+import { InvitationItem } from '@/entities/invitation'
 import NotificationSkeletonList from './NotificationSkeletonList'
-import { NotificationItem } from '@/entities/notification'
 
 const NotificationList = () => {
-  const { notifications, isPending } = useFetchNotifications()
+  const { invitations, isPending } = useFetchInvitations()
 
   return (
     <div>
@@ -19,14 +23,14 @@ const NotificationList = () => {
           <NotificationSkeletonList />
         ) : (
           <>
-            {notifications.length > 0 ? (
-              notifications.map(invite => (
-                <NotificationItem
+            {invitations.length > 0 ? (
+              invitations.map(invite => (
+                <InvitationItem
                   key={invite.id}
                   name={invite.name}
                   thumbnailUrl={invite.thumbnailUrl}
-                  onSubmit={() => {}}
-                  onCancel={() => {}}
+                  acceptAction={<AcceptButton />}
+                  cancelAction={<CancelButton />}
                 />
               ))
             ) : (

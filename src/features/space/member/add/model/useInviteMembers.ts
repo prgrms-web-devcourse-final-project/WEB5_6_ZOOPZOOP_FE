@@ -1,9 +1,9 @@
+import { useAddMembersMutation } from '@/entities/space'
 import { useUserStore } from '@/entities/user'
 import { useModalStore } from '@/shared/lib'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
-import { useState } from 'react'
-import { useAddMembersMutation } from './queries'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export const useInviteMembers = () => {
   const userInfo = useUserStore(state => state.user)
