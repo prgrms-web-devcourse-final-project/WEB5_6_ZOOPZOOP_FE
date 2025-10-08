@@ -5,6 +5,7 @@ import {
   SearchGetResponse,
   FileSearchParams
 } from '../model/type'
+import { APIResponse } from '@/shared/types'
 
 // 폴더 안의 파일 조회
 export const fetchArchiveFilesByFolderClient = async (
@@ -60,6 +61,34 @@ export const postArchiveFileClient = async (
       folderId: folderId,
       sourceUrl: sourceUrl
     }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+//파일 단건 삭제
+export const deleteOneArchiveFileClient = async (
+  dataSourceId: number
+): Promise<APIResponse<null>> => {
+  const response = await httpClient.delete<APIResponse<null>>(
+    `/api/archive/file?dataSourceId=${dataSourceId}`
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+
+  return response
+}
+
+//파일 다건 삭제
+export const deleteManyArchiveFileClient = async (
+  dataSourceId: number[]
+): Promise<APIResponse<null>> => {
+  const response = await httpClient.delete<APIResponse<null>>(
+    `/api/archive/file/list`,
+    { dataSourceId: dataSourceId }
   )
   if (response.status !== 200) {
     throw new Error(response.msg)
