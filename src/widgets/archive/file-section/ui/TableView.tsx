@@ -4,9 +4,10 @@ import { FileData } from '@/entities/archive/file'
 
 interface Props {
   fileList: FileData[]
+  mode: 'archive' | 'trash'
 }
 
-function TableView({ fileList }: Props) {
+function TableView({ fileList, mode }: Props) {
   const tableData: ArchiveColumnType[] = fileList.map(item => ({
     id: item.dataSourceId.toString(),
     title: item.title,
