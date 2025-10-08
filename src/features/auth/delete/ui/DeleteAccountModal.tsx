@@ -52,8 +52,8 @@ const DeleteAccountModal = () => {
             취소
           </button>
           <button
+            type="submit"
             disabled={!isDeleteEnabled || isDeleting}
-            type="button"
             className="flex-1 py-2 text-white bg-red-600 rounded-md disabled-hover:bg-red-700 disabled:opacity-50 cursor-pointer">
             {isDeleting ? '삭제 중...' : '삭제'}
           </button>

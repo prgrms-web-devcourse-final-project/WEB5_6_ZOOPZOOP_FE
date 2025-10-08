@@ -1,9 +1,19 @@
+import { acceptInvitationsServer } from '@/entities/invitation/api/invitation.server'
+import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
-export const POST = async (request: Request) => {
+export const POST = async (
+  _: Request,
+  { params }: { params: Promise<{ inviteId: string }> }
+) => {
   try {
-    // eslint-disable-next-line no-console
-    console.log('등록되나?')
+    const { inviteId } = await params
+
+    const response = await requireAuth(
+      async token => await acceptInvitationsServer(inviteId, { token })
+    )
+
+    return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({
       status: 500,

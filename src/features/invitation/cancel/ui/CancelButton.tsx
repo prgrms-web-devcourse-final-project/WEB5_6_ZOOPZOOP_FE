@@ -1,6 +1,10 @@
 import { X } from 'lucide-react'
 
-const CancelButton = () => {
+interface Props {
+  inviteId: number
+}
+
+const CancelButton = ({ inviteId }: Props) => {
   return (
     <button
       onClick={() => {}}

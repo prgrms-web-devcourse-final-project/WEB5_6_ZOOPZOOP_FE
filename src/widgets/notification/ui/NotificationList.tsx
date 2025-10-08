@@ -29,8 +29,8 @@ const NotificationList = () => {
                   key={invite.id}
                   name={invite.name}
                   thumbnailUrl={invite.thumbnailUrl}
-                  acceptAction={<AcceptButton />}
-                  cancelAction={<CancelButton />}
+                  acceptAction={<AcceptButton inviteId={invite.id} />}
+                  cancelAction={<CancelButton inviteId={invite.id} />}
                 />
               ))
             ) : (

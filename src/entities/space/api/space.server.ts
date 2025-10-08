@@ -54,6 +54,7 @@ export const deleteSpaceServer = async (
 ): Promise<DeleteSpaceResponse> => {
   return await httpClient.delete<DeleteSpaceResponse>(
     `/api/v1/space/${spaceId}`,
+    {},
     options
   )
 }
