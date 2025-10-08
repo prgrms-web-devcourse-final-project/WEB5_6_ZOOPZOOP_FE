@@ -62,6 +62,7 @@ export const deleteOneArchiveFileServer = async (
 ) => {
   return await httpClient.delete<FilePostResponse>(
     `/api/v1/archive/${dataSourceId}`,
+    {},
     options
   )
 }
