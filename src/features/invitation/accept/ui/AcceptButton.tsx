@@ -22,9 +22,15 @@ const AcceptButton = ({ inviteId }: Props) => {
                      transition-colors cursor-pointer"
       aria-label="수락">
       {isAccepting ? (
-        <Loader2 className="animate-spin size-4" />
+        <Loader2
+          className="animate-spin size-4"
+          aria-hidden
+        />
       ) : (
-        <Check className="size-4" />
+        <Check
+          className="size-4"
+          aria-hidden
+        />
       )}
     </button>
   )

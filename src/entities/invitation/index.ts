@@ -3,6 +3,10 @@ export { InvitationItem } from './ui'
 // model/type
 export type * from './model'
 // model/queries
-export { useInvitationQuery, useAcceptInvitationMutation } from './model'
+export {
+  useInvitationQuery,
+  useAcceptInvitationMutation,
+  useCancelInvitationMutation
+} from './model'
 // api/client
 export { acceptInvitationClient, fetchInvitationsClient } from './api'

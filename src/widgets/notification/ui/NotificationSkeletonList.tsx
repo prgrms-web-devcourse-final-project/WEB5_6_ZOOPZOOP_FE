@@ -1,6 +1,6 @@
 const NotificationSkeletonList = () => (
   <>
-    {Array.from({ length: 3 }).map((_, idx) => (
+    {Array.from({ length: 2 }).map((_, idx) => (
       <li
         className="px-4 py-2"
         key={idx}>

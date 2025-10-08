@@ -3,13 +3,17 @@ import {
   UseMutationOptions,
   useQuery
 } from '@tanstack/react-query'
-import { fetchInvitationsClient, acceptInvitationClient } from '../api'
+import {
+  fetchInvitationsClient,
+  acceptInvitationClient,
+  cancelInvitationClient
+} from '../api'
 import { InviteResult, Invitation } from './type'
 
 // 알림 목록 데이터 패칭
 export const useInvitationQuery = () => {
   return useQuery<Invitation[] | null>({
-    queryKey: ['notification'],
+    queryKey: ['invitations'],
     queryFn: fetchInvitationsClient
   })
 }
@@ -19,7 +23,7 @@ export const useAcceptInvitationMutation = (
   options: UseMutationOptions<InviteResult | null, Error, number>
 ) => {
   const { mutate, isPending } = useMutation({
-    mutationKey: ['notification', 'accept'],
+    mutationKey: ['invitation', 'accept'],
     mutationFn: inviteId => acceptInvitationClient(inviteId),
     ...options
   })
@@ -27,5 +31,21 @@ export const useAcceptInvitationMutation = (
   return {
     acceptInvitationMutate: mutate,
     isAccepting: isPending
+  }
+}
+
+// 알림 거절
+export const useCancelInvitationMutation = (
+  options: UseMutationOptions<InviteResult | null, Error, number>
+) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['invitation', 'cancel'],
+    mutationFn: inviteId => cancelInvitationClient(inviteId),
+    ...options
+  })
+
+  return {
+    cancelInvitationMutate: mutate,
+    isCanceling: isPending
   }
 }

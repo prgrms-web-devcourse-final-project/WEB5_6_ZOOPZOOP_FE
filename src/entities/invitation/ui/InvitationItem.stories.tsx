@@ -9,11 +9,11 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    name: {
+    spaceName: {
       control: 'text',
       description: '초대를 보낸  스페이스의 이름'
     },
-    thumbnailUrl: {
+    spaceThumbnailUrl: {
       control: 'text',
       description: '스페이스 썸네일 이미지 URL'
     }
@@ -36,20 +36,20 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    name: 'UX 디자인 팀',
-    thumbnailUrl:
+    spaceName: 'UX 디자인 팀',
+    spaceThumbnailUrl:
       'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop'
   }
 }
 
 /**
  * 썸네일 없는 상태
- * thumbnailUrl이 없을 때 이니셜이 표시되는지 확인
+ * spaceThumbnailUrl이 없을 때 이니셜이 표시되는지 확인
  */
 export const WithoutThumbnail: Story = {
   args: {
-    name: '프론트엔드 개발',
-    thumbnailUrl: ''
+    spaceName: '프론트엔드 개발',
+    spaceThumbnailUrl: ''
   }
 }
 
@@ -59,8 +59,8 @@ export const WithoutThumbnail: Story = {
  */
 export const LongName: Story = {
   args: {
-    name: '아주 긴 이름을 가진 스페이스 이름 테스트용 매우 긴 텍스트',
-    thumbnailUrl:
+    spaceName: '아주 긴 이름을 가진 스페이스 이름 테스트용 매우 긴 텍스트',
+    spaceThumbnailUrl:
       'https://images.unsplash.com/photo-1557683316-973673baf926?w=100&h=100&fit=crop'
   }
 }
@@ -72,32 +72,32 @@ export const LongName: Story = {
  */
 export const MultipleItems: Story = {
   args: {
-    name: '',
-    thumbnailUrl: ''
+    spaceName: '',
+    spaceThumbnailUrl: ''
   },
   render: () => {
     const notifications = [
       {
         id: 1,
-        name: 'UX 디자인 팀',
-        thumbnailUrl:
+        spaceName: 'UX 디자인 팀',
+        spaceThumbnailUrl:
           'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop'
       },
       {
         id: 2,
-        name: '프론트엔드 개발',
-        thumbnailUrl: ''
+        spaceName: '프론트엔드 개발',
+        spaceThumbnailUrl: ''
       },
       {
         id: 3,
-        name: '마케팅 전략회의',
-        thumbnailUrl:
+        spaceName: '마케팅 전략회의',
+        spaceThumbnailUrl:
           'https://images.unsplash.com/photo-1557683316-973673baf926?w=100&h=100&fit=crop'
       },
       {
         id: 4,
-        name: '데이터 분석팀',
-        thumbnailUrl: ''
+        spaceName: '데이터 분석팀',
+        spaceThumbnailUrl: ''
       }
     ]
 
@@ -117,8 +117,8 @@ export const MultipleItems: Story = {
           {notifications.map(notification => (
             <InvitationItem
               key={notification.id}
-              name={notification.name}
-              thumbnailUrl={notification.thumbnailUrl}
+              spaceName={notification.spaceName}
+              spaceThumbnailUrl={notification.spaceThumbnailUrl}
             />
           ))}
         </ul>
@@ -136,8 +136,8 @@ export const MultipleItems: Story = {
  */
 export const HoverState: Story = {
   args: {
-    name: '호버 테스트',
-    thumbnailUrl:
+    spaceName: '호버 테스트',
+    spaceThumbnailUrl:
       'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100&h=100&fit=crop'
   },
   decorators: [
