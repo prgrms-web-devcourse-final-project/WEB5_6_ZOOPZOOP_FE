@@ -25,10 +25,10 @@ export type * from './model'
 export { SpaceCard, SpaceCardSkeleton, SpaceSyncProvider } from './ui'
 
 // 맴버/클라이언트 API
-export { useUpdateAuthorityMutation } from './member'
+export { useUpdateAuthorityMutation, useAddMembersMutation } from './member'
 
 // 맴버/tanstack-query
-export { updateMemberAuthorityClient } from './member'
+export { updateMemberAuthorityClient, addSpaceMemberClient } from './member'
 
 // 맴버/타입
 export type * from './member'

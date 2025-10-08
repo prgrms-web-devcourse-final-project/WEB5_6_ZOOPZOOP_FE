@@ -1,2 +1,2 @@
 export type * from './type'
-export { useUpdateAuthorityMutation } from './queries'
+export { useUpdateAuthorityMutation, useAddMembersMutation } from './queries'

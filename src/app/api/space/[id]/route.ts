@@ -42,6 +42,7 @@ export const DELETE = async (
     )
 
     revalidateTag('space')
+
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

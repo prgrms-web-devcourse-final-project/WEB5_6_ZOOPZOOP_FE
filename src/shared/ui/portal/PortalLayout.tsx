@@ -9,17 +9,28 @@ interface Props {
   lockScroll?: boolean
 }
 
-const PortalLayout = ({
+// 유틸 함수
+const getOrCreatePortalElement = (containerId: string): HTMLElement => {
+  const existing = document.getElementById(containerId)
+  if (existing) return existing
+
+  const element = document.createElement('div')
+  element.id = containerId
+  document.body.appendChild(element)
+  return element
+}
+
+export const PortalLayout = ({
   children,
   containerId = 'portal-root',
-  lockScroll
+  lockScroll = false
 }: Props) => {
   const [mounted, setMounted] = useState<boolean>(false)
-  const portalRef = useRef<HTMLDivElement>(null)
+  const portalRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const portalElement = getOrCreatePortalElement(containerId)
-    portalRef.current = portalElement as HTMLDivElement
+    portalRef.current = portalElement
     setMounted(true)
 
     if (lockScroll) {
@@ -42,16 +53,4 @@ const PortalLayout = ({
   }
 
   return createPortal(children, portalRef.current)
-}
-export default PortalLayout
-
-// 유틸 함수
-const getOrCreatePortalElement = (containerId: string): HTMLElement => {
-  const existing = document.getElementById(containerId)
-  if (existing) return existing
-
-  const element = document.createElement('div')
-  element.id = containerId
-  document.body.appendChild(element)
-  return element
 }

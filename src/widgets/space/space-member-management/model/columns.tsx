@@ -1,5 +1,5 @@
 import { Member } from '@/entities/space/member'
-import ChangeAuthorityDropDown from '@/features/space/member/update-authority/ui/ChangeAuthorityDropDown'
+import ChangeAuthorityDropDown from '@/features/space/member/update/authority/ui/ChangeAuthorityDropDown'
 import { Avatar } from '@/shared/ui'
 import { Badge } from '@/shared/ui/shadcn/badge'
 import { Button } from '@/shared/ui/shadcn/button'
@@ -17,12 +17,15 @@ export const createMemberColumns = (
       header: '프로필',
       size: 100,
       minSize: 100,
-      cell: info => (
-        <Avatar
-          url={info.getValue() as string}
-          alt={''}
-        />
-      )
+      cell: info => {
+        const { name, profileUrl } = info.row.original
+        return (
+          <Avatar
+            url={profileUrl}
+            alt={`${name}님의 프로필 이미지`}
+          />
+        )
+      }
     },
     {
       accessorKey: 'name',
@@ -70,8 +73,6 @@ export const createMemberColumns = (
       }
     )
   }
-
-  // Pending 상태일 때는 초대 취소 버튼만 추가 (선택사항)
   if (activeType === 'pending') {
     baseColumns.push({
       id: 'cancel',

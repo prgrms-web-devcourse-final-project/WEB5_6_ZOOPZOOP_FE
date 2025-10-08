@@ -30,7 +30,7 @@ export const updateNicknameServer = async (
 export const deleteAccountServer = async (
   options: NextFetchOptions
 ): Promise<DeleteAccountResponse> => {
-  return httpClient.delete<DeleteAccountResponse>('/api/v1/member', options)
+  return httpClient.delete<DeleteAccountResponse>('/api/v1/member', {}, options)
 }
 
 // 프로필 이미지 저장
