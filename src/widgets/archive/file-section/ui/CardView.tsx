@@ -3,9 +3,12 @@ import FileCard from './FileCard'
 
 interface Props {
   fileList: FileData[]
+  mode: 'archive' | 'trash'
+  selectedIds: number[]
+  onSelect: (dataSourceId: number) => void
 }
 
-function CardView({ fileList }: Props) {
+function CardView({ fileList, mode, selectedIds, onSelect }: Props) {
   return (
     <div className="grid grid-cols-4 gap-4 w-full">
       {fileList.map(
@@ -20,6 +23,7 @@ function CardView({ fileList }: Props) {
           summary
         }) => (
           <FileCard
+            mode={mode}
             key={dataSourceId}
             id={dataSourceId}
             tags={tags}
@@ -29,8 +33,8 @@ function CardView({ fileList }: Props) {
             createdAt={dataCreatedDate}
             imageUrl={imageUrl}
             sourceUrl={sourceUrl}
-            //   isSelected={isSelected}
-            //   onSelect={() => handleCheckbox(dataSourceId)}
+            isSelected={selectedIds.includes(dataSourceId)}
+            onSelect={() => onSelect(dataSourceId)}
           />
         )
       )}

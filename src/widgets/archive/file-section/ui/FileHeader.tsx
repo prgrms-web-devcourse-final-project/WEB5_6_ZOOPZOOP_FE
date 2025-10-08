@@ -17,9 +17,11 @@ interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
+  selectedIds: number[]
   mode: 'archive' | 'trash'
   onChangeView: () => void
   handleSortClick: (key: SortKey, direction: SortDirection) => void
+  handleSelectAll: () => void
 }
 
 function FileHeader({
@@ -27,8 +29,10 @@ function FileHeader({
   direction,
   isTableView,
   mode,
+  selectedIds,
   onChangeView,
-  handleSortClick
+  handleSortClick,
+  handleSelectAll
 }: Props) {
   return (
     <div className="flex  justify-between">
@@ -53,8 +57,14 @@ function FileHeader({
         )}
         {mode === 'trash' && (
           <>
-            <RestoreButton />
-            <DeleteFileButton />
+            <button
+              type="button"
+              onClick={handleSelectAll}
+              className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
+              전체 선택
+            </button>
+            <RestoreButton selectedIds={selectedIds} />
+            <DeleteFileButton selectedIds={selectedIds} />
           </>
         )}
       </div>

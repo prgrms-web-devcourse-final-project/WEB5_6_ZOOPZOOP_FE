@@ -8,6 +8,7 @@ import Pagination from '@/shared/ui/pagination/Pagination'
 import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
 import { useSortFile, useSwitchFileView } from '@/features/archive'
+import { useState } from 'react'
 
 interface Props {
   initialFileData: SearchGetResponse
@@ -34,6 +35,26 @@ function FileSection({ initialFileData, initialPage, mode }: Props) {
   const fileList = filesQuery?.data.items || []
 
   // mode에 따라 파일 선태
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
+
+  const handleSelect = (cardId: number) => {
+    setSelectedIds(
+      prev =>
+        prev.includes(cardId)
+          ? prev.filter(id => id !== cardId) // 이미 있으면 해제
+          : [...prev, cardId] // 없으면 추가
+    )
+  }
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === fileList.length) {
+      // 이미 전체 선택된 상태면 → 전체 해제
+      setSelectedIds([])
+    } else {
+      // 전체 선택
+      setSelectedIds(fileList.map(file => file.dataSourceId))
+    }
+  }
 
   return (
     <div className="flex flex-col gap-2">
@@ -42,14 +63,24 @@ function FileSection({ initialFileData, initialPage, mode }: Props) {
         sortKey={sort.key}
         direction={sort.direction}
         isTableView={viewMode === 'list'}
+        selectedIds={selectedIds}
         onChangeView={onSwitchViewMode}
         handleSortClick={handleSortClick}
+        handleSelectAll={handleSelectAll}
       />
       <div className="flex-1">
         {viewMode === 'list' ? (
-          <TableView fileList={fileList} />
+          <TableView
+            mode={mode}
+            fileList={fileList}
+          />
         ) : (
-          <CardView fileList={fileList} />
+          <CardView
+            selectedIds={selectedIds}
+            onSelect={handleSelect}
+            mode={mode}
+            fileList={fileList}
+          />
         )}
       </div>
       {isNonePagination ? (
