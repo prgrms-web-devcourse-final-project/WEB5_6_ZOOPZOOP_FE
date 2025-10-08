@@ -14,19 +14,20 @@ export const fetchArchiveFilesByPageServer = async (
 ): Promise<SearchGetResponse> => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
-
   params.append('size', size.toString())
+
   if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
   if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
     params.append('keyword', keyword)
   }
-
-  return await httpClient.get<SearchGetResponse>(
+  const response = await httpClient.get<SearchGetResponse>(
     `/api/v1/archive?${params.toString()}`,
     options
   )
+
+  return response
 }
 
 // 폴더 내 파일 조회

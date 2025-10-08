@@ -18,6 +18,7 @@ interface Props {
 
 function FileSection({ initialFileData, initialPage, mode }: Props) {
   const searchParams = useSearchParams()
+  const queryKeyword = searchParams.get('q') || ''
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
   const { sort, handleSortClick } = useSortFile()
   const currentPage = Number(searchParams.get('page')) || 1
@@ -28,13 +29,14 @@ function FileSection({ initialFileData, initialPage, mode }: Props) {
       page: currentPage,
       isActive: false,
       size: 8,
-      sort: `${sort.key},${sort.direction}`
+      sort: `${sort.key},${sort.direction}`,
+      keyword: queryKeyword
     },
     initialData: currentPage === initialPage ? initialFileData : undefined
   })
   const fileList = filesQuery?.data.items || []
 
-  // mode에 따라 파일 선태
+  // mode에 따라 파일 선택
   const [selectedIds, setSelectedIds] = useState<number[]>([])
 
   const handleSelect = (cardId: number) => {
