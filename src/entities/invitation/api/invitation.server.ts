@@ -16,6 +16,7 @@ export const acceptInvitationsServer = async (
 ): Promise<AcceptInviteResponse> => {
   return await httpClient.post<AcceptInviteResponse>(
     `/api/v1/invite/${payload}/accept`,
+    {},
     options
   )
 }
