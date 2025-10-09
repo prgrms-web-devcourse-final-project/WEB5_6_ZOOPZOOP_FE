@@ -33,9 +33,12 @@ function MoveToTrashModal() {
     const fileIdList = selectedFiles.flatMap(folder =>
       folder.files.map(file => file.fileId)
     )
-    moveToTrash.mutate(fileIdList)
-    closeModal()
-    showSuccessToast('파일 휴지통으로 이동')
+    moveToTrash.mutate(fileIdList, {
+      onSuccess: () => {
+        closeModal()
+        showSuccessToast('파일 휴지통으로 이동')
+      }
+    })
   }
 
   return (

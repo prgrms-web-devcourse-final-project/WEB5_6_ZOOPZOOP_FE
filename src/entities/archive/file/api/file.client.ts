@@ -47,6 +47,7 @@ export const fetchArchiveFilesByPageClient = async ({
   if (response.status !== 200) {
     throw new Error(response.msg)
   }
+
   return response
 }
 

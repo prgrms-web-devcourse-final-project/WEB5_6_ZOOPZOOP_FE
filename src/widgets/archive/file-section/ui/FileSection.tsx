@@ -28,7 +28,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
 
   // 파일 정렬
-  const { sort, handleSortClick } = useSortFile()
+  const { sort, toggleSort } = useSortFile()
 
   // 파일 전체 선택
   const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
@@ -41,7 +41,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
     query: {
       folderId,
       page: currentPage,
-      isActive: false,
+      isActive: mode === 'archive',
       size: 8,
       sort: `${sort.key},${sort.direction}`,
       keyword: queryKeyword
@@ -60,7 +60,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
         isTableView={viewMode === 'list'}
         selectedIds={selectedIds}
         onChangeView={onSwitchViewMode}
-        handleSortClick={handleSortClick}
+        toggleSort={toggleSort}
         handleSelectAll={() => handleSelectAll(fileList)}
       />
       <div className="flex-1">
