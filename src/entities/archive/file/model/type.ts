@@ -40,8 +40,8 @@ export interface PageInfo {
 
 export interface FileSearchParams {
   folderId?: number
-  page: number
-  size: number
+  page?: number
+  size?: number
   isActive?: boolean
   sort?: string
   keyword?: string

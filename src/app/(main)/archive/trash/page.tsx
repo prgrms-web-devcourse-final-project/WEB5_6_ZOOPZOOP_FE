@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: '삭제된 파일과 폴더를 관리하는 휴지통 페이지'
 }
 
-const DEFAULT_PAGE_SIZE = 12
 const INITIAL_PAGE = 1
 
 interface Props {
@@ -19,8 +18,7 @@ async function ArchiveTrashPage({ searchParams }: Props) {
   const currentPage = Number(params?.page) || INITIAL_PAGE
 
   const initialFileData = await getInitialFileList({
-    page: INITIAL_PAGE,
-    size: DEFAULT_PAGE_SIZE,
+    size: 12,
     isActive: false
   })
 

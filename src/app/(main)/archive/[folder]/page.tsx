@@ -3,6 +3,7 @@ import { getInitialFolderList } from '@/entities/archive/folder/api/folder.ssr'
 import { Header } from '@/shared/ui/header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
+
 export async function generateMetadata({
   params
 }: {
@@ -13,13 +14,11 @@ export async function generateMetadata({
 }
 
 interface Props {
-  searchParams: { page?: string }
-  params: { folder: string }
+  searchParams: Promise<{ page?: string }>
+  params: Promise<{ folder: string }>
 }
 
-const DEFAULT_PAGE_SIZE = 8
 const INITIAL_PAGE = 1
-const ROOT_FOLDER_ID = 0
 
 export default async function ArchiveFolderPage({
   searchParams,
@@ -30,13 +29,13 @@ export default async function ArchiveFolderPage({
   const currentPage = Number(page?.page) || INITIAL_PAGE
 
   const folderName = folder ? decodeURIComponent(String(folder)) : ''
-  const { data: folderList } = await getInitialFolderList()
+
+  const folderList = await getInitialFolderList()
 
   const selectedFolder = folderList?.find(f => f.folderName === folderName)
 
   const initialFileData = await getInitialFileList({
     page: currentPage,
-    size: DEFAULT_PAGE_SIZE,
     folderId: selectedFolder?.folderId,
     isActive: true
   })
@@ -56,12 +55,12 @@ export default async function ArchiveFolderPage({
         searchBar={{ placeholder: '검색어를 입력해 주세요' }}
       />
       <div className="w-full flex flex-col p-8 gap-4 ">
-        <FolderSection folderList={(folderList && folderList) ?? []} />
+        <FolderSection folderList={folderList ?? []} />
 
         <FileSection
-          folderId={selectedFolder!.folderId}
+          folderId={(selectedFolder && selectedFolder.folderId) ?? 0}
           mode="archive"
-          initialFileData={initialFileData && initialFileData}
+          initialFileData={initialFileData}
           initialPage={currentPage}
         />
       </div>

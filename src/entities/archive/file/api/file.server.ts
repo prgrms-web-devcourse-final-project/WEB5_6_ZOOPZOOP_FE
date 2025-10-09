@@ -9,7 +9,14 @@ import { httpClient } from '@/shared/lib'
 
 // 아카이브 페이지 내 파일 조회
 export const fetchArchiveFilesByPageServer = async (
-  { folderId, page, size, isActive, sort, keyword }: FileSearchParams,
+  {
+    folderId = 0,
+    page = 1,
+    size = 8,
+    isActive = true,
+    sort,
+    keyword
+  }: FileSearchParams,
   options?: NextFetchOptions
 ): Promise<SearchGetResponse> => {
   const params = new URLSearchParams()

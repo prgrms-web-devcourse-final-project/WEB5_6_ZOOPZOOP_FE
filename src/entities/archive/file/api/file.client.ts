@@ -22,20 +22,20 @@ export const fetchArchiveFilesByFolderClient = async (
 
 // 페이지 안에 있는 파일 조회
 export const fetchArchiveFilesByPageClient = async ({
-  folderId,
-  page,
-  size,
+  folderId = 0,
+  page = 1,
+  size = 8,
   sort,
   isActive = true,
-  keyword = ''
+  keyword
 }: FileSearchParams) => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
   params.append('size', size.toString())
+  params.append('folderId', folderId.toString())
+  params.append('isActive', isActive.toString())
 
-  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
-  if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
     params.append('keyword', keyword)
   }

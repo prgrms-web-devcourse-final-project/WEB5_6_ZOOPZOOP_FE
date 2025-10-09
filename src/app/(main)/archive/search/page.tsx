@@ -13,7 +13,6 @@ interface Props {
   searchParams: { q?: string; page?: string }
 }
 const ROOT_FOLDER_ID = 0
-const DEFAULT_PAGE_SIZE = 12
 const INITIAL_PAGE = 1
 
 export default async function ArchiveSearchPage({ searchParams }: Props) {
@@ -22,9 +21,8 @@ export default async function ArchiveSearchPage({ searchParams }: Props) {
 
   const initialFileData = await getInitialFileList({
     page: currentPage,
-    size: DEFAULT_PAGE_SIZE,
-    keyword: query,
-    isActive: true
+    size: 12,
+    keyword: query
   })
   return (
     <div>
