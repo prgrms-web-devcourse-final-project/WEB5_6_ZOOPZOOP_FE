@@ -7,3 +7,5 @@ export { UrlUploadModal } from './archive/url-upload/UrlUploadModal'
 
 export { ModalLayout } from './ModalLayout'
 export { ArchiveFolder } from './archive/archive-select/ArchiveFolderTree'
+
+export { DeleteConfirmModel } from './delete-confirm/DeleteConfirmModel'
