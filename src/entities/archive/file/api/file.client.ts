@@ -3,7 +3,8 @@ import {
   FileGetResponse,
   FilePostResponse,
   SearchGetResponse,
-  FileSearchParams
+  FileSearchParams,
+  EditFileRequest
 } from '../model/type'
 import { APIResponse } from '@/shared/types'
 
@@ -91,6 +92,20 @@ export const deleteManyArchiveFileClient = async (
   const response = await httpClient.delete<APIResponse<null>>(
     `/api/archive/file/list`,
     { dataSourceId: dataSourceId }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+// 파일 수정
+export const editArchiveFileClient = async (
+  fileData: EditFileRequest
+): Promise<FilePostResponse> => {
+  const response = await httpClient.post<FilePostResponse>(
+    `/api/archive/file`,
+    fileData
   )
   if (response.status !== 200) {
     throw new Error(response.msg)

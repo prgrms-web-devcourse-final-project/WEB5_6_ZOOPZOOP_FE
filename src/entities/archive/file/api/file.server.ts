@@ -3,7 +3,8 @@ import {
   FileGetResponse,
   FilePostResponse,
   SearchGetResponse,
-  FileSearchParams
+  FileSearchParams,
+  EditFileRequest
 } from '../model/type'
 import { httpClient } from '@/shared/lib'
 
@@ -91,14 +92,30 @@ export const deleteManyArchiveFileServer = async (
 
 // 파일 수정
 export const editArchiveFileServer = async (
-  payload: {
-    dataSourceId: number[]
-  },
+  fileData: EditFileRequest,
   options: NextFetchOptions
 ) => {
+  const {
+    title,
+    summary,
+    sourceUrl,
+    imageUrl,
+    source,
+    tags,
+    category,
+    dataSourceId
+  } = fileData
   return await httpClient.put<FilePostResponse>(
-    `/api/v1/archive/move`,
-    payload,
+    `/api/v1/archive/${dataSourceId}`,
+    {
+      title,
+      summary,
+      sourceUrl,
+      imageUrl,
+      source,
+      tags,
+      category
+    },
     options
   )
 }
