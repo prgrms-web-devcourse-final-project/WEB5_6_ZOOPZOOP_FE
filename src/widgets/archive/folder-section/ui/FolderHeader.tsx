@@ -29,7 +29,7 @@ function FolderHeader({ onSortChange, direction }: Props) {
 
       <div className="flex gap-2">
         <SortButton
-          label="이름"
+          label="title"
           direction={direction}
           onClick={handleSortClick}
         />

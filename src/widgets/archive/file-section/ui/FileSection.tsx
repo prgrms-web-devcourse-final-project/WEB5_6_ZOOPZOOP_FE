@@ -12,7 +12,6 @@ import {
   useSortFile,
   useSwitchFileView
 } from '@/features/archive'
-import { useState } from 'react'
 
 interface Props {
   initialFileData: SearchGetResponse
@@ -35,7 +34,9 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
 
   const currentPage = Number(searchParams.get('page')) || 1
+
   const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
+
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
       folderId,
@@ -47,6 +48,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
     },
     initialData: currentPage === initialPage ? initialFileData : undefined
   })
+
   const fileList = filesQuery?.data.items || []
 
   return (
