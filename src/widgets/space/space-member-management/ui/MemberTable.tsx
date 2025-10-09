@@ -3,6 +3,8 @@ import MemberRow from './MemberRow'
 import { Separator } from '@/shared/ui/shadcn/separator'
 import { Fragment } from 'react'
 import { ActiveType } from '../model/type'
+import { useSpaceStore } from '@/entities/space'
+import { AUTHORITIES } from '@/shared/constants'
 
 interface Props {
   members: Member[]
@@ -10,6 +12,10 @@ interface Props {
 }
 
 export const MemberTable = ({ members, activeTab }: Props) => {
+  const currentSpace = useSpaceStore(state => state.currentSpace)
+
+  const isOwner = currentSpace?.userAuthority === AUTHORITIES.ADMIN
+
   return (
     <ul className="w-full">
       {members.length === 0 ? (
@@ -20,6 +26,7 @@ export const MemberTable = ({ members, activeTab }: Props) => {
         members.map((member, index) => (
           <Fragment key={member.id}>
             <MemberRow
+              isOwner={isOwner}
               {...member}
               activeTab={activeTab}
             />

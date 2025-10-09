@@ -5,12 +5,24 @@ import { Badge } from '@/shared/ui/shadcn/badge'
 import { Button } from '@/shared/ui/shadcn/button'
 import { Loader2, Trash2 } from 'lucide-react'
 import { ActiveType } from '../model/type'
+import { AUTHORITIES } from '@/shared/constants'
 
 interface Props extends Member {
   activeTab: ActiveType
+  isOwner: boolean
 }
 
-const MemberRow = ({ authority, id, name, profileUrl, activeTab }: Props) => {
+const MemberRow = ({
+  authority,
+  id,
+  name,
+  profileUrl,
+  activeTab,
+  isOwner
+}: Props) => {
+  const showChangeAuthority = activeTab === 'members' && isOwner
+  const showPendingBadge = activeTab !== 'members'
+
   return (
     <li className="flex items-center px-5 py-2 font-semibold">
       <div className="flex items-center gap-5 flex-1">
@@ -22,12 +34,13 @@ const MemberRow = ({ authority, id, name, profileUrl, activeTab }: Props) => {
       </div>
 
       <div className="flex items-center gap-5">
-        {activeTab === 'members' ? (
+        {showChangeAuthority && (
           <ChangeAuthorityDropDown
             role={authority}
             memberId={id}
           />
-        ) : (
+        )}
+        {showPendingBadge && (
           <Badge
             variant="secondary"
             className="gap-1">
@@ -35,12 +48,13 @@ const MemberRow = ({ authority, id, name, profileUrl, activeTab }: Props) => {
             Pending
           </Badge>
         )}
-
-        <Button
-          size="sm"
-          className="bg-red-500">
-          <Trash2 />
-        </Button>
+        {isOwner && (
+          <Button
+            size="sm"
+            className="bg-red-500">
+            <Trash2 />
+          </Button>
+        )}
       </div>
     </li>
   )
