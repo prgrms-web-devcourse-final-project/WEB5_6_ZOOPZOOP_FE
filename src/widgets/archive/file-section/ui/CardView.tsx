@@ -14,7 +14,7 @@ function CardView({ fileList, mode, selectedIds, onSelect }: Props) {
   const { closeMenu, handleContextMenu, activeMenu } = useContextMenu()
 
   return (
-    <div className="grid grid-cols-4 gap-4 w-full">
+    <div className="grid grid-cols-4 gap-10 w-full ">
       {fileList.map(
         ({
           dataSourceId,

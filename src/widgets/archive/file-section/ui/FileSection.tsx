@@ -53,7 +53,7 @@ export default function FileSection({
   const isEmpty = fileList.length === 0
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 justify-center">
       <FileHeader
         mode={mode}
         sortKey={sort.key}
@@ -65,7 +65,7 @@ export default function FileSection({
         handleSelectAll={() => handleSelectAll(fileList)}
       />
 
-      <div className="flex-1">
+      <div>
         {viewMode === 'list' ? (
           <TableView
             mode={mode}

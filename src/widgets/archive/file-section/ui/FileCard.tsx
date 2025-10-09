@@ -54,7 +54,7 @@ const FileCard = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       className={tw(
-        'w-10/12 p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative',
+        ' p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative border border-gray-light',
         isSelected && 'ring-3 ring-orange-accent'
       )}>
       <File
