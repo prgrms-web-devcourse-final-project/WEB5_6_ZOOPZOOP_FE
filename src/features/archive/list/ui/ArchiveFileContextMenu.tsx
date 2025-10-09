@@ -1,19 +1,19 @@
 'use client'
 
+import { FileData } from '@/entities/archive/file'
 import { useOnClickOutside } from '@/shared/hooks'
 import { useModalStore } from '@/shared/lib'
 import { useRef } from 'react'
 
 interface Props {
-  folderId: number
-  folderName: string
+  fileData: FileData
   position: { x: number; y: number }
   onClose?: () => void
 }
 
-const ArchiveContextMenu = ({
-  folderId,
-  folderName,
+const ArchiveFileContextMenu = ({
+  fileData,
+
   position,
   onClose
 }: Props) => {
@@ -25,23 +25,23 @@ const ArchiveContextMenu = ({
   const menuItems = [
     {
       label: '수정하기',
-      onClick: () =>
-        openModal({
-          type: 'rename-folder',
-          props: { folderId: folderId, folderName: folderName }
-        })
-    },
-
-    {
-      label: '삭제하기',
       onClick: () => {
         openModal({
-          type: 'delete-folder',
-          props: { folderId: folderId, folderName: folderName }
+          type: 'edit-file',
+          props: { fileData: fileData }
         })
-        onClose?.()
       }
     }
+
+    // {
+    //   label: '삭제하기',
+    //   onClick: () => {
+    //     openModal({
+    //       type: 'go-to-trash'
+    //     })
+    //     onClose?.()
+    //   }
+    // }
   ]
 
   return (
@@ -50,7 +50,7 @@ const ArchiveContextMenu = ({
       style={{ top: position.y, left: position.x }}
       className="fixed shadow-lg rounded-md py-2 w-52 z-50 bg-gray-darker">
       <h3 className="text-white p-1 pb-2 text-center text-sm border-b border-b-gray-normal truncate">
-        {folderName}
+        {fileData.title}
       </h3>
       {menuItems.map((item, index) => (
         <button
@@ -66,4 +66,4 @@ const ArchiveContextMenu = ({
   )
 }
 
-export default ArchiveContextMenu
+export default ArchiveFileContextMenu

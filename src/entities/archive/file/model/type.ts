@@ -28,6 +28,8 @@ export interface FileData {
   category: string
 }
 
+export type EditFileRequest = Omit<FileData, 'dataCreatedDate'>
+
 export interface PageInfo {
   page: number
   size: number
