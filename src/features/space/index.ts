@@ -9,5 +9,7 @@ export {
   AddMemberModal,
   ChangeAuthorityDropDown,
   LeaveSpace,
-  useMembers
+  useMembers,
+  ExpelMemberButton,
+  ExpelMemberModal
 } from './member'

@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import { ActiveType } from '../model/type'
 import { useSpaceStore } from '@/entities/space'
 import { AUTHORITIES } from '@/shared/constants'
+import { useUserStore } from '@/entities/user'
 
 interface Props {
   members: Member[]
@@ -13,8 +14,13 @@ interface Props {
 
 export const MemberTable = ({ members, activeTab }: Props) => {
   const currentSpace = useSpaceStore(state => state.currentSpace)
+  const user = useUserStore(state => state.user)
 
-  const isOwner = currentSpace?.userAuthority === AUTHORITIES.ADMIN
+  if (!currentSpace) {
+    return null
+  }
+
+  const isOwner = currentSpace.userAuthority === AUTHORITIES.ADMIN
 
   return (
     <ul className="w-full">
@@ -23,16 +29,21 @@ export const MemberTable = ({ members, activeTab }: Props) => {
           맴버가 없습니다
         </li>
       ) : (
-        members.map((member, index) => (
-          <Fragment key={member.id}>
-            <MemberRow
-              isOwner={isOwner}
-              {...member}
-              activeTab={activeTab}
-            />
-            {index < members.length - 1 && <Separator />}
-          </Fragment>
-        ))
+        members.map((member, index) => {
+          const isMe = user?.id === member.id
+          return (
+            <Fragment key={member.id}>
+              <MemberRow
+                {...member}
+                spaceId={currentSpace.spaceId}
+                isOwner={isOwner}
+                isMe={isMe}
+                activeTab={activeTab}
+              />
+              {index < members.length - 1 && <Separator />}
+            </Fragment>
+          )
+        })
       )}
     </ul>
   )

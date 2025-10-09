@@ -7,10 +7,13 @@ import { updateMemberAuthorityClient } from '../api'
 import {
   AddMemberRequest,
   AuthorityChange,
+  ExpelledMember,
+  ExpelMemberRequest,
   SpaceAuthorityChangeRequest
 } from './type'
 import {
   addSpaceMemberClient,
+  expelMemberClient,
   fetchSpaceMembersClient,
   fetchSpacePendingMembersClient
 } from '../api/member.client'
@@ -73,4 +76,23 @@ export const usePendingMembersQuery = (spaceId: string) => {
     queryKey: memberQueryKeys.pending(spaceId),
     queryFn: () => fetchSpacePendingMembersClient(spaceId)
   })
+}
+
+// 스페이스 퇴출
+export const useExpelMemberMutation = (
+  options: Omit<
+    UseMutationOptions<ExpelledMember, Error, ExpelMemberRequest>,
+    'mutationFn' | 'mutationKey'
+  >
+) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['expel-member'],
+    mutationFn: payload => expelMemberClient(payload),
+    ...options
+  })
+
+  return {
+    expelMember: mutate,
+    isExpelling: isPending
+  }
 }

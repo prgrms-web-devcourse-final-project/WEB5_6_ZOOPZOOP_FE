@@ -36,6 +36,7 @@ export type SpaceAuthorityChangeRequest = {
   memberId: number
 }
 
+// 맴버 추가
 export interface AddMember {
   memberNames: string[]
 }
@@ -46,3 +47,17 @@ export interface AddMemberRequest {
 }
 
 export type AddMemberResponse = APIResponse<AddMember>
+
+// 추방
+export interface ExpelledMember {
+  spaceId: number
+  spaceName: string
+  expelledMemberInfo: Member
+}
+
+export interface ExpelMemberRequest {
+  spaceId: number
+  memberId: number
+}
+
+export type ExpelMemberResponse = APIResponse<ExpelledMember>

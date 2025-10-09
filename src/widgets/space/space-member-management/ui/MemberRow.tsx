@@ -1,15 +1,15 @@
 import { Member } from '@/entities/space'
-import { ChangeAuthorityDropDown } from '@/features/space'
+import { ChangeAuthorityDropDown, ExpelMemberButton } from '@/features/space'
 import { Avatar } from '@/shared/ui'
 import { Badge } from '@/shared/ui/shadcn/badge'
-import { Button } from '@/shared/ui/shadcn/button'
-import { Loader2, Trash2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { ActiveType } from '../model/type'
-import { AUTHORITIES } from '@/shared/constants'
 
 interface Props extends Member {
   activeTab: ActiveType
   isOwner: boolean
+  isMe: boolean
+  spaceId: number
 }
 
 const MemberRow = ({
@@ -18,7 +18,9 @@ const MemberRow = ({
   name,
   profileUrl,
   activeTab,
-  isOwner
+  isOwner,
+  isMe,
+  spaceId
 }: Props) => {
   const showChangeAuthority = activeTab === 'members' && isOwner
   const showPendingBadge = activeTab !== 'members'
@@ -36,8 +38,10 @@ const MemberRow = ({
       <div className="flex items-center gap-5">
         {showChangeAuthority && (
           <ChangeAuthorityDropDown
+            spaceId={spaceId}
             role={authority}
             memberId={id}
+            disabled={isMe}
           />
         )}
         {showPendingBadge && (
@@ -49,11 +53,12 @@ const MemberRow = ({
           </Badge>
         )}
         {isOwner && (
-          <Button
-            size="sm"
-            className="bg-red-500">
-            <Trash2 />
-          </Button>
+          <ExpelMemberButton
+            disabled={!isOwner || isMe}
+            spaceId={spaceId}
+            memberId={id}
+            name={name}
+          />
         )}
       </div>
     </li>

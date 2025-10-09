@@ -34,6 +34,14 @@ type ModalType =
         title: string
       }
     }
+  | {
+      type: 'expel-member'
+      props: {
+        spaceId: number
+        name: string
+        memberId: number
+      }
+    }
 
 interface ModalStore {
   modal: ModalType | null

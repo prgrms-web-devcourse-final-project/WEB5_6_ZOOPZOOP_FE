@@ -3,6 +3,9 @@ import {
   AddMemberRequest,
   AddMemberResponse,
   AuthorityChange,
+  ExpelledMember,
+  ExpelMemberRequest,
+  ExpelMemberResponse,
   SpaceAuthorityChangeRequest,
   SpaceAuthorityChangeResponse,
   SpaceMember,
@@ -72,6 +75,25 @@ export const fetchSpacePendingMembersClient = async (
     await httpClient.get<SpacePendingMemberResponse>(
       `/api/space/${spaceId}/member/invite`
     )
+
+  if (status !== 200 || !data) {
+    throw new Error(msg)
+  }
+
+  return data
+}
+
+/**
+ * 스페이스 맴버 퇴출 & pending 맴버 취소
+ */
+export const expelMemberClient = async (
+  payload: ExpelMemberRequest
+): Promise<ExpelledMember> => {
+  const { spaceId, ...restPayload } = payload
+  const { data, msg, status } = await httpClient.delete<ExpelMemberResponse>(
+    `/api/space/${spaceId}/member`,
+    restPayload
+  )
 
   if (status !== 200 || !data) {
     throw new Error(msg)

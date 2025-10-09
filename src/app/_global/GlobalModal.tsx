@@ -11,7 +11,8 @@ import {
 import {
   CreateSpaceModal,
   DeleteSpaceModal,
-  AddMemberModal
+  AddMemberModal,
+  ExpelMemberModal
 } from '@/features/space'
 
 import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
@@ -59,6 +60,8 @@ export const GlobalModal = () => {
       return <DeleteSpaceModal {...modal.props} />
     case 'add-member':
       return <AddMemberModal {...modal.props} />
+    case 'expel-member':
+      return <ExpelMemberModal {...modal.props} />
     default:
       return null
   }
