@@ -22,7 +22,8 @@ import {
   RestoreFileModal,
   MoveFileModal,
   MoveToTrashModal,
-  CopyToSpaceModal
+  CopyToSpaceModal,
+  DeleteFolderModal
 } from '@/features/archive'
 
 export const GlobalModal = () => {
@@ -51,6 +52,8 @@ export const GlobalModal = () => {
       return <CopyToSpaceModal />
     case 'delete-file':
       return <DeleteFileModal {...modal.props} />
+    case 'delete-folder':
+      return <DeleteFolderModal {...modal.props} />
     case 'restore-file':
       return <RestoreFileModal {...modal.props} />
     case 'rename-folder':

@@ -34,6 +34,13 @@ type ModalType =
         title: string
       }
     }
+  | {
+      type: 'delete-folder'
+      props: {
+        folderId: number
+        folderName: string
+      }
+    }
 
 interface ModalStore {
   modal: ModalType | null

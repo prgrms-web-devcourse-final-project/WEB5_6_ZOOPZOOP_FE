@@ -6,6 +6,7 @@ import { useModalStore } from '@/shared/lib'
 import { FolderNameInput } from '../create-folder/FolderNameInput'
 import { FolderActionButtons } from '../create-folder/FolderActionButtons'
 import { useEditArchiveFolderNameQuery } from '@/entities/archive/folder'
+import { showSuccessToast } from '../../toast/Toast'
 
 interface Props {
   folderId: number
@@ -24,7 +25,10 @@ export const RenameFolderModal = ({ folderId, folderName }: Props) => {
         folderName: newFolderName
       },
       {
-        onSuccess: closeModal
+        onSuccess: () => {
+          showSuccessToast('폴더 이름 수정 완료')
+          closeModal()
+        }
       }
     )
   }
