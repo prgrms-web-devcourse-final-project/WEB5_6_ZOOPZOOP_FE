@@ -92,7 +92,7 @@ export const useExpelMemberMutation = (
   })
 
   return {
-    expelMember: mutate,
+    mutateExpelMember: mutate,
     isExpelling: isPending
   }
 }

@@ -42,6 +42,12 @@ type ModalType =
         memberId: number
       }
     }
+  | {
+      type: 'leave-space'
+      props: {
+        spaceId: number
+      }
+    }
 
 interface ModalStore {
   modal: ModalType | null

@@ -1,5 +1,5 @@
 export { AddMemberButton, AddMemberModal } from './add'
-export { LeaveSpace } from './leave'
+export { LeaveSpaceButton, LeaveSpaceModal } from './leave'
 export { ChangeAuthorityDropDown } from './update'
 export { useMembers } from './list'
 export { ExpelMemberButton, ExpelMemberModal } from './expel'

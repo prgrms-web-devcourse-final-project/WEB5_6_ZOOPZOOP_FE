@@ -19,11 +19,9 @@ const DeleteAccountModal = ({ spaceId, title }: Props) => {
 
   return (
     <DeleteConfirmModel
-      // 모달 텍스트 설정
       title="스페이스 영구 삭제"
-      description="  모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다."
+      description="모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다."
       confirmKeyword={title}
-      // 상태와 핸들러 연결
       confirmText={confirmText}
       onConfirmTextChange={setConfirmText}
       onDelete={handleDelete}

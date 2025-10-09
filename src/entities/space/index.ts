@@ -4,7 +4,8 @@ export {
   postSpaceClient,
   deleteSpaceClient,
   fetchSpaceClient,
-  updateSpaceNameClient
+  updateSpaceNameClient,
+  leaveSpaceClient
 } from './api'
 
 // tanstack query
@@ -12,7 +13,8 @@ export {
   useCreateSpaceMutation,
   useSpaceQuery,
   useDeleteSpaceMutation,
-  useEditSpaceNameMutation
+  useEditSpaceNameMutation,
+  useLeaveSpaceMutation
 } from './model'
 
 // 전역 상태 관리

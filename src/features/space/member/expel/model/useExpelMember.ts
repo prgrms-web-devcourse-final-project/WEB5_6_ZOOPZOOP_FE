@@ -10,7 +10,7 @@ export const useExpelMember = () => {
   const [confirmText, setConfirmText] = useState('')
   const queryClient = useQueryClient()
 
-  const { expelMember, isExpelling } = useExpelMemberMutation({
+  const { mutateExpelMember, isExpelling } = useExpelMemberMutation({
     onSuccess: data => {
       if (!data) return
       showSuccessToast(`${data.expelledMemberInfo.name}님을 퇴출했습니다`)
@@ -35,7 +35,7 @@ export const useExpelMember = () => {
   }
 
   return {
-    handleExpel: expelMember,
+    handleExpel: mutateExpelMember,
     isExpelling,
     confirmText,
     isDeleteEnabled,

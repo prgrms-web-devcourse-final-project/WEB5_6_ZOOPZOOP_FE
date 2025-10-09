@@ -25,8 +25,8 @@ const ExpelMemberModal = ({ spaceId, name, memberId }: Props) => {
 
   return (
     <DeleteConfirmModel
-      title={`${name}님을 퇴출하시겠습니까?`}
-      description=""
+      title={`맴버 퇴출`}
+      description={`${name} 해당 유저를 퇴출하시겠습니까?`}
       confirmKeyword={name}
       onDelete={handleCliCk}
       confirmText={confirmText}
