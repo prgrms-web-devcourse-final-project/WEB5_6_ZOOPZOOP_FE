@@ -25,7 +25,7 @@ export const MemberTable = ({ members, activeTab }: Props) => {
   return (
     <ul className="w-full">
       {members.length === 0 ? (
-        <li className="bg-white divide-y divide-gray-200 text-center py-3.5 text-gray-500">
+        <li className="bg-white divide-y divide-gray-200 text-center py-3.5 text-gray-500 text-sm font-semibold">
           맴버가 없습니다
         </li>
       ) : (
