@@ -20,23 +20,22 @@ interface Props {
   folderId: number
 }
 
-function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
+export default function FileSection({
+  initialFileData,
+  initialPage,
+  mode,
+  folderId
+}: Props) {
   const searchParams = useSearchParams()
   const queryKeyword = searchParams.get('q') || ''
-
-  //파일 뷰 선택
-  const { viewMode, onSwitchViewMode } = useSwitchFileView()
-
-  // 파일 정렬
-  const { sort, toggleSort } = useSortFile()
-
-  // 파일 전체 선택
-  const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
-
   const currentPage = Number(searchParams.get('page')) || 1
 
-  const isNonePagination = initialFileData.data.pageInfo.totalElements === 0
+  // 뷰 전환, 정렬, 선택 훅
+  const { viewMode, onSwitchViewMode } = useSwitchFileView()
+  const { sort, toggleSort } = useSortFile()
+  const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
 
+  // react-query
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
       folderId,
@@ -50,6 +49,8 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
   })
 
   const fileList = filesQuery?.data.items || []
+  const totalPages = filesQuery?.data.pageInfo.totalPages || 1
+  const isEmpty = fileList.length === 0
 
   return (
     <div className="flex flex-col gap-2">
@@ -63,6 +64,7 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
         toggleSort={toggleSort}
         handleSelectAll={() => handleSelectAll(fileList)}
       />
+
       <div className="flex-1">
         {viewMode === 'list' ? (
           <TableView
@@ -78,13 +80,12 @@ function FileSection({ initialFileData, initialPage, mode, folderId }: Props) {
           />
         )}
       </div>
-      {isNonePagination ? (
-        <p>등록된 파일이 없습니다</p>
+
+      {isEmpty ? (
+        <p>등록된 파일이 없습니다.</p>
       ) : (
-        <Pagination totalPages={initialFileData.data.pageInfo.totalPages} />
+        <Pagination totalPages={totalPages} />
       )}
     </div>
   )
 }
-
-export default FileSection
