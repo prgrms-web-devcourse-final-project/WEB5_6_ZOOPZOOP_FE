@@ -1,17 +1,17 @@
 import { requireAuth } from '@/shared/lib/api-route'
 import { SpaceMember, SpacePendingMember } from '../model/type'
 import {
-  fetchSpaceMemberServer,
-  fetchSpacePendingMemberServer
+  fetchSpaceMembersServer,
+  fetchSpacePendingMembersServer
 } from './member.server'
 
 // 현재 스페이스 맴버 리스트 불러오기
 export const getSpaceMemberList = async (id: string): Promise<SpaceMember> => {
   const { data, msg, status } = await requireAuth(
     async token =>
-      await fetchSpaceMemberServer(id, {
+      await fetchSpaceMembersServer(id, {
         token,
-        next: { revalidate: 60, tags: ['space-m'] }
+        next: { revalidate: 60, tags: ['space-member'] }
       })
   )
 
@@ -28,9 +28,9 @@ export const getSpacePendingMemberList = async (
 ): Promise<SpacePendingMember> => {
   const { data, msg, status } = await requireAuth(
     async token =>
-      await fetchSpacePendingMemberServer(id, {
+      await fetchSpacePendingMembersServer(id, {
         token,
-        next: { revalidate: 60, tags: ['space-member-pending', id] }
+        next: { revalidate: 60, tags: ['space-pending-member', id] }
       })
   )
 

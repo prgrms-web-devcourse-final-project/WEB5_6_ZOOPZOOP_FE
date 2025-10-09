@@ -9,7 +9,7 @@ import {
 } from '../model/type'
 
 // 스페이스 맴버 조회
-export const fetchSpaceMemberServer = async (
+export const fetchSpaceMembersServer = async (
   spaceId: string,
   options?: NextFetchOptions
 ): Promise<SpaceMemberResponse> => {
@@ -19,7 +19,7 @@ export const fetchSpaceMemberServer = async (
   )
 }
 // 스페이스 펜딩 유저 조회
-export const fetchSpacePendingMemberServer = async (
+export const fetchSpacePendingMembersServer = async (
   spaceId: string,
   options?: NextFetchOptions
 ): Promise<SpacePendingMemberResponse> => {

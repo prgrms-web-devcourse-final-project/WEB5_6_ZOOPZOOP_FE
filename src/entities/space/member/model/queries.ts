@@ -1,11 +1,20 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query'
+import {
+  useMutation,
+  UseMutationOptions,
+  useSuspenseQuery
+} from '@tanstack/react-query'
 import { updateMemberAuthorityClient } from '../api'
 import {
   AddMemberRequest,
   AuthorityChange,
   SpaceAuthorityChangeRequest
 } from './type'
-import { addSpaceMemberClient } from '../api/member.client'
+import {
+  addSpaceMemberClient,
+  fetchSpaceMembersClient,
+  fetchSpacePendingMembersClient
+} from '../api/member.client'
+import { memberQueryKeys } from './constant'
 
 // 스페이스 유저 권한 업데이트
 export const useUpdateAuthorityMutation = (
@@ -18,7 +27,7 @@ export const useUpdateAuthorityMutation = (
     'mutationKey' | 'mutationFn'
   >
 ) => {
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isSuccess, isError } = useMutation({
     mutationKey: ['update', 'authority'],
     mutationFn: payload => updateMemberAuthorityClient(payload),
     ...options
@@ -26,7 +35,9 @@ export const useUpdateAuthorityMutation = (
 
   return {
     mutateUpdateAuthority: mutate,
-    isUpdating: isPending
+    isUpdating: isPending,
+    isSuccess,
+    isError
   }
 }
 
@@ -47,4 +58,19 @@ export const useAddMembersMutation = (
     mutateAddMembers: mutate,
     isAdding: isPending
   }
+}
+
+// 스페이스 유저 정보 list
+export const useMembersQuery = (spaceId: string) => {
+  return useSuspenseQuery({
+    queryKey: memberQueryKeys.list(spaceId),
+    queryFn: () => fetchSpaceMembersClient(spaceId)
+  })
+}
+// 스페이스 유저 정보 list
+export const usePendingMembersQuery = (spaceId: string) => {
+  return useSuspenseQuery({
+    queryKey: memberQueryKeys.pending(spaceId),
+    queryFn: () => fetchSpacePendingMembersClient(spaceId)
+  })
 }

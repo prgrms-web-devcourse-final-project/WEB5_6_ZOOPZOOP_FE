@@ -16,7 +16,7 @@ import { getAuthorityLabel } from '../model/util'
 import { useUpdateAuthority } from '../model/useUpdateAuthority'
 import DropdownItem from './DropdownItem'
 import { useSpaceStore } from '@/entities/space'
-import { Loader2 } from 'lucide-react'
+import { Check, Loader2, X } from 'lucide-react'
 
 interface Props {
   role: Authority
@@ -25,7 +25,9 @@ interface Props {
 
 const ChangeAuthorityDropDown = ({ role, memberId }: Props) => {
   const currentSpace = useSpaceStore(state => state.currentSpace)
-  const { handleSelect, isUpdating } = useUpdateAuthority()
+  const { handleSelect, isUpdating, isError, isSuccess } = useUpdateAuthority(
+    String(currentSpace?.spaceId)
+  )
 
   const displayRole = getAuthorityLabel(role)
 
@@ -40,6 +42,8 @@ const ChangeAuthorityDropDown = ({ role, memberId }: Props) => {
             Role : {displayRole}
           </Button>
           {isUpdating && <Loader2 className="animate-spin" />}
+          {isSuccess && <Check className="text-green-normal" />}
+          {isError && <X className="text-red-500" />}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
