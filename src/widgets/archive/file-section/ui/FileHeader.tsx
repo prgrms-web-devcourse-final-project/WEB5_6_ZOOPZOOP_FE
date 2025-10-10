@@ -1,8 +1,6 @@
 import { Columns3, File, TextAlignJustifyIcon } from 'lucide-react'
-
 import { SwitchFileViewButton } from '@/features/archive/switch-file-view'
 import MoveFileButton from '@/features/archive/move-file/ui/MoveFileButton'
-
 import RestoreButton from '@/features/archive/restore-file/ui/RestoreButton'
 import {
   SortButton,
@@ -10,7 +8,8 @@ import {
   CopyToSpaceButton,
   DeleteFileButton,
   MoveToTrashButton,
-  SortDirection
+  SortDirection,
+  FileMode
 } from '@/features/archive'
 
 interface Props {
@@ -18,7 +17,7 @@ interface Props {
   direction: SortDirection
   isTableView: boolean
   selectedIds: number[]
-  mode: 'archive' | 'trash'
+  mode: FileMode
   onChangeView: () => void
   toggleSort: (key: SortKey) => void
   handleSelectAll: () => void
@@ -51,10 +50,11 @@ function FileHeader({
             {/* 파일 이동 버튼 */}
             <MoveFileButton />
 
-            {/* 파일 삭제 버튼 */}
+            {/* 파일 휴지통으로 이동 버튼 */}
             <MoveToTrashButton />
           </>
         )}
+
         {mode === 'trash' && (
           <>
             <button
