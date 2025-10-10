@@ -8,6 +8,7 @@ import { SpacePagination } from './type'
 import {
   deleteSpaceClient,
   fetchSpaceListClient,
+  leaveSpaceClient,
   postSpaceClient,
   updateSpaceNameClient
 } from '../api/space.client'
@@ -107,5 +108,24 @@ export const useEditSpaceNameMutation = (
   return {
     mutateEditSpaceName: mutate,
     isUpdating: isPending
+  }
+}
+
+// 스페이스 나가기
+export const useLeaveSpaceMutation = (
+  options: Omit<
+    UseMutationOptions<void, Error, number>,
+    'mutationFn' | 'mutationKey'
+  >
+) => {
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['leave-member'],
+    mutationFn: payload => leaveSpaceClient(payload),
+    ...options
+  })
+
+  return {
+    mutateLeaveSpace: mutate,
+    isLeaving: isPending
   }
 }

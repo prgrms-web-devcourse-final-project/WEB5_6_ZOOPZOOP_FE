@@ -1,0 +1,1 @@
+export { useFetchInvitations } from './model'

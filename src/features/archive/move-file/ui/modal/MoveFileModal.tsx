@@ -66,6 +66,7 @@ export const MoveFileModal = () => {
             />
           </div>
           <SelectSaveFolderSection
+            location="내 아카이브"
             folderList={folderList}
             saveFolder={saveFolder}
             selectedSaveFolder={selectedSaveFolder}

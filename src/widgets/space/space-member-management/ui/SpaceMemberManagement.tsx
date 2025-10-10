@@ -1,21 +1,27 @@
 'use client'
 
-import { Member } from '@/entities/space'
 import { useMemo, useState } from 'react'
 import { ActiveType } from '../model/type'
 import { MemberTable } from './MemberTable'
 import { MemberTabs } from './MemberTabs'
+import { useMembers } from '@/features/space'
 
 interface Props {
-  members: Member[]
-  pendingMembers: Member[]
+  spaceId: string
 }
 
-export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
+export const SpaceMemberManagement = ({ spaceId }: Props) => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [activeTab, setActiveTab] = useState<ActiveType>('members')
-  const currentMembers = useMemo(() => {
-    return activeTab === 'members' ? members : pendingMembers
-  }, [activeTab, members, pendingMembers])
+  const { members, pendingMembers } = useMembers(spaceId)
+
+  const filteredMembers = useMemo(() => {
+    const currentMembers = activeTab === 'members' ? members : pendingMembers
+    if (!searchTerm) return currentMembers
+    return currentMembers.filter(member =>
+      member.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+    )
+  }, [searchTerm, members, pendingMembers, activeTab])
 
   return (
     <section className="w-full">
@@ -26,11 +32,13 @@ export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
           onTabChange={setActiveTab}
           membersCount={members.length}
           pendingCount={pendingMembers?.length}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
         />
 
         <MemberTable
-          members={currentMembers}
-          activeType={activeTab}
+          members={filteredMembers}
+          activeTab={activeTab}
         />
       </div>
     </section>

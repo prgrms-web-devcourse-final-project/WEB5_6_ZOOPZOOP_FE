@@ -14,8 +14,11 @@ interface Props {
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
   tags: string[]
-  // isSelected: boolean
-  // onSelect: (cardId: number) => void
+  mode: 'archive' | 'trash'
+  isSelected: boolean
+  contextMenu?: React.ReactNode
+  onContextMenu?: (x: number, y: number) => void
+  onSelect: (cardId: number) => void
 }
 
 /**
@@ -31,23 +34,31 @@ const FileCard = ({
   imageUrl,
   sourceUrl,
   ownerProfileUrl,
-
+  mode,
   summary,
-  tags
-  // isSelected,
-  // onSelect
+  tags,
+  isSelected,
+  contextMenu,
+  onContextMenu,
+  onSelect
 }: Props) => {
   const [isHover, setIsHover] = useState(false)
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (onContextMenu) onContextMenu(e.clientX, e.clientY)
+  }
 
   return (
     <article
+      onContextMenu={handleContextMenu}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       className={tw(
-        'w-10/12 p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative'
-        // isSelected && 'ring-3 ring-orange-accent'
+        ' p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative border border-gray-light',
+        isSelected && 'ring-3 ring-orange-accent'
       )}>
       <File
+        mode={mode}
         id={id}
         category={category}
         title={title}
@@ -55,19 +66,21 @@ const FileCard = ({
         imageUrl={imageUrl}
         sourceUrl={sourceUrl}
         ownerProfileUrl={ownerProfileUrl}
-        // isSelected={isSelected}
-        // onSelect={onSelect}
+        isSelected={isSelected}
+        onSelect={onSelect}
       />
+
       <HoveredCard
+        mode={mode}
         id={id}
         tags={tags}
         sourceUrl={sourceUrl}
-        title={title}
         isHover={isHover}
         summary={summary}
-        // isSelected={isSelected}
-        // onSelect={onSelect}
+        isSelected={isSelected}
+        onSelect={onSelect}
       />
+      {contextMenu && mode !== 'trash' && contextMenu}
     </article>
   )
 }

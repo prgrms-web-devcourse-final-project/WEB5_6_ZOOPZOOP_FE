@@ -7,7 +7,8 @@ import {
   SpaceResponse,
   SpacePagination,
   SpacePaginationAPIResponse,
-  EditSpaceNameResponse
+  EditSpaceNameResponse,
+  LeaveSpaceResponse
 } from '../model/type'
 
 // 스페이스 조회
@@ -91,4 +92,18 @@ export const updateSpaceNameClient = async (
   }
 
   return name
+}
+
+/**
+ * 스페이스 나가기
+ */
+export const leaveSpaceClient = async (spaceId: number): Promise<void> => {
+  const { msg, status } = await httpClient.delete<LeaveSpaceResponse>(
+    `/api/space`,
+    { spaceId }
+  )
+
+  if (status !== 200) {
+    throw new Error(msg)
+  }
 }

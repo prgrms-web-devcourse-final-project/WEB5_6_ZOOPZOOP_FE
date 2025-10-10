@@ -3,10 +3,10 @@
 import { useUserStore } from '@/entities/user'
 import { useNavbarStore } from '@/shared/hooks'
 import { tw } from '@/shared/lib'
-import { navItems } from '@/shared/routes'
 import { usePathname } from 'next/navigation'
 import NavHeader from './NavHeader'
 import NavItems from './NavItems'
+import { useProcessedNavItems } from '@/shared/hooks/useProcessedNavItems'
 
 interface Props {
   notificationSlot?: React.ReactNode
@@ -16,6 +16,7 @@ function Navbar({ notificationSlot }: Props) {
   const pathName = usePathname()
   const user = useUserStore(state => state.user)
 
+  const processedNavItems = useProcessedNavItems()
   const { isExpanded, toggleNavbar } = useNavbarStore()
 
   return (
@@ -38,7 +39,7 @@ function Navbar({ notificationSlot }: Props) {
       />
       {/* 메뉴 리스트 */}
       <ul className="flex flex-col gap-1 items-center">
-        {navItems.map(item => (
+        {processedNavItems.map(item => (
           <NavItems
             pathName={pathName}
             item={item}

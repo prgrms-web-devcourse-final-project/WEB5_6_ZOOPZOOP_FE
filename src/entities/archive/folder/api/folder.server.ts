@@ -31,6 +31,7 @@ export const deleteArchiveFolderServer = async (
 ) => {
   return await httpClient.delete<APIResponse<null>>(
     `/api/v1/archive/folder/${folderId}`,
+    {},
     options
   )
 }

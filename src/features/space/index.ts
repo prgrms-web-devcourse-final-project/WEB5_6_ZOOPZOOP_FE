@@ -1,12 +1,16 @@
 export { CreateSpaceModal } from './create'
 export { SpaceList } from './list'
 export { DeleteSpaceButton, DeleteSpaceModal } from './delete'
-export { EditSpaceName } from './edit-name'
+export { EditSpaceName } from './edit'
 
 // 맴버 하위
 export {
   AddMemberButton,
   AddMemberModal,
   ChangeAuthorityDropDown,
-  LeaveSpace
+  LeaveSpaceButton,
+  useMembers,
+  ExpelMemberButton,
+  ExpelMemberModal,
+  LeaveSpaceModal
 } from './member'

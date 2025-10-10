@@ -30,6 +30,9 @@ const Pagination = ({ totalPages = 1, maxVisiblePages = 5 }: Props) => {
     const params = new URLSearchParams(searchParams)
     params.set('page', page.toString())
     router.push(`?${params.toString()}`) // 실제 적용할 땐 수정이 필요할수도?
+    // router.push(`${window.location.pathname}?${params.toString()}`, {
+    //   scroll: true
+    // })
   }
 
   const {

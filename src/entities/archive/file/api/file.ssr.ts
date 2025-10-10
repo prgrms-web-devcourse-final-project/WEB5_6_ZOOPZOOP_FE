@@ -4,7 +4,7 @@ import { SearchGetResponse, FileSearchParams } from '../model/type'
 
 // 페이지 내 파일 조회
 export const getInitialFileList = async (
-  params: FileSearchParams
+  params: FileSearchParams = {}
 ): Promise<SearchGetResponse> => {
   const response = await requireAuth(async token => {
     return fetchArchiveFilesByPageServer(params, {

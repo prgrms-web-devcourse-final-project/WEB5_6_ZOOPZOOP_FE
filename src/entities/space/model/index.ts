@@ -3,7 +3,8 @@ export {
   useSpaceQuery,
   useCreateSpaceMutation,
   useDeleteSpaceMutation,
-  useEditSpaceNameMutation
+  useEditSpaceNameMutation,
+  useLeaveSpaceMutation
 } from './queries'
 // 전역 상태 관리 훅
 export { useSpaceStore } from './store'

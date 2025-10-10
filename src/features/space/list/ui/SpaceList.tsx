@@ -2,15 +2,13 @@
 
 import { SpaceCard, SpacePagination } from '@/entities/space'
 import Pagination from '@/shared/ui/pagination/Pagination'
-
 import { postDashboardJWTClient } from '@/entities/dashboard'
-
 import { useRouter } from 'next/navigation'
-import { useContextMenu } from '../model/useContextMenu'
 import { useFetchSpace } from '../model/useFetchSpace'
 import EmptyList from './EmptyList'
 import PendingListSkeleton from './PendingListSkeleton'
 import SpaceContextMenu from './ContextMenu'
+import { useContextMenu } from '@/shared/hooks'
 
 interface Props {
   initialData: SpacePagination
@@ -54,7 +52,7 @@ const SpaceList = ({ initialData, initialPage }: Props) => {
               key={space.id}
               onContextMenu={(x, y) => handleContextMenu(space.id, x, y)}
               contextMenu={
-                activeMenu.spaceId === space.id ? (
+                activeMenu.targetId === space.id ? (
                   <SpaceContextMenu
                     title={space.name}
                     spaceId={space.id}

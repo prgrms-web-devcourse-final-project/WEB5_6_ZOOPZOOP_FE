@@ -1,30 +1,33 @@
 'use client'
 
-import { ToggleButton } from '@/features/archive/toggle-folder'
 import { tw } from '@/shared/lib'
 import Link from 'next/link'
 
 interface Props {
   folderName: string
-  folderId: number
   isUndo: boolean
   isActive: boolean
-  isClicked: boolean
-  onClick: (id: number) => void
+  contextMenu?: React.ReactNode
+  onContextMenu?: (x: number, y: number) => void
 }
 
 function FolderItem({
-  folderId,
   folderName,
   isUndo,
   isActive,
-  isClicked,
-  onClick
+  contextMenu,
+  onContextMenu
 }: Props) {
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (onContextMenu) onContextMenu(e.clientX, e.clientY)
+  }
+
   return (
     <>
       <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
         <div
+          onContextMenu={handleContextMenu}
           className={tw(
             'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover cursor-pointer relative',
             isUndo
@@ -34,14 +37,7 @@ function FolderItem({
           )}>
           <p className="text-base text-gray-darker truncate ">{folderName}</p>
 
-          {!isUndo && (
-            <ToggleButton
-              id={folderId}
-              folderName={folderName}
-              isClicked={isClicked}
-              onClick={onClick}
-            />
-          )}
+          {contextMenu && contextMenu}
         </div>
       </Link>
     </>

@@ -4,7 +4,7 @@ import {
   postArchiveFileServer
 } from '@/entities/archive/file/api/file.server'
 import { moveOneArchiveFileServer } from '@/features/archive/move-file/api/moveFile.server'
-import { createCookieHeader, requireAuth } from '@/shared/lib/api-route'
+import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
 //폴더 내 파일 조회
@@ -21,7 +21,7 @@ export const GET = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await fetchArchiveFilesByFolderServer(folderId, {
-          headers: createCookieHeader(token)
+          token
         })
     )
     return NextResponse.json(response)
@@ -44,7 +44,7 @@ export const POST = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await postArchiveFileServer(payload, {
-          headers: createCookieHeader(token)
+          token
         })
     )
     return NextResponse.json(response)
@@ -68,7 +68,7 @@ export const PATCH = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await moveOneArchiveFileServer(payload, {
-          headers: createCookieHeader(token)
+          token
         })
     )
 
@@ -87,12 +87,19 @@ export const PATCH = async (request: Request) => {
 
 //파일 단건 삭제 (영구 삭제)
 export const DELETE = async (request: Request) => {
-  const payload = await request.json()
   try {
+    const { searchParams } = new URL(request.url)
+    const dataSourceId = Number(searchParams.get('dataSourceId'))
+    if (isNaN(dataSourceId)) {
+      return NextResponse.json(
+        { error: '유효하지 않은 폴더 ID입니다' },
+        { status: 400 }
+      )
+    }
     const response = await requireAuth(
       async token =>
-        await deleteOneArchiveFileServer(payload, {
-          headers: createCookieHeader(token)
+        await deleteOneArchiveFileServer(dataSourceId, {
+          token
         })
     )
     return NextResponse.json(response)
@@ -103,9 +110,7 @@ export const DELETE = async (request: Request) => {
       msg:
         error instanceof Error
           ? error.message
-          : { error: '다건 파일 삭제 중 오류 발생' }
+          : { error: '단건 파일 삭제 중 오류 발생' }
     })
   }
 }
-
-// TODO: 파일 복구 기능 구현 => 휴지통에서 아카이브로 이동

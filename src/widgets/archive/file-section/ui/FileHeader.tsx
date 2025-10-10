@@ -1,27 +1,38 @@
 import { Columns3, File, TextAlignJustifyIcon } from 'lucide-react'
-import { SortDirection } from '@tanstack/react-table'
-import { SortButton, SortKey } from '@/features/archive/sort'
+
 import { SwitchFileViewButton } from '@/features/archive/switch-file-view'
 import MoveFileButton from '@/features/archive/move-file/ui/MoveFileButton'
-import CopyToSpaceButton from '@/features/archive/copy-file/ui/CopyToSpaceButton'
-import { MoveToTrashButton } from '@/features/archive/move-to-trash-file'
+
+import RestoreButton from '@/features/archive/restore-file/ui/RestoreButton'
+import {
+  SortButton,
+  SortKey,
+  CopyToSpaceButton,
+  DeleteFileButton,
+  MoveToTrashButton,
+  SortDirection
+} from '@/features/archive'
 
 interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
-
+  selectedIds: number[]
+  mode: 'archive' | 'trash'
   onChangeView: () => void
-  handleSortClick: (key: SortKey, direction: SortDirection) => void
+  toggleSort: (key: SortKey) => void
+  handleSelectAll: () => void
 }
 
 function FileHeader({
   sortKey,
   direction,
   isTableView,
-
+  mode,
+  selectedIds,
   onChangeView,
-  handleSortClick
+  toggleSort,
+  handleSelectAll
 }: Props) {
   return (
     <div className="flex  justify-between">
@@ -32,37 +43,42 @@ function FileHeader({
         />
         <p className="text-lg font-bold text-gray-darker ml-2 mr-1">파일</p>
 
-        {/* 스페이스로 복사 버튼 */}
-        <CopyToSpaceButton />
+        {mode === 'archive' && (
+          <>
+            {/* 스페이스로 복사 버튼 */}
+            <CopyToSpaceButton />
 
-        {/* 파일 이동 버튼 */}
-        <MoveFileButton />
+            {/* 파일 이동 버튼 */}
+            <MoveFileButton />
 
-        {/* 파일 삭제 버튼 */}
-        <MoveToTrashButton />
+            {/* 파일 삭제 버튼 */}
+            <MoveToTrashButton />
+          </>
+        )}
+        {mode === 'trash' && (
+          <>
+            <button
+              type="button"
+              onClick={handleSelectAll}
+              className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
+              전체 선택
+            </button>
+            <RestoreButton selectedIds={selectedIds} />
+            <DeleteFileButton selectedIds={selectedIds} />
+          </>
+        )}
       </div>
 
       <div className="flex gap-2">
         <SortButton
           label="title"
           direction={sortKey === 'title' ? direction : 'none'}
-          onClick={() =>
-            handleSortClick(
-              'title',
-              sortKey === 'title' && direction === 'asc' ? 'desc' : 'asc'
-            )
-          }
+          onClick={toggleSort}
         />
-
         <SortButton
           label="createdAt"
-          direction={sortKey === 'createdAt' ? direction : 'none'} // title 정렬할때 - 표시
-          onClick={() =>
-            handleSortClick(
-              'createdAt',
-              sortKey === 'createdAt' && direction === 'asc' ? 'desc' : 'asc'
-            )
-          }
+          direction={sortKey === 'createdAt' ? direction : 'none'}
+          onClick={toggleSort}
         />
 
         {/* 리스트 뷰 버튼 */}
