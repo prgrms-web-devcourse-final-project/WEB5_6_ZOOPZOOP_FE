@@ -2,7 +2,7 @@ import {
   deleteManySpaceFileServer,
   fetchSpaceFilesByPageServer
 } from '@/entities/shared-archive/api/file.server'
-import { postCopyFileToSpaceServer } from '@/features/archive/copy-to-space/api/copyToSpace.server'
+import { postCopyFileToSpaceServer } from '@/features/shared-archive/import-file/api/copyToSpace.server'
 import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 

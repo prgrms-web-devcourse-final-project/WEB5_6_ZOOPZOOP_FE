@@ -1,4 +1,4 @@
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
+import { SpaceFileMode } from '@/features/shared-archive'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowRight, Calendar } from 'lucide-react'

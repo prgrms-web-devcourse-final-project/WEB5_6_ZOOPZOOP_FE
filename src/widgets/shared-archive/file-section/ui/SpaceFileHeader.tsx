@@ -1,12 +1,14 @@
+import {
+  DeleteSpaceFileButton,
+  MoveToSpaceTrashButton,
+  RestoreSpaceFileButton,
+  SortDirection,
+  SortKey,
+  SpaceFileMode,
+  SpaceSortButton,
+  SwitchFileViewButton
+} from '@/features/shared-archive'
 import { Columns3, File, TextAlignJustifyIcon } from 'lucide-react'
-
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
-import MoveToSpaceTrashButton from '@/features/shared-archive/move-to-trash/ui/MoveToSpaceTrashButton'
-import { SwitchFileViewButton } from '@/features/shared-archive/switch-file-view'
-import SpaceSortButton from '@/features/shared-archive/sort/ui/SpaceSortButton'
-import { SortDirection, SortKey } from '@/features/shared-archive/sort'
-import { DeleteSpaceFileButton } from '@/features/shared-archive/delete-file'
-import { RestoreSpaceFileButton } from '@/features/shared-archive/restore-file'
 
 interface Props {
   sortKey: SortKey

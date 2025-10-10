@@ -1,8 +1,5 @@
 import { File } from '@/entities/shared-archive'
-import { HoveredCard } from '@/features/shared-archive/hover-file'
-
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
-
+import { HoveredCard, SpaceFileMode } from '@/features/shared-archive'
 import { tw } from '@/shared/lib'
 import { useState } from 'react'
 

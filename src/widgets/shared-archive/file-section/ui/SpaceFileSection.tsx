@@ -7,12 +7,14 @@ import CardView from './CardView'
 import Pagination from '@/shared/ui/pagination/Pagination'
 
 import SpaceFileHeader from './SpaceFileHeader'
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
-import { useSwitchSpaceFileView } from '@/features/shared-archive/switch-file-view'
-import { useSortFile } from '@/features/shared-archive/sort'
 import { SearchSpaceFileGetResponse } from '@/entities/shared-archive/model/type'
-import { useSelectSpaceFiles } from '@/features/shared-archive/list/model/useSelectSpaceFiles'
 import { useSpaceFilesQuery } from '@/entities/shared-archive/model/queries'
+import {
+  SpaceFileMode,
+  useSelectSpaceFiles,
+  useSortFile,
+  useSwitchSpaceFileView
+} from '@/features/shared-archive'
 
 interface Props {
   initialFileData: SearchSpaceFileGetResponse

@@ -12,7 +12,7 @@ export const useCopyToSpaceArchiveFilesQuery = () => {
       targetFolderId: number
     }) => postCopyFileToSpaceClient(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['copyToSpace'] })
+      queryClient.invalidateQueries({ queryKey: ['spaceFiles'] })
     }
   })
 

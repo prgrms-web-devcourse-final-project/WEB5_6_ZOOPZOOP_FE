@@ -1,8 +1,7 @@
 import { FileData } from '@/entities/archive/file'
 import FileCard from './SpaceFileCard'
 import { useContextMenu } from '@/shared/hooks'
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
-import SpaceFileContextMenu from '@/features/shared-archive/list/ui/SpaceFileContextMenu'
+import { SpaceFileContextMenu, SpaceFileMode } from '@/features/shared-archive'
 
 interface Props {
   fileList: FileData[]

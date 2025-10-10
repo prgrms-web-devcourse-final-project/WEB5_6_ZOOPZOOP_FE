@@ -1,4 +1,3 @@
-export * from './copy-to-space/index'
 export * from './delete-file/index'
 export * from './hover-file'
 export * from './restore-file'

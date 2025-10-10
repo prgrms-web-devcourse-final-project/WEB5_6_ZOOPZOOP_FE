@@ -5,12 +5,12 @@ import RestoreButton from '@/features/archive/restore-file/ui/RestoreButton'
 import {
   SortButton,
   SortKey,
-  CopyToSpaceButton,
   DeleteFileButton,
   MoveToTrashButton,
   SortDirection,
   FileMode
 } from '@/features/archive'
+import { CopyToSpaceButton } from '@/features/shared-archive'
 
 interface Props {
   sortKey: SortKey

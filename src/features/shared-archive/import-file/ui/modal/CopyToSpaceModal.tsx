@@ -33,6 +33,8 @@ function CopyToSpaceModal() {
     enabled: !!selectedFolder
   })
   const { spaces } = useFetchAllSpacesQuery()
+
+  //만약 path 보고 /space이면 내 스페이스 아이디 가져와서 그것만 보여줌
   const spaceList: FolderData[] =
     spaces?.spaces
       //  권한이 ADMIN 또는 READ_WRITE인 항목만 필터링

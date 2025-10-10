@@ -1,8 +1,7 @@
 import { CustomTable } from '@/shared/ui'
 import { getArchiveColumns, SpaceColumnType } from './SpaceColumn'
 import { FileData } from '@/entities/archive/file'
-import { FileMode } from '@/features/archive'
-import { SpaceFileMode } from '@/features/shared-archive/list/model/type'
+import { SpaceFileMode } from '@/features/shared-archive'
 
 interface Props {
   fileList: FileData[]

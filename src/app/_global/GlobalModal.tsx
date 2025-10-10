@@ -25,12 +25,14 @@ import {
   RestoreFileModal,
   MoveFileModal,
   MoveToArchiveTrashModal,
-  CopyToSpaceModal,
   DeleteFolderModal
 } from '@/features/archive'
-import { MoveToSpaceTrashModal } from '@/features/shared-archive'
-import { DeleteSpaceFileModal } from '@/features/shared-archive/delete-file'
-import { RestoreSpaceFileModal } from '@/features/shared-archive/restore-file'
+import {
+  CopyToSpaceModal,
+  DeleteSpaceFileModal,
+  MoveToSpaceTrashModal,
+  RestoreSpaceFileModal
+} from '@/features/shared-archive'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
