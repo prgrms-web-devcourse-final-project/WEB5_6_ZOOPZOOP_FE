@@ -43,7 +43,7 @@ export default async function Page({
 
   return (
     <Room roomId={roomId}>
-      <FlowDashboard file={fileData.data?.[0].files ?? []} />
+      <FlowDashboard file={fileData?.data?.[0]?.files ?? []} />
     </Room>
   )
 }

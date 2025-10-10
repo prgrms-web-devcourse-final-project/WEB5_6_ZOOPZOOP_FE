@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '../../badge'
 import dayjs from 'dayjs'
-import { BookmarkPlus } from 'lucide-react'
+import { BookmarkPlus, Loader2 } from 'lucide-react'
 
 interface Props {
   title: string
@@ -14,6 +14,7 @@ interface Props {
   createdAt: string
   onSave?: () => void
   type: 'base' | 'flow'
+  loading?: boolean
 }
 
 export const SubNewsCard = ({
@@ -24,7 +25,8 @@ export const SubNewsCard = ({
   link,
   createdAt,
   onSave,
-  type
+  type,
+  loading
 }: Props) => {
   return (
     <div className="w-full h-[120px] bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100 relative">
@@ -32,11 +34,19 @@ export const SubNewsCard = ({
         {type === 'base' && (
           <button
             onClick={e => {
+              if (loading) return
               e.stopPropagation()
               onSave?.()
             }}
             className="absolute top-1 left-1 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
-            <BookmarkPlus size={16} />
+            {loading ? (
+              <Loader2
+                size={16}
+                className="animate-spin"
+              />
+            ) : (
+              <BookmarkPlus size={16} />
+            )}
           </button>
         )}
         <div
