@@ -64,14 +64,14 @@ export const useAddMembersMutation = (
 }
 
 // 스페이스 유저 정보 list
-export const useMembersQuery = (spaceId: string) => {
+export const useMembersQuery = (spaceId: number) => {
   return useSuspenseQuery({
     queryKey: memberQueryKeys.list(spaceId),
     queryFn: () => fetchSpaceMembersClient(spaceId)
   })
 }
 // 스페이스 유저 정보 list
-export const usePendingMembersQuery = (spaceId: string) => {
+export const usePendingMembersQuery = (spaceId: number) => {
   return useSuspenseQuery({
     queryKey: memberQueryKeys.pending(spaceId),
     queryFn: () => fetchSpacePendingMembersClient(spaceId)

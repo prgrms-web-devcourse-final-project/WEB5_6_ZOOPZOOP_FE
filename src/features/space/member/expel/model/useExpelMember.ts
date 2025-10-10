@@ -19,13 +19,12 @@ export const useExpelMember = () => {
     onError: error => {
       showErrorToast(error.message)
     },
-    onSettled: data => {
-      if (!data) return
+    onSettled: (_data, _error, { spaceId }) => {
       queryClient.invalidateQueries({
-        queryKey: memberQueryKeys.list(String(data.spaceId))
+        queryKey: memberQueryKeys.list(spaceId)
       })
       queryClient.invalidateQueries({
-        queryKey: memberQueryKeys.pending(String(data.spaceId))
+        queryKey: memberQueryKeys.pending(spaceId)
       })
     }
   })

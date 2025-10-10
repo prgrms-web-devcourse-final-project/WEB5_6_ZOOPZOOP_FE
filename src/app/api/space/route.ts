@@ -15,13 +15,12 @@ export const POST = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await postSpaceServer(payload, {
-          token,
-          next: { tags: ['space'] }
+          token
         })
     )
 
     // 서버 케시 삭제
-    revalidateTag('space')
+    revalidateTag('spaces')
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({
@@ -67,10 +66,10 @@ export const GET = async (request: Request) => {
 // 스페이스 나가기
 export const DELETE = async (request: Request) => {
   try {
-    const payload = await request.json()
+    const { spaceId } = await request.json()
 
-    const response = requireAuth(
-      async token => await leaveSpaceServer(payload, { token })
+    const response = await requireAuth(
+      async token => await leaveSpaceServer(spaceId, { token })
     )
 
     return NextResponse.json(response)

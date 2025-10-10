@@ -9,25 +9,31 @@ export const fetchNews = async (): Promise<NewsResponse> => {
 }
 
 export const fetchNewsByKeywords = async (
-  keywords: string
-): Promise<NewsResponse | null> => {
+  keywords: string,
+  options?: NextFetchOptions
+): Promise<NewsResponse> => {
   return httpClient.post<NewsResponse>(
     `/api/v1/news/keywords`,
-    {
-      keywords: [keywords]
-    },
-    {
-      next: { revalidate: 300, tags: [`news-${keywords}`] }
-    }
+    { keywords: [keywords] },
+    { next: { revalidate: 300, tags: [`news-${keywords}`] }, ...options }
   )
 }
-
 export const fetchRecommendedNews = async (
   payload: string,
   options?: NextFetchOptions
 ): Promise<RecommendedNewsResponse> => {
   return httpClient.get<RecommendedNewsResponse>(
     `/api/v1/news/recommends/personal/${payload}`,
+    options
+  )
+}
+
+export const fetchSpaceRecommendedNews = async (
+  payload: { spaceId: string; folderId: string },
+  options?: NextFetchOptions
+): Promise<RecommendedNewsResponse> => {
+  return httpClient.get<RecommendedNewsResponse>(
+    `/api/v1/news/recommends/shared/${payload.spaceId}/${payload.folderId}`,
     options
   )
 }

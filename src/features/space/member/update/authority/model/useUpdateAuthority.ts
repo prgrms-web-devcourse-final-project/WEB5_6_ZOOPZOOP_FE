@@ -6,7 +6,7 @@ import {
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useQueryClient } from '@tanstack/react-query'
 
-export const useUpdateAuthority = (spaceId: string) => {
+export const useUpdateAuthority = () => {
   const queryClient = useQueryClient()
   // tanstack query
   const { isUpdating, mutateUpdateAuthority, isError, isSuccess } =
@@ -18,7 +18,7 @@ export const useUpdateAuthority = (spaceId: string) => {
       onError: error => {
         showErrorToast(error.message)
       },
-      onSettled: () => {
+      onSettled: (_data, _error, { spaceId }) => {
         queryClient.invalidateQueries({
           queryKey: memberQueryKeys.list(spaceId)
         })

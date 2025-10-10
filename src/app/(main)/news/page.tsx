@@ -1,5 +1,6 @@
 import { fetchNewsByKeywords } from '@/entities/news'
 import { SearchSection } from '@/features/news'
+import { requireAuth } from '@/shared/lib/api-route'
 import { MajorNews, NewsCategory } from '@/widgets/news'
 import { Metadata } from 'next'
 
@@ -18,7 +19,14 @@ export default async function News() {
   ]
 
   const categoryResults = await Promise.allSettled(
-    categories.map(category => fetchNewsByKeywords(category.categoryKor))
+    categories.map(category =>
+      requireAuth(async token => {
+        return fetchNewsByKeywords(category.categoryKor, {
+          token,
+          next: { revalidate: 300 }
+        })
+      })
+    )
   )
 
   return (

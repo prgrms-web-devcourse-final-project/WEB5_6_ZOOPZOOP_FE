@@ -48,7 +48,7 @@ export const navItems: MainNav[] = [
     children: [
       {
         /* TODO: 루트 변경 */
-        href: PATH.SPACE.ROOT,
+        href: PATH.SPACE.DASHBOARD,
         label: '차트 보기',
         icon: ChartNetwork
       },
@@ -64,7 +64,7 @@ export const navItems: MainNav[] = [
       },
       {
         /* TODO: 루트 변경 */
-        href: PATH.SPACE.ROOT,
+        href: PATH.SPACE.RECOMMEND,
         label: 'Ai 추천 받기',
         icon: BotMessageSquare
       },

@@ -2,10 +2,16 @@
 
 import { Loader2 } from 'lucide-react'
 import { useEditSpaceName } from '../model/useEditSpaceName'
+import { useSpaceStore } from '@/entities/space'
+import { AUTHORITIES } from '@/shared/constants'
 
 const EditSpaceName = () => {
+  const currentSpace = useSpaceStore(state => state.currentSpace)
   const { isUpdating, onChange, onSubmit, newName, isDisabled } =
     useEditSpaceName()
+
+  const isOwner = currentSpace?.userAuthority === AUTHORITIES.ADMIN
+
   return (
     <form onSubmit={onSubmit}>
       <label
@@ -13,8 +19,7 @@ const EditSpaceName = () => {
         htmlFor="nickname">
         <span className="mr-1">스페이스 이름</span>
         <span className="text-xs text-gray-500">
-          <span className="text-red-400">*</span>해당 스페이스의 Owner만 수정이
-          가능합니다.
+          <span className="text-red-400">*</span>Admin만 수정 가능합니다.
         </span>
       </label>
       <div className="flex gap-3">
@@ -23,11 +28,12 @@ const EditSpaceName = () => {
           id="nickname"
           value={newName}
           onChange={onChange}
+          disabled={!isOwner}
         />
         <button
           className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md transition-colors duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
           type="submit"
-          disabled={isUpdating || isDisabled}>
+          disabled={isUpdating || isDisabled || !isOwner}>
           {isUpdating ? (
             <div className="flex-center gap-2">
               <Loader2

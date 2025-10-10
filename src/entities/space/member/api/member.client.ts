@@ -52,7 +52,7 @@ export const addSpaceMemberClient = async (
  * 스페이스 멤버 목록 클라이언트 fetch api
  */
 export const fetchSpaceMembersClient = async (
-  spaceId: string
+  spaceId: number
 ): Promise<SpaceMember> => {
   const { data, status, msg } = await httpClient.get<SpaceMemberResponse>(
     `/api/space/${spaceId}/member`
@@ -69,7 +69,7 @@ export const fetchSpaceMembersClient = async (
  * 스페이스 멤버 목록 클라이언트 fetch api
  */
 export const fetchSpacePendingMembersClient = async (
-  spaceId: string
+  spaceId: number
 ): Promise<SpacePendingMember> => {
   const { data, status, msg } =
     await httpClient.get<SpacePendingMemberResponse>(

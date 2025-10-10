@@ -12,7 +12,7 @@ import {
 
 // 스페이스 맴버 조회
 export const fetchSpaceMembersServer = async (
-  spaceId: string,
+  spaceId: number,
   options?: NextFetchOptions
 ): Promise<SpaceMemberResponse> => {
   return await httpClient.get<SpaceMemberResponse>(
@@ -22,7 +22,7 @@ export const fetchSpaceMembersServer = async (
 }
 // 스페이스 펜딩 유저 조회
 export const fetchSpacePendingMembersServer = async (
-  spaceId: string,
+  spaceId: number,
   options?: NextFetchOptions
 ): Promise<SpacePendingMemberResponse> => {
   return await httpClient.get<SpacePendingMemberResponse>(
@@ -46,7 +46,7 @@ export const updateMemberAuthorityServer = async (
 
 // 스페이스 새로운 맴버 초대
 export const addSpaceMemberServer = async (
-  payload: { memberNames: string[]; spaceId: string },
+  payload: { memberNames: string[]; spaceId: number },
   options?: NextFetchOptions
 ): Promise<AddMemberResponse> => {
   const { spaceId, ...rest } = payload

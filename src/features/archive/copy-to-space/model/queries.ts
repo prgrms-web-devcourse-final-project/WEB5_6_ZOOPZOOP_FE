@@ -24,7 +24,7 @@ export const useCopyToSpaceArchiveFilesQuery = () => {
 // 스페이스 전체 목록
 export const useFetchAllSpacesQuery = () => {
   const { data, isPending, isFetching } = useQuery({
-    queryKey: ['spaceList'],
+    queryKey: ['space-all'],
     queryFn: () =>
       fetchSpaceListClient({
         page: 0,

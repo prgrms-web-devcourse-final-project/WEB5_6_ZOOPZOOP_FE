@@ -14,8 +14,8 @@ export const POST = async (
       async token => await acceptInvitationsServer(inviteId, { token })
     )
 
-    revalidateTag('space-member')
-    revalidateTag('space-pending-member')
+    revalidateTag('space-members')
+    revalidateTag('space-pending-members')
 
     return NextResponse.json(response)
   } catch (error) {

@@ -17,7 +17,7 @@ export const useLeaveSpace = () => {
   const { isLeaving, mutateLeaveSpace } = useLeaveSpaceMutation({
     onSuccess: () => {
       // 성공 로직
-      showSuccessToast('해당 스페이스를 탈퇴 하셨습니다.')
+      showSuccessToast('해당 스페이스를 탈퇴하셨습니다.')
       closeModal()
       router.push('/space')
     },
@@ -26,7 +26,7 @@ export const useLeaveSpace = () => {
       showErrorToast(error.message)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
     }
   })
 

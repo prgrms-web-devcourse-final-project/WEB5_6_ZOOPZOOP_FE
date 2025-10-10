@@ -22,7 +22,7 @@ const MemberRow = ({
   isMe,
   spaceId
 }: Props) => {
-  const showChangeAuthority = activeTab === 'members' && isOwner
+  const showChangeAuthority = activeTab === 'members'
   const showPendingBadge = activeTab !== 'members'
 
   return (
@@ -41,7 +41,7 @@ const MemberRow = ({
             spaceId={spaceId}
             role={authority}
             memberId={id}
-            disabled={isMe}
+            disabled={isMe || !isOwner}
           />
         )}
         {showPendingBadge && (
