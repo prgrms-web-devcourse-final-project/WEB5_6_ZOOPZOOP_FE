@@ -9,7 +9,6 @@ const mockNav: MainNav = {
   href: '/space',
   label: '스페이스',
   icon: LayoutGrid,
-  count: 50,
   children: [
     { href: '/space', label: '차트 보기', icon: ChartNetwork },
     { href: '/space', label: '자세히 보기', icon: TextSearch }
