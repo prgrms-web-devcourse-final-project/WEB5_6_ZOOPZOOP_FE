@@ -105,7 +105,7 @@ export const editArchiveFileServer = async (
     category,
     dataSourceId
   } = fileData
-  return await httpClient.put<FilePostResponse>(
+  return await httpClient.patch<FilePostResponse>(
     `/api/v1/archive/${dataSourceId}`,
     {
       title,

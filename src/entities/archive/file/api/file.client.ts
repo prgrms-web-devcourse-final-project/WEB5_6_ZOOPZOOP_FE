@@ -103,8 +103,8 @@ export const deleteManyArchiveFileClient = async (
 export const editArchiveFileClient = async (
   fileData: EditFileRequest
 ): Promise<FilePostResponse> => {
-  const response = await httpClient.post<FilePostResponse>(
-    `/api/archive/file`,
+  const response = await httpClient.patch<FilePostResponse>(
+    `/api/archive/file/edit`,
     fileData
   )
   if (response.status !== 200) {

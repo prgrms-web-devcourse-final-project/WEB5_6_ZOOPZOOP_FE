@@ -1,6 +1,5 @@
 import {
   deleteOneArchiveFileServer,
-  editArchiveFileServer,
   fetchArchiveFilesByFolderServer,
   postArchiveFileServer
 } from '@/entities/archive/file/api/file.server'
@@ -112,30 +111,6 @@ export const DELETE = async (request: Request) => {
         error instanceof Error
           ? error.message
           : { error: '단건 파일 삭제 중 오류 발생' }
-    })
-  }
-}
-
-export const PUT = async (request: Request) => {
-  const payload = await request.json()
-
-  try {
-    const response = await requireAuth(
-      async token =>
-        await editArchiveFileServer(payload, {
-          token
-        })
-    )
-
-    return NextResponse.json(response)
-  } catch (error) {
-    return NextResponse.json({
-      status: 500,
-      data: null,
-      msg:
-        error instanceof Error
-          ? error.message
-          : { error: '파일 수정 중 오류 발생' }
     })
   }
 }
