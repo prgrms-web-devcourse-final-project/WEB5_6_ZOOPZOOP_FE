@@ -19,8 +19,7 @@ const EditSpaceName = () => {
         htmlFor="nickname">
         <span className="mr-1">스페이스 이름</span>
         <span className="text-xs text-gray-500">
-          <span className="text-red-400">*</span>해당 스페이스의 Owner만 수정이
-          가능합니다.
+          <span className="text-red-400">*</span>Admin만 수정 가능합니다.
         </span>
       </label>
       <div className="flex gap-3">

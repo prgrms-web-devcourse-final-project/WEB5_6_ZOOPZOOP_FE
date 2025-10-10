@@ -39,7 +39,7 @@ const ChangeAuthorityDropDown = ({
       <DropdownMenuTrigger
         asChild
         disabled={disabled}>
-        <div className="flex-center gap-1 ">
+        <div className="flex-center gap-1">
           <Button
             className="px-3 py-1 rounded-sm"
             variant="outline"
