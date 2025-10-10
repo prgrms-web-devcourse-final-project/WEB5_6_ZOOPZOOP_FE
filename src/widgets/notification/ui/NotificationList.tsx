@@ -3,13 +3,15 @@
 import {
   AcceptButton,
   CancelButton,
-  useFetchInvitations
+  useFetchInvitations,
+  useAcceptInvitation
 } from '@/features/invitation'
 import { InvitationItem } from '@/entities/invitation'
 import NotificationSkeletonList from './NotificationSkeletonList'
 
 const NotificationList = () => {
   const { invitations, isPending } = useFetchInvitations()
+  const { handleAccept, isAccepting, variables } = useAcceptInvitation()
 
   return (
     <div>
@@ -29,7 +31,13 @@ const NotificationList = () => {
                   key={invite.inviteId}
                   spaceName={invite.spaceName}
                   spaceThumbnailUrl={invite.spaceThumbnailUrl}
-                  acceptAction={<AcceptButton inviteId={invite.inviteId} />}
+                  acceptAction={
+                    <AcceptButton
+                      inviteId={invite.inviteId}
+                      handleAccept={handleAccept}
+                      isAccepting={isAccepting && variables === invite.inviteId}
+                    />
+                  }
                   cancelAction={<CancelButton inviteId={invite.inviteId} />}
                 />
               ))

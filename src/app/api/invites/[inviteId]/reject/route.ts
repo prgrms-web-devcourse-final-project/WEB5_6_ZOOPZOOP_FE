@@ -1,5 +1,6 @@
 import { cancelInvitationsServer } from '@/entities/invitation/api/invitation.server'
 import { requireAuth } from '@/shared/lib/api-route'
+import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export const POST = async (
@@ -12,6 +13,9 @@ export const POST = async (
     const response = await requireAuth(
       async token => await cancelInvitationsServer(inviteId, { token })
     )
+
+    revalidateTag('space-members')
+    revalidateTag('space-pending-members')
 
     return NextResponse.json(response)
   } catch (error) {

@@ -1,15 +1,14 @@
 'use client'
 
 import { Check, Loader2 } from 'lucide-react'
-import { useAcceptInvitation } from '../model/useAcceptInvitation'
 
 interface Props {
   inviteId: number
+  handleAccept: (inviteId: number) => void
+  isAccepting: boolean
 }
 
-const AcceptButton = ({ inviteId }: Props) => {
-  const { handleAccept, isAccepting } = useAcceptInvitation()
-
+const AcceptButton = ({ inviteId, handleAccept, isAccepting }: Props) => {
   const handleClick = () => {
     handleAccept(inviteId)
   }
@@ -20,7 +19,8 @@ const AcceptButton = ({ inviteId }: Props) => {
       className="w-6 h-6 rounded flex items-center justify-center
                      text-slate-400 hover:text-green-500
                      transition-colors cursor-pointer"
-      aria-label="수락">
+      aria-label="수락"
+      disabled={isAccepting}>
       {isAccepting ? (
         <Loader2
           className="animate-spin size-4"

@@ -27,7 +27,8 @@ export const PUT = async (
     )
 
     // 스페이스 맴버 캐싱 무효화
-    revalidateTag(`space-members-${numericId.toString()}`)
+    revalidateTag(`space-members`)
+    // revalidateTag(`space-members-${numericId.toString()}`)
 
     return NextResponse.json(response)
   } catch (error) {
@@ -54,7 +55,8 @@ export const GET = async (
           token,
           next: {
             revalidate: 60,
-            tags: [`space-members-${numericId.toString()}`]
+            // tags: [`space-members-${numericId.toString()}`]
+            tags: [`space-members`]
           }
         })
     )
@@ -83,8 +85,10 @@ export const DELETE = async (
         await expelMemberServer({ spaceId: numericId, ...payload }, { token })
     )
 
-    revalidateTag(`space-members-${numericId}`)
-    revalidateTag(`space-pending-members-${numericId}`)
+    // revalidateTag(`space-members-${numericId}`)
+    // revalidateTag(`space-pending-members-${numericId}`)
+    revalidateTag(`space-members`)
+    revalidateTag(`space-pending-members`)
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

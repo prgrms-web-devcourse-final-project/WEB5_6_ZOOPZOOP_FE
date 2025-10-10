@@ -1,3 +1,3 @@
 export { useFetchInvitations } from './fetch'
-export { AcceptButton } from './accept'
-export { CancelButton } from './cancel'
+export { AcceptButton, useAcceptInvitation } from './accept'
+export { CancelButton, useCancelInvitation } from './cancel'
