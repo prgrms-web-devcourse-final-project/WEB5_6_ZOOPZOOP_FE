@@ -16,7 +16,7 @@ function RestoreSpaceFileButton({ selectedIds }: Props) {
           showInfoToast('한 개 이상의 파일을 선택해야 합니다')
         } else {
           openModal({
-            type: 'restore-archive-file',
+            type: 'restore-space-file',
             props: { dataSourceId: selectedIds }
           })
         }
