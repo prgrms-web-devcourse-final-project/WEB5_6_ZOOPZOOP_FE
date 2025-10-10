@@ -2,10 +2,16 @@
 
 import { Loader2 } from 'lucide-react'
 import { useEditSpaceName } from '../model/useEditSpaceName'
+import { useSpaceStore } from '@/entities/space'
+import { AUTHORITIES } from '@/shared/constants'
 
 const EditSpaceName = () => {
+  const currentSpace = useSpaceStore(state => state.currentSpace)
   const { isUpdating, onChange, onSubmit, newName, isDisabled } =
     useEditSpaceName()
+
+  const isOwner = currentSpace?.userAuthority === AUTHORITIES.ADMIN
+
   return (
     <form onSubmit={onSubmit}>
       <label
@@ -23,11 +29,12 @@ const EditSpaceName = () => {
           id="nickname"
           value={newName}
           onChange={onChange}
+          disabled={!isOwner}
         />
         <button
           className="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-md transition-colors duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
           type="submit"
-          disabled={isUpdating || isDisabled}>
+          disabled={isUpdating || isDisabled || !isOwner}>
           {isUpdating ? (
             <div className="flex-center gap-2">
               <Loader2

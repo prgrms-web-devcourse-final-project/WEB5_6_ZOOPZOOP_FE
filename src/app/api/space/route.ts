@@ -67,10 +67,10 @@ export const GET = async (request: Request) => {
 // 스페이스 나가기
 export const DELETE = async (request: Request) => {
   try {
-    const payload = await request.json()
+    const { spaceId } = await request.json()
 
-    const response = requireAuth(
-      async token => await leaveSpaceServer(payload, { token })
+    const response = await requireAuth(
+      async token => await leaveSpaceServer(spaceId, { token })
     )
 
     return NextResponse.json(response)
