@@ -29,6 +29,8 @@ import {
   DeleteFolderModal
 } from '@/features/archive'
 import { MoveToSpaceTrashModal } from '@/features/shared-archive'
+import { DeleteSpaceFileModal } from '@/features/shared-archive/delete-file'
+import { RestoreSpaceFileModal } from '@/features/shared-archive/restore-file'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -36,7 +38,7 @@ export const GlobalModal = () => {
   if (!isOpen || !modal) return null
 
   switch (modal.type) {
-    case 'url-upload':
+    case 'upload-archive-url':
       return <UrlUploadModal />
     case 'archive-select':
       return <ArchiveSelectModal />
@@ -46,7 +48,7 @@ export const GlobalModal = () => {
       return <CreateSpaceModal />
     case 'create-folder':
       return <CreateFolderModal />
-    case 'move-file':
+    case 'move-archive-file':
       return <MoveFileModal />
     case 'go-to-archive-trash':
       return <MoveToArchiveTrashModal />
@@ -56,14 +58,18 @@ export const GlobalModal = () => {
       return <DeleteAccountModal />
     case 'copy-to-space':
       return <CopyToSpaceModal />
-    case 'edit-file':
+    case 'edit-archive-file':
       return <EditFileModal {...modal.props} />
-    case 'delete-file':
+    case 'delete-archive-file':
       return <DeleteFileModal {...modal.props} />
+    case 'delete-space-file':
+      return <DeleteSpaceFileModal {...modal.props} />
     case 'delete-folder':
       return <DeleteFolderModal {...modal.props} />
-    case 'restore-file':
+    case 'restore-archive-file':
       return <RestoreFileModal {...modal.props} />
+    case 'restore-space-file':
+      return <RestoreSpaceFileModal {...modal.props} />
     case 'rename-folder':
       return <RenameFolderModal {...modal.props} />
     case 'delete-space':

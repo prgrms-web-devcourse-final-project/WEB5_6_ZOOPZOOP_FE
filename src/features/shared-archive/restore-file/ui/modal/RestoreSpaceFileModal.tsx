@@ -1,34 +1,31 @@
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { useDeleteFileAction } from '../../model/useDeleteFileAction'
+import { useRestoreFileAction } from '../../model/useRestoreFileAction'
 
 interface Props {
   dataSourceId: number[]
 }
-function DeleteFileModal({ dataSourceId }: Props) {
+function RestoreSpaceFileModal({ dataSourceId }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
-  const { handleDelete } = useDeleteFileAction()
-
+  const { handelRestore } = useRestoreFileAction()
   return (
     <ModalLayout size="md">
       <h1 className="text-2xl text-gray-darker font-bold text-center">
-        파일 삭제
+        파일 복구
       </h1>
       <p className="mx-auto text-base text-gray-darker  ">
-        {dataSourceId.length}개의 파일이 삭제되며, 이후 복구하기 어렵습니다
+        {dataSourceId.length}개의 데이터가 이전 폴더로 복구됩니다.
       </p>
-
+      {/* 선택된 파일 리스트 */}
       <FolderActionButtons
         onCancel={closeModal}
-        onCreate={() => {
-          handleDelete(dataSourceId)
-        }}
+        onCreate={() => handelRestore(dataSourceId)}
         isCreating={false}
-        label={'삭제'}
+        label={'복구'}
         disabled={false}
       />
     </ModalLayout>
   )
 }
-export default DeleteFileModal
+export default RestoreSpaceFileModal

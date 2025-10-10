@@ -1,2 +1,2 @@
 export { default as RestoreSpaceFileButton } from './ui/RestoreSpaceFileButton'
-export { default as RestoreFileModal } from './ui/modal/RestoreFileModal'
+export { default as RestoreSpaceFileModal } from './ui/modal/RestoreSpaceFileModal'
