@@ -4,7 +4,8 @@ export {
   postSpaceClient,
   deleteSpaceClient,
   fetchSpaceClient,
-  updateSpaceNameClient
+  updateSpaceNameClient,
+  leaveSpaceClient
 } from './api'
 
 // tanstack query
@@ -12,7 +13,8 @@ export {
   useCreateSpaceMutation,
   useSpaceQuery,
   useDeleteSpaceMutation,
-  useEditSpaceNameMutation
+  useEditSpaceNameMutation,
+  useLeaveSpaceMutation
 } from './model'
 
 // 전역 상태 관리
@@ -25,10 +27,18 @@ export type * from './model'
 export { SpaceCard, SpaceCardSkeleton, SpaceSyncProvider } from './ui'
 
 // 맴버/클라이언트 API
-export { useUpdateAuthorityMutation } from './member'
+export { useUpdateAuthorityMutation, useAddMembersMutation } from './member'
 
 // 맴버/tanstack-query
-export { updateMemberAuthorityClient } from './member'
+export {
+  updateMemberAuthorityClient,
+  addSpaceMemberClient,
+  fetchSpacePendingMembersClient,
+  fetchSpaceMembersClient
+} from './member'
 
 // 맴버/타입
 export type * from './member'
+
+// 맴버 상수
+export { memberQueryKeys } from './member'

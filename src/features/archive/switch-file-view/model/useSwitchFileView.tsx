@@ -1,7 +1,6 @@
-// hooks/useFileViewMode.ts
 import { useState } from 'react'
 
-export function useFileViewMode() {
+export function useSwitchFileView() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   const onSwitchViewMode = () => {

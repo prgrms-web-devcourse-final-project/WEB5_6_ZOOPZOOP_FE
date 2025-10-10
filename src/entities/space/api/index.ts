@@ -3,5 +3,6 @@ export {
   fetchSpaceClient,
   fetchSpaceListClient,
   postSpaceClient,
-  updateSpaceNameClient
+  updateSpaceNameClient,
+  leaveSpaceClient
 } from './space.client'

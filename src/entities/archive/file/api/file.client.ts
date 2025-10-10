@@ -5,6 +5,7 @@ import {
   SearchGetResponse,
   FileSearchParams
 } from '../model/type'
+import { APIResponse } from '@/shared/types'
 
 // 폴더 안의 파일 조회
 export const fetchArchiveFilesByFolderClient = async (
@@ -21,18 +22,18 @@ export const fetchArchiveFilesByFolderClient = async (
 
 // 페이지 안에 있는 파일 조회
 export const fetchArchiveFilesByPageClient = async ({
-  folderId = 0,
-  page = 1,
-  size = 8,
-  sort = 'createdAt,asc',
-  isActive = false,
+  folderId,
+  page,
+  size,
+  sort,
+  isActive = true,
   keyword = ''
 }: FileSearchParams) => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
-  params.append('folderId', folderId.toString())
   params.append('size', size.toString())
 
+  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
   if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
@@ -60,6 +61,35 @@ export const postArchiveFileClient = async (
       folderId: folderId,
       sourceUrl: sourceUrl
     }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+//파일 단건 삭제
+export const deleteOneArchiveFileClient = async (
+  dataSourceId: number
+): Promise<APIResponse<null>> => {
+  const response = await httpClient.delete<APIResponse<null>>(
+    `/api/archive/file?dataSourceId=${dataSourceId}`,
+    {}
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+
+  return response
+}
+
+//파일 다건 삭제
+export const deleteManyArchiveFileClient = async (
+  dataSourceId: number[]
+): Promise<APIResponse<null>> => {
+  const response = await httpClient.delete<APIResponse<null>>(
+    `/api/archive/file/list`,
+    { dataSourceId: dataSourceId }
   )
   if (response.status !== 200) {
     throw new Error(response.msg)

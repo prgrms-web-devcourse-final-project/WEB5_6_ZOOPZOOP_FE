@@ -1,18 +1,19 @@
 'use client'
 
-import { Member } from '@/entities/space'
 import { useMemo, useState } from 'react'
 import { ActiveType } from '../model/type'
 import { MemberTable } from './MemberTable'
 import { MemberTabs } from './MemberTabs'
+import { useMembers } from '@/features/space'
 
 interface Props {
-  members: Member[]
-  pendingMembers: Member[]
+  spaceId: string
 }
 
-export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
+export const SpaceMemberManagement = ({ spaceId }: Props) => {
   const [activeTab, setActiveTab] = useState<ActiveType>('members')
+  const { members, pendingMembers } = useMembers(spaceId)
+
   const currentMembers = useMemo(() => {
     return activeTab === 'members' ? members : pendingMembers
   }, [activeTab, members, pendingMembers])
@@ -30,7 +31,7 @@ export const SpaceMemberManagement = ({ members, pendingMembers }: Props) => {
 
         <MemberTable
           members={currentMembers}
-          activeType={activeTab}
+          activeTab={activeTab}
         />
       </div>
     </section>

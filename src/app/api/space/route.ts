@@ -1,5 +1,6 @@
 import {
   fetchSpaceListServer,
+  leaveSpaceServer,
   postSpaceServer
 } from '@/entities/space/api/space.server'
 import { requireAuth } from '@/shared/lib/api-route'
@@ -52,6 +53,25 @@ export const GET = async (request: Request) => {
         { token }
       )
     })
+
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg: error instanceof Error ? error.message : '요청 처리 중 오류'
+    })
+  }
+}
+
+// 스페이스 나가기
+export const DELETE = async (request: Request) => {
+  try {
+    const payload = await request.json()
+
+    const response = requireAuth(
+      async token => await leaveSpaceServer(payload, { token })
+    )
 
     return NextResponse.json(response)
   } catch (error) {

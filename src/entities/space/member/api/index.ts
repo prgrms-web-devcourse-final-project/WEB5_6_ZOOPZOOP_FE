@@ -1,1 +1,6 @@
-export { updateMemberAuthorityClient } from './member.client'
+export {
+  updateMemberAuthorityClient,
+  addSpaceMemberClient,
+  fetchSpaceMembersClient,
+  fetchSpacePendingMembersClient
+} from './member.client'

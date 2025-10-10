@@ -48,7 +48,7 @@ export default function NavHeader({
       </div>
       {/* 사용자 프로필 영역 */}
       <div className="flex items-center overflow-hidden">
-        <div className="rounded-full border-1 size-10 flex-shrink-0">
+        <div className="size-9.5 flex-shrink-0">
           <Image
             src={
               user
@@ -58,7 +58,7 @@ export default function NavHeader({
             alt="user image"
             width={50}
             height={50}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full rounded-full "
           />
         </div>
 

@@ -6,7 +6,8 @@ import {
   FetchSpaceListParams,
   SpaceResponse,
   SpacePaginationAPIResponse,
-  EditSpaceNameResponse
+  EditSpaceNameResponse,
+  LeaveSpaceResponse
 } from '../model/type'
 
 // 스페이스 목록 조회
@@ -54,6 +55,7 @@ export const deleteSpaceServer = async (
 ): Promise<DeleteSpaceResponse> => {
   return await httpClient.delete<DeleteSpaceResponse>(
     `/api/v1/space/${spaceId}`,
+    {},
     options
   )
 }
@@ -78,6 +80,17 @@ export const editSpaceNameServer = async (
   return await httpClient.put<EditSpaceNameResponse>(
     `/api/v1/space/${spaceId}`,
     restPayload,
+    options
+  )
+}
+
+// 스페이스 탈퇴
+export const leaveSpaceServer = async (
+  payload: string,
+  options?: NextFetchOptions
+) => {
+  return await httpClient.delete<LeaveSpaceResponse>(
+    `/api/v1/space/member/me/${payload}`,
     options
   )
 }

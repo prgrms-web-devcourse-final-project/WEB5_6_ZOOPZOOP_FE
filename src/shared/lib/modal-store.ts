@@ -10,7 +10,10 @@ type ModalType =
       type: 'move-file'
     }
   | { type: 'delete-account' }
+  | { type: 'copy-to-space' }
   | { type: 'go-to-trash' }
+  | { type: 'delete-file'; props: { dataSourceId: number[] } }
+  | { type: 'restore-file'; props: { dataSourceId: number[] } }
   | {
       type: 'add-member'
       props: {
@@ -29,6 +32,20 @@ type ModalType =
       props: {
         spaceId: number
         title: string
+      }
+    }
+  | {
+      type: 'expel-member'
+      props: {
+        spaceId: number
+        name: string
+        memberId: number
+      }
+    }
+  | {
+      type: 'leave-space'
+      props: {
+        spaceId: number
       }
     }
 

@@ -1,4 +1,4 @@
-import { NextFetchOptions } from '@/shared/types'
+import { APIResponse, NextFetchOptions } from '@/shared/types'
 import {
   FileGetResponse,
   FilePostResponse,
@@ -14,19 +14,20 @@ export const fetchArchiveFilesByPageServer = async (
 ): Promise<SearchGetResponse> => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
-  params.append('folderId', folderId.toString())
   params.append('size', size.toString())
 
+  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
   if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
     params.append('keyword', keyword)
   }
-
-  return await httpClient.get<SearchGetResponse>(
+  const response = await httpClient.get<SearchGetResponse>(
     `/api/v1/archive?${params.toString()}`,
     options
   )
+
+  return response
 }
 
 // 폴더 내 파일 조회
@@ -62,6 +63,7 @@ export const deleteOneArchiveFileServer = async (
 ) => {
   return await httpClient.delete<FilePostResponse>(
     `/api/v1/archive/${dataSourceId}`,
+    {},
     options
   )
 }
@@ -73,9 +75,9 @@ export const deleteManyArchiveFileServer = async (
   },
   options: NextFetchOptions
 ) => {
-  return await httpClient.delete<FilePostResponse>(
+  return await httpClient.delete<APIResponse<null>>(
     `/api/v1/archive/delete`,
-    payload,
+    { dataSourceId: payload.dataSourceId },
     options
   )
 }

@@ -1,38 +1,32 @@
-'use client'
-
-import { Button } from '@/shared/ui/shadcn/button'
 import { Bell } from 'lucide-react'
-import { useRef, useState } from 'react'
 import NotificationList from './NotificationList'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/shared/ui/shadcn/popover'
 
 const NotificationBell = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const handleToggle = () => {
-    setIsOpen(prev => !prev)
-  }
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
-
   return (
-    <div className="relative">
-      <Button
-        ref={buttonRef}
-        type="button"
-        aria-label="알림"
-        className="bg-white p-2 rounded-lg hover:bg-gray-100"
-        onClick={handleToggle}>
-        <Bell className="w-5 h-5 text-gray-600" />
-      </Button>
-      {isOpen && (
-        <NotificationList
-          onClose={handleClose}
-          triggerRef={buttonRef}
-        />
-      )}
-    </div>
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          aria-label="알림"
+          className="bg-white rounded-lg hover:bg-gray-100 p-2">
+          <Bell
+            className="text-gray-600"
+            size={18}
+          />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="p-0"
+        align="start"
+        side="bottom">
+        <NotificationList />
+      </PopoverContent>
+    </Popover>
   )
 }
 export default NotificationBell

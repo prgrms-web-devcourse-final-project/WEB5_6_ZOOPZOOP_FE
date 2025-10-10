@@ -1,2 +1,14 @@
+/**
+ * 타입
+ */
 export type * from './type'
-export { useUpdateAuthorityMutation } from './queries'
+
+/**
+ * tanstack query
+ */
+export { useUpdateAuthorityMutation, useAddMembersMutation } from './queries'
+
+/**
+ * 상수
+ */
+export { memberQueryKeys } from './constant'

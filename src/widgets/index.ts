@@ -4,7 +4,8 @@ export {
   SpaceDangerSection,
   SpaceHeader,
   SpaceInfo,
-  SpaceMemberManagement
+  SpaceMemberManagement,
+  MemberTableSkeleton
 } from './space'
 
 // 알림 위젯
