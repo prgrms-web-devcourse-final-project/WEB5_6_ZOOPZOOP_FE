@@ -6,19 +6,17 @@ import { News } from '@/entities/news'
 import { BaseNewsCard } from '@/shared/ui/card'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useState } from 'react'
-import { RecommendFolder } from '../../recommend-folder'
 
 interface Props {
   news: News[]
   page: number
-  type?: 'recommend' | 'base'
 }
-export const NewsGrid = ({ news, page, type = 'base' }: Props) => {
+export const NewsGrid = ({ news, page }: Props) => {
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data
   const [loading, setLoading] = useState(false)
-  const [selectedFolder, setSelectedFolder] = useState<number | null>(
-    folderList?.[0]?.folderId ?? null
+  const [selectedFolder] = useState<number | null>(
+    folderList?.find(f => f.folderName === 'default')?.folderId ?? null
   )
 
   if (!folderList) return null
@@ -38,17 +36,6 @@ export const NewsGrid = ({ news, page, type = 'base' }: Props) => {
   const limitedNews = news.slice((page - 1) * 18, page * 18)
   return (
     <div>
-      {folderList && type === 'recommend' && (
-        <div className="py-6">
-          <h2 className="text-base font-bold text-gray-800 mb-3">
-            분석된 관심 폴더
-          </h2>
-          <RecommendFolder
-            folderList={folderList}
-            onFolderSelect={setSelectedFolder}
-          />
-        </div>
-      )}
       <div className="flex flex-wrap gap-4">
         {limitedNews.map((item, index) => (
           <BaseNewsCard
