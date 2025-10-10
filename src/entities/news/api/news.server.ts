@@ -31,3 +31,13 @@ export const fetchRecommendedNews = async (
     options
   )
 }
+
+export const fetchSpaceRecommendedNews = async (
+  payload: { spaceId: string; folderId: string },
+  options?: NextFetchOptions
+): Promise<RecommendedNewsResponse> => {
+  return httpClient.get<RecommendedNewsResponse>(
+    `/api/v1/news/recommends/shared/${payload.spaceId}/${payload.folderId}`,
+    options
+  )
+}

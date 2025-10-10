@@ -14,7 +14,8 @@ function SpaceHeader() {
 
   const pathname = usePathname()
 
-  const isDashboard = pathname.includes('/dashboard')
+  const isDashboard =
+    pathname.includes('/dashboard') || pathname.includes('/news')
 
   // 스페이스 메인 페이지일 경우 스페이스 생성 버튼 show
   const showCreateButton = pathname === '/space'
