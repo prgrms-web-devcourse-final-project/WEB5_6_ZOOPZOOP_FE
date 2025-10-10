@@ -33,7 +33,7 @@ const SpaceContextMenu = ({
     },
     {
       label: '스페이스 관리 열기',
-      onClick: () => router.push(`/space/${spaceId}/m`)
+      onClick: () => router.push(`/space/${spaceId}/management`)
     },
     {
       label: '삭제',

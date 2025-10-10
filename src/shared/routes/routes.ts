@@ -16,8 +16,8 @@ export type MainNav = {
   href: string
   label: string
   icon: LucideIcon
-  count?: number
   children?: NavItem[]
+  showSubMenuOnBase?: boolean
 }
 
 export type NavItem = {
@@ -32,7 +32,7 @@ export const navItems: MainNav[] = [
 
     label: '아카이브',
     icon: Inbox,
-    count: 123,
+    showSubMenuOnBase: true,
     children: [
       {
         href: PATH.ARCHIVE.TRASH,
@@ -45,7 +45,6 @@ export const navItems: MainNav[] = [
     href: PATH.SPACE.ROOT,
     label: '스페이스',
     icon: LayoutGrid,
-    count: 50,
     children: [
       {
         /* TODO: 루트 변경 */
