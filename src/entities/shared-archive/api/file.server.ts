@@ -3,7 +3,7 @@ import { APIResponse, NextFetchOptions } from '@/shared/types'
 import { httpClient } from '@/shared/lib'
 import { FilePostResponse, EditFileRequest } from '@/entities/archive/file'
 import {
-  DeleteSpaceFileRequest,
+  TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByFolderGetResponse,
   SpaceFileByFolderRequest,
@@ -82,7 +82,7 @@ export const postSpaceFileServer = async (
 
 //파일 다건 삭제 (영구 삭제)
 export const deleteManySpaceFileServer = async (
-  { spaceId, dataSourceId }: DeleteSpaceFileRequest,
+  { spaceId, dataSourceId }: TrashSpaceFileRequest,
   options: NextFetchOptions
 ) => {
   return await httpClient.delete<APIResponse<null>>(

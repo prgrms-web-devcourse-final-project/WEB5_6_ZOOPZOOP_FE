@@ -1,6 +1,6 @@
 import { APIResponse } from '@/shared/types'
 import {
-  DeleteSpaceFileRequest,
+  TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByFolder,
   SpaceFileByFolderGetResponse,
@@ -57,7 +57,7 @@ export const fetchSpaceFilesByFolderClient = async ({
 export const deleteManySpaceFileClient = async ({
   spaceId,
   dataSourceId
-}: DeleteSpaceFileRequest) => {
+}: TrashSpaceFileRequest) => {
   return await httpClient.delete<APIResponse<null>>(
     `/api/shared-archive/file`,
     { spaceId, dataSourceId }

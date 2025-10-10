@@ -1,6 +1,5 @@
-import { useDeleteManyArchiveFileQuery } from '@/entities/archive/file/model/queries'
 import { useDeleteManySpaceFileQuery } from '@/entities/shared-archive/model/queries'
-import { DeleteSpaceFileRequest } from '@/entities/shared-archive/model/type'
+import { TrashSpaceFileRequest } from '@/entities/shared-archive/model/type'
 import { useModalStore } from '@/shared/lib'
 import {
   showErrorToast,
@@ -12,7 +11,7 @@ export const useDeleteFileAction = () => {
   const closeModal = useModalStore(s => s.closeModal)
   const { deleteManyFile } = useDeleteManySpaceFileQuery()
 
-  const handleDelete = ({ spaceId, dataSourceId }: DeleteSpaceFileRequest) => {
+  const handleDelete = ({ spaceId, dataSourceId }: TrashSpaceFileRequest) => {
     deleteManyFile.mutate(
       { spaceId, dataSourceId },
       {

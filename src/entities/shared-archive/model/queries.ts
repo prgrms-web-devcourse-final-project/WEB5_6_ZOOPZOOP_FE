@@ -1,5 +1,5 @@
 import {
-  DeleteSpaceFileRequest,
+  TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByPageRequest
 } from './type'
@@ -50,7 +50,7 @@ export const useSpaceFilesByFolderQuery = (
 export const useDeleteManySpaceFileQuery = () => {
   const queryClient = useQueryClient()
   const deleteManyFile = useMutation({
-    mutationFn: ({ spaceId, dataSourceId }: DeleteSpaceFileRequest) =>
+    mutationFn: ({ spaceId, dataSourceId }: TrashSpaceFileRequest) =>
       deleteManySpaceFileClient({ spaceId, dataSourceId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['spaceFile'] })

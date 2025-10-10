@@ -40,7 +40,7 @@ export interface SpaceFileByFolder {
 
 export type SpaceFileByFolderGetResponse = APIResponse<SpaceFileByFolder>
 
-export interface DeleteSpaceFileRequest {
+export interface TrashSpaceFileRequest {
   spaceId: number
   dataSourceId: number[]
 }
