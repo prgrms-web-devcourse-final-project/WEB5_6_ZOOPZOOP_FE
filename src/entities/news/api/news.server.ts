@@ -9,7 +9,8 @@ export const fetchNews = async (): Promise<NewsResponse> => {
 }
 
 export const fetchNewsByKeywords = async (
-  keywords: string
+  keywords: string,
+  options?: NextFetchOptions
 ): Promise<NewsResponse | null> => {
   return httpClient.post<NewsResponse>(
     `/api/v1/news/keywords`,
@@ -17,7 +18,8 @@ export const fetchNewsByKeywords = async (
       keywords: [keywords]
     },
     {
-      next: { revalidate: 300, tags: [`news-${keywords}`] }
+      next: { revalidate: 300, tags: [`news-${keywords}`] },
+      ...options
     }
   )
 }
