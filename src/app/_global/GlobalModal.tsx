@@ -24,10 +24,11 @@ import {
   DeleteFileModal,
   RestoreFileModal,
   MoveFileModal,
-  MoveToTrashModal,
+  MoveToArchiveTrashModal,
   CopyToSpaceModal,
   DeleteFolderModal
 } from '@/features/archive'
+import { MoveToSpaceTrashModal } from '@/features/shared-archive'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -47,8 +48,10 @@ export const GlobalModal = () => {
       return <CreateFolderModal />
     case 'move-file':
       return <MoveFileModal />
-    case 'go-to-trash':
-      return <MoveToTrashModal />
+    case 'go-to-archive-trash':
+      return <MoveToArchiveTrashModal />
+    case 'go-to-space-trash':
+      return <MoveToSpaceTrashModal {...modal.props} />
     case 'delete-account':
       return <DeleteAccountModal />
     case 'copy-to-space':

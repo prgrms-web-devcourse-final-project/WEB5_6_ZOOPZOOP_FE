@@ -12,7 +12,8 @@ type ModalType =
     }
   | { type: 'delete-account' }
   | { type: 'copy-to-space' }
-  | { type: 'go-to-trash' }
+  | { type: 'go-to-archive-trash' }
+  | { type: 'go-to-space-trash'; props: { dataSourceId: number[] } }
   | { type: 'edit-file'; props: { fileData: FileData } }
   | { type: 'delete-file'; props: { dataSourceId: number[] } }
   | { type: 'restore-file'; props: { dataSourceId: number[] } }
