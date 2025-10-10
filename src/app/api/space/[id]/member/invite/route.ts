@@ -14,18 +14,18 @@ export const POST = async (
   try {
     const payload = await request.json()
     const { id } = await params
+    const numericId = Number(id)
     const response = await requireAuth(
       async token =>
         await addSpaceMemberServer(
-          { spaceId: id, ...payload },
+          { spaceId: numericId, ...payload },
           {
             token
           }
         )
     )
 
-    revalidateTag('space-pending-members')
-    revalidateTag(payload.spaceId)
+    revalidateTag(`space-pending-members-${numericId}`)
 
     return NextResponse.json(response)
   } catch (error) {
@@ -52,7 +52,7 @@ export const GET = async (
           token,
           next: {
             revalidate: 60,
-            tags: ['space-pending-members', numericId.toString()]
+            tags: [`space-pending-members-${numericId.toString()}`]
           }
         })
     )

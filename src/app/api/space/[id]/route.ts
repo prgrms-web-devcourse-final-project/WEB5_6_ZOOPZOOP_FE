@@ -14,9 +14,9 @@ export const GET = async (
 ) => {
   try {
     const { id } = await params
-
+    const numericId = Number(id)
     const response = await requireAuth(
-      async token => await fetchSpaceServer(id, { token })
+      async token => await fetchSpaceServer(numericId, { token })
     )
 
     return NextResponse.json(response)
@@ -36,12 +36,12 @@ export const DELETE = async (
 ) => {
   try {
     const { id } = await params
-
+    const numericId = Number(id)
     const response = await requireAuth(
-      async token => await deleteSpaceServer(id, { token })
+      async token => await deleteSpaceServer(numericId, { token })
     )
 
-    revalidateTag('space')
+    revalidateTag('spaces')
 
     return NextResponse.json(response)
   } catch (error) {
@@ -61,13 +61,13 @@ export const PUT = async (
   try {
     const payload = await request.json()
     const { id } = await params
-
+    const numericId = Number(id)
     const response = await requireAuth(
       async token =>
-        await editSpaceNameServer({ spaceId: id, ...payload }, { token })
+        await editSpaceNameServer({ spaceId: numericId, ...payload }, { token })
     )
 
-    revalidateTag('space')
+    revalidateTag('spaces')
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

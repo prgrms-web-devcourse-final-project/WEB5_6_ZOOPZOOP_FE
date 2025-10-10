@@ -20,7 +20,7 @@ interface SpaceQuery {
 // 스페이스 목록 조회
 export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
   const { data, isPending, isFetching } = useQuery({
-    queryKey: ['space', pagination.currentPage],
+    queryKey: ['spaces', pagination.currentPage],
     queryFn: () =>
       fetchSpaceListClient({
         page: pagination.currentPage,

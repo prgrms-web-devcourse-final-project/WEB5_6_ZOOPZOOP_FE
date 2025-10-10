@@ -14,17 +14,21 @@ export const PUT = async (
 ) => {
   try {
     const { id } = await params
+    const numericId = Number(id)
+
     const payload = await request.json()
 
     const response = await requireAuth(
       async token =>
         await updateMemberAuthorityServer(
-          { spaceId: id, ...payload },
+          { spaceId: numericId, ...payload },
           { token }
         )
     )
 
-    revalidateTag('space-members')
+    // 스페이스 맴버 캐싱 무효화
+    revalidateTag(`space-members-${numericId.toString()}`)
+
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({
@@ -50,7 +54,7 @@ export const GET = async (
           token,
           next: {
             revalidate: 60,
-            tags: ['space-members', numericId.toString()]
+            tags: [`space-members-${numericId.toString()}`]
           }
         })
     )
@@ -71,15 +75,16 @@ export const DELETE = async (
 ) => {
   try {
     const { id } = await params
+    const numericId = Number(id)
     const payload = await request.json()
 
     const response = await requireAuth(
       async token =>
-        await expelMemberServer({ spaceId: id, ...payload }, { token })
+        await expelMemberServer({ spaceId: numericId, ...payload }, { token })
     )
 
-    revalidateTag('space-members')
-    revalidateTag('space-pending-members')
+    revalidateTag(`space-members-${numericId}`)
+    revalidateTag(`space-pending-members-${numericId}`)
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

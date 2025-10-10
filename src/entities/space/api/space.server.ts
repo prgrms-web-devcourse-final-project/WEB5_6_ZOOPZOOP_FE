@@ -50,7 +50,7 @@ export const postSpaceServer = async (
 
 // 스페이스 삭제
 export const deleteSpaceServer = async (
-  spaceId: string,
+  spaceId: number,
   options?: NextFetchOptions
 ): Promise<DeleteSpaceResponse> => {
   return await httpClient.delete<DeleteSpaceResponse>(
@@ -62,7 +62,7 @@ export const deleteSpaceServer = async (
 
 // 스페이스 단건 조회
 export const fetchSpaceServer = async (
-  spaceId: string,
+  spaceId: number,
   options?: NextFetchOptions
 ): Promise<SpaceResponse> => {
   return await httpClient.get<SpaceResponse>(
@@ -73,7 +73,7 @@ export const fetchSpaceServer = async (
 
 // 스페이스 이름 수정
 export const editSpaceNameServer = async (
-  payload: { name: string; spaceId: string },
+  payload: { name: string; spaceId: number },
   options?: NextFetchOptions
 ) => {
   const { spaceId, ...restPayload } = payload

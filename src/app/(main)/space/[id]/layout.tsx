@@ -9,7 +9,8 @@ export default async function SpaceDetailLayout({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const spaceInfo = await getSpaceInfo(id)
+  const numericId = Number(id)
+  const spaceInfo = await getSpaceInfo(numericId)
 
   return (
     <>

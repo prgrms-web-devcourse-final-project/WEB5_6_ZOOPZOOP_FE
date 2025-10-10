@@ -46,7 +46,7 @@ export const updateMemberAuthorityServer = async (
 
 // 스페이스 새로운 맴버 초대
 export const addSpaceMemberServer = async (
-  payload: { memberNames: string[]; spaceId: string },
+  payload: { memberNames: string[]; spaceId: number },
   options?: NextFetchOptions
 ): Promise<AddMemberResponse> => {
   const { spaceId, ...rest } = payload

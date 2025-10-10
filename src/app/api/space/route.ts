@@ -15,13 +15,12 @@ export const POST = async (request: Request) => {
     const response = await requireAuth(
       async token =>
         await postSpaceServer(payload, {
-          token,
-          next: { tags: ['space'] }
+          token
         })
     )
 
     // 서버 케시 삭제
-    revalidateTag('space')
+    revalidateTag('spaces')
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

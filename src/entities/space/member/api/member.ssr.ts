@@ -13,7 +13,7 @@ export const getSpaceMemberList = async (
     async token =>
       await fetchSpaceMembersServer(spaceId, {
         token,
-        next: { revalidate: 60, tags: ['space-members', spaceId.toString()] }
+        next: { revalidate: 60, tags: [`space-members-${spaceId.toString()}`] }
       })
   )
 
@@ -34,7 +34,7 @@ export const getSpacePendingMemberList = async (
         token,
         next: {
           revalidate: 60,
-          tags: ['space-pending-members', spaceId.toString()]
+          tags: [`space-pending-members-${spaceId.toString()}`]
         }
       })
   )

@@ -27,7 +27,7 @@ export const useAcceptInvitation = () => {
     },
     onSuccess: () => {
       showSuccessToast('스페이스 초대를 수락했습니다')
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
     },
     onError: (error, _, onMutateResult) => {
       showErrorToast(error.message)
