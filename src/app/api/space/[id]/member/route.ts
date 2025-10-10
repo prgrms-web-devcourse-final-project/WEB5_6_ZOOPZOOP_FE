@@ -24,7 +24,7 @@ export const PUT = async (
         )
     )
 
-    revalidateTag('space-member')
+    revalidateTag('space-members')
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({
@@ -42,12 +42,16 @@ export const GET = async (
 ) => {
   try {
     const { id } = await params
+    const numericId = Number(id)
 
     const response = await requireAuth(
       async token =>
-        await fetchSpaceMembersServer(id, {
+        await fetchSpaceMembersServer(numericId, {
           token,
-          next: { revalidate: 60, tags: ['space-member'] }
+          next: {
+            revalidate: 60,
+            tags: ['space-members', numericId.toString()]
+          }
         })
     )
 
@@ -74,8 +78,8 @@ export const DELETE = async (
         await expelMemberServer({ spaceId: id, ...payload }, { token })
     )
 
-    revalidateTag('space-member')
-    revalidateTag('space-pending-member')
+    revalidateTag('space-members')
+    revalidateTag('space-pending-members')
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

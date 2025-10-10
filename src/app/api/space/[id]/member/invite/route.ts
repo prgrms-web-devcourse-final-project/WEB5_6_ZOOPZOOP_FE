@@ -24,7 +24,7 @@ export const POST = async (
         )
     )
 
-    revalidateTag('space-member-pending')
+    revalidateTag('space-pending-members')
     revalidateTag(payload.spaceId)
 
     return NextResponse.json(response)
@@ -44,12 +44,16 @@ export const GET = async (
 ) => {
   try {
     const { id } = await params
+    const numericId = Number(id)
 
     const response = await requireAuth(
       async token =>
-        await fetchSpacePendingMembersServer(id, {
+        await fetchSpacePendingMembersServer(numericId, {
           token,
-          next: { revalidate: 60, tags: ['space-pending-member', id] }
+          next: {
+            revalidate: 60,
+            tags: ['space-pending-members', numericId.toString()]
+          }
         })
     )
 

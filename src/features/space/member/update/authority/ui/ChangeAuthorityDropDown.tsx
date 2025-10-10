@@ -30,9 +30,7 @@ const ChangeAuthorityDropDown = ({
   disabled,
   spaceId
 }: Props) => {
-  const { handleSelect, isUpdating, isError, isSuccess } = useUpdateAuthority(
-    String(spaceId)
-  )
+  const { handleSelect, isUpdating, isError, isSuccess } = useUpdateAuthority()
 
   const displayRole = getAuthorityLabel(role)
 
