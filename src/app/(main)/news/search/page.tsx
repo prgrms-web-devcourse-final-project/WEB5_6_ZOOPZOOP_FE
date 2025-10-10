@@ -30,9 +30,9 @@ export default async function NewsSearch({
   return (
     <div className="w-full flex flex-col p-10 min-h-[calc(100vh-72px)]">
       <h1 className="text-2xl font-bold mb-6">뉴스 키워드: {keyword}</h1>
-      {news && news?.data?.items?.length > 0 ? (
+      {news && news?.data?.items && news?.data?.items?.length > 0 ? (
         <NewsGrid
-          news={news.data.items}
+          news={news.data?.items ?? []}
           page={currentPage}
           type="sub"
         />
@@ -41,7 +41,7 @@ export default async function NewsSearch({
       )}
       <div className="mt-8">
         <Pagination
-          totalPages={news?.data.total ? Math.ceil(news.data.total / 18) : 1}
+          totalPages={news?.data?.total ? Math.ceil(news.data.total / 18) : 1}
         />
       </div>
     </div>
