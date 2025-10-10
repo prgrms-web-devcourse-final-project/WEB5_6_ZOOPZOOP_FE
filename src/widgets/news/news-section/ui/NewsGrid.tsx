@@ -14,22 +14,21 @@ interface Props {
 export const NewsGrid = ({ news, page }: Props) => {
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data
-  const [loading, setLoading] = useState(false)
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({})
   const [selectedFolder] = useState<number | null>(
     folderList?.find(f => f.folderName === 'default')?.folderId ?? null
   )
 
   if (!folderList) return null
-
   const handlePost = async (newUrl: string) => {
     try {
-      setLoading(true)
+      setLoadingMap(prev => ({ ...prev, [newUrl]: true }))
       await postArchiveFileClient(selectedFolder, newUrl)
       showSuccessToast('파일 업로드 성공')
     } catch {
       showErrorToast('파일 업로드 중 오류 발생')
     } finally {
-      setLoading(false)
+      setLoadingMap(prev => ({ ...prev, [newUrl]: false }))
     }
   }
 
@@ -47,7 +46,7 @@ export const NewsGrid = ({ news, page }: Props) => {
             imageUrl={`/api/og-image?url=${encodeURIComponent(item.link)}`}
             type="base"
             onSave={() => handlePost(item.link)}
-            loading={loading}
+            loading={loadingMap[item.link] || false}
           />
         ))}
       </div>
