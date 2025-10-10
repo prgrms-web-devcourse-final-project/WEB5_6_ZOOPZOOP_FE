@@ -28,6 +28,8 @@ export interface FileData {
   category: string
 }
 
+export type EditFileRequest = Omit<FileData, 'dataCreatedDate'>
+
 export interface PageInfo {
   page: number
   size: number
@@ -40,8 +42,8 @@ export interface PageInfo {
 
 export interface FileSearchParams {
   folderId?: number
-  page: number
-  size: number
+  page?: number
+  size?: number
   isActive?: boolean
   sort?: string
   keyword?: string

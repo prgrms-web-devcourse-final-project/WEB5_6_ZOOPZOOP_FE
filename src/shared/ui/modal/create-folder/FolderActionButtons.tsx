@@ -18,13 +18,13 @@ export const FolderActionButtons = ({
       <button
         onClick={onCancel}
         disabled={isCreating}
-        className="bg-white w-full text-black border border-gray-normal rounded-md py-3 px-3 text-base disabled:opacity-50">
+        className="bg-white w-full cursor-pointer text-black border border-gray-normal rounded-md py-3 px-3 text-base disabled:opacity-50 hover:bg-orange-accent">
         취소
       </button>
       <button
         onClick={onCreate}
         disabled={disabled || isCreating}
-        className="bg-green-normal w-full text-white rounded-md py-3 px-3 text-base disabled:opacity-50">
+        className="bg-green-normal w-full cursor-pointer text-white rounded-md py-3 px-3 text-base disabled:opacity-50 hover:bg-orange-accent">
         {isCreating ? `${label} 중...` : label}
       </button>
     </div>

@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { FileSearchParams, SearchGetResponse } from './type'
+import { EditFileRequest, FileSearchParams, SearchGetResponse } from './type'
 import {
   deleteManyArchiveFileClient,
   deleteOneArchiveFileClient,
+  editArchiveFileClient,
   fetchArchiveFilesByFolderClient,
   fetchArchiveFilesByPageClient
 } from '../api/file.client'
@@ -32,8 +33,9 @@ export const useArchiveFilesByPageQuery = ({
   initialData
 }: PageQuery) => {
   const { folderId, page, sort, size, keyword, isActive } = query
+
   return useQuery({
-    queryKey: ['archiveFilesPage', folderId, page, sort, keyword], //쿼리 키를 다르게 설정
+    queryKey: ['archiveFilesPage', folderId, page, sort, keyword, isActive], //쿼리 키를 다르게 설정
     queryFn: () =>
       fetchArchiveFilesByPageClient({
         folderId,
@@ -43,7 +45,7 @@ export const useArchiveFilesByPageQuery = ({
         sort,
         isActive
       }),
-    staleTime: 1000 * 60,
+    // staleTime: 1000 * 60,
     initialData: initialData
   })
 }
@@ -54,7 +56,7 @@ export const useDeleteOneArchiveFileQuery = () => {
     mutationFn: (dataSourceId: number) =>
       deleteOneArchiveFileClient(dataSourceId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['archiveDelete'] })
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
     }
   })
   return { deleteOneFile }
@@ -66,8 +68,19 @@ export const useDeleteManyArchiveFileQuery = () => {
     mutationFn: (dataSourceId: number[]) =>
       deleteManyArchiveFileClient(dataSourceId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['archiveDelete'] })
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
     }
   })
   return { deleteManyFile }
+}
+
+export const useEditArchiveFileQuery = () => {
+  const queryClient = useQueryClient()
+  const editFile = useMutation({
+    mutationFn: (fileData: EditFileRequest) => editArchiveFileClient(fileData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
+    }
+  })
+  return { editFile }
 }

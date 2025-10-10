@@ -3,13 +3,21 @@ import {
   FileGetResponse,
   FilePostResponse,
   SearchGetResponse,
-  FileSearchParams
+  FileSearchParams,
+  EditFileRequest
 } from '../model/type'
 import { httpClient } from '@/shared/lib'
 
 // 아카이브 페이지 내 파일 조회
 export const fetchArchiveFilesByPageServer = async (
-  { folderId, page, size, isActive, sort, keyword }: FileSearchParams,
+  {
+    folderId = 0,
+    page = 1,
+    size = 8,
+    isActive = true,
+    sort,
+    keyword
+  }: FileSearchParams,
   options?: NextFetchOptions
 ): Promise<SearchGetResponse> => {
   const params = new URLSearchParams()
@@ -84,14 +92,30 @@ export const deleteManyArchiveFileServer = async (
 
 // 파일 수정
 export const editArchiveFileServer = async (
-  payload: {
-    dataSourceId: number[]
-  },
+  fileData: EditFileRequest,
   options: NextFetchOptions
 ) => {
-  return await httpClient.put<FilePostResponse>(
-    `/api/v1/archive/move`,
-    payload,
+  const {
+    title,
+    summary,
+    sourceUrl,
+    imageUrl,
+    source,
+    tags,
+    category,
+    dataSourceId
+  } = fileData
+  return await httpClient.patch<FilePostResponse>(
+    `/api/v1/archive/${dataSourceId}`,
+    {
+      title,
+      summary,
+      sourceUrl,
+      imageUrl,
+      source,
+      tags,
+      category
+    },
     options
   )
 }

@@ -16,6 +16,8 @@ interface Props {
   tags: string[]
   mode: 'archive' | 'trash'
   isSelected: boolean
+  contextMenu?: React.ReactNode
+  onContextMenu?: (x: number, y: number) => void
   onSelect: (cardId: number) => void
 }
 
@@ -36,16 +38,23 @@ const FileCard = ({
   summary,
   tags,
   isSelected,
+  contextMenu,
+  onContextMenu,
   onSelect
 }: Props) => {
   const [isHover, setIsHover] = useState(false)
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault()
+    if (onContextMenu) onContextMenu(e.clientX, e.clientY)
+  }
 
   return (
     <article
+      onContextMenu={handleContextMenu}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       className={tw(
-        'w-10/12 p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative',
+        ' p-3 rounded-sm shadow-md flex flex-col gap-2.5 transition-all duration-500 bg-[#F9FAFB] relative border border-gray-light',
         isSelected && 'ring-3 ring-orange-accent'
       )}>
       <File
@@ -60,6 +69,7 @@ const FileCard = ({
         isSelected={isSelected}
         onSelect={onSelect}
       />
+
       <HoveredCard
         mode={mode}
         id={id}
@@ -70,6 +80,7 @@ const FileCard = ({
         isSelected={isSelected}
         onSelect={onSelect}
       />
+      {contextMenu && mode !== 'trash' && contextMenu}
     </article>
   )
 }
