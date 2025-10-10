@@ -12,7 +12,9 @@ export const PATH = {
   },
   SPACE: {
     ROOT: '/space',
-    MANAGEMENT: '/space/:id/management'
+    MANAGEMENT: '/space/:id/m',
+    DETAIL: '/space/:id/detail',
+    TRASH: '/space/:id/trash'
   },
   PROFILE: {
     ROOT: '/profile'
