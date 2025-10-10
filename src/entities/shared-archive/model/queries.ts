@@ -1,9 +1,14 @@
-import { SearchSpaceFileGetResponse, SpaceFileByPageRequest } from './type'
 import {
+  DeleteSpaceFileRequest,
+  SearchSpaceFileGetResponse,
+  SpaceFileByPageRequest
+} from './type'
+import {
+  deleteManySpaceFileClient,
   fetchSpaceFilesByFolderClient,
   fetchSpaceFilesClient
 } from '../api/file.client'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 interface PageQuery {
   query: SpaceFileByPageRequest
@@ -40,4 +45,16 @@ export const useSpaceFilesByFolderQuery = (
     staleTime: 1000 * 60,
     enabled: options?.enabled
   })
+}
+
+export const useDeleteManySpaceFileQuery = () => {
+  const queryClient = useQueryClient()
+  const deleteManyFile = useMutation({
+    mutationFn: ({ spaceId, dataSourceId }: DeleteSpaceFileRequest) =>
+      deleteManySpaceFileClient({ spaceId, dataSourceId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['spaceFile'] })
+    }
+  })
+  return { deleteManyFile }
 }

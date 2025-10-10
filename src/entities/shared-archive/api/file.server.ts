@@ -3,6 +3,7 @@ import { APIResponse, NextFetchOptions } from '@/shared/types'
 import { httpClient } from '@/shared/lib'
 import { FilePostResponse, EditFileRequest } from '@/entities/archive/file'
 import {
+  DeleteSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByFolderGetResponse,
   SpaceFileByFolderRequest,
@@ -68,27 +69,25 @@ export const postSpaceFileServer = async (
 }
 
 //파일 단건 삭제 (영구 삭제)
-export const deleteOneSpaceFileServer = async (
-  dataSourceId: number,
-  options: NextFetchOptions
-) => {
-  return await httpClient.delete<FilePostResponse>(
-    `/api/v1/space/${dataSourceId}`,
-    {},
-    options
-  )
-}
+// export const deleteOneSpaceFileServer = async (
+//   dataSourceId: number,
+//   options: NextFetchOptions
+// ) => {
+//   return await httpClient.delete<FilePostResponse>(
+//     `/api/v1/space/${dataSourceId}`,
+//     {},
+//     options
+//   )
+// }
 
 //파일 다건 삭제 (영구 삭제)
 export const deleteManySpaceFileServer = async (
-  payload: {
-    dataSourceId: number[]
-  },
+  { spaceId, dataSourceId }: DeleteSpaceFileRequest,
   options: NextFetchOptions
 ) => {
   return await httpClient.delete<APIResponse<null>>(
-    `/api/v1/space/delete`,
-    { dataSourceId: payload.dataSourceId },
+    `/api/v1/space/${spaceId}/archive/datasources/delete`,
+    { dataSourceId: dataSourceId },
     options
   )
 }

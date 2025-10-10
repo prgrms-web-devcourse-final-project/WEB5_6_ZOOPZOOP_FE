@@ -1,4 +1,6 @@
+import { APIResponse } from '@/shared/types'
 import {
+  DeleteSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByFolder,
   SpaceFileByFolderGetResponse,
@@ -49,4 +51,15 @@ export const fetchSpaceFilesByFolderClient = async ({
   }
 
   return response.data
+}
+
+// 파일 다건 삭제(영구삭제)
+export const deleteManySpaceFileClient = async ({
+  spaceId,
+  dataSourceId
+}: DeleteSpaceFileRequest) => {
+  return await httpClient.delete<APIResponse<null>>(
+    `/api/shared-archive/file`,
+    { spaceId, dataSourceId }
+  )
 }
