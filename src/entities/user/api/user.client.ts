@@ -61,6 +61,7 @@ export const updateProfileImageClient = async (
     '/api/user/profileImage',
     formData
   )
+
   if (response.status !== 200 || !response.data) {
     throw new Error('프로필 이미지 업데이트 실패')
   }

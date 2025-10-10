@@ -26,7 +26,7 @@ export const useLeaveSpace = () => {
       showErrorToast(error.message)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
     }
   })
 

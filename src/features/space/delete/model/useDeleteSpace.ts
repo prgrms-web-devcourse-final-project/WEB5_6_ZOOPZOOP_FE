@@ -13,7 +13,7 @@ export const useDeleteSpace = (spaceId: number) => {
 
   const { mutateDeleteSpace, isDeleting } = useDeleteSpaceMutation({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
       closeModal()
       router.push('/space?page=1')
       showSuccessToast('스페이스 삭제 완료')

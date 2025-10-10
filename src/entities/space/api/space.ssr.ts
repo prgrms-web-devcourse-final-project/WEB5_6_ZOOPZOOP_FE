@@ -13,7 +13,7 @@ export const getInitialSpaceList = async (
   const response = await requireAuth(async token => {
     return fetchSpaceListServer(params, {
       token,
-      next: { tags: ['spaceList'] }
+      next: { tags: ['spaces'] }
     })
   })
 
@@ -25,10 +25,10 @@ export const getInitialSpaceList = async (
 }
 
 // space info ssr
-export const getSpaceInfo = async (id: string): Promise<Space | null> => {
+export const getSpaceInfo = async (spaceId: number): Promise<Space | null> => {
   const response = await requireAuth(
     async token =>
-      await fetchSpaceServer(id, {
+      await fetchSpaceServer(spaceId, {
         token,
         next: { revalidate: 60, tags: ['spaceInfo'] }
       })
