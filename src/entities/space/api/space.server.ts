@@ -91,6 +91,7 @@ export const leaveSpaceServer = async (
 ) => {
   return await httpClient.delete<LeaveSpaceResponse>(
     `/api/v1/space/member/me/${payload}`,
+    {},
     options
   )
 }
