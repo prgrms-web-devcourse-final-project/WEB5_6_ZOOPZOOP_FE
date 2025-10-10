@@ -2,6 +2,7 @@ import { useAddMembersMutation } from '@/entities/space'
 import { useUserStore } from '@/entities/user'
 import { useModalStore } from '@/shared/lib'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
+import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -10,6 +11,7 @@ export const useInviteMembers = () => {
   const closeModal = useModalStore(state => state.closeModal)
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   // tanstack query
   const { mutateAddMembers, isAdding } = useAddMembersMutation({
@@ -21,6 +23,9 @@ export const useInviteMembers = () => {
     },
     onError: () => {
       showErrorToast('초대 전송을 실패했습니다.')
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['space-pending-member'] })
     }
   })
 

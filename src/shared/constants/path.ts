@@ -12,7 +12,7 @@ export const PATH = {
   },
   SPACE: {
     ROOT: '/space',
-    MANAGEMENT: '/space/:id/m'
+    MANAGEMENT: '/space/:id/management'
   },
   PROFILE: {
     ROOT: '/profile'

@@ -9,8 +9,9 @@ interface Props {
 }
 
 function NavItems({ item, pathName, isExpanded }: Props) {
-  const isMainMenuOpen =
-    pathName !== item.href && pathName.startsWith(item.href)
+  const isMainMenuOpen = item.showSubMenuOnBase
+    ? pathName.startsWith(item.href)
+    : pathName.startsWith(item.href) && pathName !== item.href
 
   const isActive = pathName.startsWith(item.href)
 
