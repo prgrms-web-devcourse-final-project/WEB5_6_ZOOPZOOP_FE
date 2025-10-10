@@ -1,17 +1,17 @@
 'use client'
 
-import { FileData } from '@/entities/archive/file'
+import { SpaceFileData } from '@/entities/shared-archive/model/type'
 import { useOnClickOutside } from '@/shared/hooks'
 import { useModalStore } from '@/shared/lib'
 import { useRef } from 'react'
 
 interface Props {
-  fileData: FileData
+  fileData: SpaceFileData
   position: { x: number; y: number }
   onClose?: () => void
 }
 
-const ArchiveFileContextMenu = ({ fileData, position, onClose }: Props) => {
+const SpaceFileContextMenu = ({ fileData, position, onClose }: Props) => {
   const menuRef = useRef<HTMLDivElement>(null)
   const openModal = useModalStore(state => state.openModal)
 
@@ -51,4 +51,4 @@ const ArchiveFileContextMenu = ({ fileData, position, onClose }: Props) => {
   )
 }
 
-export default ArchiveFileContextMenu
+export default SpaceFileContextMenu

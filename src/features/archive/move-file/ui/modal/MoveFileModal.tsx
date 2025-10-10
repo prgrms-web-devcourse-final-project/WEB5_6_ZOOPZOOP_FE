@@ -77,7 +77,7 @@ export const MoveFileModal = () => {
         {/* 버튼 */}
         <FolderActionButtons
           onCancel={closeModal}
-          onCreate={() => handleMoveFiles(selectedFiles)}
+          onCreate={() => handleMoveFiles(selectedFiles, selectedSaveFolder!)}
           isCreating={false}
           label={'이동'}
           disabled={!saveFolder}

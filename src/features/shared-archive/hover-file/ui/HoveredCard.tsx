@@ -2,11 +2,11 @@
 import { Checkbox } from '@/shared/ui'
 import Link from 'next/link'
 import { tw } from '@/shared/lib'
-import { FileMode } from '../../list'
+import { SpaceFileMode } from '../../list/model/type'
 
 interface Props {
   id: number
-  mode: FileMode
+  mode: SpaceFileMode
   summary: string
   sourceUrl: string
   tags: string[]
