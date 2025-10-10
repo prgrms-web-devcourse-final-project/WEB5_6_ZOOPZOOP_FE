@@ -1,4 +1,4 @@
-import { LeaveSpace } from '@/features/space'
+import { LeaveSpaceButton } from '@/features/space'
 
 const LeaveSpaceSection = () => {
   return (
@@ -14,7 +14,7 @@ const LeaveSpaceSection = () => {
         </p>
       </div>
       {/* 스페이스 나가기 버튼 */}
-      <LeaveSpace />
+      <LeaveSpaceButton />
     </div>
   )
 }

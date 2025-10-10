@@ -37,6 +37,20 @@ type ModalType =
       }
     }
   | {
+      type: 'expel-member'
+      props: {
+        spaceId: number
+        name: string
+        memberId: number
+      }
+    }
+  | {
+      type: 'leave-space'
+      props: {
+        spaceId: number
+      }
+    }
+  | {
       type: 'delete-folder'
       props: {
         folderId: number

@@ -2,6 +2,8 @@ import { httpClient } from '@/shared/lib'
 import { NextFetchOptions } from '@/shared/types'
 import {
   AddMemberResponse,
+  ExpelMemberRequest,
+  ExpelMemberResponse,
   SpaceAuthorityChangeRequest,
   SpaceAuthorityChangeResponse,
   SpaceMemberResponse,
@@ -9,7 +11,7 @@ import {
 } from '../model/type'
 
 // 스페이스 맴버 조회
-export const fetchSpaceMemberServer = async (
+export const fetchSpaceMembersServer = async (
   spaceId: string,
   options?: NextFetchOptions
 ): Promise<SpaceMemberResponse> => {
@@ -19,7 +21,7 @@ export const fetchSpaceMemberServer = async (
   )
 }
 // 스페이스 펜딩 유저 조회
-export const fetchSpacePendingMemberServer = async (
+export const fetchSpacePendingMembersServer = async (
   spaceId: string,
   options?: NextFetchOptions
 ): Promise<SpacePendingMemberResponse> => {
@@ -51,6 +53,19 @@ export const addSpaceMemberServer = async (
   return httpClient.post<AddMemberResponse>(
     `/api/v1/space/member/${spaceId}`,
     rest,
+    options
+  )
+}
+
+// 스페이스 맴버 퇴출
+export const expelMemberServer = async (
+  payload: ExpelMemberRequest,
+  options?: NextFetchOptions
+): Promise<ExpelMemberResponse> => {
+  const { spaceId, ...restPayload } = payload
+  return httpClient.delete<ExpelMemberResponse>(
+    `/api/v1/space/member/${spaceId}`,
+    restPayload,
     options
   )
 }

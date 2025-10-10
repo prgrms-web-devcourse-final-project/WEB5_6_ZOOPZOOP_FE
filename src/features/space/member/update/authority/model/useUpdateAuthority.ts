@@ -1,19 +1,29 @@
 import {
+  memberQueryKeys,
   SpaceAuthorityChangeRequest,
   useUpdateAuthorityMutation
 } from '@/entities/space'
-import { showErrorToast } from '@/shared/ui/toast/Toast'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
+import { useQueryClient } from '@tanstack/react-query'
 
-export const useUpdateAuthority = () => {
+export const useUpdateAuthority = (spaceId: string) => {
+  const queryClient = useQueryClient()
   // tanstack query
-  const { isUpdating, mutateUpdateAuthority } = useUpdateAuthorityMutation({
-    onSuccess: () => {
-      // 성공 로직 필요
-    },
-    onError: error => {
-      showErrorToast(error.message)
-    }
-  })
+  const { isUpdating, mutateUpdateAuthority, isError, isSuccess } =
+    useUpdateAuthorityMutation({
+      onSuccess: () => {
+        // 성공 로직 필요
+        showSuccessToast('권한 변경')
+      },
+      onError: error => {
+        showErrorToast(error.message)
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({
+          queryKey: memberQueryKeys.list(spaceId)
+        })
+      }
+    })
 
   // 권한 선택
   const handleSelect = (params: SpaceAuthorityChangeRequest) => {
@@ -22,6 +32,8 @@ export const useUpdateAuthority = () => {
 
   return {
     handleSelect,
-    isUpdating
+    isUpdating,
+    isSuccess,
+    isError
   }
 }

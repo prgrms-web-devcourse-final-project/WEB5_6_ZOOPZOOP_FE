@@ -1,1 +1,2 @@
-export { default as LeaveSpace } from './ui/LeaveSpace'
+export { default as LeaveSpaceButton } from './ui/LeaveSpaceButton'
+export { default as LeaveSpaceModal } from './ui/LeaveSpaceModal'
