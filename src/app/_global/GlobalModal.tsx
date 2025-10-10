@@ -20,11 +20,13 @@ import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderM
 import { DeleteAccountModal } from '@/features/auth'
 
 import {
+  EditFileModal,
   DeleteFileModal,
   RestoreFileModal,
   MoveFileModal,
   MoveToTrashModal,
-  CopyToSpaceModal
+  CopyToSpaceModal,
+  DeleteFolderModal
 } from '@/features/archive'
 
 export const GlobalModal = () => {
@@ -51,8 +53,12 @@ export const GlobalModal = () => {
       return <DeleteAccountModal />
     case 'copy-to-space':
       return <CopyToSpaceModal />
+    case 'edit-file':
+      return <EditFileModal {...modal.props} />
     case 'delete-file':
       return <DeleteFileModal {...modal.props} />
+    case 'delete-folder':
+      return <DeleteFolderModal {...modal.props} />
     case 'restore-file':
       return <RestoreFileModal {...modal.props} />
     case 'rename-folder':

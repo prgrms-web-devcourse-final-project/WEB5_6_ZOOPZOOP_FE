@@ -3,7 +3,8 @@ import {
   FileGetResponse,
   FilePostResponse,
   SearchGetResponse,
-  FileSearchParams
+  FileSearchParams,
+  EditFileRequest
 } from '../model/type'
 import { APIResponse } from '@/shared/types'
 
@@ -22,20 +23,20 @@ export const fetchArchiveFilesByFolderClient = async (
 
 // 페이지 안에 있는 파일 조회
 export const fetchArchiveFilesByPageClient = async ({
-  folderId,
-  page,
-  size,
+  folderId = 0,
+  page = 1,
+  size = 8,
   sort,
   isActive = true,
-  keyword = ''
+  keyword
 }: FileSearchParams) => {
   const params = new URLSearchParams()
   params.append('page', (page - 1).toString())
   params.append('size', size.toString())
+  params.append('folderId', folderId.toString())
+  params.append('isActive', isActive.toString())
 
-  if (folderId) params.append('folderId', folderId.toString())
   if (sort) params.append('sort', sort)
-  if (isActive !== undefined) params.append('isActive', isActive.toString())
   if (keyword && keyword.trim() !== '') {
     params.append('keyword', keyword)
   }
@@ -47,6 +48,7 @@ export const fetchArchiveFilesByPageClient = async ({
   if (response.status !== 200) {
     throw new Error(response.msg)
   }
+
   return response
 }
 
@@ -90,6 +92,20 @@ export const deleteManyArchiveFileClient = async (
   const response = await httpClient.delete<APIResponse<null>>(
     `/api/archive/file/list`,
     { dataSourceId: dataSourceId }
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+// 파일 수정
+export const editArchiveFileClient = async (
+  fileData: EditFileRequest
+): Promise<FilePostResponse> => {
+  const response = await httpClient.patch<FilePostResponse>(
+    `/api/archive/file/edit`,
+    fileData
   )
   if (response.status !== 200) {
     throw new Error(response.msg)

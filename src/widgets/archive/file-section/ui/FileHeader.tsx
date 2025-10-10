@@ -20,7 +20,7 @@ interface Props {
   selectedIds: number[]
   mode: 'archive' | 'trash'
   onChangeView: () => void
-  handleSortClick: (key: SortKey, direction: SortDirection) => void
+  toggleSort: (key: SortKey) => void
   handleSelectAll: () => void
 }
 
@@ -31,7 +31,7 @@ function FileHeader({
   mode,
   selectedIds,
   onChangeView,
-  handleSortClick,
+  toggleSort,
   handleSelectAll
 }: Props) {
   return (
@@ -73,23 +73,12 @@ function FileHeader({
         <SortButton
           label="title"
           direction={sortKey === 'title' ? direction : 'none'}
-          onClick={() =>
-            handleSortClick(
-              'title',
-              sortKey === 'title' && direction === 'asc' ? 'desc' : 'asc'
-            )
-          }
+          onClick={toggleSort}
         />
-
         <SortButton
           label="createdAt"
-          direction={sortKey === 'createdAt' ? direction : 'none'} // title 정렬할때 - 표시
-          onClick={() =>
-            handleSortClick(
-              'createdAt',
-              sortKey === 'createdAt' && direction === 'asc' ? 'desc' : 'asc'
-            )
-          }
+          direction={sortKey === 'createdAt' ? direction : 'none'}
+          onClick={toggleSort}
         />
 
         {/* 리스트 뷰 버튼 */}

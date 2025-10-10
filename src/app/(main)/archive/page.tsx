@@ -4,7 +4,6 @@ import Header, { Button } from '@/shared/ui/header/Header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
 
-const DEFAULT_PAGE_SIZE = 8
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 1
 
@@ -16,14 +15,9 @@ export default async function Archive({ searchParams }: Props) {
   const params = await searchParams
   const currentPage = Number(params?.page) || INITIAL_PAGE
 
-  const { data: folderList } = await getInitialFolderList()
+  const folderList = await getInitialFolderList()
 
-  const initialFileData = await getInitialFileList({
-    page: currentPage,
-    size: DEFAULT_PAGE_SIZE,
-    folderId: ROOT_FOLDER_ID,
-    isActive: true
-  })
+  const initialFileData = await getInitialFileList({ page: currentPage })
 
   const buttons: Button[] = [
     {
@@ -46,7 +40,7 @@ export default async function Archive({ searchParams }: Props) {
         <FileSection
           folderId={ROOT_FOLDER_ID}
           mode="archive"
-          initialFileData={initialFileData && initialFileData}
+          initialFileData={initialFileData}
           initialPage={currentPage}
         />
       </div>

@@ -1,3 +1,4 @@
+import { FileData } from '@/entities/archive/file'
 import { create } from 'zustand'
 
 type ModalType =
@@ -12,6 +13,7 @@ type ModalType =
   | { type: 'delete-account' }
   | { type: 'copy-to-space' }
   | { type: 'go-to-trash' }
+  | { type: 'edit-file'; props: { fileData: FileData } }
   | { type: 'delete-file'; props: { dataSourceId: number[] } }
   | { type: 'restore-file'; props: { dataSourceId: number[] } }
   | {
@@ -46,6 +48,13 @@ type ModalType =
       type: 'leave-space'
       props: {
         spaceId: number
+      }
+    }
+  | {
+      type: 'delete-folder'
+      props: {
+        folderId: number
+        folderName: string
       }
     }
 

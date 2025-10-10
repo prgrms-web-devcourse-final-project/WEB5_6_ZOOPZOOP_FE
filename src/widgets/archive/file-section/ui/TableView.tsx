@@ -1,5 +1,5 @@
 import { CustomTable } from '@/shared/ui'
-import { ArchiveColumn, ArchiveColumnType } from './ArchiveColumn'
+import { getArchiveColumns, ArchiveColumnType } from './ArchiveColumn'
 import { FileData } from '@/entities/archive/file'
 
 interface Props {
@@ -16,10 +16,12 @@ function TableView({ fileList, mode }: Props) {
     origin: item.source
   }))
 
+  const columns = getArchiveColumns(mode)
+
   return (
     <div className="w-full">
       <CustomTable
-        columns={ArchiveColumn}
+        columns={columns}
         data={tableData}
       />
     </div>
