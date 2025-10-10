@@ -25,7 +25,8 @@ export const POST = async (
         )
     )
 
-    revalidateTag(`space-pending-members-${numericId}`)
+    // revalidateTag(`space-pending-members-${numericId}`)
+    revalidateTag(`space-pending-members`)
 
     return NextResponse.json(response)
   } catch (error) {
@@ -52,7 +53,8 @@ export const GET = async (
           token,
           next: {
             revalidate: 60,
-            tags: [`space-pending-members-${numericId.toString()}`]
+            // tags: [`space-pending-members-${numericId.toString()}`]
+            tags: [`space-pending-members`]
           }
         })
     )
