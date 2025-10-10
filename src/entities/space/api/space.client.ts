@@ -99,7 +99,8 @@ export const updateSpaceNameClient = async (
  */
 export const leaveSpaceClient = async (spaceId: number): Promise<void> => {
   const { msg, status } = await httpClient.delete<LeaveSpaceResponse>(
-    `/api/space/${spaceId}`
+    `/api/space`,
+    { spaceId }
   )
 
   if (status !== 200) {

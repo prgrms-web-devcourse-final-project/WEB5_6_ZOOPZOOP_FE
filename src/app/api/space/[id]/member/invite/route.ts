@@ -24,9 +24,9 @@ export const POST = async (
         )
     )
 
-    // 캐시 삭제
     revalidateTag('space-member-pending')
     revalidateTag(payload.spaceId)
+
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

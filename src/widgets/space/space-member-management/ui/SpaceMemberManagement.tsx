@@ -11,12 +11,17 @@ interface Props {
 }
 
 export const SpaceMemberManagement = ({ spaceId }: Props) => {
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [activeTab, setActiveTab] = useState<ActiveType>('members')
   const { members, pendingMembers } = useMembers(spaceId)
 
-  const currentMembers = useMemo(() => {
-    return activeTab === 'members' ? members : pendingMembers
-  }, [activeTab, members, pendingMembers])
+  const filteredMembers = useMemo(() => {
+    const currentMembers = activeTab === 'members' ? members : pendingMembers
+    if (!searchTerm) return currentMembers
+    return currentMembers.filter(member =>
+      member.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+    )
+  }, [searchTerm, members, pendingMembers, activeTab])
 
   return (
     <section className="w-full">
@@ -27,10 +32,12 @@ export const SpaceMemberManagement = ({ spaceId }: Props) => {
           onTabChange={setActiveTab}
           membersCount={members.length}
           pendingCount={pendingMembers?.length}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
         />
 
         <MemberTable
-          members={currentMembers}
+          members={filteredMembers}
           activeTab={activeTab}
         />
       </div>
