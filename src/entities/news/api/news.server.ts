@@ -11,19 +11,13 @@ export const fetchNews = async (): Promise<NewsResponse> => {
 export const fetchNewsByKeywords = async (
   keywords: string,
   options?: NextFetchOptions
-): Promise<NewsResponse | null> => {
+): Promise<NewsResponse> => {
   return httpClient.post<NewsResponse>(
     `/api/v1/news/keywords`,
-    {
-      keywords: [keywords]
-    },
-    {
-      next: { revalidate: 300, tags: [`news-${keywords}`] },
-      ...options
-    }
+    { keywords: [keywords] },
+    { next: { revalidate: 300, tags: [`news-${keywords}`] }, ...options }
   )
 }
-
 export const fetchRecommendedNews = async (
   payload: string,
   options?: NextFetchOptions

@@ -21,11 +21,10 @@ export default async function News() {
   const categoryResults = await Promise.allSettled(
     categories.map(category =>
       requireAuth(async token => {
-        const response = await fetchNewsByKeywords(category.categoryKor, {
+        return fetchNewsByKeywords(category.categoryKor, {
           token,
           next: { revalidate: 300 }
         })
-        return { status: 200, msg: 'ok', data: response }
       })
     )
   )
@@ -44,7 +43,7 @@ export default async function News() {
           {categories.map((category, index) => {
             const news =
               categoryResults[index].status === 'fulfilled'
-                ? categoryResults[index].value?.data?.data?.items
+                ? categoryResults[index].value?.data?.items
                 : []
 
             return (
