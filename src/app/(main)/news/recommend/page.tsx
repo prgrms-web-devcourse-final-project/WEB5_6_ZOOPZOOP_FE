@@ -1,10 +1,9 @@
-import { fetchArchiveFolderServer } from '@/entities/archive/folder/api/folder.server'
+import { getInitialFolderList } from '@/entities/archive/folder/api/folder.ssr'
 import { fetchRecommendedNews } from '@/entities/news'
 import { requireAuth } from '@/shared/lib/api-route'
 import Pagination from '@/shared/ui/pagination/Pagination'
 
 import { NewsGrid } from '@/widgets/news'
-import { RecommendFolder } from '@/widgets/news/recommend-folder'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -17,13 +16,18 @@ export default async function Recommend({
 }: {
   searchParams: Promise<{ page: string }>
 }) {
-  const { data } = await fetchArchiveFolderServer({})
+  const { data } = await getInitialFolderList()
 
   const { page } = await searchParams
 
+  if (!data) return null
+
   // 나중에 아카이브 합치면서 수정해야함
   const recommendedNews = await requireAuth(token =>
-    fetchRecommendedNews('24', { token, next: { revalidate: 300 } })
+    fetchRecommendedNews(data[2].folderId.toString(), {
+      token,
+      next: { revalidate: 300 }
+    })
   )
   const currentPage = Number(page) || 1
 
@@ -38,15 +42,6 @@ export default async function Recommend({
           </p>
         </div>
 
-        {data && data.length > 0 && (
-          <div className="py-6">
-            <h2 className="text-base font-bold text-gray-800 mb-3">
-              분석된 관심 폴더
-            </h2>
-            <RecommendFolder folderList={data} />
-          </div>
-        )}
-
         <div className="pt-6">
           {recommendedNews &&
           recommendedNews?.data?.items &&
@@ -54,6 +49,7 @@ export default async function Recommend({
             <NewsGrid
               news={recommendedNews.data.items}
               page={currentPage}
+              type="recommend"
             />
           ) : (
             <div className="text-center py-20 text-gray-500">
