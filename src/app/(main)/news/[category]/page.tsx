@@ -46,6 +46,7 @@ export default async function NewsCategory({
           <NewsGrid
             news={news.data.items}
             page={currentPage}
+            type="sub"
           />
         ) : (
           <div className="text-center text-gray-500">검색 결과가 없습니다.</div>

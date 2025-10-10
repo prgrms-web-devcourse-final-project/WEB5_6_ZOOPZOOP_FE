@@ -86,6 +86,7 @@ export default async function Recommend({
             <NewsGrid
               news={news.data.items}
               page={currentPage}
+              type="sub"
             />
           ) : (
             <div className="text-center py-20 text-gray-500">
