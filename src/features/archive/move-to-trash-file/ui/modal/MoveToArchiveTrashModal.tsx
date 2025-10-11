@@ -4,7 +4,7 @@ import { useMoveFileModalState } from '@/features/archive/move-file/model/useMov
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { ChevronsRight, Folder } from 'lucide-react'
+import { ChevronsRight, Folder, Trash2 } from 'lucide-react'
 import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { SelectFileSection } from '@/features/archive/move-file'
@@ -70,11 +70,11 @@ function MoveToArchiveTrashModal() {
             />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-center">
-            <Folder
-              size={100}
+            <Trash2
+              size={80}
               className="text-gray-normal"
             />
-            <p className="text-lg">휴지통</p>
+            <p className="text-xl">휴지통</p>
           </div>
         </div>
 
