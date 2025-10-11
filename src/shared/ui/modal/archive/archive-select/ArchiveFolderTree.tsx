@@ -16,7 +16,7 @@ interface Props {
       name: string
     }[]
   }
-  onFolderSelect: (folderId: number) => void
+  onFolderSelect: (folderId: number, folderName: string) => void
   onFileSelect?: ({
     folderId,
     folderName,
@@ -53,12 +53,12 @@ export const ArchiveFolder = ({
     <div className="cursor-pointer flex flex-col gap-2 text-sm ml-10">
       <div
         className={tw(
-          'flex items-center gap-2.5 w-fit py-1 px-2 rounded-sm',
+          'flex items-center gap-4 w-fit py-1 px-2 rounded-sm',
           isSelected && mode === 'select' && 'bg-green-light-active ',
           isSelected && mode === 'move' && 'bg-orange-accent'
         )}
         onClick={() => {
-          onFolderSelect(data.id)
+          onFolderSelect(data.id, data.name)
         }}>
         <LuFolder size={20} />
         <p>{data.name}</p>

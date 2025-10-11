@@ -5,8 +5,7 @@ import { useShallow } from 'zustand/shallow'
 import {
   AlarmModal,
   ArchiveSelectModal,
-  CreateFolderModal,
-  UrlUploadModal
+  CreateFolderModal
 } from '@/shared/ui/modal'
 import {
   CreateSpaceModal,
@@ -25,7 +24,8 @@ import {
   RestoreFileModal,
   MoveFileModal,
   MoveToArchiveTrashModal,
-  DeleteFolderModal
+  DeleteFolderModal,
+  UrlUploadModal
 } from '@/features/archive'
 import {
   CopyToSpaceModal,
