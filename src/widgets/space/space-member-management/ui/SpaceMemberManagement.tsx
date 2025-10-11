@@ -7,7 +7,7 @@ import { MemberTabs } from './MemberTabs'
 import { useMembers } from '@/features/space'
 
 interface Props {
-  spaceId: string
+  spaceId: number
 }
 
 export const SpaceMemberManagement = ({ spaceId }: Props) => {

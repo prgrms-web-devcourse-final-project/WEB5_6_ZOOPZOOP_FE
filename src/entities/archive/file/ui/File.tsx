@@ -2,6 +2,7 @@ import { formatDate } from '@/shared/lib/formatter'
 import FileCardTitle from './FileTitle'
 import FileThumbnail from './FileThumbnail'
 import { Avatar, Badge, Checkbox } from '@/shared/ui'
+import { FileMode } from '@/features/archive'
 
 interface Props {
   id: number // 자료 아이디
@@ -11,7 +12,7 @@ interface Props {
   imageUrl: string // 썸네일 url
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
-  mode: 'archive' | 'trash'
+  mode: FileMode
   isSelected: boolean
   onSelect: (cardId: number) => void
 }

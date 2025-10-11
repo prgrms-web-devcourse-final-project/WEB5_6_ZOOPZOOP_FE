@@ -1,3 +1,4 @@
+import { FileMode } from '@/features/archive'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowRight, Calendar } from 'lucide-react'
@@ -11,7 +12,7 @@ export interface ArchiveColumnType {
 }
 
 export const getArchiveColumns = (
-  mode: 'archive' | 'trash'
+  mode: FileMode
 ): ColumnDef<ArchiveColumnType>[] => {
   const columns: ColumnDef<ArchiveColumnType>[] = [
     {

@@ -22,7 +22,7 @@ export const useInvitationQuery = () => {
 export const useAcceptInvitationMutation = (
   options: UseMutationOptions<InviteResult | null, Error, number>
 ) => {
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, variables } = useMutation({
     mutationKey: ['invitation', 'accept'],
     mutationFn: inviteId => acceptInvitationClient(inviteId),
     ...options
@@ -30,7 +30,8 @@ export const useAcceptInvitationMutation = (
 
   return {
     acceptInvitationMutate: mutate,
-    isAccepting: isPending
+    isAccepting: isPending,
+    variables
   }
 }
 

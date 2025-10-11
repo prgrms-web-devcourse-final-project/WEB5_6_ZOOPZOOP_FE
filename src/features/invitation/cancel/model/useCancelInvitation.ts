@@ -29,7 +29,7 @@ export const useCancelInvitation = () => {
     onSuccess: data => {
       showSuccessToast(`'${data?.name}' 초대를 거절했습니다.`)
 
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
     },
     onError: (error, _, onMutateResult) => {
       showErrorToast(error.message)

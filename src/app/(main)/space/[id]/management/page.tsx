@@ -23,16 +23,17 @@ interface Props {
 
 const SpaceManagementPage = async ({ params }: Props) => {
   const { id } = await params
+  const numericId = Number(id)
   const queryClient = new QueryClient()
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: memberQueryKeys.list(id),
-      queryFn: () => getSpaceMemberList(id)
+      queryKey: memberQueryKeys.list(numericId),
+      queryFn: () => getSpaceMemberList(numericId)
     }),
     queryClient.prefetchQuery({
-      queryKey: memberQueryKeys.pending(id),
-      queryFn: () => getSpacePendingMemberList(id)
+      queryKey: memberQueryKeys.pending(numericId),
+      queryFn: () => getSpacePendingMemberList(numericId)
     })
   ])
 
@@ -44,7 +45,7 @@ const SpaceManagementPage = async ({ params }: Props) => {
       {/* 스페이스 맴버 테이블 */}
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<MemberTableSkeleton />}>
-          <SpaceMemberManagement spaceId={id} />
+          <SpaceMemberManagement spaceId={numericId} />
         </Suspense>
       </HydrationBoundary>
       <Separator className="my-10" />

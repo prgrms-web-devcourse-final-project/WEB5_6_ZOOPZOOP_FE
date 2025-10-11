@@ -6,12 +6,15 @@ import {
 } from './member.server'
 
 // 현재 스페이스 맴버 리스트 불러오기
-export const getSpaceMemberList = async (id: string): Promise<SpaceMember> => {
+export const getSpaceMemberList = async (
+  spaceId: number
+): Promise<SpaceMember> => {
   const { data, msg, status } = await requireAuth(
     async token =>
-      await fetchSpaceMembersServer(id, {
+      await fetchSpaceMembersServer(spaceId, {
         token,
-        next: { revalidate: 60, tags: ['space-member'] }
+        // next: { revalidate: 60, tags: [`space-members-${spaceId.toString()}`] }
+        next: { revalidate: 60, tags: [`space-members`] }
       })
   )
 
@@ -24,13 +27,17 @@ export const getSpaceMemberList = async (id: string): Promise<SpaceMember> => {
 
 // 초대 중엔 맴버 리스트 불러오기
 export const getSpacePendingMemberList = async (
-  id: string
+  spaceId: number
 ): Promise<SpacePendingMember> => {
   const { data, msg, status } = await requireAuth(
     async token =>
-      await fetchSpacePendingMembersServer(id, {
+      await fetchSpacePendingMembersServer(spaceId, {
         token,
-        next: { revalidate: 60, tags: ['space-pending-member', id] }
+        next: {
+          revalidate: 60,
+          // tags: [`space-pending-members-${spaceId.toString()}`]
+          tags: [`space-pending-members`]
+        }
       })
   )
 

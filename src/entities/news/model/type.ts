@@ -1,13 +1,9 @@
 import { APIResponse } from '@/shared/types'
 
-export interface NewsResponse {
-  status: string
-  msg: string
-  data: {
-    total: number
-    items: News[]
-  }
-}
+export type NewsResponse = APIResponse<{
+  total: number
+  items: News[]
+}>
 
 export interface News {
   title: string

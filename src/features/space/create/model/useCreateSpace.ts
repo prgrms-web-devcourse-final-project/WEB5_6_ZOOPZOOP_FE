@@ -15,7 +15,7 @@ export const useCreateSpace = () => {
   const { mutateCreateSpace, isCreating } = useCreateSpaceMutation({
     onSuccess: data => {
       // space 목록 캐시 무효화
-      queryClient.invalidateQueries({ queryKey: ['space'] })
+      queryClient.invalidateQueries({ queryKey: ['spaces'] })
       router.refresh()
       showSuccessToast(`'${data?.name}' 스페이스 생성 완료`)
       closeModal()
