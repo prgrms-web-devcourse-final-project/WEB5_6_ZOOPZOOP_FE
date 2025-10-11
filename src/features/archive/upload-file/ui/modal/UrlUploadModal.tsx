@@ -4,7 +4,6 @@ import { useRef } from 'react'
 import { LuFolder } from 'react-icons/lu'
 import { useModalStore } from '@/shared/lib'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
-import { useUploadArchiveFileQuery } from '@/entities/archive/file/model/queries'
 import { ModalLayout } from '@/shared/ui'
 import { ArchiveFolder } from '@/shared/ui/modal'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
@@ -18,9 +17,8 @@ export const UrlUploadModal = () => {
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data
 
-  const { uploadFile } = useUploadArchiveFileQuery()
   const closeModal = useModalStore(s => s.closeModal)
-  const { handlePost } = useUrlUploadAction()
+  const { handlePost, isPending } = useUrlUploadAction()
   const handleUpload = () => {
     if (!selectedFolder || !urlRef.current?.value?.trim()) return
 
@@ -72,7 +70,7 @@ export const UrlUploadModal = () => {
         label="업로드"
         onCancel={closeModal}
         onCreate={handleUpload}
-        isCreating={uploadFile.isPending}
+        isCreating={isPending}
         disabled={false}
       />
     </ModalLayout>

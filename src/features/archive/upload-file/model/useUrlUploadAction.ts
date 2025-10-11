@@ -35,5 +35,5 @@ export const useUrlUploadAction = () => {
       }
     )
   }
-  return { handlePost }
+  return { handlePost, isPending: uploadFile.isPending }
 }

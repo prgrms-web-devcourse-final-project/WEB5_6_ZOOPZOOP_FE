@@ -8,7 +8,7 @@ interface Props {
 }
 function DeleteFileModal({ dataSourceId }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
-  const { handleDelete } = useDeleteFileAction()
+  const { handleDelete, isPending } = useDeleteFileAction()
 
   return (
     <ModalLayout size="md">
@@ -24,7 +24,7 @@ function DeleteFileModal({ dataSourceId }: Props) {
         onCreate={() => {
           handleDelete(dataSourceId)
         }}
-        isCreating={false}
+        isCreating={isPending}
         label={'삭제'}
         disabled={false}
       />

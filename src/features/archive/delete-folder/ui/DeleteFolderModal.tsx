@@ -1,9 +1,7 @@
-import { useDeleteArchiveFolderQuery } from '@/entities/archive/folder'
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { showSuccessToast } from '@/shared/ui/toast/Toast'
-import { useRouter } from 'next/navigation'
+import { useDeleteFolderAction } from '../model/useDeleteFolderAction'
 
 interface Props {
   folderId: number
@@ -12,18 +10,7 @@ interface Props {
 
 function DeleteFolderModal({ folderId, folderName }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
-  const { deleteFolder } = useDeleteArchiveFolderQuery()
-  const router = useRouter()
-
-  const handleDelete = () => {
-    deleteFolder.mutate(folderId, {
-      onSuccess: () => {
-        showSuccessToast('폴더 삭제 성공')
-        closeModal()
-        router.push('/archive')
-      }
-    })
-  }
+  const { handleDelete, isPending } = useDeleteFolderAction()
 
   return (
     <ModalLayout size="md">
@@ -37,8 +24,8 @@ function DeleteFolderModal({ folderId, folderName }: Props) {
 
       <FolderActionButtons
         onCancel={closeModal}
-        onCreate={handleDelete}
-        isCreating={false}
+        onCreate={() => handleDelete(folderId)}
+        isCreating={isPending}
         label={'삭제'}
         disabled={false}
       />
