@@ -6,6 +6,7 @@ import FolderHeader from './FolderHeader'
 import { SortDirection } from '@tanstack/react-table'
 import { FolderData } from '@/entities/archive/folder/model/type'
 import { getSortedFolders } from '@/features/archive'
+import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 
 const SORT_KEY = 'title'
 

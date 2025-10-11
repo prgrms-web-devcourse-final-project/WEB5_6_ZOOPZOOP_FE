@@ -42,7 +42,7 @@ export const useSpaceFilesByFolderQuery = (
   return useQuery({
     queryKey: ['spaceFile', spaceId],
     queryFn: () => fetchSpaceFilesByFolderClient({ spaceId }),
-    staleTime: 1000 * 60,
+    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 }

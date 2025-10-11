@@ -4,18 +4,29 @@ import { Header } from '@/shared/ui/header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'
 
+import type { Metadata } from 'next'
+
+interface MetadataProps {
+  params: { folderId: string }
+  searchParams?: { name?: string }
+}
+
 export async function generateMetadata({
-  params
-}: {
-  params: Promise<{ folder: string }>
-}) {
-  const { folder } = await params
-  return { title: folder }
+  params,
+  searchParams
+}: MetadataProps): Promise<Metadata> {
+  const folderName = searchParams?.name
+    ? decodeURIComponent(searchParams.name)
+    : '폴더'
+  return {
+    title: folderName,
+    description: `${folderName} 안의 파일들을 볼 수 있는 페이지`
+  }
 }
 
 interface Props {
-  searchParams: Promise<{ page?: string }>
-  params: Promise<{ folder: string }>
+  searchParams: Promise<{ page?: string; name?: string }>
+  params: Promise<{ folderId: string }>
 }
 
 const INITIAL_PAGE = 1
@@ -24,11 +35,14 @@ export default async function ArchiveFolderPage({
   searchParams,
   params
 }: Props) {
-  const page = await searchParams
-  const { folder } = await params
-  const currentPage = Number(page?.page) || INITIAL_PAGE
+  const searchParam = await searchParams
+  const { folderId } = await params
 
-  const folderName = folder ? decodeURIComponent(String(folder)) : ''
+  const currentPage = Number(searchParam?.page) || INITIAL_PAGE
+
+  const folderName = searchParam.name
+    ? decodeURIComponent(String(searchParam.name))
+    : ''
 
   const folderList = await getInitialFolderList()
 
@@ -36,7 +50,7 @@ export default async function ArchiveFolderPage({
 
   const initialFileData = await getInitialFileList({
     page: currentPage,
-    folderId: selectedFolder?.folderId,
+    folderId: Number(folderId),
     isActive: true
   })
 

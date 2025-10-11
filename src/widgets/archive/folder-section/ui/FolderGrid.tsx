@@ -30,17 +30,18 @@ function FolderGrid({ data }: Props) {
 
   return (
     <div className="grid grid-cols-4 gap-4 max-h-[120px] overflow-y-auto">
-      <FolderItem
+      {/* <FolderItem
         folderName={useName}
         isUndo={true}
         isActive={false}
-      />
+      /> */}
 
       {data.map(({ folderName, folderId }) => {
         const isActive = clickedFolder === folderName
         return (
           <FolderItem
             key={folderId}
+            folderId={folderId}
             folderName={folderName}
             isUndo={false}
             isActive={isActive}

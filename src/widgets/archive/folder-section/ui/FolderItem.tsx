@@ -4,6 +4,7 @@ import { tw } from '@/shared/lib'
 import Link from 'next/link'
 
 interface Props {
+  folderId: number
   folderName: string
   isUndo: boolean
   isActive: boolean
@@ -12,6 +13,7 @@ interface Props {
 }
 
 function FolderItem({
+  folderId,
   folderName,
   isUndo,
   isActive,
@@ -25,7 +27,12 @@ function FolderItem({
 
   return (
     <>
-      <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
+      <Link
+        href={
+          !isUndo
+            ? `/archive/${folderId}?name=${encodeURIComponent(folderName)}`
+            : '/archive'
+        }>
         <div
           onContextMenu={handleContextMenu}
           className={tw(

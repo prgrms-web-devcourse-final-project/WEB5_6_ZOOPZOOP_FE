@@ -10,7 +10,7 @@ import { showSuccessToast } from '../../toast/Toast'
 import { useRouter } from 'next/navigation'
 
 export const CreateFolderModal = () => {
-  // const router = useRouter()
+  const router = useRouter()
   const [folderName, setFolderName] = useState('')
   const closeModal = useModalStore(s => s.closeModal)
   const { addFolder } = usePostArchiveFolderQuery()
@@ -23,6 +23,7 @@ export const CreateFolderModal = () => {
         const folderId = response.data?.folderId // 추후 폴더 페이지로 이동
         showSuccessToast('폴더 생성 완료')
         closeModal()
+        router.push(`/archive/${folderId}?name=${folderName}`)
       }
     })
   }
