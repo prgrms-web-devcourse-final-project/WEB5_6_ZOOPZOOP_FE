@@ -13,7 +13,8 @@ export const getInitialSpaceFileList = async (
   const response = await requireAuth(async token => {
     return fetchSpaceFilesByPageServer(params, {
       token,
-      next: { revalidate: 10, tags: ['spaceFiles'] }
+      //  next: { revalidate: 10, tags: ['spaceFiles'] }
+      next: { tags: ['spaceFiles'] }
     })
   })
 

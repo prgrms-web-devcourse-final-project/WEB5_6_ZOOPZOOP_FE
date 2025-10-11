@@ -5,7 +5,8 @@ import {
   deleteOneArchiveFileClient,
   editArchiveFileClient,
   fetchArchiveFilesByFolderClient,
-  fetchArchiveFilesByPageClient
+  fetchArchiveFilesByPageClient,
+  postArchiveFileClient
 } from '../api/file.client'
 
 export const useArchiveFilesByFolderQuery = (
@@ -13,9 +14,9 @@ export const useArchiveFilesByFolderQuery = (
   options?: { enabled?: boolean }
 ) => {
   const filesQuery = useQuery({
-    queryKey: ['archiveFilesFolder', folderId],
+    queryKey: ['archiveFilesPage', folderId],
     queryFn: () => fetchArchiveFilesByFolderClient(folderId),
-    staleTime: 1000 * 60,
+    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 
@@ -74,6 +75,7 @@ export const useDeleteManyArchiveFileQuery = () => {
   return { deleteManyFile }
 }
 
+//파일 수정
 export const useEditArchiveFileQuery = () => {
   const queryClient = useQueryClient()
   const editFile = useMutation({
@@ -83,4 +85,22 @@ export const useEditArchiveFileQuery = () => {
     }
   })
   return { editFile }
+}
+
+// 파일 업로드
+export const useUploadArchiveFileQuery = () => {
+  const queryClient = useQueryClient()
+  const uploadFile = useMutation({
+    mutationFn: ({
+      folderId,
+      sourceUrl
+    }: {
+      folderId: number
+      sourceUrl: string
+    }) => postArchiveFileClient(folderId, sourceUrl),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
+    }
+  })
+  return { uploadFile }
 }
