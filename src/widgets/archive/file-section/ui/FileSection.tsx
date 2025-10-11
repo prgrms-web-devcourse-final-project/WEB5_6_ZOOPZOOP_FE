@@ -14,6 +14,8 @@ import {
   useSwitchFileView
 } from '@/features/archive'
 
+import EmptyArchiveFileList from '@/features/archive/list/ui/EmptyArchiveFileList'
+
 interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
@@ -67,7 +69,7 @@ export default function FileSection({
       />
 
       <div>
-        {viewMode === 'list' ? (
+        {!isEmpty && viewMode === 'list' ? (
           <TableView
             mode={mode}
             fileList={fileList}
@@ -83,7 +85,7 @@ export default function FileSection({
       </div>
 
       {isEmpty ? (
-        <p>등록된 파일이 없습니다.</p>
+        <EmptyArchiveFileList />
       ) : (
         <Pagination totalPages={totalPages} />
       )}
