@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { ModalLayout } from '../ModalLayout'
+
 import { useModalStore } from '@/shared/lib'
-import { FolderNameInput } from '../create-folder/FolderNameInput'
-import { FolderActionButtons } from '../create-folder/FolderActionButtons'
-import { useEditArchiveFolderNameQuery } from '@/entities/archive/folder'
-import { showSuccessToast } from '../../toast/Toast'
+import { ModalLayout } from '@/shared/ui'
+import { FolderNameInput } from '@/shared/ui/modal/create-folder/FolderNameInput'
+import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
+import { useRenameAction } from '../../model/useRenameAction'
 
 interface Props {
   folderId: number
@@ -16,22 +16,7 @@ interface Props {
 export const RenameFolderModal = ({ folderId, folderName }: Props) => {
   const [newFolderName, setFolderName] = useState(folderName)
   const closeModal = useModalStore(s => s.closeModal)
-  const { updateFolderName } = useEditArchiveFolderNameQuery()
-
-  const handleRename = () => {
-    updateFolderName.mutate(
-      {
-        folderId: folderId,
-        folderName: newFolderName
-      },
-      {
-        onSuccess: () => {
-          showSuccessToast('폴더 이름 수정 완료')
-          closeModal()
-        }
-      }
-    )
-  }
+  const { handleRename, isPending } = useRenameAction()
 
   return (
     <ModalLayout size="md">
@@ -40,13 +25,15 @@ export const RenameFolderModal = ({ folderId, folderName }: Props) => {
         <FolderNameInput
           value={newFolderName}
           onChange={setFolderName}
+          onEnter={() => handleRename(folderId, newFolderName)}
+          autoFocus
         />
       </div>
       <FolderActionButtons
         label="수정"
         onCancel={closeModal}
-        onCreate={handleRename}
-        isCreating={false}
+        onCreate={() => handleRename(folderId, newFolderName)}
+        isCreating={isPending}
         disabled={!folderName.trim()}
       />
     </ModalLayout>
