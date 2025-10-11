@@ -12,8 +12,8 @@ interface Props {
 function MoveToSpaceTrashModal({ dataSourceId }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
-
-  const { data } = useSpaceFilesByFolderQuery(currentSpace!.spaceId)
+  const spaceId = currentSpace!.spaceId
+  const { data } = useSpaceFilesByFolderQuery(spaceId)
   const selectedFiles =
     data?.files?.filter(file =>
       dataSourceId.includes(Number(file.dataSourceId))
@@ -48,7 +48,7 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
           onCancel={closeModal}
           onCreate={() => {
             handleMoveToTrash({
-              spaceId: currentSpace!.spaceId,
+              spaceId: spaceId,
               dataSourceId: dataSourceId
             })
           }}
