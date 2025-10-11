@@ -35,7 +35,7 @@ export function HoveredCard({
           : 'opacity-0 scale-95 pointer-events-none'
       )}>
       <div className="flex flex-col w-full min-h-full bg-white rounded-sm shadow-2xl p-4 text-gray-darker text-base ">
-        {(mode === 'trash' || mode === 'space') && (
+        {mode === 'trash' && (
           <Checkbox
             checked={isSelected}
             onClick={() => onSelect(id)}
