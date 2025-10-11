@@ -3,19 +3,26 @@ import {
   FolderData,
   useGetArchiveFoldersQuery
 } from '@/entities/archive/folder'
-import { fetchSpaceListClient, useSpaceQuery } from '@/entities/space'
+import { useSpaceStore } from '@/entities/space'
 import { SelectFileSection } from '@/features/archive/move-file'
 
 import { useMoveFileModalState } from '@/features/archive/move-file/model/useMoveFileModalState'
-import SelectSaveFolderSection from '@/features/archive/move-file/ui/modal/SelectSaveFolderSection'
+
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { ChevronsRight } from 'lucide-react'
 import { useCopyToSpaceAction } from '../../model/useCopyToSpaceAction'
 import { useFetchAllSpacesQuery } from '../../model/queries'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
+import SelectSaveSpaceSection from './SelectSaveSpaceSection'
 
 function CopyToSpaceModal() {
+  const pathname = usePathname()
+  const isSpacePage = pathname.includes('/space')
+  const { currentSpace } = useSpaceStore()
+
   const {
     selectedFolder,
     selectedSaveFolder,
@@ -33,6 +40,7 @@ function CopyToSpaceModal() {
     enabled: !!selectedFolder
   })
   const { spaces } = useFetchAllSpacesQuery()
+
   const spaceList: FolderData[] =
     spaces?.spaces
       //  권한이 ADMIN 또는 READ_WRITE인 항목만 필터링
@@ -53,10 +61,16 @@ function CopyToSpaceModal() {
 
   const { handleCopyToSpace } = useCopyToSpaceAction()
 
+  useEffect(() => {
+    if (isSpacePage && currentSpace && selectedSaveFolder === null) {
+      handleSelectSaveFolder(currentSpace.spaceId)
+    }
+  }, [isSpacePage, currentSpace, selectedSaveFolder, handleSelectSaveFolder])
+
   return (
     <ModalLayout size="lg">
       <div className=" w-full flex flex-col gap-2 min-h-[600px] ">
-        <h1 className="text-2xl font-bold text-center">스페이스에 복사</h1>
+        <h1 className="text-2xl font-bold text-center">스페이스로 불러오기</h1>
         <div className="flex justify-between">
           {/* 파일 위치 */}
           <div className=" w-1/2 flex flex-col gap-2.5 ">
@@ -77,9 +91,9 @@ function CopyToSpaceModal() {
             />
           </div>
           {/* 스페이스 영역 */}
-          <SelectSaveFolderSection
+          <SelectSaveSpaceSection
             location={'내 스페이스'}
-            folderList={spaceList}
+            spaceList={spaceList}
             saveFolder={saveFolder}
             selectedSaveFolder={selectedSaveFolder}
             onFolderSelect={handleSelectSaveFolder}

@@ -9,7 +9,7 @@ import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { SelectFileSection } from '@/features/archive/move-file'
 
-function MoveToTrashModal() {
+function MoveToArchiveTrashModal() {
   const { selectedFolder, selectedFiles, handleSelectFolder, onSelectFiles } =
     useMoveFileModalState()
 
@@ -90,4 +90,4 @@ function MoveToTrashModal() {
     </ModalLayout>
   )
 }
-export default MoveToTrashModal
+export default MoveToArchiveTrashModal

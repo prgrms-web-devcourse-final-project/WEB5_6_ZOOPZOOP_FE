@@ -11,12 +11,7 @@ interface Props {
   onClose?: () => void
 }
 
-const ArchiveFileContextMenu = ({
-  fileData,
-
-  position,
-  onClose
-}: Props) => {
+const ArchiveFileContextMenu = ({ fileData, position, onClose }: Props) => {
   const menuRef = useRef<HTMLDivElement>(null)
   const openModal = useModalStore(state => state.openModal)
 
@@ -27,21 +22,11 @@ const ArchiveFileContextMenu = ({
       label: '수정하기',
       onClick: () => {
         openModal({
-          type: 'edit-file',
+          type: 'edit-archive-file',
           props: { fileData: fileData }
         })
       }
     }
-
-    // {
-    //   label: '삭제하기',
-    //   onClick: () => {
-    //     openModal({
-    //       type: 'go-to-trash'
-    //     })
-    //     onClose?.()
-    //   }
-    // }
   ]
 
   return (

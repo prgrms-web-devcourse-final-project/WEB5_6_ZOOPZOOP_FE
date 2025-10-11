@@ -10,14 +10,16 @@ export const metadata: Metadata = {
 }
 
 interface Props {
-  searchParams: { q?: string; page?: string }
+  searchParams: Promise<{ q?: string; page?: string }>
 }
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 1
 
 export default async function ArchiveSearchPage({ searchParams }: Props) {
-  const query = searchParams.q ?? ''
-  const currentPage = Number(searchParams?.page) || INITIAL_PAGE
+  const params = await searchParams
+  const query = params.q ? decodeURIComponent(params.q) : ''
+
+  const currentPage = Number(params?.page) || INITIAL_PAGE
 
   const initialFileData = await getInitialFileList({
     page: currentPage,

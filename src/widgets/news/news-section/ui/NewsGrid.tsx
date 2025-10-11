@@ -3,7 +3,8 @@
 import { postArchiveFileClient } from '@/entities/archive/file'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { News } from '@/entities/news'
-import { useCopyToSpaceAction } from '@/features/archive/copy-to-space/model/useCopyToSpaceAction'
+import { useCopyToSpaceAction } from '@/features/shared-archive/import-file/model/useCopyToSpaceAction'
+
 import { BaseNewsCard, MainNewsCard, SubNewsCard } from '@/shared/ui/card'
 import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 import { useState } from 'react'

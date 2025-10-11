@@ -1,4 +1,5 @@
 import { File } from '@/entities/archive/file'
+import { FileMode } from '@/features/archive'
 import { HoveredCard } from '@/features/archive/hover-file'
 
 import { tw } from '@/shared/lib'
@@ -14,7 +15,7 @@ interface Props {
   sourceUrl: string // 원본 url
   ownerProfileUrl?: string // 자료 등록한 사람 프로필 url
   tags: string[]
-  mode: 'archive' | 'trash'
+  mode: FileMode
   isSelected: boolean
   contextMenu?: React.ReactNode
   onContextMenu?: (x: number, y: number) => void

@@ -14,7 +14,9 @@ export const PATH = {
     ROOT: '/space',
     DASHBOARD: '/space/:id/dashboard',
     MANAGEMENT: '/space/:id/management',
-    RECOMMEND: '/space/:id/news'
+    RECOMMEND: '/space/:id/news',
+    DETAIL: '/space/:id/detail',
+    TRASH: '/space/:id/trash'
   },
   PROFILE: {
     ROOT: '/profile'
