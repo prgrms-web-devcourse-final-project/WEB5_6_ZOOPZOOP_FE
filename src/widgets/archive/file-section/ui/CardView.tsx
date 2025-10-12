@@ -2,10 +2,11 @@ import { FileData } from '@/entities/archive/file'
 import FileCard from './FileCard'
 import { useContextMenu } from '@/shared/hooks'
 import ArchiveFileContextMenu from '@/features/archive/list/ui/ArchiveFileContextMenu'
+import { FileMode } from '@/features/archive'
 
 interface Props {
   fileList: FileData[]
-  mode: 'archive' | 'trash'
+  mode: FileMode
   selectedIds: number[]
   onSelect: (dataSourceId: number) => void
 }

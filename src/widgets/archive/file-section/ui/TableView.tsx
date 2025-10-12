@@ -1,10 +1,11 @@
 import { CustomTable } from '@/shared/ui'
 import { getArchiveColumns, ArchiveColumnType } from './ArchiveColumn'
 import { FileData } from '@/entities/archive/file'
+import { FileMode } from '@/features/archive'
 
 interface Props {
   fileList: FileData[]
-  mode: 'archive' | 'trash'
+  mode: FileMode
 }
 
 function TableView({ fileList, mode }: Props) {

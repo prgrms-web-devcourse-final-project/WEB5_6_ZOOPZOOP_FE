@@ -16,9 +16,14 @@ import {
 interface Props {
   totalPages?: number
   maxVisiblePages?: number
+  className?: string
 }
 
-const Pagination = ({ totalPages = 1, maxVisiblePages = 5 }: Props) => {
+const Pagination = ({
+  totalPages = 1,
+  maxVisiblePages = 5,
+  className
+}: Props) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -52,7 +57,7 @@ const Pagination = ({ totalPages = 1, maxVisiblePages = 5 }: Props) => {
   })
 
   return (
-    <PaginationContainer>
+    <PaginationContainer className={className}>
       <PaginationContent>
         {/* 맨 첫번째 페이지로 이동 */}
         <PaginationItem>

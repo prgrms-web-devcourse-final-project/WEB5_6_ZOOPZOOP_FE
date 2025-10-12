@@ -1,5 +1,6 @@
 import { Member } from '@/entities/space/member'
 import { APIResponse, Authority, Pagination } from '@/shared/types'
+import { SPACE_STATUS } from './constants'
 
 // 스페이스 인포
 export interface Space {
@@ -25,6 +26,7 @@ export interface FetchSpaceListParams {
   page?: number
   size?: number
   sort?: string[]
+  state?: SpaceStatus
   includeMembers?: boolean
 }
 
@@ -47,3 +49,12 @@ export type EditSpaceNameResponse = APIResponse<{ name: string }>
 
 // 스페이스 탈퇴
 export type LeaveSpaceResponse = APIResponse<{ id: number; name: string }>
+
+// 스페이스 메인 페이지 텝 타입
+export type TabType = {
+  value: string
+  label: string
+  icon?: React.ReactNode
+}
+
+export type SpaceStatus = (typeof SPACE_STATUS)[keyof typeof SPACE_STATUS]

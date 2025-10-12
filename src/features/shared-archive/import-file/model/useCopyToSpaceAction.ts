@@ -5,7 +5,7 @@ import {
 } from '@/shared/ui/toast/Toast'
 import { useModalStore } from '@/shared/lib'
 import { useCopyToSpaceArchiveFilesQuery } from './queries'
-import { SelectedFile } from '../../move-file/model/type'
+import { SelectedFile } from '@/features/archive/move-file/model/type'
 
 export const useCopyToSpaceAction = () => {
   const closeModal = useModalStore(s => s.closeModal)

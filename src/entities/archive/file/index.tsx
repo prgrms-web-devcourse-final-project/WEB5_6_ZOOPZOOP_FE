@@ -1,5 +1,5 @@
 /* type ------------------------------------ */
-export { type FileData } from './model/type'
+export * from './model/type'
 
 /* ui ------------------------------------ */
 export { default as File } from './ui/File'

@@ -53,7 +53,9 @@ function Header({ title, buttons, searchBar }: Props) {
           {buttons &&
             buttons.map(button => {
               const modalLabel =
-                button.label === '폴더 생성' ? 'create-folder' : 'url-upload'
+                button.label === '폴더 생성'
+                  ? 'create-folder'
+                  : 'upload-archive-url'
               const Icon = button.label === '폴더 생성' ? Plus : Upload
               return (
                 <ActionButton

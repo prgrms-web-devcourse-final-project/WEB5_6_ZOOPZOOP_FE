@@ -1,16 +1,23 @@
 'use client'
 
+import { InviteRequest } from '@/entities/invitation'
 import { Check, Loader2 } from 'lucide-react'
 
 interface Props {
   inviteId: number
-  handleAccept: (inviteId: number) => void
+  handleAccept: (payload: InviteRequest) => void
   isAccepting: boolean
+  spaceId: number
 }
 
-const AcceptButton = ({ inviteId, handleAccept, isAccepting }: Props) => {
+const AcceptButton = ({
+  inviteId,
+  handleAccept,
+  isAccepting,
+  spaceId
+}: Props) => {
   const handleClick = () => {
-    handleAccept(inviteId)
+    handleAccept({ inviteId, spaceId })
   }
 
   return (

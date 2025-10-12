@@ -11,17 +11,20 @@ export const useMoveFileAction = () => {
   const { moveFile } = useMoveOneArchiveFilesQuery()
   const { moveFiles } = useMoveManyArchiveFilesQuery()
 
-  const handleMoveFiles = async (selectedFiles: SelectedFile[]) => {
+  const handleMoveFiles = async (
+    selectedFiles: SelectedFile[],
+    selectedSaveFolder: number
+  ) => {
     try {
       const promises = selectedFiles.map(item => {
         if (item.files.length === 1) {
           return moveFile.mutateAsync({
             dataSourceId: item.files[0].fileId,
-            folderId: item.folderId
+            folderId: selectedSaveFolder
           })
         }
         return moveFiles.mutateAsync({
-          folderId: item.folderId,
+          folderId: selectedSaveFolder,
           dataSourceId: item.files.map(f => f.fileId)
         })
       })

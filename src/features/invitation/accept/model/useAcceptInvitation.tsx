@@ -11,7 +11,7 @@ export const useAcceptInvitation = () => {
   // tanstack query
   const { acceptInvitationMutate, isAccepting, variables } =
     useAcceptInvitationMutation({
-      onMutate: async inviteId => {
+      onMutate: async ({ inviteId }) => {
         await queryClient.cancelQueries({ queryKey: ['invitations'] })
 
         const prevInvitations = queryClient.getQueryData<Invitation[]>([
@@ -45,6 +45,6 @@ export const useAcceptInvitation = () => {
   return {
     handleAccept: acceptInvitationMutate,
     isAccepting,
-    variables
+    acceptingInviteId: variables?.inviteId
   }
 }

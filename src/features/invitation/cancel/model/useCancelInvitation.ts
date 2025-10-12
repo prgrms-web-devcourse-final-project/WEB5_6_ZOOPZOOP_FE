@@ -9,42 +9,43 @@ interface MutationContext {
 export const useCancelInvitation = () => {
   const queryClient = useQueryClient()
 
-  const { cancelInvitationMutate, isCanceling } = useCancelInvitationMutation({
-    onMutate: async inviteId => {
-      await queryClient.cancelQueries({ queryKey: ['invitations'] })
+  const { cancelInvitationMutate, isCanceling, variables } =
+    useCancelInvitationMutation({
+      onMutate: async ({ inviteId }) => {
+        await queryClient.cancelQueries({ queryKey: ['invitations'] })
 
-      const preInvitations = queryClient.getQueryData<Invitation[]>([
-        'invitations'
-      ])
+        const preInvitations = queryClient.getQueryData<Invitation[]>([
+          'invitations'
+        ])
 
-      if (preInvitations) {
-        const newInvitations = preInvitations.filter(
-          invitation => invitation.inviteId !== inviteId
-        )
-        queryClient.setQueryData(['invitations'], newInvitations)
+        if (preInvitations) {
+          const newInvitations = preInvitations.filter(
+            invitation => invitation.inviteId !== inviteId
+          )
+          queryClient.setQueryData(['invitations'], newInvitations)
+        }
+
+        return { preInvitations }
+      },
+      onSuccess: data => {
+        showSuccessToast(`'${data?.name}' 초대를 거절했습니다.`)
+        queryClient.invalidateQueries({ queryKey: ['spaces'] })
+      },
+      onError: (error, _, onMutateResult) => {
+        showErrorToast(error.message)
+        const context = onMutateResult as MutationContext
+        if (context.prevInvitations) {
+          queryClient.setQueryData(['invitations'], context.prevInvitations)
+        }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: ['invitations'] })
       }
-
-      return { preInvitations }
-    },
-    onSuccess: data => {
-      showSuccessToast(`'${data?.name}' 초대를 거절했습니다.`)
-
-      queryClient.invalidateQueries({ queryKey: ['spaces'] })
-    },
-    onError: (error, _, onMutateResult) => {
-      showErrorToast(error.message)
-      const context = onMutateResult as MutationContext
-      if (context.prevInvitations) {
-        queryClient.setQueryData(['invitations'], context.prevInvitations)
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['invitations'] })
-    }
-  })
+    })
 
   return {
     handleCancel: cancelInvitationMutate,
-    isCanceling
+    isCanceling,
+    cancelingInviteId: variables?.inviteId
   }
 }

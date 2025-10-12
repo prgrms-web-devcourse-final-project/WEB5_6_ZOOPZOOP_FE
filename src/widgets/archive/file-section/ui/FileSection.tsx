@@ -8,6 +8,7 @@ import Pagination from '@/shared/ui/pagination/Pagination'
 import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/queries'
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
 import {
+  FileMode,
   useSelectFiles,
   useSortFile,
   useSwitchFileView
@@ -16,7 +17,7 @@ import {
 interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
-  mode: 'archive' | 'trash'
+  mode: FileMode
   folderId: number
 }
 

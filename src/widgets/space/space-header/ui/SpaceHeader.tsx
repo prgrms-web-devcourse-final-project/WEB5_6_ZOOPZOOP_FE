@@ -1,35 +1,60 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-
+import { usePathname, useRouter } from 'next/navigation'
 import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
 import ActionButton from '@/shared/ui/header/ActionButton'
-import { Plus } from 'lucide-react'
+import { Plus, Upload } from 'lucide-react'
+import { useState } from 'react'
+import { SearchBar } from '@/shared/ui/header'
 
 function SpaceHeader() {
-  const { currentSpace } = useSpaceStore()
-
-  const openModal = useModalStore(s => s.openModal)
-
   const pathname = usePathname()
+  const router = useRouter()
+  const [query, setQuery] = useState('')
+
+  const { currentSpace } = useSpaceStore()
+  const spaceId = currentSpace?.spaceId
+  const openModal = useModalStore(s => s.openModal)
 
   const isDashboard =
     pathname.includes('/dashboard') || pathname.includes('/news')
-
-  // 스페이스 메인 페이지일 경우 스페이스 생성 버튼 show
-  const showCreateButton = pathname === '/space'
+  const isMainPage = pathname === '/space'
+  const isDetailPage = pathname.endsWith('/detail')
+  const isSearchResultPage = pathname.includes('/search')
+  const isTrashPage = pathname.endsWith('/trash')
+  const PLACEHOLDER = '검색어를 입력해 주세요'
 
   if (isDashboard) {
     return null
   }
 
+  const handleSearchInArchive = () => {
+    if (!query.trim()) return
+    router.push(`/space/${spaceId}/search?q=${encodeURIComponent(query)}`)
+  }
+
+  const handleSearchInSpace = () => {
+    if (!query.trim()) return
+  }
+
   return (
     <header className="bg-gray-dark-active p-6 w-full">
       <h1 className="text-white font-bold text-2xl mb-7">
-        {currentSpace?.spaceName || '내 스페이스'}
+        {isMainPage ? '내 스페이스' : currentSpace?.spaceName}
       </h1>
-      {showCreateButton ? (
+
+      {/* 휴지통 페이지 */}
+      {isTrashPage && (
+        <SearchBar
+          placeholder={PLACEHOLDER}
+          value={query}
+          onChange={setQuery}
+          onEnter={handleSearchInArchive}
+        />
+      )}
+      {/* 메인 페이지 */}
+      {isMainPage && (
         <div className="flex justify-between">
           <div className="flex gap-3">
             <ActionButton
@@ -40,21 +65,33 @@ function SpaceHeader() {
               }}
             />
           </div>
-          {/* <SearchBar
-            placeholder={searchBar.placeholder}
+          <SearchBar
+            placeholder={PLACEHOLDER}
             value={query}
             onChange={setQuery}
-            onEnter={() => {}}
-          /> */}
+            onEnter={handleSearchInSpace}
+          />
         </div>
-      ) : (
-        <></>
-        // <SearchBar
-        //   placeholder={searchBar.placeholder}
-        //   value={query}
-        //   onChange={setQuery}
-        //   onEnter={() => {}}
-        // />
+      )}
+      {/* 상세 페이지 , 검색결과 페이지*/}
+      {(isDetailPage || isSearchResultPage) && (
+        <div className="flex justify-between">
+          <div className="flex gap-3">
+            <ActionButton
+              label="파일 불러오기"
+              icon={Upload}
+              onClick={() => {
+                openModal({ type: 'copy-to-space' })
+              }}
+            />
+          </div>
+          <SearchBar
+            placeholder={PLACEHOLDER}
+            value={query}
+            onChange={setQuery}
+            onEnter={handleSearchInArchive}
+          />
+        </div>
       )}
     </header>
   )

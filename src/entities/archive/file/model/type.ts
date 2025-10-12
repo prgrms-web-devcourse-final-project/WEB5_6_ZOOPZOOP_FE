@@ -1,4 +1,4 @@
-import { APIResponse, Pagination } from '@/shared/types'
+import { APIResponse } from '@/shared/types'
 import { FolderData } from '../../folder'
 
 export type FileGetResponse = APIResponse<{

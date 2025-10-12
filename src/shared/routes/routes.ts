@@ -53,13 +53,11 @@ export const navItems: MainNav[] = [
         icon: ChartNetwork
       },
       {
-        /* TODO: 루트 변경 */
-        href: PATH.SPACE.ROOT,
+        href: PATH.SPACE.DETAIL,
         label: '자세히 보기',
         icon: TextSearch
       },
       {
-        /* TODO: 루트 변경 */
         href: PATH.SPACE.MANAGEMENT,
         label: '스페이스 관리',
         icon: Users
@@ -72,7 +70,7 @@ export const navItems: MainNav[] = [
       },
       {
         /* TODO: 루트 변경 */
-        href: PATH.SPACE.ROOT,
+        href: PATH.SPACE.TRASH,
         label: '휴지통',
         icon: Trash2
       }
