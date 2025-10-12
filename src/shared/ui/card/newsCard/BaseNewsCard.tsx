@@ -49,7 +49,7 @@ export const BaseNewsCard = ({
               e.stopPropagation()
               onSave?.()
             }}
-            className="absolute top-2 right-2 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+            className="absolute top-2 right-2 z-2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all cursor-pointer">
             {loading ? (
               <Loader2
                 size={16}
@@ -62,11 +62,7 @@ export const BaseNewsCard = ({
         )}
 
         <div
-          className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'} relative`}
-          onClick={() => {
-            if (!link) return
-            window.open(link, '_blank', 'noopener,noreferrer')
-          }}>
+          className={`w-full h-[200px] rounded-t-lg overflow-hidden relative`}>
           {imageUrl ? (
             <Image
               src={imageUrl}
