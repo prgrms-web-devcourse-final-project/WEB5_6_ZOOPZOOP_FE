@@ -27,7 +27,8 @@ function RestoreSpaceFileModal({ dataSourceId }: Props) {
         파일 복구
       </h1>
       <p className="mx-auto text-base text-gray-darker  ">
-        {dataSourceId.length}개의 데이터가 이전 폴더로 복구됩니다.
+        <span className="font-bold"> {dataSourceId.length}개</span>의 파일이
+        복구됩니다.
       </p>
 
       <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">

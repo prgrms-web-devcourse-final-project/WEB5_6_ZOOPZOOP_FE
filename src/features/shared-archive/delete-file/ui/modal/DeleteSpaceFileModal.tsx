@@ -38,11 +38,11 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
 
         <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
           {selectedFiles &&
-            selectedFiles.map((item, index) => (
+            selectedFiles.map(item => (
               <div
                 key={item.dataSourceId}
                 className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                {index + 1}. {item.title}
+                {item.title}
               </div>
             ))}
         </div>

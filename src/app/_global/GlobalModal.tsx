@@ -15,7 +15,6 @@ import {
   LeaveSpaceModal
 } from '@/features/space'
 
-import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
 import { DeleteAccountModal } from '@/features/auth'
 
 import {
@@ -25,7 +24,8 @@ import {
   MoveFileModal,
   MoveToArchiveTrashModal,
   DeleteFolderModal,
-  UrlUploadModal
+  UrlUploadModal,
+  RenameFolderModal
 } from '@/features/archive'
 import {
   CopyToSpaceModal,

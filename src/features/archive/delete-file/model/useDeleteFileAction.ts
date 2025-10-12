@@ -1,14 +1,6 @@
-import {
-  useDeleteManyArchiveFileQuery,
-  useDeleteOneArchiveFileQuery
-} from '@/entities/archive/file/model/queries'
+import { useDeleteManyArchiveFileQuery } from '@/entities/archive/file/model/queries'
 import { useModalStore } from '@/shared/lib'
-import {
-  showErrorToast,
-  showInfoToast,
-  showSuccessToast
-} from '@/shared/ui/toast/Toast'
-import { useRouter } from 'next/navigation'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 
 export const useDeleteFileAction = () => {
   const closeModal = useModalStore(s => s.closeModal)

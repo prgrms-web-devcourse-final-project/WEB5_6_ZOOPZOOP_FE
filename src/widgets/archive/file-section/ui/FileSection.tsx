@@ -15,6 +15,7 @@ import {
 } from '@/features/archive'
 
 import EmptyArchiveFileList from '@/features/archive/list/ui/EmptyArchiveFileList'
+import { tw } from '@/shared/lib'
 
 interface Props {
   initialFileData: SearchGetResponse
@@ -36,7 +37,7 @@ export default function FileSection({
   // 뷰 전환, 정렬, 선택 훅
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
   const { sort, toggleSort } = useSortFile()
-  const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
+  const { selectedFiles, handleSelect, handleSelectAll } = useSelectFiles()
 
   // react-query
   const { data: filesQuery } = useArchiveFilesByPageQuery({
@@ -62,13 +63,15 @@ export default function FileSection({
         sortKey={sort.key}
         direction={sort.direction}
         isTableView={viewMode === 'list'}
-        selectedIds={selectedIds}
+        selectedFiles={selectedFiles}
         onChangeView={onSwitchViewMode}
         toggleSort={toggleSort}
         handleSelectAll={() => handleSelectAll(fileList)}
       />
 
-      <div>
+      <div
+        className={tw('min-h-[64vh] py-3', mode === 'trash' && 'min-h-[75vh]')}>
+        {isEmpty && <EmptyArchiveFileList mode={mode} />}
         {!isEmpty && viewMode === 'list' ? (
           <TableView
             mode={mode}
@@ -76,7 +79,7 @@ export default function FileSection({
           />
         ) : (
           <CardView
-            selectedIds={selectedIds}
+            selectedFiles={selectedFiles}
             onSelect={handleSelect}
             mode={mode}
             fileList={fileList}
@@ -84,11 +87,7 @@ export default function FileSection({
         )}
       </div>
 
-      {isEmpty ? (
-        <EmptyArchiveFileList />
-      ) : (
-        <Pagination totalPages={totalPages} />
-      )}
+      {isEmpty ? '' : <Pagination totalPages={totalPages} />}
     </div>
   )
 }
