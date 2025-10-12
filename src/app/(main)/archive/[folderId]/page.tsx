@@ -10,17 +10,17 @@ interface MetadataProps {
   params: { folderId: string }
   searchParams?: { name?: string }
 }
-
 export async function generateMetadata({
   params,
   searchParams
 }: MetadataProps): Promise<Metadata> {
-  const folderName = searchParams?.name
-    ? decodeURIComponent(searchParams.name)
+  const resolvedSearchParams = await searchParams
+  const folderName = resolvedSearchParams?.name
+    ? decodeURIComponent(resolvedSearchParams.name)
     : '폴더'
+
   return {
-    title: folderName,
-    description: `${folderName} 안의 파일들을 볼 수 있는 페이지`
+    title: folderName
   }
 }
 

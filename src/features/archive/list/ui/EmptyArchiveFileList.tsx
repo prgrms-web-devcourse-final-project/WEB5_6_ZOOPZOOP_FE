@@ -2,8 +2,11 @@ import { useModalStore } from '@/shared/lib'
 import { Button } from '@/shared/ui/shadcn/button'
 import { PlusCircle } from 'lucide-react'
 import Image from 'next/image'
-
-const EmptyArchiveFileList = () => {
+import { FileMode } from '../model/type'
+interface Props {
+  mode: FileMode
+}
+const EmptyArchiveFileList = ({ mode }: Props) => {
   const openModal = useModalStore(state => state.openModal)
 
   return (
@@ -22,9 +25,11 @@ const EmptyArchiveFileList = () => {
       <p className="text-muted-foreground mb-5">
         URL을 업로드하여 아카이브를 만들어보세요!
       </p>
-      <Button onClick={() => openModal({ type: 'upload-archive-url' })}>
-        <PlusCircle className="mr-2 h-4 w-4" /> URL 업로드
-      </Button>
+      {mode === 'archive' && (
+        <Button onClick={() => openModal({ type: 'upload-archive-url' })}>
+          <PlusCircle className="mr-2 h-4 w-4" /> URL 업로드
+        </Button>
+      )}
     </section>
   )
 }
