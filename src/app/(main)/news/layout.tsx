@@ -1,3 +1,4 @@
+import { ScrollTop } from '@/shared/ui/button'
 import { NewsHeader } from '@/widgets/news'
 import { Suspense } from 'react'
 
@@ -12,6 +13,8 @@ export default function NewsLayout({
         <NewsHeader />
       </Suspense>
       <div className="w-[1200px] mx-auto">{children}</div>
+
+      <ScrollTop />
     </div>
   )
 }
