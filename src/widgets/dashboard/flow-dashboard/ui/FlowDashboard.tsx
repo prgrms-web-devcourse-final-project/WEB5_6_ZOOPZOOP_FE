@@ -8,7 +8,8 @@ import {
   MiniMap,
   ReactFlow,
   ReactFlowProvider,
-  useReactFlow
+  useReactFlow,
+  ConnectionMode
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { useFlowState } from '../model/useFlowState'
@@ -110,6 +111,8 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
           connectionLineStyle={connectionLineStyle} // 연결 중인 선 스타일
+          connectionMode={ConnectionMode.Loose} // 핸들 근처면 연결 허용
+          connectionRadius={60}
           fitView
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
