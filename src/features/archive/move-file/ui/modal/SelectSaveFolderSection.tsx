@@ -1,7 +1,7 @@
 import { FolderData } from '@/entities/archive/folder'
 import { SelectedFolder } from '@/features/archive/upload-file/model/type'
 import { ArchiveFolder } from '@/shared/ui/modal'
-import { LuFolder } from 'react-icons/lu'
+import { FolderOpen } from 'lucide-react'
 
 interface Props {
   folderList: FolderData[]
@@ -22,7 +22,7 @@ function SelectSaveFolderSection({
     <div className=" flex flex-col gap-2 ">
       <h2 className=" text-lg font-bold">이동할 위치 선택</h2>
       <div className="flex items-center gap-2 text-base">
-        <LuFolder size={20} />
+        <FolderOpen size={20} />
         <p>{location}</p>
       </div>
       <div className="h-[300px] overflow-y-auto box-border border-b-1">

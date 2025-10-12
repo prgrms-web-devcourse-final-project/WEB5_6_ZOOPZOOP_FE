@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { LuFolder } from 'react-icons/lu'
 
 interface FolderNameInputProps {
   value: string
@@ -42,7 +43,8 @@ export const FolderNameInput = ({
     <div className="w-full flex flex-col gap-2.5">
       <label
         htmlFor="folder-name"
-        className="text-xl font-bold">
+        className="flex items-center gap-2  text-xl font-bold">
+        <LuFolder size={20} />
         폴더 이름
       </label>
       <input

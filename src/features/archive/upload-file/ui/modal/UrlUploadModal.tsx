@@ -1,13 +1,14 @@
 'use client'
 
 import { useRef } from 'react'
-import { LuFolder } from 'react-icons/lu'
+
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { ArchiveFolder } from '@/shared/ui/modal'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useUrlUploadFolderState } from '../../model/useUrlUploadFolderState'
 import { useUrlUploadAction } from '../../model/useUrlUploadAction'
+import { FolderOpen } from 'lucide-react'
 
 export const UrlUploadModal = () => {
   const urlRef = useRef<HTMLInputElement>(null)
@@ -33,7 +34,7 @@ export const UrlUploadModal = () => {
       <div className="w-full flex flex-col gap-2.5">
         <h2 className="text-lg font-bold">저장 위치</h2>
         <div className="flex items-center gap-2 text-base">
-          <LuFolder size={20} />
+          <FolderOpen size={20} />
           <p>내 아카이브</p>
         </div>
 
