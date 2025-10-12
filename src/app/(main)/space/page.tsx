@@ -28,18 +28,9 @@ export default async function Space({ searchParams }: Props) {
       })
   })
 
-  // server components에서 백엔드로 요청 ssr
-  const initialData = await getInitialSpaceList({
-    page: currentPage,
-    state: currentState
-  })
-
-  if (!initialData) return null
-
   return (
     <div className="px-8 min-h-[calc(100vh-152px)] flex flex-col">
       <SpaceTab />
-      {/*  서버 컴포넌트와 클라이언트 컴포넌트의 경계 */}
       <HydrationBoundary state={dehydrate(queryClient)}>
         <SpaceList />
       </HydrationBoundary>
