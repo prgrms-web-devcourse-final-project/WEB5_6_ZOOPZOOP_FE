@@ -5,6 +5,11 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 import Image from 'next/image'
+import { Hero } from '@/app/_main/Hero'
+import { Teaser } from '@/app/_main/Teaser'
+import { Services } from '@/app/_main/Services'
+import { CTA } from '@/app/_main/CTA'
+import { DemoFlow } from '@/app/_main/DemoFlow'
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -14,40 +19,126 @@ const IMG =
 
 export default function ArchiveScrollPage() {
   useEffect(() => {
-    // ScrollSmoother 생성
     const smoother = ScrollSmoother.create({
       wrapper: '#wrapper',
       content: '#content',
-      smooth: 1.5,
-      speed: 2,
+      smooth: 1.2,
+      speed: 1.6,
       effects: true
     })
 
-    // 각 이미지 컬럼에 패럴랙스 속도 차 적용
-    smoother.effects('.hero__image-cont', {
-      speed: () => gsap.utils.random(0.55, 0.85, 0.05)
-    })
-
-    // 첫 등장 시 스와이프 애니메이션
     gsap.set('.anim-swipe', { yPercent: 0 })
     gsap.to('.anim-swipe', {
       yPercent: 300,
       delay: 0.2,
-      duration: 3,
-      stagger: { from: 'random', each: 0.1 },
+      duration: 2.4,
+      stagger: { from: 'random', each: 0.08 },
       ease: 'sine.out'
     })
 
-    // 이미지 확대 + x축 미세 이동 (스크롤 연동)
+    const cols = gsap.utils.toArray<HTMLElement>('.hero__image-cont')
+    cols.forEach((col, i) => {
+      smoother.effects(col, { speed: i % 2 === 0 ? 0.6 : 0.85, lag: 0.12 })
+    })
+    cols.forEach((col, i) => {
+      const slice = col.querySelector('.slice')
+      if (!slice) return
+      gsap.to(slice, {
+        yPercent: i % 2 === 0 ? -10 : 10,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: '+=2200',
+          scrub: true
+        }
+      })
+    })
     gsap.to('.slice', {
-      scale: 1.5,
-      xPercent: 20,
+      scale: 1.35,
+      xPercent: 14,
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
-        end: '+=3000',
+        end: '+=2200',
         scrub: true
       }
+    })
+
+    const cards = gsap.utils.toArray<HTMLElement>('.teaser__card')
+    cards.forEach(c => gsap.set(c, { autoAlpha: 0, scale: 0.98, y: 20 }))
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: '.teaser',
+          start: 'top top',
+          end: '+=1800',
+          scrub: true,
+          pin: true
+        }
+      })
+      .to(cards[0], {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.33,
+        ease: 'power2.out'
+      })
+      .to(
+        cards[0],
+        { autoAlpha: 0, y: -20, duration: 0.25, ease: 'power2.in' },
+        '+=0.25'
+      )
+      .to(cards[1], {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.33,
+        ease: 'power2.out'
+      })
+      .to(
+        cards[1],
+        { autoAlpha: 0, y: -20, duration: 0.25, ease: 'power2.in' },
+        '+=0.25'
+      )
+      .to(cards[2], {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.33,
+        ease: 'power2.out'
+      })
+
+    const features = gsap.utils.toArray<HTMLElement>('.feature')
+    features.forEach((el, i) => {
+      const img = el.querySelector('.feature__image')
+      const txt = el.querySelector('.feature__text')
+      const fromXImg = i % 2 === 0 ? -60 : 60
+      const fromXTxt = i % 2 === 0 ? 60 : -60
+
+      gsap.fromTo(
+        img,
+        { x: fromXImg, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 75%' }
+        }
+      )
+      gsap.fromTo(
+        txt,
+        { x: fromXTxt, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power2.out',
+          delay: 0.1,
+          scrollTrigger: { trigger: el, start: 'top 75%' }
+        }
+      )
     })
 
     return () => {
@@ -59,39 +150,31 @@ export default function ArchiveScrollPage() {
   return (
     <div
       id="wrapper"
-      className="overflow-hidden bg-[#111111] text-white">
+      className="overflow-hidden bg-[#f8fafc] text-[#0b0b0b]">
       <div id="content">
-        <section className="hero h-screen">
-          <div className="hero__inner grid h-full w-screen grid-cols-6 gap-0">
-            {Array.from({ length: COLS }).map((_, i) => (
-              <div
-                key={i}
-                className="hero__image-cont relative overflow-hidden">
-                <div
-                  className="slice absolute inset-[-1px] bg-cover bg-no-repeat will-change-transform"
-                  style={{
-                    backgroundImage: `url(${IMG})`,
-                    backgroundSize: `${COLS * 100}% 100%`,
-                    backgroundPosition: `${(i / (COLS - 1)) * 100}% 50%`,
-                    backfaceVisibility: 'hidden',
-                    transform: 'translateZ(0)'
-                  }}
-                />
-                <div className="anim-swipe absolute inset-0 bg-[#111111]" />
-                {i !== COLS - 1 && (
-                  <div className="absolute right-0 top-0 z-[2] h-full w-[2.5px] bg-[#111111]" />
-                )}
-              </div>
-            ))}
+        <Hero
+          imageUrl={IMG}
+          cols={COLS}
+        />
+        <Teaser />
+        <Services />
+        <CTA />
+        <section className="flow-demo border-t border-neutral-200 bg-white py-24 text-[#0b0b0b]">
+          <div className="mx-auto mb-8 max-w-6xl px-5">
+            <h2 className="text-3xl font-semibold md:text-4xl">
+              ZoopZoop Flow 데모
+            </h2>
+            <p className="mt-2 text-neutral-600">
+              수집 → 정리 → 공유 → 추천 흐름을 직접 드래그하고 연결해 보세요.
+            </p>
           </div>
+          <DemoFlow />
         </section>
-
-        <section className="h-[300vh]" />
       </div>
 
       <Image
         className="fixed bottom-4 left-1/2 w-12 -translate-x-1/2 opacity-80"
-        src="https://img.icons8.com/glyph-neue/128/ffffff/circled-down-2.png"
+        src="https://img.icons8.com/glyph-neue/128/000000/circled-down-2.png"
         alt="scroll down"
         loading="lazy"
         width={48}
