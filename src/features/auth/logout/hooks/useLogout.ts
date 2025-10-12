@@ -16,7 +16,7 @@ export const useLogout = () => {
       queryClient.invalidateQueries({ queryKey: ['user'] })
       queryClient.removeQueries({ queryKey: ['user'] })
       setTimeout(() => {
-        router.push(PATH.AUTH.LOGIN)
+        router.push(PATH.ROOT)
       }, 0)
     },
     onError: () => {
