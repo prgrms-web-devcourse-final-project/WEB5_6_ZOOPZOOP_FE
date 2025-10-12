@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface FolderNameInputProps {
   value: string
@@ -13,18 +13,26 @@ export const FolderNameInput = ({
   onEnter,
   autoFocus
 }: FolderNameInputProps) => {
+  const [inputValue, setInputValue] = useState('')
+
   const [error, setError] = useState('')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value
-    // 특수문자 검사 (알파벳, 숫자, 공백, _ 만 허용)
-    if (/[^a-zA-Z0-9_ ]/.test(newValue)) {
-      setError('폴더 이름에 특수문자를 사용할 수 없습니다.')
-    } else {
-      setError('')
-    }
-    onChange(newValue)
+    setInputValue(e.target.value)
+    onChange(e.target.value)
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (/[^a-zA-Z0-9가-힣_ ]/.test(inputValue)) {
+        setError('폴더 이름에 특수문자를 사용할 수 없습니다.')
+      } else {
+        setError('')
+      }
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [inputValue])
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !error && onEnter) onEnter()
