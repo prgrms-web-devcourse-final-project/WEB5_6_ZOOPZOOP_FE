@@ -2,6 +2,15 @@
 
 import { useCallback, type RefObject } from 'react'
 import { useReactFlow, useViewport } from '@xyflow/react'
+import {
+  DndContext,
+  DragEndEvent,
+  PointerSensor,
+  TouchSensor,
+  useDraggable,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core'
 
 import { useComment } from '../model/useComment'
 import { CommentThread, NewCommentForm } from '@/features/dashboard'
@@ -21,10 +30,60 @@ export const CommentOverlay = ({
   setNewCommentPosition,
   containerRef
 }: CommentOverlayProps) => {
-  const { flowToScreenPosition } = useReactFlow()
-  // 뷰포트(줌/패닝) 변경 시 자동 재렌더
+  const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
   useViewport()
-  const { threads, createComment, deleteComment, toggleResolved } = useComment()
+  const {
+    threads,
+    createComment,
+    deleteComment,
+    toggleResolved,
+    updateThreadPosition
+  } = useComment()
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(TouchSensor, {
+      activationConstraint: { delay: 75, tolerance: 5 }
+    })
+  )
+
+  const handleDragEnd = useCallback(
+    (event: DragEndEvent) => {
+      const id = String(event.active.id)
+      const t = threads.find(th => th.id === id)
+      if (!t) return
+      const startScreen = flowToScreenPosition({
+        x: t.metadata.x,
+        y: t.metadata.y
+      })
+      const nextScreen = {
+        x: startScreen.x + event.delta.x,
+        y: startScreen.y + event.delta.y
+      }
+      const nextFlow = screenToFlowPosition(nextScreen)
+      updateThreadPosition(id, nextFlow.x, nextFlow.y)
+    },
+    [threads, flowToScreenPosition, screenToFlowPosition, updateThreadPosition]
+  )
+
+  const DraggableComment = ({
+    id,
+    children
+  }: {
+    id: string
+    children: React.ReactNode
+  }) => {
+    const { attributes, listeners, setNodeRef } = useDraggable({ id })
+    return (
+      <div
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={{ touchAction: 'none' }}>
+        {children}
+      </div>
+    )
+  }
 
   const handleCreateComment = useCallback(
     (content: string) => {
@@ -50,7 +109,9 @@ export const CommentOverlay = ({
   )
 
   return (
-    <>
+    <DndContext
+      sensors={sensors}
+      onDragEnd={handleDragEnd}>
       {threads.map(thread => {
         const screenPosition = flowToScreenPosition({
           x: thread.metadata.x,
@@ -61,14 +122,17 @@ export const CommentOverlay = ({
         const y = bounds ? screenPosition.y - bounds.top : screenPosition.y
 
         return (
-          <CommentThread
+          <DraggableComment
             key={thread.id}
-            threadId={thread.id}
-            x={x}
-            y={y}
-            onResolve={toggleResolved}
-            onDelete={handleDeleteComment}
-          />
+            id={thread.id}>
+            <CommentThread
+              threadId={thread.id}
+              x={x}
+              y={y}
+              onResolve={toggleResolved}
+              onDelete={handleDeleteComment}
+            />
+          </DraggableComment>
         )
       })}
 
@@ -88,6 +152,6 @@ export const CommentOverlay = ({
             />
           )
         })()}
-    </>
+    </DndContext>
   )
 }
