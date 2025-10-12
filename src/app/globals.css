@@ -6,3 +6,9 @@
 @import './styles/_theme.css';
 @import './styles/_base.css';
 @import './styles/_utilities.css';
+
+/* 선택된 엣지 색/두께 변경 */
+.react-flow__edge.selected path {
+  stroke: var(--green-normal) !important;
+  stroke-width: 3px !important;
+}
