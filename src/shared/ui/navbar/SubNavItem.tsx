@@ -20,14 +20,19 @@ function SubNavItem({ subItem }: Props) {
       <Link
         href={href}
         className={tw(
-          'flex items-center gap-4 px-3 py-2 rounded-r-md rounded-br-md text-sm font-medium hover:bg-green-normal hover:text-white text-black',
-          !isActive ? 'bg-white' : 'bg-green-normal text-white'
+          'w-full flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium transition-all duration-200 text-gray-500',
+          isActive && 'bg-green-light text-green-normal',
+          !isActive && 'hover:text-gray-600 hover:bg-gray-50'
         )}>
         <Icon
-          size={20}
-          className={tw(!isActive ? 'text-dark' : 'text-white')}
+          size={16}
+          className={tw(
+            'transition-transform duration-200 flex-shrink-0',
+            isActive && 'text-green-normal',
+            !isActive && 'text-gray-500'
+          )}
         />
-        <p className="whitespace-nowrap">{label}</p>
+        <p className="whitespace-nowrap truncate">{label}</p>
       </Link>
     </li>
   )
