@@ -16,6 +16,7 @@ export const fetchSpaceListServer = async (
     page = 1,
     size = 15,
     sort = [],
+    state,
     includeMembers = true
   }: FetchSpaceListParams,
   options?: NextFetchOptions
@@ -25,6 +26,10 @@ export const fetchSpaceListServer = async (
   params.append('page', (page - 1).toString())
   params.append('size', size.toString())
   params.append('includeMembers', includeMembers.toString())
+
+  if (state) {
+    params.append('state', state)
+  }
 
   sort.forEach(s => {
     params.append('sort', s)
