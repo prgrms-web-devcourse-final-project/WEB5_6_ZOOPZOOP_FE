@@ -5,7 +5,6 @@ import { ModalLayout } from '../../ModalLayout'
 import { LuFolder } from 'react-icons/lu'
 import { ArchiveFolder } from './ArchiveFolderTree'
 import { FileUploadZone } from './FileUploadZone'
-import { SelectItem } from '../SelectedFileItem'
 import archiveData from '../data'
 import { useState } from 'react'
 

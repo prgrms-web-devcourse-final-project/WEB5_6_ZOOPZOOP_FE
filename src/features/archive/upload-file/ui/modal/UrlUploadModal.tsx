@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import { LuFolder } from 'react-icons/lu'
 import { useModalStore } from '@/shared/lib'
-import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { ModalLayout } from '@/shared/ui'
 import { ArchiveFolder } from '@/shared/ui/modal'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
@@ -13,9 +12,8 @@ import { useUrlUploadAction } from '../../model/useUrlUploadAction'
 export const UrlUploadModal = () => {
   const urlRef = useRef<HTMLInputElement>(null)
 
-  const { selectedFolder, handleSelectFolder } = useUrlUploadFolderState()
-  const { foldersQuery } = useGetArchiveFoldersQuery()
-  const folderList = foldersQuery.data?.data
+  const { selectedFolder, folderList, handleSelectFolder } =
+    useUrlUploadFolderState()
 
   const closeModal = useModalStore(s => s.closeModal)
   const { handlePost, isPending } = useUrlUploadAction()

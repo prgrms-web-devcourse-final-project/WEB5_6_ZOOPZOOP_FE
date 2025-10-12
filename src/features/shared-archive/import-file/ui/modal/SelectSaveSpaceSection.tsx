@@ -1,15 +1,14 @@
 import { FolderData } from '@/entities/archive/folder'
-import { useSpaceStore } from '@/entities/space'
+import { SelectedFolder } from '@/features/archive/upload-file/model/type'
 import { ArchiveFolder } from '@/shared/ui/modal'
-import { usePathname } from 'next/navigation'
 import { LuFolder } from 'react-icons/lu'
 
 interface Props {
   spaceList: FolderData[]
   location: string
   saveFolder: FolderData | undefined
-  selectedSaveFolder: number | null
-  onFolderSelect: (folderId: number) => void
+  selectedSaveFolder: SelectedFolder
+  onFolderSelect: (folderId: number, folderName: string) => void
 }
 
 function SelectSaveSpaceSection({
@@ -20,30 +19,37 @@ function SelectSaveSpaceSection({
   onFolderSelect
 }: Props) {
   return (
-    <div className=" w-1/2 flex flex-col gap-2.5 ">
+    <div className=" flex flex-col gap-2 ">
       <h2 className=" text-lg font-bold">이동할 위치 선택</h2>
       <div className="flex items-center gap-2 text-base">
         <LuFolder size={20} />
+
         <p>{location}</p>
       </div>
-      <div className="h-[300px] overflow-y-auto mb-5">
-        {spaceList?.map(folder => (
-          <ArchiveFolder
-            key={folder.folderId}
-            type="folder"
-            mode="move"
-            data={{ id: folder.folderId, name: folder.folderName }}
-            onFolderSelect={onFolderSelect}
-            isSelected={selectedSaveFolder === folder.folderId}
-          />
-        ))}
+      <div className="h-[300px] overflow-y-auto box-border border-b-1">
+        {spaceList.length > 0 ? (
+          spaceList.map(folder => (
+            <ArchiveFolder
+              key={folder.folderId}
+              type="folder"
+              mode="move"
+              data={{ id: folder.folderId, name: folder.folderName }}
+              onFolderSelect={onFolderSelect}
+              isSelected={selectedSaveFolder?.folderId === folder.folderId}
+            />
+          ))
+        ) : (
+          <p>등록된 스페이스가 없습니다</p>
+        )}
       </div>
-
-      <div className="w-full flex flex-col gap-2.5">
-        {saveFolder && (
+      <div className="h-[300px]  overflow-y-auto ">
+        <h2 className="text-lg font-bold">선택한 스페이스</h2>
+        {selectedSaveFolder ? (
           <div className="border border-gray-light rounded-md py-3 px-3 text-base bg-gray-light">
-            {location}/{saveFolder.folderName}
+            {location}/{selectedSaveFolder.folderName}
           </div>
+        ) : (
+          <p>선택한 스페이스가 없습니다</p>
         )}
       </div>
     </div>

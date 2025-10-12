@@ -1,15 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SelectedFile } from './type'
+import { useParams, useSearchParams } from 'next/navigation'
+import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
+import { SelectedFolder } from '../../upload-file/model/type'
 
 export const useMoveFileModalState = () => {
-  const [selectedFolder, setSelectedFolder] = useState<number | null>(null)
-  const [selectedSaveFolder, setSelectedSaveFolder] = useState<number | null>(
-    null
-  )
+  const params = useParams()
+  const searchParams = useSearchParams()
+  const folderIdFromUrl = params?.folderId
+  const folderNameFromUrl = searchParams.get('name')
+  const { foldersQuery } = useGetArchiveFoldersQuery()
+  const folderList = foldersQuery.data?.data
+  const defaultFolder = folderList?.find(item => item.folderName === 'default')
+  const [selectedFolder, setSelectedFolder] = useState<SelectedFolder>({
+    folderId: defaultFolder?.folderId ?? 0,
+    folderName: defaultFolder?.folderName ?? ''
+  })
+  const [selectedSaveFolder, setSelectedSaveFolder] = useState<SelectedFolder>()
   const [selectedFiles, setSelectedFiles] = useState<SelectedFile[]>([])
 
-  const handleSelectFolder = (id: number) => setSelectedFolder(id)
-  const handleSelectSaveFolder = (id: number) => setSelectedSaveFolder(id)
+  const handleSelectFolder = (folderId: number, folderName: string) => {
+    setSelectedFolder({ folderId, folderName })
+  }
+
+  const handleSelectSaveFolder = (folderId: number, folderName: string) =>
+    setSelectedSaveFolder({
+      folderId,
+      folderName
+    })
 
   const onSelectFiles = ({
     folderId,
@@ -52,7 +70,17 @@ export const useMoveFileModalState = () => {
     })
   }
 
+  useEffect(() => {
+    if (folderIdFromUrl && folderNameFromUrl) {
+      setSelectedFolder({
+        folderId: Number(folderIdFromUrl),
+        folderName: folderNameFromUrl
+      })
+    }
+  }, [folderIdFromUrl, folderNameFromUrl])
+
   return {
+    folderList,
     selectedFolder,
     selectedSaveFolder,
     selectedFiles,
