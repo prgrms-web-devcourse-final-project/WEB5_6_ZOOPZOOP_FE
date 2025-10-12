@@ -62,8 +62,13 @@ export const UrlUploadModal = () => {
             if (e.key === 'Enter') handleUpload()
           }}
           type="text"
-          className="border border-gray-light rounded-md py-3 px-3 text-base"
+          className="border border-gray-300 rounded-lg py-3 px-4 text-base 
+                     focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
+                     transition-all duration-200
+                     placeholder:text-gray-400
+                     disabled:bg-gray-50 disabled:cursor-not-allowed"
           placeholder="URL을 입력해 주세요"
+          autoFocus
         />
       </div>
       <FolderActionButtons
