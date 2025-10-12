@@ -11,6 +11,7 @@ import { useFetchSpace } from '../model/useFetchSpace'
 import SpaceContextMenu from './ContextMenu'
 import EmptyList from './EmptyList'
 import PendingListSkeleton from './PendingListSkeleton'
+import { tw } from '@/shared/lib'
 
 const SpaceList = () => {
   const router = useRouter()
@@ -35,7 +36,11 @@ const SpaceList = () => {
 
   return (
     <section
-      className={`flex flex-col flex-1 transition-opacity ${isFetching ? 'opacity-50' : 'opacity-100'}`}>
+      className={tw(
+        `flex flex-col flex-1 transition-opacity`,
+        isFetching && 'opacity-50 pointer-events-none',
+        !isFetching && 'opacity-100'
+      )}>
       <h2 className="sr-only">내 스페이스 목록</h2>
       <ul className="grid gap-5 flex-1 grid-cols-1 min-[480px]:grid-cols-2 min-[896px]:grid-cols-3 min-[1312px]:grid-cols-4 min-[1728px]:grid-cols-5 auto-rows-min">
         {spaces &&
