@@ -19,7 +19,7 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
       dataSourceId.includes(Number(file.dataSourceId))
     ) ?? []
 
-  const { handleMoveToTrash } = useMoveToSpaceTrashAction()
+  const { handleMoveToTrash, isPending } = useMoveToSpaceTrashAction()
 
   return (
     <ModalLayout size="md">
@@ -52,7 +52,7 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
               dataSourceId: dataSourceId
             })
           }}
-          isCreating={false}
+          isCreating={isPending}
           label={'이동'}
           disabled={false}
         />

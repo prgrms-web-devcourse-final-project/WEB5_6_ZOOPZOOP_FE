@@ -12,7 +12,7 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
-  const { handleDelete } = useDeleteFileAction()
+  const { handleDelete, isPending } = useDeleteFileAction()
   const { data } = useSpaceFilesByFolderQuery(spaceId)
   const selectedFiles =
     data?.files?.filter(file =>
@@ -53,7 +53,7 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
           onCreate={() => {
             handleDelete({ spaceId: spaceId, dataSourceId })
           }}
-          isCreating={false}
+          isCreating={isPending}
           label={'삭제'}
           disabled={false}
         />

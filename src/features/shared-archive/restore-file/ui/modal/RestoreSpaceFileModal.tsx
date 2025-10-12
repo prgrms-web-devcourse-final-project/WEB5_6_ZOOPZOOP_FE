@@ -15,7 +15,7 @@ function RestoreSpaceFileModal({ dataSourceId }: Props) {
   const spaceId = currentSpace!.spaceId
 
   const { data } = useSpaceFilesByFolderQuery(spaceId)
-  const { handelRestore } = useRestoreSpaceFileAction()
+  const { handelRestore, isPending } = useRestoreSpaceFileAction()
   const selectedFiles =
     data?.files?.filter(file =>
       dataSourceId.includes(Number(file.dataSourceId))
@@ -44,7 +44,7 @@ function RestoreSpaceFileModal({ dataSourceId }: Props) {
       <FolderActionButtons
         onCancel={closeModal}
         onCreate={() => handelRestore({ spaceId, dataSourceId })}
-        isCreating={false}
+        isCreating={isPending}
         label={'복구'}
         disabled={false}
       />
