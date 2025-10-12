@@ -6,9 +6,18 @@ import { SpaceFileMode } from '@/features/shared-archive'
 interface Props {
   fileList: FileData[]
   mode: SpaceFileMode
+  selectedFiles: number[]
+  onSelect: (cardId: number) => void
+  onSelectAll: (files: FileData[]) => void
 }
 
-function TableView({ fileList, mode }: Props) {
+function TableView({
+  fileList,
+  mode,
+  selectedFiles,
+  onSelect,
+  onSelectAll
+}: Props) {
   const tableData: SpaceColumnType[] = fileList.map(item => ({
     id: item.dataSourceId.toString(),
     title: item.title,
@@ -17,8 +26,9 @@ function TableView({ fileList, mode }: Props) {
     origin: item.source
   }))
 
-  const columns = getArchiveColumns(mode)
-
+  const columns = getArchiveColumns(mode, selectedFiles, onSelect, () =>
+    onSelectAll(fileList)
+  )
   return (
     <div className="w-full">
       <CustomTable

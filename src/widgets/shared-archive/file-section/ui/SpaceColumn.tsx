@@ -12,7 +12,10 @@ export interface SpaceColumnType {
 }
 
 export const getArchiveColumns = (
-  mode: SpaceFileMode
+  mode: SpaceFileMode,
+  selectedFiles: number[],
+  onSelect: (cardId: number) => void,
+  onSelectAll: () => void
 ): ColumnDef<SpaceColumnType>[] => {
   const columns: ColumnDef<SpaceColumnType>[] = [
     {
@@ -64,22 +67,27 @@ export const getArchiveColumns = (
   if (mode === 'trash') {
     columns.unshift({
       id: 'select',
-      header: ({ table }) => (
+      header: () => (
         <input
           type="checkbox"
           className="checkbox"
-          checked={table.getIsAllPageRowsSelected()}
-          onChange={table.getToggleAllPageRowsSelectedHandler()}
+          onChange={onSelectAll}
         />
       ),
-      cell: ({ row }) => (
-        <input
-          type="checkbox"
-          className="checkbox"
-          checked={row.getIsSelected()}
-          onChange={row.getToggleSelectedHandler()}
-        />
-      )
+      cell: ({ row }) => {
+        const id = Number(row.original.id)
+
+        const checked = selectedFiles.includes(id)
+
+        return (
+          <input
+            type="checkbox"
+            className="checkbox"
+            checked={checked}
+            onChange={() => onSelect(id)}
+          />
+        )
+      }
     })
   }
 

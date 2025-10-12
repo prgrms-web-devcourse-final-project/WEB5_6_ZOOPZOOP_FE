@@ -76,6 +76,9 @@ export default function SpaceFileSection({
           <TableView
             mode={mode}
             fileList={fileList}
+            selectedFiles={selectedIds}
+            onSelect={handleSelect}
+            onSelectAll={handleSelectAll}
           />
         ) : (
           <CardView
