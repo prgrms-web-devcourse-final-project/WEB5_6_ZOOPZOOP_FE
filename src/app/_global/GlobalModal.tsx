@@ -33,6 +33,7 @@ import {
   MoveToSpaceTrashModal,
   RestoreSpaceFileModal
 } from '@/features/shared-archive'
+import ImportToSpaceModal from '@/features/shared-archive/import-file/ui/modal/ImportToSpaceModal'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -82,6 +83,8 @@ export const GlobalModal = () => {
       return <ExpelMemberModal {...modal.props} />
     case 'leave-space':
       return <LeaveSpaceModal {...modal.props} />
+    case 'import-to-space-file':
+      return <ImportToSpaceModal />
     default:
       return null
   }

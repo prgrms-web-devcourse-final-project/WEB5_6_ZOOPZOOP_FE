@@ -81,7 +81,7 @@ function SpaceHeader() {
               label="파일 불러오기"
               icon={Upload}
               onClick={() => {
-                openModal({ type: 'copy-to-space' })
+                openModal({ type: 'import-to-space-file' })
               }}
             />
           </div>

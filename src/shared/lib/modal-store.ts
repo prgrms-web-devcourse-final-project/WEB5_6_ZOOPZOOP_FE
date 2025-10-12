@@ -11,6 +11,7 @@ type ModalType =
   | {
       type: 'move-archive-file'
     }
+  | { type: 'import-to-space-file' }
   | { type: 'delete-account' }
   | { type: 'copy-to-space' }
   | { type: 'go-to-archive-trash' }
