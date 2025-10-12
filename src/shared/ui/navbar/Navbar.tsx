@@ -5,8 +5,8 @@ import { useNavbarStore } from '@/shared/hooks'
 import { tw } from '@/shared/lib'
 import { usePathname } from 'next/navigation'
 import NavHeader from './NavHeader'
-import NavItems from './NavItems'
 import { useProcessedNavItems } from '@/shared/hooks/useProcessedNavItems'
+import NavItemGroup from './NavItemGroup'
 
 interface Props {
   notificationSlot?: React.ReactNode
@@ -15,12 +15,11 @@ interface Props {
 function Navbar({ notificationSlot }: Props) {
   const pathName = usePathname()
   const user = useUserStore(state => state.user)
-
   const processedNavItems = useProcessedNavItems()
   const { isExpanded, toggleNavbar } = useNavbarStore()
 
   return (
-    <nav
+    <aside
       aria-label="Primary navigation"
       className={tw(
         'fixed flex flex-col py-4 px-2 border-r-1 h-screen z-10 bg-white transition-all duration-300',
@@ -38,17 +37,17 @@ function Navbar({ notificationSlot }: Props) {
         slot={notificationSlot}
       />
       {/* 메뉴 리스트 */}
-      <ul className="flex flex-col gap-1 items-center">
-        {processedNavItems.map(item => (
-          <NavItems
-            pathName={pathName}
-            item={item}
-            key={item.label}
+      <nav className="flex flex-col gap-1 items-center">
+        {processedNavItems.map((item, index) => (
+          <NavItemGroup
+            key={index}
+            mainItem={item}
+            currentPath={pathName}
             isExpanded={isExpanded}
           />
         ))}
-      </ul>
-    </nav>
+      </nav>
+    </aside>
   )
 }
 export default Navbar
