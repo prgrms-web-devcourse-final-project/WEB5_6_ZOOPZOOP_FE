@@ -3,8 +3,7 @@
 import FolderItem from './FolderItem'
 import { FolderData } from '@/entities/archive/folder'
 import { useUserStore } from '@/entities/user'
-import { useModalStore } from '@/shared/lib'
-import { useParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useContextMenu } from '@/shared/hooks'
 import ArchiveContextMenu from '@/features/archive/list/ui/ArchiveFolderContextMenu'
 
@@ -15,7 +14,8 @@ interface Props {
 function FolderGrid({ data }: Props) {
   // 컨택스트 메뉴
   const { closeMenu, handleContextMenu, activeMenu } = useContextMenu()
-  const { folder } = useParams()
+  const searchParams = useSearchParams()
+  const folder = searchParams.get('name')
   const clickedFolder = folder ? decodeURIComponent(String(folder)) : ''
   const user = useUserStore(state => state.user)
   const useName = user?.name.split('#')[0] ?? '사용자 닉네임'
@@ -43,8 +43,10 @@ function FolderGrid({ data }: Props) {
             key={folderId}
             folderId={folderId}
             folderName={folderName}
-            isUndo={false}
+            useName={useName}
+            isDefault={folderName === 'default'}
             isActive={isActive}
+            isContextMenuActive={activeMenu.targetId === folderId}
             onContextMenu={(x, y) => handleContextMenu(folderId, x, y)}
             contextMenu={
               activeMenu.targetId === folderId ? (
