@@ -70,7 +70,8 @@ export default function FileSection({
       />
 
       <div
-        className={tw('min-h-[64vh] py-3', mode === 'trash' && 'min-h-[75vh]')}>
+      // className={tw('min-h-[64vh] py-3', mode === 'trash' && 'min-h-[75vh]')}
+      >
         {isEmpty && <EmptyArchiveFileList mode={mode} />}
         {!isEmpty && viewMode === 'list' ? (
           <TableView
@@ -87,7 +88,13 @@ export default function FileSection({
         )}
       </div>
 
-      {isEmpty ? '' : <Pagination totalPages={totalPages} />}
+      {isEmpty ? (
+        ''
+      ) : (
+        <div className="fixed bottom-6 left-4/7 -translate-x-1/2 z-50">
+          <Pagination totalPages={totalPages} />
+        </div>
+      )}
     </div>
   )
 }
