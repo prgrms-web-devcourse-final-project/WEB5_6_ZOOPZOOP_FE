@@ -79,6 +79,9 @@ export default function FileSection({
           <TableView
             mode={mode}
             fileList={fileList}
+            selectedFiles={selectedFiles}
+            onSelect={handleSelect}
+            onSelectAll={handleSelectAll}
           />
         ) : (
           <CardView
