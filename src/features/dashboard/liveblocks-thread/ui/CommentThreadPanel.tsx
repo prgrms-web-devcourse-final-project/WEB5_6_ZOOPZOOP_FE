@@ -14,6 +14,7 @@ interface CommentThreadPanelProps {
   onDelete: (threadId: string) => void
   onClose: () => void
   placement?: 'top' | 'right'
+  container?: HTMLElement | null
 }
 
 export const CommentThreadPanel = memo(function CommentThreadPanel({
@@ -23,7 +24,8 @@ export const CommentThreadPanel = memo(function CommentThreadPanel({
   onResolve,
   onDelete,
   onClose,
-  placement = 'right'
+  placement = 'right',
+  container
 }: CommentThreadPanelProps) {
   const { threads } = useThreads()
   const thread = threads.find(t => t.id === threadId)
@@ -32,18 +34,18 @@ export const CommentThreadPanel = memo(function CommentThreadPanel({
   const pos =
     placement === 'right'
       ? {
-          position: 'fixed' as const,
+          position: 'absolute' as const,
           left: x + 12,
           top: y,
           transform: 'translateY(-50%)',
-          zIndex: 2200
+          zIndex: 2100
         }
       : {
-          position: 'fixed' as const,
+          position: 'absolute' as const,
           left: x,
           top: y,
           transform: 'translate(-50%, -100%)',
-          zIndex: 2200
+          zIndex: 2100
         }
 
   return createPortal(
@@ -80,6 +82,6 @@ export const CommentThreadPanel = memo(function CommentThreadPanel({
         </div>
       </div>
     </div>,
-    document.body
+    container ?? document.body
   )
 })

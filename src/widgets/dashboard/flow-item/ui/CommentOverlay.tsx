@@ -93,7 +93,7 @@ export const CommentOverlay = ({
         ref={setNodeRef}
         {...dragBind}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           left: x,
           top: y,
           zIndex: isDragging ? 10000 : 2100,
@@ -140,8 +140,9 @@ export const CommentOverlay = ({
             x: thread.metadata.x,
             y: thread.metadata.y
           })
-          const x = screen.x
-          const y = screen.y
+          const bounds = containerRef.current?.getBoundingClientRect()
+          const x = bounds ? screen.x - bounds.left - 10 : screen.x
+          const y = bounds ? screen.y - bounds.top - 90 : screen.y
           const isOpen = selectedThreadId === thread.id
 
           return (
@@ -168,15 +169,20 @@ export const CommentOverlay = ({
             x: t.metadata.x,
             y: t.metadata.y
           })
+          const bounds = containerRef.current?.getBoundingClientRect()
+          const x = bounds ? screen.x - bounds.left : screen.x
+          const y = bounds ? screen.y - bounds.top : screen.y
+
           return (
             <CommentThreadPanel
               threadId={t.id}
-              x={screen.x}
-              y={screen.y}
+              x={x}
+              y={y}
               onResolve={toggleResolved}
               onDelete={handleDeleteComment}
               onClose={() => setSelectedThreadId(null)}
               placement="right"
+              container={containerRef.current}
             />
           )
         })()}
