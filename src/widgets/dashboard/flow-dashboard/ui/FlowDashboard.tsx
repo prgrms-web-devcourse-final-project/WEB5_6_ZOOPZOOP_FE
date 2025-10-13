@@ -1,6 +1,13 @@
 'use client'
 
-import { RefObject, useMemo, useRef, useState } from 'react'
+import {
+  RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback
+} from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -74,6 +81,10 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
 
   const flowContainerRef = useRef<HTMLDivElement | null>(null)
 
+  // 썸네일 비콘 전송을 위한 최신 Blob 캐시
+  const latestBlobRef = useRef<Blob | null>(null)
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   // 사용자별 로컬 선택 상태
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
 
@@ -115,7 +126,15 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   }
   const { getNodes } = useReactFlow()
 
-  const captureDataUrl = async () => {
+  // 초기 진입 시점의 id를 고정
+  const initialIdRef = useRef<string | null>(null)
+  useEffect(() => {
+    if (id && !initialIdRef.current) {
+      initialIdRef.current = String(id)
+    }
+  }, [id])
+
+  const captureDataUrl = useCallback(async () => {
     const el = document.querySelector(
       '.react-flow__viewport'
     ) as HTMLElement | null
@@ -153,15 +172,61 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
         return true
       }
     })
-  }
+  }, [getNodes])
 
-  const handleUpload = async (spaceId: number | string) => {
-    const dataUrl = await captureDataUrl()
-    const blob = await (await fetch(dataUrl)).blob()
-    const file = new File([blob], 'flow.png', { type: 'image/png' })
+  // 노드/엣지 변경 시 썸네일 미리 생성하여 이탈 전송에 사용
+  useEffect(() => {
+    if (!nodes.length) return
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current)
+    debounceTimerRef.current = setTimeout(async () => {
+      try {
+        const dataUrl = await captureDataUrl()
+        const blob = await (await fetch(dataUrl)).blob()
+        latestBlobRef.current = blob
+      } catch {}
+    }, 1000)
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+        debounceTimerRef.current = null
+      }
+    }
+  }, [nodes, edges, captureDataUrl])
 
-    await updateThumbnailClient(Number(spaceId), file)
-  }
+  // 페이지 이탈/언마운트 시 keepalive PUT으로 자동 업로드
+  useEffect(() => {
+    const sendAutoSave = () => {
+      const sid = initialIdRef.current
+      if (!sid) return
+      const blob = latestBlobRef.current
+      if (!blob) return
+      const form = new FormData()
+      const file = new File([blob], 'flow.png', { type: 'image/png' })
+      form.append('image', file)
+      try {
+        updateThumbnailClient(Number(id), file)
+      } catch {}
+    }
+
+    const handleVisibility = () => {
+      if (document.hidden) sendAutoSave()
+    }
+    const handlePageHide = () => {
+      sendAutoSave()
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility)
+    window.addEventListener('pagehide', handlePageHide)
+    window.addEventListener('beforeunload', handlePageHide)
+
+    return () => {
+      sendAutoSave()
+      document.removeEventListener('visibilitychange', handleVisibility)
+      window.removeEventListener('pagehide', handlePageHide)
+      window.removeEventListener('beforeunload', handlePageHide)
+    }
+  }, [])
+
   return (
     <div className="flex w-full h-screen relative">
       <FlowSidebar
@@ -220,19 +285,6 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
             gap={12}
             size={1}
           />
-          <Panel
-            position="top-right"
-            className="z-10">
-            <button
-              className="px-3 py-1.5 mr-2 rounded bg-slate-600 text-white text-sm"
-              onMouseDown={e => e.stopPropagation()}
-              onClick={async e => {
-                e.stopPropagation()
-                await handleUpload(id as string)
-              }}>
-              저장
-            </button>
-          </Panel>
         </ReactFlow>
 
         <FlowItemContainer
