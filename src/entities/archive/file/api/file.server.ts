@@ -92,7 +92,7 @@ export const deleteManyArchiveFileServer = async (
   )
 }
 
-// 파일 수정
+// 파일 수정 - 이미지 불포함
 export const editArchiveFileServer = async (
   fileData: EditFileWithoutImgRequest,
   options: NextFetchOptions
@@ -122,6 +122,7 @@ export const editArchiveFileServer = async (
   )
 }
 
+// 파일 수정 - 이미지 포함
 export const editArchiveFileWithImgServer = async (
   dataSourceId: number,
   formData: FormData,

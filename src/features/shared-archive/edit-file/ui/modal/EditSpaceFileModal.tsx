@@ -1,5 +1,7 @@
 import { EditFileWithoutImgRequest } from '@/entities/archive/file'
 import { useEditArchiveFileQuery } from '@/entities/archive/file/model/queries'
+import { useEditSpaceFileQuery } from '@/entities/shared-archive/model/queries'
+import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { BadgeCategory } from '@/shared/ui/badge/Badge'
@@ -26,7 +28,7 @@ const categories: BadgeCategory[] = [
   'WORLD'
 ]
 
-function EditFileModal({ fileData }: Props) {
+function EditSpaceFileModal({ fileData }: Props) {
   const closeModal = useModalStore(s => s.closeModal)
   const {
     title,
@@ -38,6 +40,9 @@ function EditFileModal({ fileData }: Props) {
     category,
     imageUrl
   } = fileData
+
+  const { currentSpace } = useSpaceStore()
+  const spaceId = currentSpace!.spaceId
 
   const [newTitle, setNewTitle] = useState(title || '')
   const [newSourceUrl, setNewSourceUrl] = useState(sourceUrl || '')
@@ -70,7 +75,7 @@ function EditFileModal({ fileData }: Props) {
     reader.readAsDataURL(file)
   }
 
-  const { editFileWithoutImg, editFileWithImg } = useEditArchiveFileQuery()
+  const { editFileWithoutImg, editFileWithImg } = useEditSpaceFileQuery()
   const handleEdit = () => {
     // # 붙은 태그 문자열을 배열로 변환
     const tagsArray: string[] = newTags
@@ -84,6 +89,7 @@ function EditFileModal({ fileData }: Props) {
     if (selectedFile) {
       editFileWithImg.mutate(
         {
+          spaceId: spaceId,
           dataSourceId: dataSourceId,
           payload: {
             title: newTitle ?? '',
@@ -105,6 +111,7 @@ function EditFileModal({ fileData }: Props) {
     } else {
       editFileWithoutImg.mutate(
         {
+          spaceId: spaceId,
           dataSourceId,
           title: newTitle ?? '',
           category: newCategory as BadgeCategory,
@@ -241,4 +248,4 @@ function EditFileModal({ fileData }: Props) {
     </ModalLayout>
   )
 }
-export default EditFileModal
+export default EditSpaceFileModal

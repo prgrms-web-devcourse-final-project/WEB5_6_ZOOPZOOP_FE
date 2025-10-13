@@ -17,6 +17,7 @@ type ModalType =
   | { type: 'go-to-archive-trash' }
   | { type: 'go-to-space-trash'; props: { dataSourceId: number[] } }
   | { type: 'edit-archive-file'; props: { fileData: FileData } }
+  | { type: 'edit-space-file'; props: { fileData: FileData } }
   | { type: 'delete-archive-file'; props: { selectedFiles: CheckedFile[] } }
   | { type: 'delete-space-file'; props: { dataSourceId: number[] } }
   | { type: 'restore-archive-file'; props: { selectedFiles: CheckedFile[] } }

@@ -34,6 +34,7 @@ import {
   RestoreSpaceFileModal
 } from '@/features/shared-archive'
 import ImportToSpaceModal from '@/features/shared-archive/import-file/ui/modal/ImportToSpaceModal'
+import EditSpaceFileModal from '@/features/shared-archive/edit-file/ui/modal/EditSpaceFileModal'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -63,6 +64,8 @@ export const GlobalModal = () => {
       return <CopyToSpaceModal />
     case 'edit-archive-file':
       return <EditFileModal {...modal.props} />
+    case 'edit-space-file':
+      return <EditSpaceFileModal {...modal.props} />
     case 'delete-archive-file':
       return <DeleteFileModal {...modal.props} />
     case 'delete-space-file':
