@@ -41,6 +41,8 @@ export const requireAuth = async <T>(handler: AuthHandler<T>) => {
     console.log('404 토큰 다시 해야하는거 ')
     return response
   }
+
+  return response
 }
 
 // const refreshAccessTokenOnce = async () => {
