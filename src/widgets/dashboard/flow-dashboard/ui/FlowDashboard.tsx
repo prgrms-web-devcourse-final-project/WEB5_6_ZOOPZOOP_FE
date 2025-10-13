@@ -25,6 +25,8 @@ import { Cursor } from './Cursor'
 import { CommentOverlay, FlowItemContainer } from '../../flow-item'
 import { DashboardFile } from '@/entities/dashboard'
 import { toPng } from 'html-to-image'
+import { updateThumbnailClient } from '@/entities/thumbnail'
+import { useParams } from 'next/navigation'
 
 const imageWidth = 1024
 const imageHeight = 768
@@ -61,6 +63,8 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   const { onDrop, onDragOver } = useFlowDragDrop({ setNodes, nodes })
   const { others, handlePointerMove, handlePointerLeave } = useCursor()
   const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
+
+  const { id } = useParams()
 
   const [isCreating, setIsCreating] = useState(false)
   const [newCommentPosition, setNewCommentPosition] = useState<{
@@ -151,12 +155,12 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
     })
   }
 
-  const handleDownload = async () => {
+  const handleUpload = async (spaceId: number | string) => {
     const dataUrl = await captureDataUrl()
-    const a = document.createElement('a')
-    a.download = 'reactflow.png'
-    a.href = dataUrl
-    a.click()
+    const blob = await (await fetch(dataUrl)).blob()
+    const file = new File([blob], 'flow.png', { type: 'image/png' })
+
+    await updateThumbnailClient(Number(spaceId), file)
   }
   return (
     <div className="flex w-full h-screen relative">
@@ -222,11 +226,11 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
             <button
               className="px-3 py-1.5 mr-2 rounded bg-slate-600 text-white text-sm"
               onMouseDown={e => e.stopPropagation()}
-              onClick={e => {
+              onClick={async e => {
                 e.stopPropagation()
-                handleDownload()
+                await handleUpload(id as string)
               }}>
-              다운로드
+              저장
             </button>
           </Panel>
         </ReactFlow>
