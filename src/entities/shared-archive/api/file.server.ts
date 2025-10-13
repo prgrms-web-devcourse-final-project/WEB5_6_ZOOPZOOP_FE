@@ -1,7 +1,10 @@
 import { APIResponse, NextFetchOptions } from '@/shared/types'
 
 import { httpClient } from '@/shared/lib'
-import { FilePostResponse, EditFileRequest } from '@/entities/archive/file'
+import {
+  FilePostResponse,
+  EditFileWithoutImgRequest
+} from '@/entities/archive/file'
 import {
   TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
@@ -94,7 +97,7 @@ export const deleteManySpaceFileServer = async (
 
 // 파일 수정
 export const editSpaceFileServer = async (
-  fileData: EditFileRequest,
+  fileData: EditFileWithoutImgRequest,
   options: NextFetchOptions
 ) => {
   const {

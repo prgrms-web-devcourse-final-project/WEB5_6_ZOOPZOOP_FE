@@ -28,7 +28,29 @@ export interface FileData {
   category: string
 }
 
-export type EditFileRequest = Omit<FileData, 'dataCreatedDate'>
+export type EditFileWithoutImgRequest = {
+  dataSourceId: number
+  title: string
+  summary: string
+  sourceUrl: string
+  source: string
+  imageUrl: string
+  tags: string[]
+  category: string
+}
+
+export type EditFileWithImgRequest = {
+  dataSourceId: number
+  payload: {
+    title: string
+    summary: string
+    sourceUrl: string
+    source: string
+    tags: string[]
+    category: string
+  }
+  image: File
+}
 
 export interface PageInfo {
   page: number

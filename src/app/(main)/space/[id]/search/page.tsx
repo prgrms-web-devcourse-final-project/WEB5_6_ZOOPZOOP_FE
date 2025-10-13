@@ -16,7 +16,11 @@ interface Props {
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 1
 
-const SpaceDetailPage = async ({ searchParams, pageParams, params }: Props) => {
+const SpaceSearchResultPage = async ({
+  searchParams,
+  pageParams,
+  params
+}: Props) => {
   const search = await searchParams
   const param = await params
   const page = await pageParams
@@ -43,4 +47,4 @@ const SpaceDetailPage = async ({ searchParams, pageParams, params }: Props) => {
     </div>
   )
 }
-export default SpaceDetailPage
+export default SpaceSearchResultPage
