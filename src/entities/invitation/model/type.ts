@@ -13,6 +13,11 @@ export type InvitationList = ListPayload<'spaces', Invitation>
 // 알림 리스트 response
 export type InvitationsResponse = APIResponse<InvitationList>
 
+export interface InviteRequest {
+  inviteId: number
+  spaceId: number
+}
+
 export interface InviteResult {
   id: number
   name: string

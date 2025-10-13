@@ -71,7 +71,7 @@ export const updateProfileImageClient = async (
 // 유저 정보 검색 by nickname
 export const fetchUserInfoByNameClient = async (
   name: string
-): Promise<SearchUser> => {
+): Promise<SearchUser[]> => {
   const encodedName = encodeURIComponent(name)
   const { data, msg, status } = await httpClient.get<SearchUserResponse>(
     `/api/user/nickname?name=${encodedName}`

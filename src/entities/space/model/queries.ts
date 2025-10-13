@@ -4,7 +4,6 @@ import {
   UseMutationOptions,
   useQuery
 } from '@tanstack/react-query'
-import { SpacePagination } from './type'
 import {
   deleteSpaceClient,
   fetchSpaceListClient,
@@ -12,22 +11,31 @@ import {
   postSpaceClient,
   updateSpaceNameClient
 } from '../api/space.client'
+import { SpacePagination, SpaceStatus } from './type'
+import { SpaceQueryKey } from './constants'
 
 interface SpaceQuery {
-  pagination: { currentPage: number; size?: number; sort?: string[] }
-  initialData?: SpacePagination
+  pagination: {
+    currentPage: number
+    currentState?: SpaceStatus
+    size?: number
+    sort?: string[]
+  }
 }
 // 스페이스 목록 조회
-export const useSpaceQuery = ({ pagination, initialData }: SpaceQuery) => {
-  const { data, isPending, isFetching } = useQuery({
-    queryKey: ['spaces', pagination.currentPage],
+export const useSpaceQuery = ({ pagination }: SpaceQuery) => {
+  const { data, isPending, isFetching } = useQuery<
+    SpacePagination | null,
+    Error
+  >({
+    queryKey: [SpaceQueryKey, pagination.currentPage, pagination.currentState],
     queryFn: () =>
       fetchSpaceListClient({
         page: pagination.currentPage,
         size: pagination.size,
-        sort: pagination.sort
+        sort: pagination.sort,
+        state: pagination.currentState
       }),
-    initialData: initialData,
     placeholderData: keepPreviousData
   })
 

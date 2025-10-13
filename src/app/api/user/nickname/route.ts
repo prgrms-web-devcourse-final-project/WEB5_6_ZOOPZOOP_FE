@@ -38,6 +38,7 @@ export const GET = async (request: Request) => {
     const response = await requireAuth(
       async token => await fetchUserInfoByNameServer(encodedName, { token })
     )
+
     return NextResponse.json(response)
   } catch (error) {
     return NextResponse.json({

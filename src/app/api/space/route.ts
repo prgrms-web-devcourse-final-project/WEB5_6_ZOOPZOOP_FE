@@ -6,6 +6,7 @@ import {
 import { requireAuth } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 import { revalidateTag } from 'next/cache'
+import { SpaceStatus } from '@/entities/space'
 
 // 스페이스 등록
 export const POST = async (request: Request) => {
@@ -38,6 +39,7 @@ export const GET = async (request: Request) => {
   const page = searchParams.get('page')
   const size = searchParams.get('size')
   const sort = searchParams.getAll('sort')
+  const state = searchParams.get('state') as SpaceStatus
   const includeMembers = searchParams.get('includeMembers')
 
   try {
@@ -47,6 +49,7 @@ export const GET = async (request: Request) => {
           page: Number(page),
           size: Number(size),
           sort,
+          state,
           includeMembers: Boolean(includeMembers)
         },
         { token }

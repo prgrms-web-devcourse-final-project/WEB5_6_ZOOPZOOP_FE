@@ -1,17 +1,13 @@
-import { SpacePagination, useSpaceQuery } from '@/entities/space'
+import { SpaceStatus, useSpaceQuery } from '@/entities/space'
 import { useSearchParams } from 'next/navigation'
 
-interface Props {
-  initialData: SpacePagination
-  initialPage: number
-}
-
-export const useFetchSpace = ({ initialData, initialPage }: Props) => {
+export const useFetchSpace = () => {
   const searchParams = useSearchParams()
   const currentPage = Number(searchParams.get('page')) || 1
+  const currentState = (searchParams.get('state') as SpaceStatus) || undefined
+
   const { spaces, isPending, isFetching } = useSpaceQuery({
-    pagination: { currentPage },
-    initialData: currentPage === initialPage ? initialData : undefined
+    pagination: { currentPage, currentState }
   })
 
   return {
