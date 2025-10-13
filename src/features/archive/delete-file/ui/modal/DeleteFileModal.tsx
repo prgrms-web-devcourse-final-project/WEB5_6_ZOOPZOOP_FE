@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
@@ -8,7 +7,6 @@ interface Props {
   selectedFiles: CheckedFile[]
 }
 function DeleteFileModal({ selectedFiles }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { handleDelete, isPending } = useDeleteFileAction()
   const selectedFilesId = selectedFiles.map(item => item.dataSourceId)
 
@@ -40,7 +38,6 @@ function DeleteFileModal({ selectedFiles }: Props) {
       </div>
 
       <FolderActionButtons
-        onCancel={closeModal}
         onCreate={() => {
           handleDelete(selectedFilesId)
         }}

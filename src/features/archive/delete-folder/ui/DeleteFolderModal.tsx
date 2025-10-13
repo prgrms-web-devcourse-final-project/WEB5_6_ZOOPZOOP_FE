@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFolderAction } from '../model/useDeleteFolderAction'
@@ -9,7 +8,6 @@ interface Props {
 }
 
 function DeleteFolderModal({ folderId, folderName }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { handleDelete, isPending } = useDeleteFolderAction()
 
   return (
@@ -23,7 +21,6 @@ function DeleteFolderModal({ folderId, folderName }: Props) {
       </p>
 
       <FolderActionButtons
-        onCancel={closeModal}
         onCreate={() => handleDelete(folderId)}
         isCreating={isPending}
         label={'삭제'}

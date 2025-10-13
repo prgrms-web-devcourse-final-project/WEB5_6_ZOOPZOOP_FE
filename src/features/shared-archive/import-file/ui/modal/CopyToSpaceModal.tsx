@@ -1,5 +1,5 @@
 import { SelectFileSection } from '@/features/archive/move-file'
-import { useModalStore } from '@/shared/lib'
+
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { ChevronsRight } from 'lucide-react'
@@ -8,8 +8,6 @@ import SelectSaveSpaceSection from './SelectSaveSpaceSection'
 import { useCopyToSpaceState } from '../../model/useCopyToSpaceState'
 
 function CopyToSpaceModal() {
-  const closeModal = useModalStore(s => s.closeModal)
-
   const { handleCopyToSpace, idPending } = useCopyToSpaceAction()
   const {
     spaceList,
@@ -63,7 +61,6 @@ function CopyToSpaceModal() {
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() =>
             handleCopyToSpace(selectedSaveFolder?.folderId ?? 0, selectedFiles)
           }

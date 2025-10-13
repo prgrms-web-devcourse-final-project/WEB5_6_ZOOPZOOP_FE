@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useRestoreFileAction } from '../../model/useRestoreFileAction'
@@ -8,7 +7,6 @@ interface Props {
   selectedFiles: CheckedFile[]
 }
 function RestoreFileModal({ selectedFiles }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { handelRestore, isPending } = useRestoreFileAction()
   const selectedFilesId = selectedFiles.map(item => item.dataSourceId)
   return (
@@ -33,7 +31,6 @@ function RestoreFileModal({ selectedFiles }: Props) {
       </div>
 
       <FolderActionButtons
-        onCancel={closeModal}
         onCreate={() => handelRestore(selectedFilesId)}
         isCreating={isPending}
         label={'복구'}

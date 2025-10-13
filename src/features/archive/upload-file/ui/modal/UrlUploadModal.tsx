@@ -1,8 +1,6 @@
 'use client'
 
 import { useRef } from 'react'
-
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { ArchiveFolder } from '@/shared/ui/modal'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
@@ -16,7 +14,6 @@ export const UrlUploadModal = () => {
   const { selectedFolder, folderList, handleSelectFolder } =
     useUrlUploadFolderState()
 
-  const closeModal = useModalStore(s => s.closeModal)
   const { handlePost, isPending } = useUrlUploadAction()
   const handleUpload = () => {
     if (!selectedFolder || !urlRef.current?.value?.trim()) return
@@ -72,7 +69,6 @@ export const UrlUploadModal = () => {
       </div>
       <FolderActionButtons
         label="업로드"
-        onCancel={closeModal}
         onCreate={handleUpload}
         isCreating={isPending}
         disabled={false}

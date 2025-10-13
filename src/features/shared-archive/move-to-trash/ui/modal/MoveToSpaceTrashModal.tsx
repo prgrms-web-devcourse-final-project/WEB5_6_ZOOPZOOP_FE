@@ -1,6 +1,5 @@
 import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
 import { useSpaceStore } from '@/entities/space'
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useMoveToSpaceTrashAction } from '../../model/useMoveToSpaceTrashAction'
@@ -10,7 +9,6 @@ interface Props {
 }
 
 function MoveToSpaceTrashModal({ dataSourceId }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
   const { data } = useSpaceFilesByFolderQuery(spaceId)
@@ -45,7 +43,6 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => {
             handleMoveToTrash({
               spaceId: spaceId,

@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderNameInput } from '@/shared/ui/modal/create-folder/FolderNameInput'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
@@ -15,7 +13,6 @@ interface Props {
 
 export const RenameFolderModal = ({ folderId, folderName }: Props) => {
   const [newFolderName, setFolderName] = useState(folderName)
-  const closeModal = useModalStore(s => s.closeModal)
   const { handleRename, isPending } = useRenameAction()
 
   return (
@@ -31,7 +28,6 @@ export const RenameFolderModal = ({ folderId, folderName }: Props) => {
       </div>
       <FolderActionButtons
         label="수정"
-        onCancel={closeModal}
         onCreate={() => handleRename(folderId, newFolderName)}
         isCreating={isPending}
         disabled={!folderName.trim()}

@@ -85,7 +85,6 @@ function MoveToArchiveTrashModal() {
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={handleMoveToTrash}
           isCreating={moveToTrash.isPending}
           label={'이동'}

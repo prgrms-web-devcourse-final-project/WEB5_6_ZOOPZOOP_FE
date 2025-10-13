@@ -1,5 +1,4 @@
 import { EditFileWithoutImgRequest } from '@/entities/archive/file'
-import { useEditArchiveFileQuery } from '@/entities/archive/file/model/queries'
 import { useEditSpaceFileQuery } from '@/entities/shared-archive/model/queries'
 import { useSpaceStore } from '@/entities/space'
 import { useModalStore } from '@/shared/lib'
@@ -238,7 +237,6 @@ function EditSpaceFileModal({ fileData }: Props) {
           </li>
         </ul>
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={handleEdit}
           isCreating={false}
           label={'수정'}

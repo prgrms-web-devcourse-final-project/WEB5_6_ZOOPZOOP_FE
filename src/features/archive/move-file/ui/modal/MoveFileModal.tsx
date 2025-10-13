@@ -1,6 +1,5 @@
 'use client'
 
-import { useModalStore } from '@/shared/lib'
 import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/queries'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { ChevronsRight } from 'lucide-react'
@@ -22,7 +21,6 @@ export const MoveFileModal = () => {
     onSelectFiles
   } = useMoveFileModalState()
 
-  const closeModal = useModalStore(s => s.closeModal)
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data || []
   const saveFolder = folderList.find(
@@ -80,7 +78,6 @@ export const MoveFileModal = () => {
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => handleMoveFiles(selectedFiles, selectedSaveFolder!)}
           isCreating={isPending}
           label={'이동'}

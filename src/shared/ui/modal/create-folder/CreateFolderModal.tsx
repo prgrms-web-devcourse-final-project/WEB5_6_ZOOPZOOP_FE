@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { ModalLayout } from '../ModalLayout'
 import { FolderNameInput } from './FolderNameInput'
 import { FolderActionButtons } from './FolderActionButtons'
@@ -41,7 +41,6 @@ export const CreateFolderModal = () => {
       </div>
       <FolderActionButtons
         label="생성"
-        onCancel={closeModal}
         onCreate={handleCreate}
         isCreating={addFolder.isPending}
         disabled={!folderName.trim()}

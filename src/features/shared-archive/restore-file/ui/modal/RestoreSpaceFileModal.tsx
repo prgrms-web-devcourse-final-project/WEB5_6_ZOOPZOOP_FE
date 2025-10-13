@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useRestoreSpaceFileAction } from '../../model/useRestoreSpaceFileAction'
@@ -9,8 +8,6 @@ interface Props {
   dataSourceId: number[]
 }
 function RestoreSpaceFileModal({ dataSourceId }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
-
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
 
@@ -42,7 +39,6 @@ function RestoreSpaceFileModal({ dataSourceId }: Props) {
           ))}
       </div>
       <FolderActionButtons
-        onCancel={closeModal}
         onCreate={() => handelRestore({ spaceId, dataSourceId })}
         isCreating={isPending}
         label={'복구'}

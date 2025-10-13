@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
@@ -9,7 +8,6 @@ interface Props {
   dataSourceId: number[]
 }
 function DeleteSpaceFileModal({ dataSourceId }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
   const { handleDelete, isPending } = useDeleteFileAction()
@@ -49,7 +47,6 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
 
         {/* 삭제 파일 리스트  */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => {
             handleDelete({ spaceId: spaceId, dataSourceId })
           }}

@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { useCopyToSpaceAction } from '../../model/useCopyToSpaceAction'
 import { ModalLayout } from '@/shared/ui'
 import { SelectFileSection } from '@/features/archive'
@@ -8,7 +7,6 @@ import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/quer
 import { useSpaceStore } from '@/entities/space'
 
 function ImportToSpaceModal() {
-  const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
   const {
@@ -56,7 +54,6 @@ function ImportToSpaceModal() {
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => handleCopyToSpace(spaceId, selectedFiles)}
           isCreating={idPending}
           label={'불러오기'}

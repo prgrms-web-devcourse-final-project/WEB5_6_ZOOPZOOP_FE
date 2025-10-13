@@ -231,7 +231,6 @@ function EditFileModal({ fileData }: Props) {
           </li>
         </ul>
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={handleEdit}
           isCreating={false}
           label={'수정'}
