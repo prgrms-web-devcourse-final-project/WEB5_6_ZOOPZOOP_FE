@@ -5,17 +5,31 @@ interface Props {
   data: FlowNodeData
   selected: boolean
 }
+export const CustomFlowNode = ({ data, selected }: Props) => {
+  const proxiedImageUrl = data.link?.trim()
+    ? `/api/og-image?url=${encodeURIComponent(data.link)}`
+    : data.imageUrl?.trim()
+      ? `/api/thumbnail?src=${encodeURIComponent(data.imageUrl)}`
+      : undefined
 
-export const CustomFlowNode = ({ data, selected }: Props) => (
-  <BaseNewsCard
-    title={data.title}
-    content={data.content}
-    imageUrl={data.imageUrl}
-    createdAt={data.createdAt}
-    category={data.category}
-    type="flow"
-    user={data.user}
-    link={data.link}
-    selected={selected}
-  />
-)
+  const proxiedProfile = data.user?.profileUrl?.trim()
+    ? {
+        ...data.user,
+        profileUrl: `/api/thumbnail?src=${encodeURIComponent(data.user.profileUrl)}`
+      }
+    : data.user
+
+  return (
+    <BaseNewsCard
+      title={data.title}
+      content={data.content}
+      imageUrl={proxiedImageUrl}
+      createdAt={data.createdAt}
+      category={data.category}
+      type="flow"
+      user={proxiedProfile}
+      link={data.link}
+      selected={selected}
+    />
+  )
+}
