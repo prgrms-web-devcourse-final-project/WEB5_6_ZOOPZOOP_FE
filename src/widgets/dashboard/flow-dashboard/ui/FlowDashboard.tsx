@@ -1,6 +1,6 @@
 'use client'
 
-import { RefObject, useRef, useState } from 'react'
+import { RefObject, useMemo, useRef, useState } from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -11,6 +11,7 @@ import {
   useReactFlow,
   ConnectionMode
 } from '@xyflow/react'
+import type { OnNodesChange } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { useFlowState } from '../model/useFlowState'
 import { CustomFlowNode } from './CustomFlowNode'
@@ -62,6 +63,35 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
 
   const flowContainerRef = useRef<HTMLDivElement | null>(null)
 
+  // 사용자별 로컬 선택 상태
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+
+  const handleNodesChange: OnNodesChange = changes => {
+    // select 변화는 로컬 선택 상태에만 반영
+    const select = changes.filter(c => c.type === 'select')
+    if (select.length) {
+      setSelectedIds(prev => {
+        const next = new Set(prev)
+        for (const c of select) {
+          if ('selected' in c) {
+            if (c.selected) next.add(c.id)
+            else next.delete(c.id)
+          }
+        }
+        return next
+      })
+    }
+
+    // 그 외 변화(이동/크기변경 등)만 공유 스토리지에 반영
+    const other = changes.filter(c => c.type !== 'select')
+    if (other.length) onNodesChange(other)
+  }
+
+  const nodesWithSelection = useMemo(
+    () => nodes.map(n => ({ ...n, selected: selectedIds.has(n.id) })),
+    [nodes, selectedIds]
+  )
+
   const handlePaneClick = (event: React.MouseEvent) => {
     if (isCreating) {
       const flowPosition = screenToFlowPosition({
@@ -106,15 +136,15 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
             )
           })}
         <ReactFlow
-          nodes={nodes}
+          nodes={nodesWithSelection}
           edges={edges}
           nodeTypes={nodeTypes}
           defaultEdgeOptions={defaultEdgeOptions}
-          connectionLineStyle={connectionLineStyle} // 연결 중인 선 스타일
-          connectionMode={ConnectionMode.Loose} // 핸들 근처면 연결 허용
+          connectionLineStyle={connectionLineStyle}
+          connectionMode={ConnectionMode.Loose}
           connectionRadius={60}
           fitView
-          onNodesChange={onNodesChange}
+          onNodesChange={handleNodesChange}
           onEdgesChange={onEdgesChange}
           onNodesDelete={onNodesDelete}
           onConnect={onConnect}
