@@ -238,7 +238,9 @@ function EditSpaceFileModal({ fileData }: Props) {
         </ul>
         <FolderActionButtons
           onCreate={handleEdit}
-          isCreating={false}
+          isCreating={
+            editFileWithImg?.isPending || editFileWithoutImg.isPending
+          }
           label={'수정'}
           disabled={false}
         />
