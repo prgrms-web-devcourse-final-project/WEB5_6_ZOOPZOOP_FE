@@ -5,8 +5,7 @@ import { useShallow } from 'zustand/shallow'
 import {
   AlarmModal,
   ArchiveSelectModal,
-  CreateFolderModal,
-  UrlUploadModal
+  CreateFolderModal
 } from '@/shared/ui/modal'
 import {
   CreateSpaceModal,
@@ -16,7 +15,6 @@ import {
   LeaveSpaceModal
 } from '@/features/space'
 
-import { RenameFolderModal } from '@/shared/ui/modal/rename-folder/RenameFolderModal'
 import { DeleteAccountModal } from '@/features/auth'
 
 import {
@@ -25,7 +23,9 @@ import {
   RestoreFileModal,
   MoveFileModal,
   MoveToArchiveTrashModal,
-  DeleteFolderModal
+  DeleteFolderModal,
+  UrlUploadModal,
+  RenameFolderModal
 } from '@/features/archive'
 import {
   CopyToSpaceModal,
@@ -33,6 +33,8 @@ import {
   MoveToSpaceTrashModal,
   RestoreSpaceFileModal
 } from '@/features/shared-archive'
+import ImportToSpaceModal from '@/features/shared-archive/import-file/ui/modal/ImportToSpaceModal'
+import EditSpaceFileModal from '@/features/shared-archive/edit-file/ui/modal/EditSpaceFileModal'
 
 export const GlobalModal = () => {
   const [modal, isOpen] = useModalStore(useShallow(s => [s.modal, s.isOpen]))
@@ -62,6 +64,8 @@ export const GlobalModal = () => {
       return <CopyToSpaceModal />
     case 'edit-archive-file':
       return <EditFileModal {...modal.props} />
+    case 'edit-space-file':
+      return <EditSpaceFileModal {...modal.props} />
     case 'delete-archive-file':
       return <DeleteFileModal {...modal.props} />
     case 'delete-space-file':
@@ -82,6 +86,8 @@ export const GlobalModal = () => {
       return <ExpelMemberModal {...modal.props} />
     case 'leave-space':
       return <LeaveSpaceModal {...modal.props} />
+    case 'import-to-space-file':
+      return <ImportToSpaceModal />
     default:
       return null
   }

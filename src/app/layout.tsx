@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import { GlobalModal } from './_global/GlobalModal'
+import { Noto_Sans_KR } from 'next/font/google'
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +23,13 @@ export const metadata: Metadata = {
     siteName: 'ZoopZoop'
   }
 }
+
+const notoSans = Noto_Sans_KR({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '500', '700']
+})
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -29,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className="antialiased">
+      <body className={`antialiased ${notoSans.className}  text-[#0b0b0b]`}>
         <main>
           <ToastProvider />
           <QueryProvider>

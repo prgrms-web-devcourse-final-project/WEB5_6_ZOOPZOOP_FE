@@ -14,11 +14,14 @@ export const fetchDashboardFolderServer = async (
 }
 
 export const fetchDashboardFileServer = async (
-  payload: string,
+  payload: {
+    spaceId: string
+    folderId: string
+  },
   options: NextFetchOptions
 ) => {
   return await httpClient.get<FetchDashboardFolderResponse>(
-    `/api/v1/space/32/archive/folder/${payload}/files`,
+    `/api/v1/space/${payload.spaceId}/archive/folder/${payload.folderId}/files`,
     options
   )
 }

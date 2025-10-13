@@ -51,7 +51,7 @@ export const fetchUserInfoByNameServer = async (
   options?: NextFetchOptions
 ): Promise<SearchUserResponse> => {
   return httpClient.get<SearchUserResponse>(
-    `/api/v1/member?name=${name}`,
+    `/api/v1/member/search?keyword=${name}`,
     options
   )
 }

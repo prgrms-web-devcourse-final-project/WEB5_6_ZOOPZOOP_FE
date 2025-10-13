@@ -4,7 +4,8 @@ import {
   FilePostResponse,
   SearchGetResponse,
   FileSearchParams,
-  EditFileRequest
+  EditFileWithImgRequest,
+  EditFileWithoutImgRequest
 } from '../model/type'
 import { httpClient } from '@/shared/lib'
 
@@ -30,6 +31,7 @@ export const fetchArchiveFilesByPageServer = async (
   if (keyword && keyword.trim() !== '') {
     params.append('keyword', keyword)
   }
+
   const response = await httpClient.get<SearchGetResponse>(
     `/api/v1/archive?${params.toString()}`,
     options
@@ -90,9 +92,9 @@ export const deleteManyArchiveFileServer = async (
   )
 }
 
-// 파일 수정
+// 파일 수정 - 이미지 불포함
 export const editArchiveFileServer = async (
-  fileData: EditFileRequest,
+  fileData: EditFileWithoutImgRequest,
   options: NextFetchOptions
 ) => {
   const {
@@ -116,6 +118,19 @@ export const editArchiveFileServer = async (
       tags,
       category
     },
+    options
+  )
+}
+
+// 파일 수정 - 이미지 포함
+export const editArchiveFileWithImgServer = async (
+  dataSourceId: number,
+  formData: FormData,
+  options: NextFetchOptions
+) => {
+  return await httpClient.patch<FilePostResponse>(
+    `/api/v1/archive/${dataSourceId}`,
+    formData,
     options
   )
 }

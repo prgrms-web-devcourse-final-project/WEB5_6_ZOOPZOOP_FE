@@ -1,15 +1,21 @@
+import { InviteRequest } from '@/entities/invitation'
 import { Loader2, X } from 'lucide-react'
-import { useCancelInvitation } from '../model/useCancelInvitation'
 
 interface Props {
   inviteId: number
+  handleCancel: (payload: InviteRequest) => void
+  spaceId: number
+  isCanceling: boolean
 }
 
-const CancelButton = ({ inviteId }: Props) => {
-  const { handleCancel, isCanceling } = useCancelInvitation()
-
+const CancelButton = ({
+  inviteId,
+  handleCancel,
+  isCanceling,
+  spaceId
+}: Props) => {
   const handleClick = () => {
-    handleCancel(inviteId)
+    handleCancel({ inviteId, spaceId })
   }
 
   return (

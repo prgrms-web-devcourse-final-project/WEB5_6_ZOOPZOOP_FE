@@ -23,6 +23,9 @@ export { useSpaceStore } from './model'
 // 타입
 export type * from './model'
 
+// 상수
+export { SPACE_STATUS, SpaceQueryKey } from './model'
+
 // ui
 export { SpaceCard, SpaceCardSkeleton, SpaceSyncProvider } from './ui'
 

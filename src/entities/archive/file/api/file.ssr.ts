@@ -9,7 +9,9 @@ export const getInitialFileList = async (
   const response = await requireAuth(async token => {
     return fetchArchiveFilesByPageServer(params, {
       token,
-      next: { revalidate: 60, tags: ['archiveFiles'] }
+      cache: 'no-store',
+      next: { tags: ['archiveFiles'] }
+      // next: { revalidate: 60, tags: ['archiveFiles'] }
     })
   })
 

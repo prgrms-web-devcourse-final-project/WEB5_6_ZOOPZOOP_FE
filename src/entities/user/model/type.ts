@@ -28,5 +28,7 @@ export interface Profile {
 export type UpdateProfileImageResponse = APIResponse<Profile>
 
 // 유저 검색
-export type SearchUser = Omit<User, 'createAt' | 'provider'>
-export type SearchUserResponse = APIResponse<SearchUser>
+export type SearchUser = Omit<User, 'createAt' | 'provider' | 'profileUrl'> & {
+  profileImageUrl: string
+}
+export type SearchUserResponse = APIResponse<SearchUser[]>

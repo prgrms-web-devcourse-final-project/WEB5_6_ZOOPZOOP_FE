@@ -4,7 +4,8 @@ import {
   InviteResult,
   Invitation,
   InvitationsResponse,
-  CancelInviteResponse
+  CancelInviteResponse,
+  InviteRequest
 } from '../model'
 
 // 알림 리스트 패치
@@ -24,10 +25,12 @@ export const fetchInvitationsClient = async (): Promise<
 
 // 초대 수락
 export const acceptInvitationClient = async (
-  inviteId: number
+  payload: InviteRequest
 ): Promise<InviteResult | null> => {
+  const { inviteId, ...restPayload } = payload
   const { data, msg, status } = await httpClient.post<AcceptInviteResponse>(
-    `/api/invites/${inviteId}/accept`
+    `/api/invites/${inviteId}/accept`,
+    restPayload
   )
 
   if (status !== 200) {
@@ -39,10 +42,12 @@ export const acceptInvitationClient = async (
 
 // 초대 거절
 export const cancelInvitationClient = async (
-  inviteId: number
+  payload: InviteRequest
 ): Promise<InviteResult | null> => {
+  const { inviteId, ...restPayload } = payload
   const { data, msg, status } = await httpClient.post<CancelInviteResponse>(
-    `/api/invites/${inviteId}/reject`
+    `/api/invites/${inviteId}/reject`,
+    restPayload
   )
 
   if (status !== 200) {

@@ -8,7 +8,7 @@ import {
   acceptInvitationClient,
   cancelInvitationClient
 } from '../api'
-import { InviteResult, Invitation } from './type'
+import { InviteResult, Invitation, InviteRequest } from './type'
 
 // 알림 목록 데이터 패칭
 export const useInvitationQuery = () => {
@@ -20,11 +20,11 @@ export const useInvitationQuery = () => {
 
 // 알림 수락
 export const useAcceptInvitationMutation = (
-  options: UseMutationOptions<InviteResult | null, Error, number>
+  options: UseMutationOptions<InviteResult | null, Error, InviteRequest>
 ) => {
   const { mutate, isPending, variables } = useMutation({
     mutationKey: ['invitation', 'accept'],
-    mutationFn: inviteId => acceptInvitationClient(inviteId),
+    mutationFn: payload => acceptInvitationClient(payload),
     ...options
   })
 
@@ -37,16 +37,17 @@ export const useAcceptInvitationMutation = (
 
 // 알림 거절
 export const useCancelInvitationMutation = (
-  options: UseMutationOptions<InviteResult | null, Error, number>
+  options: UseMutationOptions<InviteResult | null, Error, InviteRequest>
 ) => {
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, variables } = useMutation({
     mutationKey: ['invitation', 'cancel'],
-    mutationFn: inviteId => cancelInvitationClient(inviteId),
+    mutationFn: payload => cancelInvitationClient(payload),
     ...options
   })
 
   return {
     cancelInvitationMutate: mutate,
-    isCanceling: isPending
+    isCanceling: isPending,
+    variables
   }
 }

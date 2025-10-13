@@ -49,7 +49,7 @@ export const BaseNewsCard = ({
               e.stopPropagation()
               onSave?.()
             }}
-            className="absolute top-2 right-2 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+            className="absolute top-2 right-2 z-2 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all cursor-pointer">
             {loading ? (
               <Loader2
                 size={16}
@@ -61,22 +61,20 @@ export const BaseNewsCard = ({
           </button>
         )}
 
-        <div
-          className={`w-full h-[200px] rounded-t-lg overflow-hidden ${link ? 'cursor-pointer' : 'cursor-default'} relative`}
-          onClick={() => {
-            if (!link) return
-            window.open(link, '_blank', 'noopener,noreferrer')
-          }}>
-          {imageUrl ? (
+        <div className="w-full h-[200px] rounded-t-lg overflow-hidden relative">
+          {imageUrl?.trim() ? (
             <Image
               src={imageUrl}
               alt="news"
               width={360}
               height={200}
               className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              unoptimized
               onError={e => {
                 e.currentTarget.style.display = 'none'
               }}
+              draggable={false}
             />
           ) : (
             <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
@@ -106,16 +104,22 @@ export const BaseNewsCard = ({
           <p className="text-sm text-gray-500 line-clamp-3">{content}</p>
         </div>
 
-        {/* flow 타입일 때만 유저 정보 표시 */}
         {type === 'flow' && user && (
           <div className="absolute bottom-4 right-4 flex items-center gap-2">
-            <Image
-              src={user.profileUrl}
-              alt={user.name}
-              width={20}
-              height={20}
-              className="rounded-full"
-            />
+            {user.profileUrl?.trim() ? (
+              <Image
+                src={user.profileUrl}
+                alt={user.name}
+                width={20}
+                height={20}
+                className="rounded-full"
+                loading="lazy"
+                unoptimized
+                draggable={false}
+              />
+            ) : (
+              <div className="w-5 h-5 rounded-full bg-gray-300" />
+            )}
             <p className="text-xs text-gray-normal">{user.name}</p>
           </div>
         )}

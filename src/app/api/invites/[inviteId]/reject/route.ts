@@ -4,18 +4,20 @@ import { revalidateTag } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 export const POST = async (
-  _: Request,
+  request: Request,
   { params }: { params: Promise<{ inviteId: string }> }
 ) => {
   try {
+    const payload = await request.json()
     const { inviteId } = await params
+    const numericId = Number(inviteId)
 
     const response = await requireAuth(
-      async token => await cancelInvitationsServer(inviteId, { token })
+      async token => await cancelInvitationsServer(numericId, { token })
     )
 
-    revalidateTag('space-members')
-    revalidateTag('space-pending-members')
+    revalidateTag(`space-members-${payload.spaceId}`)
+    revalidateTag(`space-pending-members-${payload.spaceId}`)
 
     return NextResponse.json(response)
   } catch (error) {

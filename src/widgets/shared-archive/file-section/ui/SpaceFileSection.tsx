@@ -15,6 +15,8 @@ import {
   useSortFile,
   useSwitchSpaceFileView
 } from '@/features/shared-archive'
+import { tw } from '@/shared/lib'
+import EmptySpaceFileList from '@/features/shared-archive/list/ui/EmptySpaceFileList'
 
 interface Props {
   initialFileData: SearchSpaceFileGetResponse
@@ -56,7 +58,7 @@ export default function SpaceFileSection({
   const isEmpty = fileList.length === 0
 
   return (
-    <div className="flex flex-col gap-2 justify-center">
+    <div className="flex flex-col gap-2 ">
       <SpaceFileHeader
         mode={mode}
         sortKey={sort.key}
@@ -68,11 +70,15 @@ export default function SpaceFileSection({
         handleSelectAll={() => handleSelectAll(fileList)}
       />
 
-      <div>
+      <div className="min-h-[74vh] py-2">
+        {isEmpty && <EmptySpaceFileList mode={mode} />}
         {viewMode === 'list' ? (
           <TableView
             mode={mode}
             fileList={fileList}
+            selectedFiles={selectedIds}
+            onSelect={handleSelect}
+            onSelectAll={handleSelectAll}
           />
         ) : (
           <CardView
@@ -87,7 +93,9 @@ export default function SpaceFileSection({
       {isEmpty ? (
         <p>등록된 파일이 없습니다.</p>
       ) : (
-        <Pagination totalPages={totalPages} />
+        <div className="mt-3">
+          <Pagination totalPages={totalPages} />
+        </div>
       )}
     </div>
   )

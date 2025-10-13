@@ -14,6 +14,9 @@ import {
   useSwitchFileView
 } from '@/features/archive'
 
+import EmptyArchiveFileList from '@/features/archive/list/ui/EmptyArchiveFileList'
+import { tw } from '@/shared/lib'
+
 interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
@@ -34,7 +37,7 @@ export default function FileSection({
   // 뷰 전환, 정렬, 선택 훅
   const { viewMode, onSwitchViewMode } = useSwitchFileView()
   const { sort, toggleSort } = useSortFile()
-  const { selectedIds, handleSelect, handleSelectAll } = useSelectFiles()
+  const { selectedFiles, handleSelect, handleSelectAll } = useSelectFiles()
 
   // react-query
   const { data: filesQuery } = useArchiveFilesByPageQuery({
@@ -60,21 +63,29 @@ export default function FileSection({
         sortKey={sort.key}
         direction={sort.direction}
         isTableView={viewMode === 'list'}
-        selectedIds={selectedIds}
+        selectedFiles={selectedFiles}
         onChangeView={onSwitchViewMode}
         toggleSort={toggleSort}
         handleSelectAll={() => handleSelectAll(fileList)}
       />
 
-      <div>
-        {viewMode === 'list' ? (
+      <div
+        className={tw(
+          'min-h-[64vh] py-2',
+          mode === 'trash' && 'min-h-[74vh] '
+        )}>
+        {isEmpty && <EmptyArchiveFileList mode={mode} />}
+        {!isEmpty && viewMode === 'list' ? (
           <TableView
             mode={mode}
             fileList={fileList}
+            selectedFiles={selectedFiles}
+            onSelect={handleSelect}
+            onSelectAll={handleSelectAll}
           />
         ) : (
           <CardView
-            selectedIds={selectedIds}
+            selectedFiles={selectedFiles}
             onSelect={handleSelect}
             mode={mode}
             fileList={fileList}
@@ -83,9 +94,11 @@ export default function FileSection({
       </div>
 
       {isEmpty ? (
-        <p>등록된 파일이 없습니다.</p>
+        ''
       ) : (
-        <Pagination totalPages={totalPages} />
+        <div className="mt-3">
+          <Pagination totalPages={totalPages} />
+        </div>
       )}
     </div>
   )

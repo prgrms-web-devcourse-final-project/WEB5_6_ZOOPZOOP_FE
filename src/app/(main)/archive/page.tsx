@@ -16,8 +16,12 @@ export default async function Archive({ searchParams }: Props) {
   const currentPage = Number(params?.page) || INITIAL_PAGE
 
   const folderList = await getInitialFolderList()
+  const defaultFolder = folderList.find(item => item.folderName === 'default')
 
-  const initialFileData = await getInitialFileList({ page: currentPage })
+  const initialFileData = await getInitialFileList({
+    page: currentPage,
+    folderId: defaultFolder?.folderId
+  })
 
   const buttons: Button[] = [
     {

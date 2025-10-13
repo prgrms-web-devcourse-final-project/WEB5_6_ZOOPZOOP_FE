@@ -1,4 +1,4 @@
-import { FileData } from '@/entities/archive/file'
+import { EditFileWithoutImgRequest } from '@/entities/archive/file'
 import { useEditArchiveFileQuery } from '@/entities/archive/file/model/queries'
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
@@ -10,7 +10,7 @@ import Image from 'next/image'
 import { useRef, useState } from 'react'
 
 interface Props {
-  fileData: FileData
+  fileData: EditFileWithoutImgRequest
 }
 
 const categories: BadgeCategory[] = [
@@ -43,21 +43,34 @@ function EditFileModal({ fileData }: Props) {
   const [newSourceUrl, setNewSourceUrl] = useState(sourceUrl || '')
   const [newSource, setNewSource] = useState(source || '')
   const [newCategory, setNewCategory] = useState<string>(category || '')
-  const [fileName, setFileName] = useState<string | null>(null)
+
   const initialTags = tags?.map(tag => `#${tag}`).join(' ') || ''
   const [newTags, setNewTags] = useState(initialTags || '')
   const [newSummary, setNewSummary] = useState(summary || '')
-  const [newImage, setNewImage] = useState(imageUrl || '')
+
+  const [previewUrl, setPreviewUrl] = useState(imageUrl || '')
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
-      const imagePreviewUrl = URL.createObjectURL(file)
-      setNewImage(imagePreviewUrl)
-      setFileName(file.name) // 파일 이름 저장
+    if (!file) return
+
+    // 파일 크기 제한 (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('파일 크기는 5MB 이하여야 합니다.')
+      return
     }
+    // 미리보기 생성
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result as string)
+      setSelectedFile(file)
+    }
+    reader.readAsDataURL(file)
   }
-  const { editFile } = useEditArchiveFileQuery()
+
+  const { editFileWithoutImg, editFileWithImg } = useEditArchiveFileQuery()
   const handleEdit = () => {
     // # 붙은 태그 문자열을 배열로 변환
     const tagsArray: string[] = newTags
@@ -68,24 +81,47 @@ function EditFileModal({ fileData }: Props) {
           .map(tag => tag.slice(1))
       : [] // '#' 제거
 
-    editFile.mutate(
-      {
-        dataSourceId,
-        title: newTitle ?? '',
-        category: newCategory as BadgeCategory,
-        summary: newSummary ?? '',
-        sourceUrl: newSourceUrl ?? '',
-        source: newSource ?? '',
-        tags: tagsArray ?? [],
-        imageUrl: newImage ?? ''
-      },
-      {
-        onSuccess: () => {
-          showSuccessToast('수정 완료')
-          closeModal()
+    if (selectedFile) {
+      editFileWithImg.mutate(
+        {
+          dataSourceId: dataSourceId,
+          payload: {
+            title: newTitle ?? '',
+            category: newCategory as BadgeCategory,
+            summary: newSummary ?? '',
+            sourceUrl: newSourceUrl ?? '',
+            source: newSource ?? '',
+            tags: tagsArray ?? []
+          },
+          image: selectedFile
+        },
+        {
+          onSuccess: () => {
+            showSuccessToast('수정 완료')
+            closeModal()
+          }
         }
-      }
-    )
+      )
+    } else {
+      editFileWithoutImg.mutate(
+        {
+          dataSourceId,
+          title: newTitle ?? '',
+          category: newCategory as BadgeCategory,
+          summary: newSummary ?? '',
+          sourceUrl: newSourceUrl ?? '',
+          source: newSource ?? '',
+          tags: tagsArray ?? [],
+          imageUrl: previewUrl
+        },
+        {
+          onSuccess: () => {
+            showSuccessToast('수정 완료')
+            closeModal()
+          }
+        }
+      )
+    }
   }
   return (
     <ModalLayout size="lg">
@@ -99,7 +135,7 @@ function EditFileModal({ fileData }: Props) {
               <div className="w-full rounded overflow-hidden flex justify-center">
                 <Image
                   src={
-                    newImage ??
+                    String(previewUrl) ??
                     'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default-profile'
                   }
                   alt={category}
@@ -111,6 +147,7 @@ function EditFileModal({ fileData }: Props) {
 
               {/* 숨긴 실제 input */}
               <input
+                ref={inputRef}
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/jpg"
                 id="fileInput"
@@ -194,9 +231,10 @@ function EditFileModal({ fileData }: Props) {
           </li>
         </ul>
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={handleEdit}
-          isCreating={false}
+          isCreating={
+            editFileWithImg?.isPending || editFileWithoutImg.isPending
+          }
           label={'수정'}
           disabled={false}
         />

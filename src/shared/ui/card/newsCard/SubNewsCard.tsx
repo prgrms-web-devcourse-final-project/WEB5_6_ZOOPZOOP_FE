@@ -38,7 +38,7 @@ export const SubNewsCard = ({
               e.stopPropagation()
               onSave?.()
             }}
-            className="absolute top-1 left-1 z-10 w-8 h-8 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all">
+            className="absolute top-1 left-1 w-8 h-8 z-2 bg-white/90 backdrop-blur-sm shadow-md rounded-full flex items-center justify-center hover:bg-green-normal hover:text-white transition-all cursor-pointer">
             {loading ? (
               <Loader2
                 size={16}
@@ -49,12 +49,7 @@ export const SubNewsCard = ({
             )}
           </button>
         )}
-        <div
-          className="w-21 h-21 flex-shrink-0 cursor-pointer rounded-lg overflow-hidden"
-          onClick={() => {
-            if (!link) return
-            window.open(link, '_blank', 'noopener,noreferrer')
-          }}>
+        <div className="w-21 h-21 flex-shrink-0 rounded-lg overflow-hidden">
           {imageUrl ? (
             <Image
               src={imageUrl}

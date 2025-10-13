@@ -11,12 +11,13 @@ import {
   FileMode
 } from '@/features/archive'
 import { CopyToSpaceButton } from '@/features/shared-archive'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
-  selectedIds: number[]
+  selectedFiles: CheckedFile[]
   mode: FileMode
   onChangeView: () => void
   toggleSort: (key: SortKey) => void
@@ -28,7 +29,7 @@ function FileHeader({
   direction,
   isTableView,
   mode,
-  selectedIds,
+  selectedFiles,
   onChangeView,
   toggleSort,
   handleSelectAll
@@ -60,11 +61,11 @@ function FileHeader({
             <button
               type="button"
               onClick={handleSelectAll}
-              className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
+              className="text-center cursor-pointer px-3 text-base hover:bg-gray-light-active border-r-2">
               전체 선택
             </button>
-            <RestoreButton selectedIds={selectedIds} />
-            <DeleteFileButton selectedIds={selectedIds} />
+            <RestoreButton selectedFiles={selectedFiles} />
+            <DeleteFileButton selectedFiles={selectedFiles} />
           </>
         )}
       </div>

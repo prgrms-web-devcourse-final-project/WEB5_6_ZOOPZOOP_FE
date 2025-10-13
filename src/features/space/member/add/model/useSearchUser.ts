@@ -5,6 +5,7 @@ import { useState } from 'react'
 export const useSearchUserByNickname = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 500)
+
   const { data, isPending } = useFetchUserInfoByNicknameQuery(
     debouncedSearchTerm.trim()
   )
@@ -20,7 +21,7 @@ export const useSearchUserByNickname = () => {
     searchTerm,
     handleInputChange,
     resetSearch,
-    result: data,
+    results: data ?? [],
     isSearching: isPending
   }
 }

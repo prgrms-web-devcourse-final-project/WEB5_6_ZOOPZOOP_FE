@@ -1,5 +1,6 @@
 import {
   deleteManySpaceFileServer,
+  editSpaceFileWithoutImgServer,
   fetchSpaceFilesByPageServer
 } from '@/entities/shared-archive/api/file.server'
 import { postCopyFileToSpaceServer } from '@/features/shared-archive/import-file/api/copyToSpace.server'
@@ -71,6 +72,30 @@ export const DELETE = async (request: Request) => {
         error instanceof Error
           ? error.message
           : { error: '스페이스 다건 파일 삭제 중 오류 발생' }
+    })
+  }
+}
+
+// 파일 수정 - 이미지 불포함
+export const PATCH = async (request: Request) => {
+  const payload = await request.json()
+
+  try {
+    const response = await requireAuth(
+      async token =>
+        await editSpaceFileWithoutImgServer(payload, {
+          token
+        })
+    )
+    return NextResponse.json(response)
+  } catch (error) {
+    return NextResponse.json({
+      status: 500,
+      data: null,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '파일 수정 중 오류 발생' }
     })
   }
 }

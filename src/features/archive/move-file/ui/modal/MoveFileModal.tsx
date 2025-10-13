@@ -1,7 +1,5 @@
 'use client'
 
-import { LuFolder } from 'react-icons/lu'
-import { useModalStore } from '@/shared/lib'
 import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/queries'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { ChevronsRight } from 'lucide-react'
@@ -23,16 +21,17 @@ export const MoveFileModal = () => {
     onSelectFiles
   } = useMoveFileModalState()
 
-  const closeModal = useModalStore(s => s.closeModal)
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data || []
-  const saveFolder = folderList.find(f => f.folderId === selectedSaveFolder)
+  const saveFolder = folderList.find(
+    f => f.folderId === selectedSaveFolder?.folderId
+  )
 
   // 선택한 폴더에 대한 파일 조회
-  const { filesQuery } = useArchiveFilesByFolderQuery(selectedFolder!, {
+  const { filesQuery } = useArchiveFilesByFolderQuery(selectedFolder.folderId, {
     enabled: !!selectedFolder
   })
-  const { handleMoveFiles } = useMoveFileAction()
+  const { handleMoveFiles, isPending } = useMoveFileAction()
 
   const filesForArchiveFolder =
     filesQuery.data?.files.map(file => ({
@@ -44,11 +43,11 @@ export const MoveFileModal = () => {
 
   return (
     <ModalLayout size="lg">
-      <div className=" w-full flex flex-col gap-2 min-h-[600px] ">
+      <div className=" w-full flex flex-col gap-5 min-h-[600px] ">
         <h1 className="text-2xl font-bold text-center">파일 이동</h1>
         <div className="flex justify-between">
           {/* 파일 위치 */}
-          <div className=" w-1/2 flex flex-col gap-2.5 ">
+          <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
             <SelectFileSection
               folderList={folderList}
               filesForArchiveFolder={filesForArchiveFolder}
@@ -65,20 +64,22 @@ export const MoveFileModal = () => {
               className="text-green-normal"
             />
           </div>
-          <SelectSaveFolderSection
-            location="내 아카이브"
-            folderList={folderList}
-            saveFolder={saveFolder}
-            selectedSaveFolder={selectedSaveFolder}
-            onFolderSelect={handleSelectSaveFolder}
-          />
+
+          <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
+            <SelectSaveFolderSection
+              location="내 아카이브"
+              folderList={folderList}
+              saveFolder={saveFolder}
+              selectedSaveFolder={selectedSaveFolder!}
+              onFolderSelect={handleSelectSaveFolder}
+            />
+          </div>
         </div>
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => handleMoveFiles(selectedFiles, selectedSaveFolder!)}
-          isCreating={false}
+          isCreating={isPending}
           label={'이동'}
           disabled={!saveFolder}
         />

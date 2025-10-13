@@ -22,7 +22,7 @@ const SpaceFileContextMenu = ({ fileData, position, onClose }: Props) => {
       label: '수정하기',
       onClick: () => {
         openModal({
-          type: 'edit-archive-file',
+          type: 'edit-space-file',
           props: { fileData: fileData }
         })
       }

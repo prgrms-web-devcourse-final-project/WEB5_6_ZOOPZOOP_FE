@@ -1,4 +1,5 @@
 import { FileData } from '@/entities/archive/file'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { create } from 'zustand'
 
 type ModalType =
@@ -10,14 +11,16 @@ type ModalType =
   | {
       type: 'move-archive-file'
     }
+  | { type: 'import-to-space-file' }
   | { type: 'delete-account' }
   | { type: 'copy-to-space' }
   | { type: 'go-to-archive-trash' }
   | { type: 'go-to-space-trash'; props: { dataSourceId: number[] } }
   | { type: 'edit-archive-file'; props: { fileData: FileData } }
-  | { type: 'delete-archive-file'; props: { dataSourceId: number[] } }
+  | { type: 'edit-space-file'; props: { fileData: FileData } }
+  | { type: 'delete-archive-file'; props: { selectedFiles: CheckedFile[] } }
   | { type: 'delete-space-file'; props: { dataSourceId: number[] } }
-  | { type: 'restore-archive-file'; props: { dataSourceId: number[] } }
+  | { type: 'restore-archive-file'; props: { selectedFiles: CheckedFile[] } }
   | { type: 'restore-space-file'; props: { dataSourceId: number[] } }
   | {
       type: 'add-member'

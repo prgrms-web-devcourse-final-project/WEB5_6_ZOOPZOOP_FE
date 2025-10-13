@@ -2,13 +2,13 @@ import { httpClient } from '@/shared/lib'
 import {
   CreateSpaceResponse,
   DeleteSpaceResponse,
+  EditSpaceNameResponse,
   FetchSpaceListParams,
+  LeaveSpaceResponse,
   Space,
-  SpaceResponse,
   SpacePagination,
   SpacePaginationAPIResponse,
-  EditSpaceNameResponse,
-  LeaveSpaceResponse
+  SpaceResponse
 } from '../model/type'
 
 // 스페이스 조회
@@ -16,12 +16,17 @@ export const fetchSpaceListClient = async ({
   page = 1,
   size = 15,
   sort = [],
+  state,
   includeMembers = true
 }: FetchSpaceListParams): Promise<SpacePagination | null> => {
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('size', size.toString())
   params.append('includeMembers', includeMembers.toString())
+
+  if (state) {
+    params.append('state', state)
+  }
 
   sort.forEach(s => {
     params.append('sort', s)

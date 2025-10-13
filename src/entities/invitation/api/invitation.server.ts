@@ -15,11 +15,11 @@ export const fetchInvitationsServer = async (
 
 // 알림 수락
 export const acceptInvitationsServer = async (
-  payload: string,
+  inviteId: number,
   options: NextFetchOptions
 ): Promise<AcceptInviteResponse> => {
   return await httpClient.post<AcceptInviteResponse>(
-    `/api/v1/invite/${payload}/accept`,
+    `/api/v1/invite/${inviteId}/accept`,
     {},
     options
   )
@@ -27,11 +27,11 @@ export const acceptInvitationsServer = async (
 
 // 알림 거절
 export const cancelInvitationsServer = async (
-  payload: string,
+  inviteId: number,
   options: NextFetchOptions
 ): Promise<CancelInviteResponse> => {
   return await httpClient.post<CancelInviteResponse>(
-    `/api/v1/invite/${payload}/reject`,
+    `/api/v1/invite/${inviteId}/reject`,
     {},
     options
   )
