@@ -13,7 +13,9 @@ import {
 } from '@dnd-kit/core'
 
 import { useComment } from '../model/useComment'
-import { CommentThread, NewCommentForm } from '@/features/dashboard'
+import { CommentThread } from '@/features/dashboard/liveblocks-thread/ui/CommentThread'
+import { CommentThreadPanel } from '@/features/dashboard/liveblocks-thread/ui/CommentThreadPanel'
+import { NewCommentForm } from '@/features/dashboard'
 
 interface CommentOverlayProps {
   isCreating: boolean
@@ -32,12 +34,15 @@ export const CommentOverlay = ({
 }: CommentOverlayProps) => {
   const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
   useViewport()
+
   const {
     threads,
     createComment,
     deleteComment,
     toggleResolved,
-    updateThreadPosition
+    updateThreadPosition,
+    selectedThreadId,
+    setSelectedThreadId
   } = useComment()
 
   const sensors = useSensors(
@@ -68,18 +73,35 @@ export const CommentOverlay = ({
 
   const DraggableComment = ({
     id,
+    x,
+    y,
+    disabled,
     children
   }: {
     id: string
+    x: number
+    y: number
+    disabled?: boolean
     children: React.ReactNode
   }) => {
-    const { attributes, listeners, setNodeRef } = useDraggable({ id })
+    const { attributes, listeners, setNodeRef, transform, isDragging } =
+      useDraggable({ id })
+    const dragBind = disabled ? {} : { ...attributes, ...listeners }
+
     return (
       <div
         ref={setNodeRef}
-        {...attributes}
-        {...listeners}
-        style={{ touchAction: 'none' }}>
+        {...dragBind}
+        style={{
+          position: 'fixed',
+          left: x,
+          top: y,
+          zIndex: isDragging ? 10000 : 2100,
+          touchAction: 'none',
+          transform: transform
+            ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+            : undefined
+        }}>
         {children}
       </div>
     )
@@ -109,32 +131,55 @@ export const CommentOverlay = ({
   )
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragEnd={handleDragEnd}>
-      {threads.map(thread => {
-        const screenPosition = flowToScreenPosition({
-          x: thread.metadata.x,
-          y: thread.metadata.y
-        })
-        const bounds = containerRef.current?.getBoundingClientRect()
-        const x = bounds ? screenPosition.x - bounds.left : screenPosition.x
-        const y = bounds ? screenPosition.y - bounds.top : screenPosition.y
+    <>
+      <DndContext
+        sensors={sensors}
+        onDragEnd={handleDragEnd}>
+        {threads.map(thread => {
+          const screen = flowToScreenPosition({
+            x: thread.metadata.x,
+            y: thread.metadata.y
+          })
+          const x = screen.x
+          const y = screen.y
+          const isOpen = selectedThreadId === thread.id
 
-        return (
-          <DraggableComment
-            key={thread.id}
-            id={thread.id}>
-            <CommentThread
-              threadId={thread.id}
+          return (
+            <DraggableComment
+              key={thread.id}
+              id={thread.id}
               x={x}
               y={y}
+              disabled={isOpen}>
+              <CommentThread
+                threadId={thread.id}
+                onToggle={() => setSelectedThreadId(isOpen ? null : thread.id)}
+              />
+            </DraggableComment>
+          )
+        })}
+      </DndContext>
+
+      {selectedThreadId &&
+        (() => {
+          const t = threads.find(th => th.id === selectedThreadId)
+          if (!t) return null
+          const screen = flowToScreenPosition({
+            x: t.metadata.x,
+            y: t.metadata.y
+          })
+          return (
+            <CommentThreadPanel
+              threadId={t.id}
+              x={screen.x}
+              y={screen.y}
               onResolve={toggleResolved}
               onDelete={handleDeleteComment}
+              onClose={() => setSelectedThreadId(null)}
+              placement="right"
             />
-          </DraggableComment>
-        )
-      })}
+          )
+        })()}
 
       {isCreating &&
         newCommentPosition &&
@@ -152,6 +197,6 @@ export const CommentOverlay = ({
             />
           )
         })()}
-    </DndContext>
+    </>
   )
 }
