@@ -9,7 +9,10 @@ import {
   ReactFlow,
   ReactFlowProvider,
   useReactFlow,
-  ConnectionMode
+  ConnectionMode,
+  getNodesBounds,
+  getViewportForBounds,
+  Panel
 } from '@xyflow/react'
 import type { OnNodesChange } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
@@ -21,6 +24,10 @@ import { FlowSidebar } from '../../flow-sidebar'
 import { Cursor } from './Cursor'
 import { CommentOverlay, FlowItemContainer } from '../../flow-item'
 import { DashboardFile } from '@/entities/dashboard'
+import { toPng } from 'html-to-image'
+
+const imageWidth = 1024
+const imageHeight = 768
 
 const nodeTypes = {
   custom: CustomFlowNode
@@ -102,6 +109,55 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
       setNewCommentPosition(flowPosition)
     }
   }
+  const { getNodes } = useReactFlow()
+
+  const captureDataUrl = async () => {
+    const el = document.querySelector(
+      '.react-flow__viewport'
+    ) as HTMLElement | null
+    if (!el) throw new Error('viewport not found')
+
+    const nodesBounds = getNodesBounds(getNodes())
+    const view = getViewportForBounds(
+      nodesBounds,
+      imageWidth,
+      imageHeight,
+      0.5,
+      2,
+      0.1
+    )
+
+    const transparentPx =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+
+    return await toPng(el, {
+      backgroundColor: '#ffffff',
+      width: imageWidth,
+      height: imageHeight,
+      style: {
+        width: `${imageWidth}px`,
+        height: `${imageHeight}px`,
+        transform: `translate(${view.x}px, ${view.y}px) scale(${view.zoom})`
+      },
+      cacheBust: true,
+      imagePlaceholder: transparentPx,
+      filter: node => {
+        if (node instanceof HTMLImageElement) {
+          const src = node.getAttribute('src') || ''
+          if (!src || src.startsWith('blob:')) return false
+        }
+        return true
+      }
+    })
+  }
+
+  const handleDownload = async () => {
+    const dataUrl = await captureDataUrl()
+    const a = document.createElement('a')
+    a.download = 'reactflow.png'
+    a.href = dataUrl
+    a.click()
+  }
   return (
     <div className="flex w-full h-screen relative">
       <FlowSidebar
@@ -160,6 +216,19 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
             gap={12}
             size={1}
           />
+          <Panel
+            position="top-right"
+            className="z-10">
+            <button
+              className="px-3 py-1.5 mr-2 rounded bg-slate-600 text-white text-sm"
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation()
+                handleDownload()
+              }}>
+              다운로드
+            </button>
+          </Panel>
         </ReactFlow>
 
         <FlowItemContainer
