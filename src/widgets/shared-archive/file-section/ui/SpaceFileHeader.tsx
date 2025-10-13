@@ -45,7 +45,7 @@ function SpaceFileHeader({
             <button
               type="button"
               onClick={handleSelectAll}
-              className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
+              className=" text-center cursor-pointer px-3 text-base hover:bg-gray-light-active border-r-2">
               전체 선택
             </button>
             <MoveToSpaceTrashButton
@@ -60,7 +60,7 @@ function SpaceFileHeader({
             <button
               type="button"
               onClick={handleSelectAll}
-              className=" text-center px-3 text-gray-dark text-lg hover:bg-orange-accent hover:text-white border-r-2">
+              className=" text-center cursor-pointer px-3 text-base hover:bg-gray-light-active border-r-2">
               전체 선택
             </button>
             <RestoreSpaceFileButton selectedIds={selectedIds} />
