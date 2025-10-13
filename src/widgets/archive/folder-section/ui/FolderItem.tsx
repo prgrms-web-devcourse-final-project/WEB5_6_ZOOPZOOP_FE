@@ -4,18 +4,24 @@ import { tw } from '@/shared/lib'
 import Link from 'next/link'
 
 interface Props {
+  folderId: number
   folderName: string
-  isUndo: boolean
+  useName?: string
+  isDefault: boolean
   isActive: boolean
   contextMenu?: React.ReactNode
+  isContextMenuActive?: boolean
   onContextMenu?: (x: number, y: number) => void
 }
 
 function FolderItem({
+  folderId,
   folderName,
-  isUndo,
+  isDefault,
+  useName,
   isActive,
   contextMenu,
+  isContextMenuActive,
   onContextMenu
 }: Props) {
   const handleContextMenu = (e: React.MouseEvent) => {
@@ -23,19 +29,32 @@ function FolderItem({
     if (onContextMenu) onContextMenu(e.clientX, e.clientY)
   }
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (isContextMenuActive) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
   return (
     <>
-      <Link href={!isUndo ? `/archive/${folderName}` : '/archive'}>
+      <Link
+        href={
+          isDefault
+            ? '/archive'
+            : `/archive/${folderId}?name=${encodeURIComponent(folderName)}`
+        }
+        onClick={handleClick}>
         <div
           onContextMenu={handleContextMenu}
           className={tw(
             'flex justify-between bg-[#F9FAFB] rounded-sm px-3 py-3 hover:bg-gray-light-hover cursor-pointer relative',
-            isUndo
-              ? 'bg-orange-accent text-gray-darker hover:bg-green-normal'
-              : '',
-            isActive ? 'bg-gray-light-active' : ''
+            isDefault ? 'bg-green-normal text-gray-darker ' : '',
+            isActive ? 'bg-orange-accent' : ''
           )}>
-          <p className="text-base text-gray-darker truncate ">{folderName}</p>
+          <p className={tw('text-base text-gray-darker truncate')}>
+            {isDefault ? useName : folderName}
+          </p>
 
           {contextMenu && contextMenu}
         </div>

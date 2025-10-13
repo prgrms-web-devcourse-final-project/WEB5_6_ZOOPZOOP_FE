@@ -22,6 +22,7 @@ export default async function ArchiveSearchPage({ searchParams }: Props) {
   const currentPage = Number(params?.page) || INITIAL_PAGE
 
   const initialFileData = await getInitialFileList({
+    folderId: 0,
     page: currentPage,
     size: 12,
     keyword: query

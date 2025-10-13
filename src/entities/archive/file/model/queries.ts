@@ -1,11 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { EditFileRequest, FileSearchParams, SearchGetResponse } from './type'
+import {
+  EditFileWithImgRequest,
+  EditFileWithoutImgRequest,
+  FileSearchParams,
+  SearchGetResponse
+} from './type'
 import {
   deleteManyArchiveFileClient,
   deleteOneArchiveFileClient,
-  editArchiveFileClient,
+  editArchiveFileWithImgClient,
+  editArchiveFileWithoutImgClient,
   fetchArchiveFilesByFolderClient,
-  fetchArchiveFilesByPageClient
+  fetchArchiveFilesByPageClient,
+  postArchiveFileClient
 } from '../api/file.client'
 
 export const useArchiveFilesByFolderQuery = (
@@ -13,9 +20,9 @@ export const useArchiveFilesByFolderQuery = (
   options?: { enabled?: boolean }
 ) => {
   const filesQuery = useQuery({
-    queryKey: ['archiveFilesFolder', folderId],
+    queryKey: ['archiveFilesPage', folderId],
     queryFn: () => fetchArchiveFilesByFolderClient(folderId),
-    staleTime: 1000 * 60,
+    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 
@@ -74,13 +81,41 @@ export const useDeleteManyArchiveFileQuery = () => {
   return { deleteManyFile }
 }
 
+//파일 수정
 export const useEditArchiveFileQuery = () => {
   const queryClient = useQueryClient()
-  const editFile = useMutation({
-    mutationFn: (fileData: EditFileRequest) => editArchiveFileClient(fileData),
+  const editFileWithoutImg = useMutation({
+    mutationFn: (fileData: EditFileWithoutImgRequest) =>
+      editArchiveFileWithoutImgClient(fileData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
     }
   })
-  return { editFile }
+  const editFileWithImg = useMutation({
+    mutationFn: (fileData: EditFileWithImgRequest) =>
+      editArchiveFileWithImgClient(fileData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
+    }
+  })
+
+  return { editFileWithoutImg, editFileWithImg }
+}
+
+// 파일 업로드
+export const useUploadArchiveFileQuery = () => {
+  const queryClient = useQueryClient()
+  const uploadFile = useMutation({
+    mutationFn: ({
+      folderId,
+      sourceUrl
+    }: {
+      folderId: number
+      sourceUrl: string
+    }) => postArchiveFileClient(folderId, sourceUrl),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
+    }
+  })
+  return { uploadFile }
 }

@@ -44,3 +44,31 @@ export interface TrashSpaceFileRequest {
   spaceId: number
   dataSourceId: number[]
 }
+
+export type EditSpaceFileWithoutImgRequest = {
+  spaceId: number
+  dataSourceId: number
+  title: string
+  summary: string
+  sourceUrl: string
+  source: string
+  imageUrl: string
+  tags: string[]
+  category: string
+}
+
+export type EditSpaceFileWithImgRequest = {
+  spaceId: number
+  dataSourceId: number
+  payload: {
+    title: string
+    summary: string
+    sourceUrl: string
+    source: string
+    tags: string[]
+    category: string
+  }
+  image: File
+}
+
+export type EditResponse = APIResponse<SpaceFileData>

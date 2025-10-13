@@ -55,11 +55,16 @@ export function HoveredCard({
           <p className="text-base text-black">{summary}</p>
         </div>
 
-        <Link href={sourceUrl}>
-          <button className="text-center text-base underline underline-offset-1 py-1 cursor-pointer hover:text-green-normal">
+        <div>
+          <button
+            className="text-center text-base underline underline-offset-1 py-1 cursor-pointer hover:text-green-normal"
+            onClick={() => {
+              if (!sourceUrl) return
+              window.open(sourceUrl, '_blank', 'noopener,noreferrer')
+            }}>
             자세히 보기
           </button>
-        </Link>
+        </div>
       </div>
     </div>
   )

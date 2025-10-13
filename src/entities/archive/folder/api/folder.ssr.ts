@@ -2,12 +2,14 @@ import { requireAuth } from '@/shared/lib/api-route'
 import { FolderData } from '../model/type'
 import { fetchArchiveFolderServer } from './folder.server'
 
-// 페이지 내 파일 조회
+// 페이지 내 폴더 조회
 export const getInitialFolderList = async (): Promise<FolderData[]> => {
   const response = await requireAuth(async token => {
     return fetchArchiveFolderServer({
       token,
-      next: { revalidate: 60, tags: ['archiveFolders'] }
+      //  next: { revalidate: 60, tags: ['archiveFolders'] }
+      next: { tags: ['archiveFolders'] },
+      cache: 'no-store'
     })
   })
 

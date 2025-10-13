@@ -1,7 +1,11 @@
 'use client'
 
 import { httpClient } from '@/shared/lib'
-import { FolderPatchResponse, FolderResponse } from '../model/type'
+import {
+  FolderPatchResponse,
+  FolderPostResponse,
+  FolderResponse
+} from '../model/type'
 
 // 폴더 조회
 export const fetchArchiveFolderClient = async (): Promise<FolderResponse> => {
@@ -16,8 +20,8 @@ export const fetchArchiveFolderClient = async (): Promise<FolderResponse> => {
 // 폴더 생성
 export const postArchiveFolderClient = async (
   folderName: string
-): Promise<FolderResponse> => {
-  const response = await httpClient.post<FolderResponse>(
+): Promise<FolderPostResponse> => {
+  const response = await httpClient.post<FolderPostResponse>(
     `/api/archive/folder`,
     {
       folderName

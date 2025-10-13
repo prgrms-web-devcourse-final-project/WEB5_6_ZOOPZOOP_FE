@@ -37,8 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body
-        className={`antialiased ${notoSans.className} bg-[#f8fafc] text-[#0b0b0b]`}>
+      <body className={`antialiased ${notoSans.className}  text-[#0b0b0b]`}>
         <main>
           <ToastProvider />
           <QueryProvider>

@@ -4,7 +4,8 @@ import {
   FilePostResponse,
   SearchGetResponse,
   FileSearchParams,
-  EditFileRequest
+  EditFileWithoutImgRequest,
+  EditFileWithImgRequest
 } from '../model/type'
 import { APIResponse } from '@/shared/types'
 
@@ -99,14 +100,40 @@ export const deleteManyArchiveFileClient = async (
   return response
 }
 
-// 파일 수정
-export const editArchiveFileClient = async (
-  fileData: EditFileRequest
+// 파일 수정  - 이미지 불포함
+export const editArchiveFileWithoutImgClient = async (
+  fileData: EditFileWithoutImgRequest
 ): Promise<FilePostResponse> => {
   const response = await httpClient.patch<FilePostResponse>(
     `/api/archive/file/edit`,
     fileData
   )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+// 파일 수정 - 이미지 포함
+export const editArchiveFileWithImgClient = async (
+  fileData: EditFileWithImgRequest
+): Promise<FilePostResponse> => {
+  const { payload, image, dataSourceId } = fileData
+  const formData = new FormData()
+  formData.append(
+    'payload',
+    new Blob([JSON.stringify(payload)], { type: 'application/json' })
+  )
+
+  if (image) {
+    formData.append('image', image)
+  }
+
+  const response = await httpClient.patch<FilePostResponse>(
+    `/api/archive/file/image?dataSourceId=${dataSourceId}`,
+    formData
+  )
+
   if (response.status !== 200) {
     throw new Error(response.msg)
   }

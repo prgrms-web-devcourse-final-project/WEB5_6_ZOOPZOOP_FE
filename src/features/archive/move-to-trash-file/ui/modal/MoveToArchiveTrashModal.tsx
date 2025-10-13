@@ -1,15 +1,19 @@
+'use client'
+
 import { useArchiveFilesByFolderQuery } from '@/entities/archive/file/model/queries'
 import { useGetArchiveFoldersQuery } from '@/entities/archive/folder'
 import { useMoveFileModalState } from '@/features/archive/move-file/model/useMoveFileModalState'
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { ChevronsRight, Folder } from 'lucide-react'
+import { ChevronsRight, Folder, Trash2 } from 'lucide-react'
 import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { SelectFileSection } from '@/features/archive/move-file'
+import { useRouter } from 'next/navigation'
 
 function MoveToArchiveTrashModal() {
+  const router = useRouter()
   const { selectedFolder, selectedFiles, handleSelectFolder, onSelectFiles } =
     useMoveFileModalState()
 
@@ -19,7 +23,7 @@ function MoveToArchiveTrashModal() {
   const folderList = foldersQuery.data?.data || []
 
   // 선택한 폴더에 대한 파일 조회
-  const { filesQuery } = useArchiveFilesByFolderQuery(selectedFolder!, {
+  const { filesQuery } = useArchiveFilesByFolderQuery(selectedFolder.folderId, {
     enabled: !!selectedFolder
   })
 
@@ -35,8 +39,9 @@ function MoveToArchiveTrashModal() {
     )
     moveToTrash.mutate(fileIdList, {
       onSuccess: () => {
-        closeModal()
         showSuccessToast('파일 휴지통으로 이동')
+        closeModal()
+        router.push('/archive/trash')
       }
     })
   }
@@ -48,7 +53,7 @@ function MoveToArchiveTrashModal() {
           파일 삭제
         </h1>
         <p className="mx-auto text-base text-gray-darker  ">
-          해당 파일은 휴지통으로 이동합니다.
+          선택한 파일은 휴지통으로 이동됩니다.
         </p>
         <div className="flex justify-between">
           {/* 파일 위치 */}
@@ -70,19 +75,18 @@ function MoveToArchiveTrashModal() {
             />
           </div>
           <div className="w-1/2 flex flex-col items-center justify-center">
-            <Folder
-              size={100}
+            <Trash2
+              size={80}
               className="text-gray-normal"
             />
-            <p className="text-lg">휴지통</p>
+            <p className="text-xl">휴지통</p>
           </div>
         </div>
 
         {/* 버튼 */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={handleMoveToTrash}
-          isCreating={false}
+          isCreating={moveToTrash.isPending}
           label={'이동'}
           disabled={selectedFiles.length === 0}
         />

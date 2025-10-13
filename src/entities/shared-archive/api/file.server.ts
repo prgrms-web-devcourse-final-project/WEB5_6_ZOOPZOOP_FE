@@ -1,13 +1,15 @@
 import { APIResponse, NextFetchOptions } from '@/shared/types'
 
 import { httpClient } from '@/shared/lib'
-import { FilePostResponse, EditFileRequest } from '@/entities/archive/file'
+import { FilePostResponse } from '@/entities/archive/file'
 import {
   TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
   SpaceFileByFolderGetResponse,
   SpaceFileByFolderRequest,
-  SpaceFileByPageRequest
+  SpaceFileByPageRequest,
+  EditSpaceFileWithoutImgRequest,
+  EditResponse
 } from '../model/type'
 
 // 페이지 내 파일 조회
@@ -68,18 +70,6 @@ export const postSpaceFileServer = async (
   )
 }
 
-//파일 단건 삭제 (영구 삭제)
-// export const deleteOneSpaceFileServer = async (
-//   dataSourceId: number,
-//   options: NextFetchOptions
-// ) => {
-//   return await httpClient.delete<FilePostResponse>(
-//     `/api/v1/space/${dataSourceId}`,
-//     {},
-//     options
-//   )
-// }
-
 //파일 다건 삭제 (영구 삭제)
 export const deleteManySpaceFileServer = async (
   { spaceId, dataSourceId }: TrashSpaceFileRequest,
@@ -92,12 +82,13 @@ export const deleteManySpaceFileServer = async (
   )
 }
 
-// 파일 수정
-export const editSpaceFileServer = async (
-  fileData: EditFileRequest,
+// 파일 수정 - 이미지 불포함
+export const editSpaceFileWithoutImgServer = async (
+  fileData: EditSpaceFileWithoutImgRequest,
   options: NextFetchOptions
 ) => {
   const {
+    spaceId,
     title,
     summary,
     sourceUrl,
@@ -107,8 +98,9 @@ export const editSpaceFileServer = async (
     category,
     dataSourceId
   } = fileData
-  return await httpClient.put<FilePostResponse>(
-    `/api/v1/space/${dataSourceId}`,
+
+  return await httpClient.patch<EditResponse>(
+    `/api/v1/space/${spaceId}/archive/datasources/${dataSourceId}`,
     {
       title,
       summary,
@@ -118,6 +110,20 @@ export const editSpaceFileServer = async (
       tags,
       category
     },
+    options
+  )
+}
+
+// 파일 수정 - 이미지 포함
+export const editSpaceFileWithImgServer = async (
+  spaceId: number,
+  dataSourceId: number,
+  formData: FormData,
+  options: NextFetchOptions
+) => {
+  return await httpClient.patch<EditResponse>(
+    `/api/v1/space/${spaceId}/archive/datasources/${dataSourceId}`,
+    formData,
     options
   )
 }

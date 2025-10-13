@@ -5,7 +5,10 @@ import {
   SpaceFileByFolder,
   SpaceFileByFolderGetResponse,
   SpaceFileByFolderRequest,
-  SpaceFileByPageRequest
+  SpaceFileByPageRequest,
+  EditSpaceFileWithoutImgRequest,
+  EditResponse,
+  EditSpaceFileWithImgRequest
 } from '../model/type'
 import { httpClient } from '@/shared/lib'
 
@@ -62,4 +65,44 @@ export const deleteManySpaceFileClient = async ({
     `/api/shared-archive/file`,
     { spaceId, dataSourceId }
   )
+}
+
+// 파일 수정  - 이미지 불포함
+export const editSpaceFileWithoutImgClient = async (
+  fileData: EditSpaceFileWithoutImgRequest
+): Promise<EditResponse> => {
+  const response = await httpClient.patch<EditResponse>(
+    `/api/shared-archive/file`,
+    fileData
+  )
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
+}
+
+// 파일 수정 - 이미지 포함
+export const editSpaceFileWithImgClient = async (
+  fileData: EditSpaceFileWithImgRequest
+): Promise<EditResponse> => {
+  const { payload, image, dataSourceId, spaceId } = fileData
+  const formData = new FormData()
+  formData.append(
+    'payload',
+    new Blob([JSON.stringify(payload)], { type: 'application/json' })
+  )
+
+  if (image) {
+    formData.append('image', image)
+  }
+
+  const response = await httpClient.patch<EditResponse>(
+    `/api/shared-archive/edit?dataSourceId=${dataSourceId}&spaceId=${spaceId}`,
+    formData
+  )
+
+  if (response.status !== 200) {
+    throw new Error(response.msg)
+  }
+  return response
 }

@@ -1,4 +1,5 @@
 import { FileMode } from '@/features/archive'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
 import { ArrowRight, Calendar } from 'lucide-react'
@@ -10,9 +11,11 @@ export interface ArchiveColumnType {
   createdAt: string
   origin: string
 }
-
 export const getArchiveColumns = (
-  mode: FileMode
+  mode: FileMode,
+  selectedFiles: CheckedFile[],
+  onSelect: (dataSourceId: number, fileName: string) => void,
+  onSelectAll: () => void
 ): ColumnDef<ArchiveColumnType>[] => {
   const columns: ColumnDef<ArchiveColumnType>[] = [
     {
@@ -60,26 +63,30 @@ export const getArchiveColumns = (
     }
   ]
 
-  // trash 모드일 때만 체크박스 컬럼 추가
   if (mode === 'trash') {
     columns.unshift({
       id: 'select',
-      header: ({ table }) => (
+      header: () => (
         <input
           type="checkbox"
           className="checkbox"
-          checked={table.getIsAllPageRowsSelected()}
-          onChange={table.getToggleAllPageRowsSelectedHandler()}
+          onChange={onSelectAll}
         />
       ),
-      cell: ({ row }) => (
-        <input
-          type="checkbox"
-          className="checkbox"
-          checked={row.getIsSelected()}
-          onChange={row.getToggleSelectedHandler()}
-        />
-      )
+      cell: ({ row }) => {
+        const id = Number(row.original.id)
+        const title = row.original.title
+        const checked = selectedFiles.some(f => f.dataSourceId === id)
+
+        return (
+          <input
+            type="checkbox"
+            className="checkbox"
+            checked={checked}
+            onChange={() => onSelect(id, title)}
+          />
+        )
+      }
     })
   }
 

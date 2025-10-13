@@ -1,6 +1,6 @@
 export type CheckedFile = {
-  folderId: number
-  fileId: number[]
+  dataSourceId: number
+  fileName: string
 }
 
 export type OneFileMove = {

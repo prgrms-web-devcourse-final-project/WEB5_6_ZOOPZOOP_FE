@@ -1,11 +1,7 @@
 import { useDeleteManySpaceFileQuery } from '@/entities/shared-archive/model/queries'
 import { TrashSpaceFileRequest } from '@/entities/shared-archive/model/type'
 import { useModalStore } from '@/shared/lib'
-import {
-  showErrorToast,
-  showInfoToast,
-  showSuccessToast
-} from '@/shared/ui/toast/Toast'
+import { showErrorToast, showSuccessToast } from '@/shared/ui/toast/Toast'
 
 export const useDeleteFileAction = () => {
   const closeModal = useModalStore(s => s.closeModal)
@@ -15,20 +11,16 @@ export const useDeleteFileAction = () => {
     deleteManyFile.mutate(
       { spaceId, dataSourceId },
       {
-        onSuccess: res => {
-          if (res?.status === 200) {
-            showSuccessToast('파일 삭제 성공')
-          } else {
-            showInfoToast('파일 삭제 중 오류가 발생했습니다')
-          }
+        onSuccess: () => {
+          showSuccessToast('파일 삭제 성공')
           closeModal()
         },
-        onError: err => {
+        onError: () => {
           showErrorToast('파일 삭제 실패')
         }
       }
     )
   }
 
-  return { handleDelete }
+  return { handleDelete, isPending: deleteManyFile.isPending }
 }

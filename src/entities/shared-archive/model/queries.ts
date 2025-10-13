@@ -1,10 +1,14 @@
 import {
   TrashSpaceFileRequest,
   SearchSpaceFileGetResponse,
-  SpaceFileByPageRequest
+  SpaceFileByPageRequest,
+  EditSpaceFileWithoutImgRequest,
+  EditSpaceFileWithImgRequest
 } from './type'
 import {
   deleteManySpaceFileClient,
+  editSpaceFileWithImgClient,
+  editSpaceFileWithoutImgClient,
   fetchSpaceFilesByFolderClient,
   fetchSpaceFilesClient
 } from '../api/file.client'
@@ -42,7 +46,7 @@ export const useSpaceFilesByFolderQuery = (
   return useQuery({
     queryKey: ['spaceFile', spaceId],
     queryFn: () => fetchSpaceFilesByFolderClient({ spaceId }),
-    staleTime: 1000 * 60,
+    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 }
@@ -57,4 +61,25 @@ export const useDeleteManySpaceFileQuery = () => {
     }
   })
   return { deleteManyFile }
+}
+
+// 파일 수정
+export const useEditSpaceFileQuery = () => {
+  const queryClient = useQueryClient()
+  const editFileWithoutImg = useMutation({
+    mutationFn: (fileData: EditSpaceFileWithoutImgRequest) =>
+      editSpaceFileWithoutImgClient(fileData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['spaceFile'] })
+    }
+  })
+  const editFileWithImg = useMutation({
+    mutationFn: (fileData: EditSpaceFileWithImgRequest) =>
+      editSpaceFileWithImgClient(fileData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['spaceFile'] })
+    }
+  })
+
+  return { editFileWithoutImg, editFileWithImg }
 }

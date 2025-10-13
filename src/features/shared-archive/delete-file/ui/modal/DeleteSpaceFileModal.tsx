@@ -1,4 +1,3 @@
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
@@ -9,10 +8,9 @@ interface Props {
   dataSourceId: number[]
 }
 function DeleteSpaceFileModal({ dataSourceId }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
-  const { handleDelete } = useDeleteFileAction()
+  const { handleDelete, isPending } = useDeleteFileAction()
   const { data } = useSpaceFilesByFolderQuery(spaceId)
   const selectedFiles =
     data?.files?.filter(file =>
@@ -38,22 +36,21 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
 
         <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
           {selectedFiles &&
-            selectedFiles.map((item, index) => (
+            selectedFiles.map(item => (
               <div
                 key={item.dataSourceId}
                 className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                {index + 1}. {item.title}
+                {item.title}
               </div>
             ))}
         </div>
 
         {/* 삭제 파일 리스트  */}
         <FolderActionButtons
-          onCancel={closeModal}
           onCreate={() => {
             handleDelete({ spaceId: spaceId, dataSourceId })
           }}
-          isCreating={false}
+          isCreating={isPending}
           label={'삭제'}
           disabled={false}
         />
