@@ -1,8 +1,17 @@
 import { PATH } from '@/shared/constants'
 import { NextResponse } from 'next/server'
 
-export async function GET(req: Request) {
-  const url = new URL(req.url)
+export async function GET(request: Request) {
+  // const accessToken = getAccessToken()
+  // const url = new URL(request.url)
+
+  // if (!accessToken) {
+  //   return NextResponse.redirect(new URL(PATH.AUTH.LOGIN, url))
+  // }
+
+  // return NextResponse.redirect(new URL(PATH.NEWS.ROOT, url))
+
+  const url = new URL(request.url)
 
   const accessToken = url.searchParams.get('accessToken')
   const refreshToken = url.searchParams.get('refreshToken')

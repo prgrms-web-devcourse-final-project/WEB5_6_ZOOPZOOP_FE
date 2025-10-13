@@ -8,121 +8,81 @@ import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { Camera } from 'lucide-react'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import { useEditFileState } from '../../model/useEditFileState'
+import { useEditFileAction } from '../../model/useEditFileAction'
 
 interface Props {
   fileData: EditFileWithoutImgRequest
 }
+type Badge = {
+  name: string
+  value: string
+}
 
-const categories: BadgeCategory[] = [
-  'POLITICS',
-  'ECONOMY',
-  'SOCIETY',
-  'IT',
-  'SCIENCE',
-  'CULTURE',
-  'SPORTS',
-  'ENVIRONMENT',
-  'HISTORY',
-  'WORLD'
+const categories: Badge[] = [
+  { name: '정치', value: 'POLITICS' },
+  {
+    name: '경제',
+    value: 'ECONOMY'
+  },
+  {
+    name: '사회',
+    value: 'SOCIETY'
+  },
+  {
+    name: 'IT',
+    value: 'IT'
+  },
+  {
+    name: '과학',
+    value: 'SCIENCE'
+  },
+  {
+    name: '문화',
+    value: 'CULTURE'
+  },
+  {
+    name: '스포츠',
+    value: 'SPORTS'
+  },
+  {
+    name: '환경',
+    value: 'ENVIRONMENT'
+  },
+  {
+    name: '역사',
+    value: 'HISTORY'
+  },
+  {
+    name: '세계',
+    value: 'WORLD'
+  }
 ]
 
 function EditFileModal({ fileData }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
+  // const closeModal = useModalStore(s => s.closeModal)
   const {
-    title,
-    source,
-    sourceUrl,
-    summary,
     dataSourceId,
-    tags,
-    category,
-    imageUrl
-  } = fileData
+    newTitle,
+    newSourceUrl,
+    newSource,
+    newCategory,
+    newTags,
+    newSummary,
+    previewUrl,
+    selectedFile,
+    inputRef,
+    setNewTitle,
+    setNewSourceUrl,
+    setNewSource,
+    setNewCategory,
+    setNewTags,
+    setNewSummary,
+    handleImageChange
+  } = useEditFileState(fileData)
 
-  const [newTitle, setNewTitle] = useState(title || '')
-  const [newSourceUrl, setNewSourceUrl] = useState(sourceUrl || '')
-  const [newSource, setNewSource] = useState(source || '')
-  const [newCategory, setNewCategory] = useState<string>(category || '')
+  const { handleEdit, isPending } = useEditFileAction()
 
-  const initialTags = tags?.map(tag => `#${tag}`).join(' ') || ''
-  const [newTags, setNewTags] = useState(initialTags || '')
-  const [newSummary, setNewSummary] = useState(summary || '')
-
-  const [previewUrl, setPreviewUrl] = useState(imageUrl || '')
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    // 파일 크기 제한 (5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('파일 크기는 5MB 이하여야 합니다.')
-      return
-    }
-    // 미리보기 생성
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setPreviewUrl(reader.result as string)
-      setSelectedFile(file)
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const { editFileWithoutImg, editFileWithImg } = useEditArchiveFileQuery()
-  const handleEdit = () => {
-    // # 붙은 태그 문자열을 배열로 변환
-    const tagsArray: string[] = newTags
-      ? newTags
-          .split(' ')
-          .map(tag => tag.trim())
-          .filter(tag => tag.startsWith('#')) // '#' 붙은 것만
-          .map(tag => tag.slice(1))
-      : [] // '#' 제거
-
-    if (selectedFile) {
-      editFileWithImg.mutate(
-        {
-          dataSourceId: dataSourceId,
-          payload: {
-            title: newTitle ?? '',
-            category: newCategory as BadgeCategory,
-            summary: newSummary ?? '',
-            sourceUrl: newSourceUrl ?? '',
-            source: newSource ?? '',
-            tags: tagsArray ?? []
-          },
-          image: selectedFile
-        },
-        {
-          onSuccess: () => {
-            showSuccessToast('수정 완료')
-            closeModal()
-          }
-        }
-      )
-    } else {
-      editFileWithoutImg.mutate(
-        {
-          dataSourceId,
-          title: newTitle ?? '',
-          category: newCategory as BadgeCategory,
-          summary: newSummary ?? '',
-          sourceUrl: newSourceUrl ?? '',
-          source: newSource ?? '',
-          tags: tagsArray ?? [],
-          imageUrl: previewUrl
-        },
-        {
-          onSuccess: () => {
-            showSuccessToast('수정 완료')
-            closeModal()
-          }
-        }
-      )
-    }
-  }
   return (
     <ModalLayout size="lg">
       <div className="flex flex-col w-full gap-3 max-h-[80vh] overflow-y-auto">
@@ -138,7 +98,7 @@ function EditFileModal({ fileData }: Props) {
                     String(previewUrl) ??
                     'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default-profile'
                   }
-                  alt={category}
+                  alt={newTitle}
                   width={500}
                   height={250}
                   className="object-cover rounded border "
@@ -183,9 +143,9 @@ function EditFileModal({ fileData }: Props) {
               <option value="">카테고리 선택</option> {/* 초기 선택 */}
               {categories.map(cat => (
                 <option
-                  key={cat}
-                  value={cat}>
-                  {cat}
+                  key={cat.value}
+                  value={cat.value}>
+                  {cat.name}
                 </option>
               ))}
             </select>
@@ -231,8 +191,20 @@ function EditFileModal({ fileData }: Props) {
           </li>
         </ul>
         <FolderActionButtons
-          onCreate={handleEdit}
-          isCreating={false}
+          onCreate={() => {
+            handleEdit({
+              newTags,
+              selectedFile,
+              dataSourceId,
+              newTitle,
+              newCategory,
+              newSummary,
+              newSourceUrl,
+              newSource,
+              previewUrl
+            })
+          }}
+          isCreating={isPending}
           label={'수정'}
           disabled={false}
         />
