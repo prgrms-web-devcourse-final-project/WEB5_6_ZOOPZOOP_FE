@@ -9,7 +9,6 @@ import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/querie
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
 import {
   FileMode,
-  SortKey,
   useSelectFiles,
   useSortFile,
   useSwitchFileView
@@ -46,7 +45,7 @@ export default function FileSection({
 
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
-      folderId,
+      folderId: mode === 'trash' ? 0 : folderId,
       page: currentPage,
       isActive: mode === 'archive',
       size: size,

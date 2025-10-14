@@ -1,6 +1,5 @@
 import { getInitialFileList } from '@/entities/archive/file/api/file.ssr'
 import { getInitialFolderList } from '@/entities/archive/folder/api/folder.ssr'
-import { SortKey } from '@/features/archive'
 import Header, { Button } from '@/shared/ui/header/Header'
 import { FileSection } from '@/widgets/archive/file-section'
 import { FolderSection } from '@/widgets/archive/folder-section'

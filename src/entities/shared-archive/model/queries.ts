@@ -33,7 +33,6 @@ export const useSpaceFilesQuery = ({ query, initialData }: PageQuery) => {
         sort,
         isActive
       }),
-    // staleTime: 1000 * 60,
     initialData: initialData
   })
 }
@@ -46,7 +45,6 @@ export const useSpaceFilesByFolderQuery = (
   return useQuery({
     queryKey: ['spaceFile', spaceId],
     queryFn: () => fetchSpaceFilesByFolderClient({ spaceId }),
-    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 }

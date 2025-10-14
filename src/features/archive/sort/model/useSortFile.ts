@@ -8,6 +8,7 @@ export const useSortFile = (
   ) => void
 ) => {
   const router = useRouter()
+
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({
     key: 'createdAt',
     direction: 'desc'
@@ -25,8 +26,13 @@ export const useSortFile = (
     // 상태 업데이트
     setSort({ key, direction: nextDirection })
 
-    // 페이지 이동
-    router.push(`archive?sort=${key},${nextDirection}`)
+    // 현재 페이지에서 sort
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', `${key},${nextDirection}`)
+    url.searchParams.set('page', '1')
+
+    // router.push(`archive?sort=${key},${nextDirection}`)
+    router.push(`${url.pathname}?${url.searchParams.toString()}`)
   }
 
   useEffect(() => {
