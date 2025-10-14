@@ -25,7 +25,6 @@ export default async function Page({
   const folderData = await requireAuth(token =>
     fetchDashboardFolderServer(id, { token, cache: 'no-store' })
   )
-
   if (folderData.status !== 200) throw new Error(folderData.msg)
 
   // 파일 데이터 한번에 조회
