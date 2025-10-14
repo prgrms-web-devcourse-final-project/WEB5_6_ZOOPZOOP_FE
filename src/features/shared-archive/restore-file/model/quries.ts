@@ -8,7 +8,7 @@ export const useRestoreArchiveFilesQuery = () => {
     mutationFn: ({ spaceId, dataSourceId }: TrashSpaceFileRequest) =>
       restoreSpaceFileClient({ spaceId, dataSourceId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['archiveSoftDelete'] })
+      queryClient.invalidateQueries({ queryKey: ['spaceFiles'] })
     }
   })
 

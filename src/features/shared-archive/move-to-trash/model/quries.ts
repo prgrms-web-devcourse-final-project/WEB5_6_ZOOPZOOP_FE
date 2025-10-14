@@ -8,7 +8,7 @@ export const useMoveToTrashSpaceFilesQuery = () => {
     mutationFn: ({ spaceId, dataSourceId }: SpaceSoftDeleteRequest) =>
       softDeleteSpaceFileClient({ spaceId, dataSourceId }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['spaceSoftDelete'] })
+      queryClient.invalidateQueries({ queryKey: ['spaceFiles'] })
     }
   })
 
