@@ -14,6 +14,7 @@ const createFetchOptions = (
   return {
     method,
     headers: {
+      credentials: 'include',
       ...(!isFormData && { 'Content-Type': 'application/json' }),
       ...(token && { Authorization: `Bearer ${token}` }),
       ...headers
