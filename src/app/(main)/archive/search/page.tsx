@@ -10,20 +10,23 @@ export const metadata: Metadata = {
 }
 
 interface Props {
-  searchParams: Promise<{ q?: string; page?: string }>
+  searchParams: Promise<{ q?: string; page?: string; sort?: string }>
 }
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 1
+const DEFAULT_SIZE = 12
 
 export default async function ArchiveSearchPage({ searchParams }: Props) {
   const params = await searchParams
   const query = params.q ? decodeURIComponent(params.q) : ''
 
   const currentPage = Number(params?.page) || INITIAL_PAGE
+  const currentSort = params?.sort
 
   const initialFileData = await getInitialFileList({
     folderId: 0,
     page: currentPage,
+    sort: currentSort,
     size: 12,
     keyword: query
   })
@@ -35,6 +38,8 @@ export default async function ArchiveSearchPage({ searchParams }: Props) {
       />
       <div className="w-full flex flex-col p-8 gap-4 ">
         <FileSection
+          currentSort={currentSort}
+          size={DEFAULT_SIZE}
           folderId={ROOT_FOLDER_ID}
           mode="archive"
           initialFileData={initialFileData && initialFileData}

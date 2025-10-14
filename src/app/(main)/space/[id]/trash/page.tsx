@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 interface Props {
   params: Promise<{ id: string }>
-  searchParams: Promise<{ page: string }>
+  searchParams: Promise<{ page: string; sort: string }>
 }
 
 const INITIAL_PAGE = 1
@@ -20,18 +20,21 @@ async function SpaceTrashPage({ searchParams, params }: Props) {
   const param = await params
 
   const currentPage = Number(search?.page) || INITIAL_PAGE
+  const currentSort = search?.sort
   const spaceId = Number(param.id)
 
   const initialFileData = await getInitialSpaceFileList({
     page: currentPage,
     spaceId: spaceId,
-    isActive: false
+    isActive: false,
+    sort: currentSort
   })
 
   return (
     <div>
       <div className="w-full flex flex-col p-8 gap-4 ">
         <SpaceFileSection
+          currentSort={currentSort}
           spaceId={currentPage}
           mode="trash"
           initialFileData={initialFileData && initialFileData}
