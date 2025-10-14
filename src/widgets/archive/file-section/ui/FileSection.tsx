@@ -9,6 +9,7 @@ import { useArchiveFilesByPageQuery } from '@/entities/archive/file/model/querie
 import { SearchGetResponse } from '@/entities/archive/file/model/type'
 import {
   FileMode,
+  SortKey,
   useSelectFiles,
   useSortFile,
   useSwitchFileView
@@ -20,6 +21,8 @@ import { tw } from '@/shared/lib'
 interface Props {
   initialFileData: SearchGetResponse
   initialPage: number
+  currentSort?: string
+  size: number
   mode: FileMode
   folderId: number
 }
@@ -28,6 +31,8 @@ export default function FileSection({
   initialFileData,
   initialPage,
   mode,
+  size,
+  currentSort,
   folderId
 }: Props) {
   const searchParams = useSearchParams()
@@ -39,14 +44,13 @@ export default function FileSection({
   const { sort, toggleSort } = useSortFile()
   const { selectedFiles, handleSelect, handleSelectAll } = useSelectFiles()
 
-  // react-query
   const { data: filesQuery } = useArchiveFilesByPageQuery({
     query: {
       folderId,
       page: currentPage,
       isActive: mode === 'archive',
-      size: 8,
-      sort: `${sort.key},${sort.direction}`,
+      size: size,
+      sort: currentSort,
       keyword: queryKeyword
     },
     initialData: currentPage === initialPage ? initialFileData : undefined
