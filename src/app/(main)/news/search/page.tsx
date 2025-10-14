@@ -2,8 +2,6 @@ import { fetchNewsByKeywords } from '@/entities/news'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { NewsGrid } from '@/widgets/news/news-section'
 
-export const dynamic = 'force-dynamic'
-
 export default async function NewsSearch({
   searchParams
 }: {

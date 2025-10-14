@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get('accessToken')?.value
   const { pathname } = request.nextUrl
 
-  const publicPaths = [PATH.AUTH.LOGIN, PATH.ROOT]
+  const publicPaths = [PATH.AUTH.LOGIN, PATH.ROOT, PATH.AUTH.EXTENSION]
   const isPublicPath = publicPaths.some(path => path === pathname)
 
   if (accessToken && isPublicPath) {
