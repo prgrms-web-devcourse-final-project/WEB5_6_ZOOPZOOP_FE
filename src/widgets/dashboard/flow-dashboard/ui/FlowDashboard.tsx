@@ -18,8 +18,7 @@ import {
   useReactFlow,
   ConnectionMode,
   getNodesBounds,
-  getViewportForBounds,
-  Panel
+  getViewportForBounds
 } from '@xyflow/react'
 import type { OnNodesChange } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
@@ -34,6 +33,8 @@ import { DashboardFile } from '@/entities/dashboard'
 import { toPng } from 'html-to-image'
 import { updateThumbnailClient } from '@/entities/thumbnail'
 import { useParams } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { SpaceQueryKey } from '@/entities/space'
 
 const imageWidth = 1024
 const imageHeight = 768
@@ -72,6 +73,7 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
 
   const { id } = useParams()
+  const queryClient = useQueryClient()
 
   const [isCreating, setIsCreating] = useState(false)
   const [newCommentPosition, setNewCommentPosition] = useState<{
@@ -162,12 +164,11 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
         height: `${imageHeight}px`,
         transform: `translate(${view.x}px, ${view.y}px) scale(${view.zoom})`
       },
-      cacheBust: true,
       imagePlaceholder: transparentPx,
       filter: node => {
         if (node instanceof HTMLImageElement) {
           const src = node.getAttribute('src') || ''
-          if (!src || src.startsWith('blob:')) return false
+          if (!src) return false
         }
         return true
       }
@@ -184,7 +185,7 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
         const blob = await (await fetch(dataUrl)).blob()
         latestBlobRef.current = blob
       } catch {}
-    }, 1000)
+    }, 1500)
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current)
@@ -195,24 +196,37 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
 
   // 페이지 이탈/언마운트 시 keepalive PUT으로 자동 업로드
   useEffect(() => {
-    const sendAutoSave = () => {
+    const sendAutoSave = async () => {
       const sid = initialIdRef.current
       if (!sid) return
-      const blob = latestBlobRef.current
+      let blob = latestBlobRef.current
+      if (!blob) {
+        try {
+          const dataUrl = await captureDataUrl()
+          const freshBlob = await (await fetch(dataUrl)).blob()
+          latestBlobRef.current = freshBlob
+          blob = freshBlob
+        } catch {}
+      }
       if (!blob) return
       const form = new FormData()
       const file = new File([blob], 'flow.png', { type: 'image/png' })
       form.append('image', file)
       try {
         updateThumbnailClient(Number(id), file)
+        queryClient.invalidateQueries({
+          queryKey: [SpaceQueryKey]
+        })
       } catch {}
     }
 
     const handleVisibility = () => {
-      if (document.hidden) sendAutoSave()
+      if (document.hidden) {
+        void sendAutoSave()
+      }
     }
     const handlePageHide = () => {
-      sendAutoSave()
+      void sendAutoSave()
     }
 
     document.addEventListener('visibilitychange', handleVisibility)
@@ -220,7 +234,7 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
     window.addEventListener('beforeunload', handlePageHide)
 
     return () => {
-      sendAutoSave()
+      void sendAutoSave()
       document.removeEventListener('visibilitychange', handleVisibility)
       window.removeEventListener('pagehide', handlePageHide)
       window.removeEventListener('beforeunload', handlePageHide)
