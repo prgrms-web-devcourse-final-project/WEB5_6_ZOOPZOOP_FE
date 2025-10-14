@@ -9,6 +9,7 @@ export interface ArchiveColumnType {
   title: string
   category: string
   createdAt: string
+  sourceUrl: string
   origin: string
 }
 export const getArchiveColumns = (
@@ -19,12 +20,25 @@ export const getArchiveColumns = (
 ): ColumnDef<ArchiveColumnType>[] => {
   const columns: ColumnDef<ArchiveColumnType>[] = [
     {
+      accessorKey: 'sourceUrl',
+      header: () => null,
+      cell: () => null
+    },
+    {
       accessorKey: 'title',
       header: '파일',
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Badge name={row.getValue('category')} />
-          <p className="text-base text-gray-darker">{row.getValue('title')}</p>
+          <p
+            className="text-base text-gray-darker cursor-pointer"
+            onClick={() => {
+              const url = row.getValue('sourceUrl') as string
+              if (!url) return // 없으면 그냥 종료
+              window.open(url, '_blank', 'noopener,noreferrer')
+            }}>
+            {row.getValue('title')}
+          </p>
         </div>
       )
     },

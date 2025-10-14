@@ -24,7 +24,8 @@ function TableView({
     title: item.title,
     category: item.category,
     createdAt: item.dataCreatedDate,
-    origin: item.source
+    origin: item.source,
+    sourceUrl: item.sourceUrl
   }))
 
   const columns = getArchiveColumns(mode, selectedFiles, onSelect, () =>
