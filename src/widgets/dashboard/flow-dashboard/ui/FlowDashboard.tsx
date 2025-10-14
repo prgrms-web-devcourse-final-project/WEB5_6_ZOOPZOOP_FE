@@ -213,8 +213,8 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
       const file = new File([blob], 'flow.png', { type: 'image/png' })
       form.append('image', file)
       try {
-        updateThumbnailClient(Number(id), file)
-        queryClient.invalidateQueries({
+        await updateThumbnailClient(Number(id), file)
+        await queryClient.invalidateQueries({
           queryKey: [SpaceQueryKey]
         })
       } catch {}
