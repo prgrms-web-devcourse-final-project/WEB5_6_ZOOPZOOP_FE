@@ -7,6 +7,8 @@ import { FolderSection } from '@/widgets/archive/folder-section'
 const ROOT_FOLDER_ID = 0
 const INITIAL_PAGE = 1
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   searchParams: Promise<{ page?: string }>
 }
