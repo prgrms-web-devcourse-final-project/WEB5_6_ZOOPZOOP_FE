@@ -1,8 +1,9 @@
 const Loading = () => {
   return (
-    <section className="h-screen flex-center">
-      <div className="size-32 rounded-full border-16 border-gray-400 border-l-green-normal animate-spin"></div>
+    <section className="h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
     </section>
   )
 }
+
 export default Loading

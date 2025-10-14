@@ -7,6 +7,7 @@ import {
   ClientSideSuspense
 } from '@liveblocks/react/suspense'
 import { Edge } from '@xyflow/react'
+import Loading from '@/shared/ui/loading/Loading'
 
 const initialNodes = [
   {
@@ -54,7 +55,7 @@ export function Room({
           nodes: initialNodes,
           edges: initialEdges
         }}>
-        <ClientSideSuspense fallback={<div>Loading…</div>}>
+        <ClientSideSuspense fallback={<Loading />}>
           {children}
         </ClientSideSuspense>
       </RoomProvider>
