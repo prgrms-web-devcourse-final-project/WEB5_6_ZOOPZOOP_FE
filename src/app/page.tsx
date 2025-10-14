@@ -13,9 +13,62 @@ import { DemoFlow } from '@/app/_main/DemoFlow'
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
-const COLS = 6
-const IMG =
-  'https://images.unsplash.com/photo-1483213097419-365e22f0f258?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2070'
+const HERO_COLUMNS = [
+  {
+    speed: 0.45,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/4f/The_Verge_logo_2016.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/6/6f/BBC_News_2022_%28Alt%29.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/4d/TechCrunch_logo.svg'
+    ]
+  },
+  {
+    speed: 0.6,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/6/6a/Medium_logo_Monogram.svg',
+      'https://static.toss.im/illusts/logo-toss-tech.png',
+      'https://upload.wikimedia.org/wikipedia/commons/9/99/Substack_logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/48/Naver_Blog_Icon_2022.svg'
+    ]
+  },
+  {
+    speed: 0.75,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/8/89/Notion-logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/9/9c/OpenAI_Logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/2f/GitHub_logo_2013.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/5/57/Google_News_icon.svg'
+    ]
+  },
+  {
+    speed: 0.55,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/0/0c/Vercel_logo_black.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/1/1f/Stack_Overflow_logo.svg'
+    ]
+  },
+  {
+    speed: 0.7,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/1/1e/Product_Hunt_Logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/9/91/Dev.to_logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/45/Hacker_News_logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/4/4e/Reddit_logo_new.svg'
+    ]
+  },
+  {
+    speed: 0.5,
+    images: [
+      'https://upload.wikimedia.org/wikipedia/commons/2/24/YouTube_logo_%282013-2017%29.png',
+      'https://upload.wikimedia.org/wikipedia/commons/e/ef/Twitter_logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/5/51/LinkedIn_Logo.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/28/Medium_logo_wordmark.svg'
+    ]
+  }
+]
 
 export default function ArchiveScrollPage() {
   useEffect(() => {
@@ -25,44 +78,6 @@ export default function ArchiveScrollPage() {
       smooth: 1.2,
       speed: 1.6,
       effects: true
-    })
-
-    gsap.set('.anim-swipe', { yPercent: 0 })
-    gsap.to('.anim-swipe', {
-      yPercent: 300,
-      delay: 0.2,
-      duration: 2.4,
-      stagger: { from: 'random', each: 0.08 },
-      ease: 'sine.out'
-    })
-
-    const cols = gsap.utils.toArray<HTMLElement>('.hero__image-cont')
-    cols.forEach((col, i) => {
-      smoother.effects(col, { speed: i % 2 === 0 ? 0.6 : 0.85, lag: 0.12 })
-    })
-    cols.forEach((col, i) => {
-      const slice = col.querySelector('.slice')
-      if (!slice) return
-      gsap.to(slice, {
-        yPercent: i % 2 === 0 ? -10 : 10,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: '+=2200',
-          scrub: true
-        }
-      })
-    })
-    gsap.to('.slice', {
-      scale: 1.35,
-      xPercent: 14,
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: '+=2200',
-        scrub: true
-      }
     })
 
     const cards = gsap.utils.toArray<HTMLElement>('.teaser__card')
@@ -153,9 +168,12 @@ export default function ArchiveScrollPage() {
       className="overflow-hidden bg-[#f8fafc] text-[#0b0b0b]">
       <div id="content">
         <Hero
-          imageUrl={IMG}
-          cols={COLS}
+          columns={HERO_COLUMNS}
+          height={400}
+          gap={16}
+          repeat={8}
         />
+
         <Teaser />
         <Services />
         <CTA />
