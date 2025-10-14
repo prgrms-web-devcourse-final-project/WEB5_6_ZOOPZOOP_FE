@@ -17,9 +17,24 @@ export const getRefreshToken = async () => {
 
 export const clearToken = async () => {
   const cookieStore = await cookies()
-  cookieStore.delete(ACCESS_TOKEN)
-  cookieStore.delete(REFRESH_TOKEN)
-  cookieStore.delete(SESSION_ID)
+  const domain = '.zoopzoop.kro.kr'
+  const path = '/'
+
+  cookieStore.delete({
+    name: ACCESS_TOKEN,
+    domain,
+    path
+  })
+  cookieStore.delete({
+    name: REFRESH_TOKEN,
+    domain,
+    path
+  })
+  cookieStore.delete({
+    name: SESSION_ID,
+    domain,
+    path
+  })
 }
 
 // 쿠키가 포함된 헤더
