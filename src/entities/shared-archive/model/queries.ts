@@ -20,7 +20,7 @@ interface PageQuery {
 }
 //페이지 내 파일 조회
 export const useSpaceFilesQuery = ({ query, initialData }: PageQuery) => {
-  const { spaceId, page, sort, size, keyword, isActive } = query
+  const { spaceId, page, sort, keyword, isActive } = query
 
   return useQuery({
     queryKey: ['spaceFile', spaceId, page, sort, keyword, isActive], //쿼리 키를 다르게 설정
@@ -28,7 +28,6 @@ export const useSpaceFilesQuery = ({ query, initialData }: PageQuery) => {
       fetchSpaceFilesClient({
         spaceId,
         page,
-        size,
         keyword,
         sort,
         isActive

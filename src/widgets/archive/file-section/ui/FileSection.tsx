@@ -78,7 +78,7 @@ export default function FileSection({
           mode === 'trash' && 'min-h-[74vh] '
         )}>
         {isEmpty && <EmptyArchiveFileList mode={mode} />}
-        {!isEmpty && viewMode === 'list' ? (
+        {viewMode === 'list' ? (
           <TableView
             mode={mode}
             fileList={fileList}

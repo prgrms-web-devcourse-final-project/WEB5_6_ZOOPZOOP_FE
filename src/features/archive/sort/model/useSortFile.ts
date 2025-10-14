@@ -31,7 +31,6 @@ export const useSortFile = (
     url.searchParams.set('sort', `${key},${nextDirection}`)
     url.searchParams.set('page', '1')
 
-    // router.push(`archive?sort=${key},${nextDirection}`)
     router.push(`${url.pathname}?${url.searchParams.toString()}`)
   }
 
