@@ -21,12 +21,10 @@ export const useDeleteAccount = () => {
       clearUser()
       queryClient.invalidateQueries({ queryKey: ['user'] })
       queryClient.removeQueries({ queryKey: ['user'] })
-      setTimeout(() => {
-        router.push(PATH.AUTH.LOGIN)
-        closeModal()
-      }, 0)
+      router.push(PATH.AUTH.LOGIN)
     },
-    onError: () => {
+    onError: () => {},
+    onSettled: () => {
       closeModal()
     }
   })

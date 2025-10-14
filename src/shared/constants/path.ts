@@ -1,7 +1,8 @@
 export const PATH = {
   ROOT: '/',
   AUTH: {
-    LOGIN: '/auth/login'
+    LOGIN: '/auth/login',
+    EXTENSION: '/extension/success'
   },
   NEWS: {
     ROOT: '/news'

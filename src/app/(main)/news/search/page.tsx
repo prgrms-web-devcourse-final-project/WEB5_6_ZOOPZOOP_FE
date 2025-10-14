@@ -7,7 +7,7 @@ export default async function NewsSearch({
 }: {
   searchParams: { keywords?: string | string[]; page?: string }
 }) {
-  const { keywords, page } = await searchParams
+  const { keywords, page } = searchParams
   const rawKeywords = keywords
   const keyword = Array.isArray(rawKeywords)
     ? rawKeywords[0]

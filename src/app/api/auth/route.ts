@@ -14,16 +14,15 @@ export const GET = async () => {
           headers: { cookie: `sessionId=${sessionId!}` }
         })
     )
+    await clearToken()
     return NextResponse.json(response)
   } catch (error) {
+    await clearToken()
     return NextResponse.json({
       status: 500,
       data: null,
       msg: error instanceof Error ? error.message : '요청 처리 중 오류 발생'
     })
-  } finally {
-    // 토큰 삭제
-    await clearToken()
   }
 }
 
@@ -38,15 +37,14 @@ export const DELETE = async () => {
           headers: { cookie: `sessionId=${sessionId!}` }
         })
     )
+    await clearToken()
     return NextResponse.json(response)
   } catch (error) {
+    await clearToken()
     return NextResponse.json({
       status: 500,
       data: null,
       msg: error instanceof Error ? error.message : '요청 처리 중 오류 발생'
     })
-  } finally {
-    // 토큰 삭제
-    await clearToken()
   }
 }

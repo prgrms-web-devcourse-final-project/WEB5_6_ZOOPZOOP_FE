@@ -34,10 +34,6 @@ function SpaceHeader() {
     router.push(`/space/${spaceId}/detail?q=${encodeURIComponent(query)}`)
   }
 
-  const handleSearchInSpace = () => {
-    if (!query.trim()) return
-  }
-
   return (
     <header className="bg-gray-dark-active p-6 w-full">
       <h1 className="text-white font-bold text-2xl mb-7">
@@ -55,21 +51,13 @@ function SpaceHeader() {
       )}
       {/* 메인 페이지 */}
       {isMainPage && (
-        <div className="flex justify-between">
-          <div className="flex gap-3">
-            <ActionButton
-              label="스페이스 생성"
-              icon={Plus}
-              onClick={() => {
-                openModal({ type: 'create-space' })
-              }}
-            />
-          </div>
-          <SearchBar
-            placeholder={PLACEHOLDER}
-            value={query}
-            onChange={setQuery}
-            onEnter={handleSearchInSpace}
+        <div className="flex gap-3">
+          <ActionButton
+            label="스페이스 생성"
+            icon={Plus}
+            onClick={() => {
+              openModal({ type: 'create-space' })
+            }}
           />
         </div>
       )}
