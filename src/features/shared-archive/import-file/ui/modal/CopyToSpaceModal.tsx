@@ -66,7 +66,7 @@ function CopyToSpaceModal() {
           }
           isCreating={idPending}
           label={'이동'}
-          disabled={false}
+          disabled={!selectedSaveFolder?.folderId}
         />
       </div>
     </ModalLayout>
