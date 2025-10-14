@@ -1,8 +1,12 @@
+'use client'
 import { DashboardItem, SearchArchive } from '@/features/dashboard'
 import { DashboardFile } from '@/entities/dashboard'
 import { FlowCategory } from './FlowCategory'
 import { Node } from '@xyflow/react'
 import { useCategory } from '../model/useCategory'
+import { useRouter } from 'next/navigation'
+import { ArrowLeftIcon } from 'lucide-react'
+import { useSpaceStore } from '@/entities/space'
 
 interface Props {
   file: DashboardFile[]
@@ -15,10 +19,23 @@ export const FlowSidebar = ({ file, nodes }: Props) => {
       nodes,
       file
     })
+  const router = useRouter()
+  const { currentSpace } = useSpaceStore()
 
   return (
     <div className="w-90 h-[100vh] bg-white border-r-1 p-4 flex flex-col gap-3">
-      <h1 className="text-2xl font-bold">스페이스 관리</h1>
+      <div className="flex gap-4 items-center">
+        <button
+          onClick={() => {
+            router.back()
+          }}>
+          <ArrowLeftIcon className="w-4 h-4" />
+        </button>
+        <h1 className="text-2xl font-bold text-ellipsis overflow-hidden whitespace-nowrap">
+          {currentSpace?.spaceName}
+        </h1>
+      </div>
+
       <SearchArchive
         search={search}
         setSearch={setSearch}
