@@ -23,7 +23,7 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
     <ModalLayout size="md">
       <div className=" w-full flex flex-col gap-2 ">
         <h1 className="text-2xl text-gray-darker font-bold text-center">
-          파일 삭제
+          파일 임시 삭제
         </h1>
         <p className="mx-auto text-base text-gray-darker  ">
           <span className="font-bold"> {dataSourceId.length}개</span>의 파일이

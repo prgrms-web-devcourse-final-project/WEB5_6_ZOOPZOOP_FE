@@ -40,7 +40,9 @@ function MoveToArchiveTrashModal() {
     moveToTrash.mutate(fileIdList, {
       onSuccess: () => {
         showSuccessToast('파일 휴지통으로 이동')
+
         closeModal()
+
         router.push('/archive/trash')
       }
     })
@@ -50,7 +52,7 @@ function MoveToArchiveTrashModal() {
     <ModalLayout size="lg">
       <div className=" w-full flex flex-col gap-2 min-h-[600px] ">
         <h1 className="text-2xl text-gray-darker font-bold text-center">
-          파일 삭제
+          파일 임시 삭제
         </h1>
         <p className="mx-auto text-base text-gray-darker  ">
           선택한 파일은 휴지통으로 이동됩니다.
