@@ -41,6 +41,7 @@ function NavItemGroup({ mainItem, isExpanded, currentPath }: Props) {
               <SubNavItem
                 key={idx}
                 subItem={child}
+                isExpanded={isExpanded}
               />
             ))}
           </ul>
