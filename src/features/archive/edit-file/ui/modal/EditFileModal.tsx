@@ -1,13 +1,8 @@
 import { EditFileWithoutImgRequest } from '@/entities/archive/file'
-import { useEditArchiveFileQuery } from '@/entities/archive/file/model/queries'
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
-import { BadgeCategory } from '@/shared/ui/badge/Badge'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { Camera } from 'lucide-react'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
 import { useEditFileState } from '../../model/useEditFileState'
 import { useEditFileAction } from '../../model/useEditFileAction'
 
@@ -60,7 +55,6 @@ const categories: Badge[] = [
 ]
 
 function EditFileModal({ fileData }: Props) {
-  // const closeModal = useModalStore(s => s.closeModal)
   const {
     dataSourceId,
     newTitle,
@@ -150,6 +144,7 @@ function EditFileModal({ fileData }: Props) {
               ))}
             </select>
           </li>
+
           <li>
             {/*  # 붙이고 입력 가능 */}
             <p className="font-bold ">태그</p>
