@@ -2,12 +2,14 @@ import { fetchNewsByKeywords } from '@/entities/news'
 import Pagination from '@/shared/ui/pagination/Pagination'
 import { NewsGrid } from '@/widgets/news/news-section'
 
+export const dynamic = 'force-dynamic'
+
 export default async function NewsSearch({
   searchParams
 }: {
   searchParams: { keywords?: string | string[]; page?: string }
 }) {
-  const { keywords, page } = await searchParams
+  const { keywords, page } = searchParams
   const rawKeywords = keywords
   const keyword = Array.isArray(rawKeywords)
     ? rawKeywords[0]
