@@ -15,9 +15,7 @@ export const useLogout = () => {
       clearUser()
       queryClient.invalidateQueries({ queryKey: ['user'] })
       queryClient.removeQueries({ queryKey: ['user'] })
-      setTimeout(() => {
-        router.push(PATH.ROOT)
-      }, 0)
+      router.push(PATH.ROOT)
     },
     onError: () => {
       // 에러 코드
@@ -25,7 +23,7 @@ export const useLogout = () => {
   })
 
   return {
-    logout: () => mutate(),
+    logout: mutate,
     isLoading: isPending
   }
 }
