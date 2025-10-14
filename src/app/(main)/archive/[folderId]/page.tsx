@@ -7,8 +7,8 @@ import { FolderSection } from '@/widgets/archive/folder-section'
 import type { Metadata } from 'next'
 
 interface MetadataProps {
-  params: { folderId: string }
-  searchParams?: { name?: string }
+  params: Promise<{ folderId: string }>
+  searchParams?: Promise<{ name?: string }>
 }
 export async function generateMetadata({
   params,
@@ -25,11 +25,12 @@ export async function generateMetadata({
 }
 
 interface Props {
-  searchParams: Promise<{ page?: string; name?: string }>
+  searchParams: Promise<{ page?: string; name?: string; sort?: string }>
   params: Promise<{ folderId: string }>
 }
 
 const INITIAL_PAGE = 1
+const DEFAULT_SIZE = 8
 
 export default async function ArchiveFolderPage({
   searchParams,
@@ -39,6 +40,7 @@ export default async function ArchiveFolderPage({
   const { folderId } = await params
 
   const currentPage = Number(searchParam?.page) || INITIAL_PAGE
+  const currentSort = searchParam?.sort
 
   const folderName = searchParam.name
     ? decodeURIComponent(String(searchParam.name))
@@ -51,6 +53,7 @@ export default async function ArchiveFolderPage({
   const initialFileData = await getInitialFileList({
     page: currentPage,
     folderId: Number(folderId),
+    sort: currentSort,
     isActive: true
   })
 
@@ -72,6 +75,8 @@ export default async function ArchiveFolderPage({
         <FolderSection folderList={folderList ?? []} />
 
         <FileSection
+          size={DEFAULT_SIZE}
+          currentSort={currentSort}
           folderId={(selectedFolder && selectedFolder.folderId) ?? 0}
           mode="archive"
           initialFileData={initialFileData}

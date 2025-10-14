@@ -31,7 +31,7 @@ function SpaceHeader() {
 
   const handleSearchInArchive = () => {
     if (!query.trim()) return
-    router.push(`/space/${spaceId}/search?q=${encodeURIComponent(query)}`)
+    router.push(`/space/${spaceId}/detail?q=${encodeURIComponent(query)}`)
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 
 interface PaginationProps {
   totalPages: number
@@ -13,7 +13,7 @@ export const usePagination = ({
   maxVisiblePages = 5,
   onPageChange
 }: PaginationProps) => {
-  const [currentPage, setCurrentPage] = useState(initialPage)
+  const currentPage = initialPage
 
   const pages = useMemo(() => {
     // 보여줄 페이지보다 총 페이지 수가 더 적으면 페이지 배열 전부 보여줌
@@ -47,7 +47,6 @@ export const usePagination = ({
 
       if (clampedPage === currentPage) return
 
-      setCurrentPage(clampedPage)
       onPageChange?.(clampedPage)
     },
     [currentPage, totalPages, onPageChange]

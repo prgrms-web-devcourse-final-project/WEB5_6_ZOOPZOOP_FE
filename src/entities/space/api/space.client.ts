@@ -14,7 +14,7 @@ import {
 // 스페이스 조회
 export const fetchSpaceListClient = async ({
   page = 1,
-  size = 15,
+  size = 16,
   sort = [],
   state,
   includeMembers = true
