@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers'
 import { ACCESS_TOKEN, REFRESH_TOKEN, SESSION_ID } from '../constants'
-import { APIResponse, AuthHandler } from '../types/api'
-import { httpClient } from './http-client'
+import { AuthHandler } from '../types/api'
 
 // 엑세스 토큰 추출
 export const getAccessToken = async () => {
@@ -66,22 +65,19 @@ const refreshAccessTokenOnce = async () => {
     })
 
     if (!response.ok) {
-      throw new Error('Failed to refresh access token')
+      throw new Error(`Failed to refresh token: ${response.status}`)
     }
     const newAccessToken = await getAccessToken()
 
-    if (!!newAccessToken) {
+    if (!newAccessToken) {
       // eslint-disable-next-line no-console
-      console.log(
-        'Refresh endpoint succeeded but no new access token cookie was set.'
-      )
+      console.warn('Refresh succeeded but no access token was set.')
     }
 
     return newAccessToken
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Token refresh error:', error)
-
     await clearToken()
     return null
   }
