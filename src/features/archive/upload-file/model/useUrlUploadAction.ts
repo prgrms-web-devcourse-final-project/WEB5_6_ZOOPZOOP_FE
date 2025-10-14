@@ -25,7 +25,7 @@ export const useUrlUploadAction = () => {
       {
         onSuccess: () => {
           showSuccessToast('파일 업로드 완료')
-          if (folderName === 'default') {
+          if (folderName === 'default' || folderName.trim() === '') {
             router.push(`/archive`)
           } else {
             router.push(`/archive/${folderId}?name=${folderName}`)
