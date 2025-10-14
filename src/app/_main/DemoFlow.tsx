@@ -48,20 +48,6 @@ export function DemoFlow() {
         target: '2',
         animated: true,
         style: { strokeWidth: 2, stroke: '#94a3b8' }
-      },
-      {
-        id: 'e2-3',
-        source: '2',
-        target: '3',
-        animated: true,
-        style: { strokeWidth: 2, stroke: '#94a3b8' }
-      },
-      {
-        id: 'e3-4',
-        source: '3',
-        target: '4',
-        animated: true,
-        style: { strokeWidth: 2, stroke: '#94a3b8' }
       }
     ],
     []
@@ -103,7 +89,7 @@ export function DemoFlow() {
           pannable
           zoomable
         />
-        <Controls position="top-left" />
+        <Controls position="bottom-left" />
         <Background
           variant={BackgroundVariant.Dots}
           gap={16}
@@ -116,11 +102,6 @@ export function DemoFlow() {
           <p className="text-sm text-neutral-600">
             노드를 드래그하고 선을 연결해 보세요.
           </p>
-          <a
-            href="/auth/login"
-            className="rounded-full bg-[#ff9354] px-4 py-2 text-xs font-semibold text-white hover:brightness-105">
-            웹으로 시작
-          </a>
         </div>
       </div>
     </div>

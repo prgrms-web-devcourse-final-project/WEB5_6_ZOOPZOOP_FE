@@ -1,105 +1,53 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Link from 'next/link'
 import Image from 'next/image'
 
-gsap.registerPlugin(ScrollTrigger)
-
-type ColumnSpec = { images: string[]; speed: number }
-
-export function Hero({
-  columns,
-  height = 180, // vh
-  repeat = 6, // 이미지 반복 배수(짝수 권장)
-  gap = 16, // px
-  itemHeight = 240, // 각 이미지 높이(px) — 밀도 조절
-  fallbackSrc = 'https://zoopzoop-test-bucket.s3.ap-northeast-2.amazonaws.com/default_space_image'
-}: {
-  columns: ColumnSpec[]
-  height?: number
-  repeat?: number
-  gap?: number
-  itemHeight?: number
-  fallbackSrc?: string
-}) {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const reduceMotion = useMemo(
-    () =>
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-    []
-  )
-
-  useEffect(() => {
-    if (!containerRef.current || reduceMotion) return
-
-    const ctx = gsap.context(() => {
-      const colEls = gsap.utils.toArray<HTMLElement>('.gsap-col')
-
-      colEls.forEach(col => {
-        const speed = Number(col.dataset.speed || '0.6')
-        // 반복 배수 기준으로 래핑 높이를 계산해 끊김 방지
-        const wrapHeight = col.scrollHeight / repeat
-        gsap.set(col, { y: 0, willChange: 'transform' })
-        const wrap = gsap.utils.wrap(-wrapHeight, 0)
-
-        ScrollTrigger.create({
-          trigger: containerRef.current!,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-          onUpdate: self => {
-            const y = wrap(-self.scroll() * speed)
-            gsap.set(col, { y })
-          }
-        })
-      })
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [reduceMotion, repeat])
-
+export function Hero() {
   return (
-    <section
-      className="relative overflow-hidden bg-white"
-      style={{ height: `${height}vh` }}>
-      <div
-        ref={containerRef}
-        className="mx-auto flex h-full w-full items-stretch"
-        style={{ gap }}>
-        {columns.map((col, i) => {
-          // 무한 루프 이음새 제거: 이미지 배열을 repeat 배수만큼 복제
-          const list = Array(Math.max(2, repeat)).fill(col.images).flat()
-          return (
-            <div
-              key={i}
-              className="gsap-col relative flex basis-0 grow flex-col overflow-hidden"
-              data-speed={col.speed}
-              aria-hidden>
-              {list.map((src, idx) => (
-                <Image
-                  key={`${i}-${idx}`}
-                  src={src}
-                  width={320}
-                  height={itemHeight}
-                  loading={idx > 2 ? 'lazy' : 'eager'}
-                  className="mb-4 block w-full select-none will-change-transform object-cover"
-                  style={{ height: `${itemHeight}px` }}
-                  alt=""
-                  onError={e => {
-                    const img = e.currentTarget as unknown as HTMLImageElement
-                    if (img.src !== fallbackSrc) {
-                      img.src = fallbackSrc
-                    }
-                  }}
-                />
-              ))}
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5">
+        <div className="grid items-center gap-12 md:grid-cols-2">
+          <div className="space-y-6">
+            <h1 className="text-4xl font-bold leading-tight text-[#0b0b0b] md:text-5xl lg:text-6xl">
+              마음에 드는 순간을
+              <br />
+              <span className="text-[#ff9354]">줍줍</span>하세요
+            </h1>
+            <p className="text-lg text-neutral-600 md:text-xl">
+              웹에서 발견한 콘텐츠를 저장, 정리, 공유해 보세요.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 pt-4">
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center justify-center rounded-full bg-[#ff9354] px-6 py-3 text-base font-semibold text-white transition-all hover:brightness-110 hover:shadow-lg">
+                지금 시작하기
+              </Link>
+              <Link
+                href="https://chromewebstore.google.com/detail/your-extension-id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border-2 border-neutral-300 px-6 py-3 text-base font-semibold text-[#0b0b0b] transition-all hover:border-neutral-400 hover:bg-neutral-50">
+                Chrome 확장 설치
+              </Link>
             </div>
-          )
-        })}
+          </div>
+
+          <div className="relative">
+            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl">
+              <Image
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop"
+                alt="ZoopZoop 협업 화면"
+                fill
+                className="object-cover"
+                priority
+                sizes="(min-width: 768px) 50vw, 100vw"
+              />
+            </div>
+            <div className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full bg-[#ff9354]/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-blue-400/20 blur-3xl" />
+          </div>
+        </div>
       </div>
     </section>
   )
