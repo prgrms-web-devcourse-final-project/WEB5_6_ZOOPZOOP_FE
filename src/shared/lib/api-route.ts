@@ -17,9 +17,24 @@ export const getRefreshToken = async () => {
 
 export const clearToken = async () => {
   const cookieStore = await cookies()
-  cookieStore.delete(ACCESS_TOKEN)
-  cookieStore.delete(REFRESH_TOKEN)
-  cookieStore.delete(SESSION_ID)
+  const domain = '.zoopzoop.kro.kr'
+  const path = '/'
+
+  cookieStore.delete({
+    name: ACCESS_TOKEN,
+    domain,
+    path
+  })
+  cookieStore.delete({
+    name: REFRESH_TOKEN,
+    domain,
+    path
+  })
+  cookieStore.delete({
+    name: SESSION_ID,
+    domain,
+    path
+  })
 }
 
 // 쿠키가 포함된 헤더
@@ -33,27 +48,52 @@ export const createCookieHeader = (
 // 쿠키가 필요한 통신인 경우
 export const requireAuth = async <T>(handler: AuthHandler<T>) => {
   const token = await getAccessToken()
+  // 토큰이 없는 경우
   if (!token) return { status: 401, data: null, msg: '토큰 없음, 인증 필요' }
   const response = await handler(token)
-  // 엑세스 토큰이 유효하다면 바로 요청 값을 리턴
+
   if (response.status !== 401) {
-    // eslint-disable-next-line no-console
-    console.log('404 토큰 다시 해야하는거 ')
     return response
+  }
+
+  const newAccessToken = await refreshAccessTokenOnce()
+
+  if (newAccessToken) {
+    return handler(newAccessToken)
   }
 
   return response
 }
 
-// const refreshAccessTokenOnce = async () => {
-//   const refreshUrl = `${process.env.API_URL}/api/v1/auth/refresh`
-//   const sessionId = await getSessionId()
+const refreshAccessTokenOnce = async () => {
+  const sessionId = await getSessionId()
+  if (!sessionId) {
+    await clearToken()
+    return null
+  }
+  const refreshUrl = `${process.env.API_URL}/api/v1/auth/refresh`
+  try {
+    const response = await fetch(refreshUrl, {
+      headers: {
+        Cookie: `sessionId=${sessionId}`
+      }
+    })
 
-//   const response = fetch(refreshUrl, { method: 'POST', credentials: 'include' })
+    if (!response.ok) {
+      throw new Error(`Failed to refresh token: ${response.status}`)
+    }
+    const newAccessToken = await getAccessToken()
 
-//   if(!response.ok) {
-//     reutnr {
+    if (!newAccessToken) {
+      // eslint-disable-next-line no-console
+      console.warn('Refresh succeeded but no access token was set.')
+    }
 
-//     }
-//   }
-// }
+    return newAccessToken
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Token refresh error:', error)
+    await clearToken()
+    return null
+  }
+}

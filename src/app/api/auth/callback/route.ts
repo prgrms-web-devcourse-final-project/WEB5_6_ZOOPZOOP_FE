@@ -3,21 +3,21 @@ import { getAccessToken } from '@/shared/lib/api-route'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-  const accessToken = getAccessToken()
   const url = new URL(request.url)
+  const accessToken = getAccessToken()
+
+  // eslint-disable-next-line no-console
+  console.log('accessToken', accessToken)
 
   if (!accessToken) {
     return NextResponse.redirect(new URL(PATH.AUTH.LOGIN, url))
   }
 
   return NextResponse.redirect(new URL(PATH.NEWS.ROOT, url))
-
-  // const url = new URL(req.url)
-
+  // const url = new URL(request.url)
   // const accessToken = url.searchParams.get('accessToken')
   // const refreshToken = url.searchParams.get('refreshToken')
   // const sessionId = url.searchParams.get('sessionId')
-
   // if (!accessToken) {
   //   return NextResponse.redirect(new URL(PATH.AUTH.LOGIN, url))
   // }

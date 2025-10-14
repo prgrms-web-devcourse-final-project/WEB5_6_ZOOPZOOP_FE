@@ -1,6 +1,13 @@
 'use client'
 
-import { RefObject, useMemo, useRef, useState } from 'react'
+import {
+  RefObject,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback
+} from 'react'
 import {
   Background,
   BackgroundVariant,
@@ -9,7 +16,9 @@ import {
   ReactFlow,
   ReactFlowProvider,
   useReactFlow,
-  ConnectionMode
+  ConnectionMode,
+  getNodesBounds,
+  getViewportForBounds
 } from '@xyflow/react'
 import type { OnNodesChange } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
@@ -21,6 +30,14 @@ import { FlowSidebar } from '../../flow-sidebar'
 import { Cursor } from './Cursor'
 import { CommentOverlay, FlowItemContainer } from '../../flow-item'
 import { DashboardFile } from '@/entities/dashboard'
+import { toPng } from 'html-to-image'
+import { updateThumbnailClient } from '@/entities/thumbnail'
+import { useParams } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { SpaceQueryKey } from '@/entities/space'
+
+const imageWidth = 1024
+const imageHeight = 768
 
 const nodeTypes = {
   custom: CustomFlowNode
@@ -55,6 +72,9 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   const { others, handlePointerMove, handlePointerLeave } = useCursor()
   const { flowToScreenPosition, screenToFlowPosition } = useReactFlow()
 
+  const { id } = useParams()
+  const queryClient = useQueryClient()
+
   const [isCreating, setIsCreating] = useState(false)
   const [newCommentPosition, setNewCommentPosition] = useState<{
     x: number
@@ -62,6 +82,10 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
   } | null>(null)
 
   const flowContainerRef = useRef<HTMLDivElement | null>(null)
+
+  // 썸네일 비콘 전송을 위한 최신 Blob 캐시
+  const latestBlobRef = useRef<Blob | null>(null)
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // 사용자별 로컬 선택 상태
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -102,6 +126,121 @@ const FlowDashboardContent = ({ file }: { file: DashboardFile[] }) => {
       setNewCommentPosition(flowPosition)
     }
   }
+  const { getNodes } = useReactFlow()
+
+  // 초기 진입 시점의 id를 고정
+  const initialIdRef = useRef<string | null>(null)
+  useEffect(() => {
+    if (id && !initialIdRef.current) {
+      initialIdRef.current = String(id)
+    }
+  }, [id])
+
+  const captureDataUrl = useCallback(async () => {
+    const el = document.querySelector(
+      '.react-flow__viewport'
+    ) as HTMLElement | null
+    if (!el) throw new Error('viewport not found')
+
+    const nodesBounds = getNodesBounds(getNodes())
+    const view = getViewportForBounds(
+      nodesBounds,
+      imageWidth,
+      imageHeight,
+      0.5,
+      2,
+      0.1
+    )
+
+    const transparentPx =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='
+
+    return await toPng(el, {
+      backgroundColor: '#ffffff',
+      width: imageWidth,
+      height: imageHeight,
+      style: {
+        width: `${imageWidth}px`,
+        height: `${imageHeight}px`,
+        transform: `translate(${view.x}px, ${view.y}px) scale(${view.zoom})`
+      },
+      imagePlaceholder: transparentPx,
+      filter: node => {
+        if (node instanceof HTMLImageElement) {
+          const src = node.getAttribute('src') || ''
+          if (!src) return false
+        }
+        return true
+      }
+    })
+  }, [getNodes])
+
+  // 노드/엣지 변경 시 썸네일 미리 생성하여 이탈 전송에 사용
+  useEffect(() => {
+    if (!nodes.length) return
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current)
+    debounceTimerRef.current = setTimeout(async () => {
+      try {
+        const dataUrl = await captureDataUrl()
+        const blob = await (await fetch(dataUrl)).blob()
+        latestBlobRef.current = blob
+      } catch {}
+    }, 1500)
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current)
+        debounceTimerRef.current = null
+      }
+    }
+  }, [nodes, edges, captureDataUrl])
+
+  // 페이지 이탈/언마운트 시 keepalive PUT으로 자동 업로드
+  useEffect(() => {
+    const sendAutoSave = async () => {
+      const sid = initialIdRef.current
+      if (!sid) return
+      let blob = latestBlobRef.current
+      if (!blob) {
+        try {
+          const dataUrl = await captureDataUrl()
+          const freshBlob = await (await fetch(dataUrl)).blob()
+          latestBlobRef.current = freshBlob
+          blob = freshBlob
+        } catch {}
+      }
+      if (!blob) return
+      const form = new FormData()
+      const file = new File([blob], 'flow.png', { type: 'image/png' })
+      form.append('image', file)
+      try {
+        await updateThumbnailClient(Number(id), file)
+        await queryClient.invalidateQueries({
+          queryKey: [SpaceQueryKey]
+        })
+      } catch {}
+    }
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        void sendAutoSave()
+      }
+    }
+    const handlePageHide = () => {
+      void sendAutoSave()
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility)
+    window.addEventListener('pagehide', handlePageHide)
+    window.addEventListener('beforeunload', handlePageHide)
+
+    return () => {
+      void sendAutoSave()
+      document.removeEventListener('visibilitychange', handleVisibility)
+      window.removeEventListener('pagehide', handlePageHide)
+      window.removeEventListener('beforeunload', handlePageHide)
+    }
+  }, [])
+
   return (
     <div className="flex w-full h-screen relative">
       <FlowSidebar

@@ -20,7 +20,7 @@ export default async function Space({ searchParams }: Props) {
   const currentState = (params?.state as SpaceStatus) ?? undefined
 
   await queryClient.prefetchQuery({
-    queryKey: [SpaceQueryKey, currentPage, currentPage],
+    queryKey: [SpaceQueryKey, currentPage, currentState],
     queryFn: () =>
       getInitialSpaceList({
         page: currentPage,
