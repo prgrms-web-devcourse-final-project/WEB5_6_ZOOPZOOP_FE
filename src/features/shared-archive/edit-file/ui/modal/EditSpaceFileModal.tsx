@@ -1,5 +1,4 @@
 import { EditFileWithoutImgRequest } from '@/entities/archive/file'
-import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { Camera } from 'lucide-react'
@@ -56,7 +55,6 @@ const categories: Badge[] = [
 ]
 
 function EditSpaceFileModal({ fileData }: Props) {
-  const closeModal = useModalStore(s => s.closeModal)
   const {
     spaceId,
     dataSourceId,

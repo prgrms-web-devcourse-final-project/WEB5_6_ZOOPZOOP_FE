@@ -6,7 +6,7 @@ import { useMoveFileModalState } from '@/features/archive/move-file/model/useMov
 import { useModalStore } from '@/shared/lib'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
-import { ChevronsRight, Folder, Trash2 } from 'lucide-react'
+import { ChevronsRight, Trash2 } from 'lucide-react'
 import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { SelectFileSection } from '@/features/archive/move-file'

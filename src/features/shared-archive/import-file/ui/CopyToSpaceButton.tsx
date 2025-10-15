@@ -1,5 +1,4 @@
 import { useModalStore } from '@/shared/lib'
-import { Copy } from 'lucide-react'
 
 function CopyToSpaceButton() {
   const openModal = useModalStore(s => s.openModal)

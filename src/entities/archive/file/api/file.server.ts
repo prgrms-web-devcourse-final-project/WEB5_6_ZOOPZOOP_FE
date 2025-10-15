@@ -4,7 +4,6 @@ import {
   FilePostResponse,
   SearchGetResponse,
   FileSearchParams,
-  EditFileWithImgRequest,
   EditFileWithoutImgRequest
 } from '../model/type'
 import { httpClient } from '@/shared/lib'
