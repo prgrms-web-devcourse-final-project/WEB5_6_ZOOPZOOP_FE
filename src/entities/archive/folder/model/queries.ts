@@ -12,7 +12,6 @@ export const useGetArchiveFoldersQuery = () => {
   const foldersQuery = useQuery({
     queryKey: ['archiveFolders'],
     queryFn: fetchArchiveFolderClient
-    // staleTime: 1000 * 60
   })
   return {
     foldersQuery

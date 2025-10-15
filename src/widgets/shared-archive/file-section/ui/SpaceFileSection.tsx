@@ -15,7 +15,6 @@ import {
   useSortFile,
   useSwitchSpaceFileView
 } from '@/features/shared-archive'
-import { tw } from '@/shared/lib'
 import EmptySpaceFileList from '@/features/shared-archive/list/ui/EmptySpaceFileList'
 
 interface Props {
@@ -23,13 +22,15 @@ interface Props {
   initialPage: number
   mode: SpaceFileMode
   spaceId: number
+  currentSort?: string
 }
 
 export default function SpaceFileSection({
   initialFileData,
   initialPage,
   mode,
-  spaceId
+  spaceId,
+  currentSort
 }: Props) {
   const searchParams = useSearchParams()
   const queryKeyword = searchParams.get('q') || ''
@@ -40,21 +41,21 @@ export default function SpaceFileSection({
   const { sort, toggleSort } = useSortFile()
   const { selectedIds, handleSelect, handleSelectAll } = useSelectSpaceFiles()
 
-  // react-query
-  const { data: filesQuery } = useSpaceFilesQuery({
+  useSpaceFilesQuery({
     query: {
       spaceId,
       page: currentPage,
       isActive: mode === 'space',
-      size: 8,
-      sort: `${sort.key},${sort.direction}`,
+      size: 12,
+      sort: currentSort,
       keyword: queryKeyword
     },
     initialData: currentPage === initialPage ? initialFileData : undefined
   })
 
-  const fileList = filesQuery?.data.items || []
-  const totalPages = filesQuery?.data.pageInfo.totalPages || 1
+  const fileList = initialFileData.data.items
+  const pageInfo = initialFileData.data.pageInfo
+  const totalPages = pageInfo.totalPages || 1
   const isEmpty = fileList.length === 0
 
   return (
@@ -85,13 +86,13 @@ export default function SpaceFileSection({
             selectedIds={selectedIds}
             onSelect={handleSelect}
             mode={mode}
-            fileList={fileList}
+            fileList={initialFileData.data.items}
           />
         )}
       </div>
 
       {isEmpty ? (
-        <p>등록된 파일이 없습니다.</p>
+        ''
       ) : (
         <div className="mt-3">
           <Pagination totalPages={totalPages} />

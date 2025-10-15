@@ -20,7 +20,7 @@ export const getArchiveColumns = (
   const columns: ColumnDef<SpaceColumnType>[] = [
     {
       accessorKey: 'title',
-      header: '파일 선택',
+      header: '파일',
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
           <Badge name={row.getValue('category')} />

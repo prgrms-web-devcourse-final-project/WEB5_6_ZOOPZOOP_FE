@@ -1,6 +1,7 @@
 'use client'
 
 import { useUserQuery, useUserStore } from '@/entities/user'
+import Loading from '@/shared/ui/loading/Loading'
 import { useEffect } from 'react'
 
 interface Props {
@@ -18,11 +19,7 @@ const AuthProvider = ({ children }: Props) => {
   }, [data, user, setUser])
 
   if (isPending) {
-    return (
-      <section className="h-screen flex-center">
-        <div className="size-32 rounded-full border-16 border-gray-400 border-l-green-normal animate-spin"></div>
-      </section>
-    )
+    return <Loading />
   }
 
   return <>{children}</>

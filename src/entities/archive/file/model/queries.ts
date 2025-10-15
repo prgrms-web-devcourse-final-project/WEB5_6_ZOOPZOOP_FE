@@ -22,7 +22,6 @@ export const useArchiveFilesByFolderQuery = (
   const filesQuery = useQuery({
     queryKey: ['archiveFilesPage', folderId],
     queryFn: () => fetchArchiveFilesByFolderClient(folderId),
-    // staleTime: 1000 * 60,
     enabled: options?.enabled
   })
 
@@ -52,7 +51,6 @@ export const useArchiveFilesByPageQuery = ({
         sort,
         isActive
       }),
-    // staleTime: 1000 * 60,
     initialData: initialData
   })
 }

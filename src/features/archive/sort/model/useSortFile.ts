@@ -1,29 +1,37 @@
 import { useState, useEffect } from 'react'
 import { SortKey, SortDirection } from './type'
+import { useRouter } from 'next/navigation'
 
 export const useSortFile = (
   onSortChange?: (
     sort: { key: SortKey; direction: SortDirection } | null
   ) => void
 ) => {
+  const router = useRouter()
+
   const [sort, setSort] = useState<{ key: SortKey; direction: SortDirection }>({
     key: 'createdAt',
     direction: 'desc'
   })
 
   const toggleSort = (key: SortKey) => {
-    setSort(prev => {
-      //같은 키 클릭 시 asc ↔ desc 토글
-      if (prev.key === key) {
-        const nextDirection: SortDirection =
-          prev.direction === 'asc' ? 'desc' : 'asc'
-        return { key, direction: nextDirection }
-      }
+    // nextDirection 계산
+    let nextDirection: SortDirection
+    if (sort.key === key) {
+      nextDirection = sort.direction === 'asc' ? 'desc' : 'asc'
+    } else {
+      nextDirection = 'asc'
+    }
 
-      // 다른 키 클릭 시 새 키 asc로 설정
-      // 이전 키는 자동으로 none 상태로 간주됨
-      return { key, direction: 'asc' }
-    })
+    // 상태 업데이트
+    setSort({ key, direction: nextDirection })
+
+    // 현재 페이지에서 sort
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', `${key},${nextDirection}`)
+    url.searchParams.set('page', '1')
+
+    router.push(`${url.pathname}?${url.searchParams.toString()}`)
   }
 
   useEffect(() => {

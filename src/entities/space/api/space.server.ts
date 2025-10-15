@@ -14,7 +14,7 @@ import {
 export const fetchSpaceListServer = async (
   {
     page = 1,
-    size = 15,
+    size = 16,
     sort = [],
     state,
     includeMembers = true
