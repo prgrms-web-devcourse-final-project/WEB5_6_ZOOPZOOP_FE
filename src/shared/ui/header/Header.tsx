@@ -93,7 +93,7 @@ function Header({ title, buttons, searchBar }: Props) {
         </div>
       </header>
     )
-  }, [buttons, searchBar.placeholder, query, handleSearch])
+  }, [buttons, searchBar.placeholder, query, handleSearch, title, openModal])
 
   return <>{buttons ? buttonWithSearchHeader() : searchHeader()}</>
 }

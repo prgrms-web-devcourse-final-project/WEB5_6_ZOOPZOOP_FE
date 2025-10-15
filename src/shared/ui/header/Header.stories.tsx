@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import Header, { Button } from './Header'
-import { LucideIcon, Settings, Plus } from 'lucide-react'
 
 // --- 더미 버튼 예시 ---
 const buttons: Button[] = [

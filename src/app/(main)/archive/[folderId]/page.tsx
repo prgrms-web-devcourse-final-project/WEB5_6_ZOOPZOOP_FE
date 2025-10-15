@@ -7,11 +7,9 @@ import { FolderSection } from '@/widgets/archive/folder-section'
 import type { Metadata } from 'next'
 
 interface MetadataProps {
-  params: Promise<{ folderId: string }>
   searchParams?: Promise<{ name?: string }>
 }
 export async function generateMetadata({
-  params,
   searchParams
 }: MetadataProps): Promise<Metadata> {
   const resolvedSearchParams = await searchParams

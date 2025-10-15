@@ -57,7 +57,6 @@ const FileCard = ({
         isSelected && 'ring-3 ring-orange-accent'
       )}>
       <File
-        mode={mode}
         id={id}
         category={category}
         title={title}

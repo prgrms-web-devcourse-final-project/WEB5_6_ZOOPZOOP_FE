@@ -3,6 +3,7 @@ import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActio
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
 import { useSpaceStore } from '@/entities/space'
 import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
+import ModalLoading from '@/shared/ui/loading/ModalLoading'
 
 interface Props {
   dataSourceId: number[]
@@ -11,10 +12,10 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
   const { handleDelete, isPending } = useDeleteFileAction()
-  const { data } = useSpaceFilesByFolderQuery(spaceId)
+  const { data, isLoading } = useSpaceFilesByFolderQuery(spaceId)
   const selectedFiles =
     data?.files?.filter(file =>
-      dataSourceId.includes(Number(file.dataSourceId))
+      dataSourceId.filter(item => item === file.dataSourceId)
     ) ?? []
 
   return (
@@ -34,16 +35,25 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
           </p>
         </div>
 
-        <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
-          {selectedFiles &&
-            selectedFiles.map(item => (
-              <div
-                key={item.dataSourceId}
-                className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                {item.title}
+        {!isPending ? (
+          <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
+            {!isLoading ? (
+              selectedFiles.map(item => (
+                <div
+                  key={item.dataSourceId}
+                  className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
+                  {item.title}
+                </div>
+              ))
+            ) : (
+              <div className="flex items-center">
+                <ModalLoading />
               </div>
-            ))}
-        </div>
+            )}
+          </div>
+        ) : (
+          <ModalLoading />
+        )}
 
         {/* 삭제 파일 리스트  */}
         <FolderActionButtons
