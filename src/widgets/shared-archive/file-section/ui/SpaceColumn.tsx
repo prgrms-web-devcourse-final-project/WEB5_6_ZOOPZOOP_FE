@@ -49,7 +49,7 @@ export const getArchiveColumns = (
     },
     {
       accessorKey: 'createdAt',
-      header: '작성일',
+      header: '업로드 날짜',
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <Calendar

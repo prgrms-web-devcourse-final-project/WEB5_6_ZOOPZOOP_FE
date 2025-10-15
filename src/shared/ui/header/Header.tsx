@@ -5,7 +5,7 @@ import SearchBar from './Search'
 import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useModalStore } from '@/shared/lib'
-import { ArrowLeft, ChevronLeft, Plus, Upload } from 'lucide-react'
+import { ChevronLeft, Plus, Upload } from 'lucide-react'
 
 export type Button = {
   label: string

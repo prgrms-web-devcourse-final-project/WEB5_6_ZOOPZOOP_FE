@@ -17,7 +17,7 @@ function ImportToSpaceModal() {
     onSelectFiles
   } = useMoveFileModalState()
 
-  const { handleCopyToSpace, idPending } = useCopyToSpaceAction()
+  const { handleCopyToSpace, isPending } = useCopyToSpaceAction()
 
   const { filesQuery } = useArchiveFilesByFolderQuery(
     selectedFolder.folderId!,
@@ -55,7 +55,7 @@ function ImportToSpaceModal() {
         {/* 버튼 */}
         <FolderActionButtons
           onCreate={() => handleCopyToSpace(spaceId, selectedFiles)}
-          isCreating={idPending}
+          isCreating={isPending}
           label={'불러오기'}
           disabled={false}
         />

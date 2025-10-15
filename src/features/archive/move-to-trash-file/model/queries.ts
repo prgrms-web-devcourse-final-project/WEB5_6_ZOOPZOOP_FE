@@ -12,6 +12,7 @@ export const useMoveToTrashArchiveFilesQuery = () => {
   })
 
   return {
-    moveToTrash
+    moveToTrash,
+    isPending: moveToTrash.isPending
   }
 }
