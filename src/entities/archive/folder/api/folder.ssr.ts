@@ -7,7 +7,6 @@ export const getInitialFolderList = async (): Promise<FolderData[]> => {
   const response = await requireAuth(async token => {
     return fetchArchiveFolderServer({
       token,
-      //  next: { revalidate: 60, tags: ['archiveFolders'] }
       next: { tags: ['archiveFolders'] },
       cache: 'no-store'
     })

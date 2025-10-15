@@ -2,21 +2,17 @@ import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
 import { useSpaceStore } from '@/entities/space'
-import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
 import ModalLoading from '@/shared/ui/loading/ModalLoading'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
-  dataSourceId: number[]
+  selectedFiles: CheckedFile[]
 }
-function DeleteSpaceFileModal({ dataSourceId }: Props) {
+function DeleteSpaceFileModal({ selectedFiles }: Props) {
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
   const { handleDelete, isPending } = useDeleteFileAction()
-  const { data, isLoading } = useSpaceFilesByFolderQuery(spaceId)
-  const selectedFiles =
-    data?.files?.filter(file =>
-      dataSourceId.filter(item => item === file.dataSourceId)
-    ) ?? []
+  const selectedFilesId = selectedFiles.map(item => item.dataSourceId)
 
   return (
     <ModalLayout size="md">
@@ -27,7 +23,9 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
 
         <div className="flex flex-col items-center ">
           <p>
-            <span className="font-bold text-base">{dataSourceId.length}개</span>
+            <span className="font-bold text-base">
+              {selectedFiles.length}개
+            </span>
             의 파일이 삭제됩니다
           </p>
           <p className="text-red-500 text-base">
@@ -37,28 +35,24 @@ function DeleteSpaceFileModal({ dataSourceId }: Props) {
 
         {!isPending ? (
           <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
-            {!isLoading ? (
-              selectedFiles.map(item => (
-                <div
-                  key={item.dataSourceId}
-                  className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                  {item.title}
-                </div>
-              ))
-            ) : (
-              <div className="flex items-center">
-                <ModalLoading />
+            {selectedFiles.map(item => (
+              <div
+                key={item.dataSourceId}
+                className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
+                {item.fileName}
               </div>
-            )}
+            ))}
           </div>
         ) : (
-          <ModalLoading />
+          <div className=" w-full flex justify-center items-center  min-h-[35vh] ">
+            <ModalLoading />
+          </div>
         )}
 
         {/* 삭제 파일 리스트  */}
         <FolderActionButtons
           onCreate={() => {
-            handleDelete({ spaceId: spaceId, dataSourceId })
+            handleDelete({ spaceId: spaceId, dataSourceId: selectedFilesId })
           }}
           isCreating={isPending}
           label={'삭제'}

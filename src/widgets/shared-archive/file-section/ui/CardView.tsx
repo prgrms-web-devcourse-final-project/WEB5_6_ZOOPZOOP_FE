@@ -2,15 +2,16 @@ import { FileData } from '@/entities/archive/file'
 import FileCard from './SpaceFileCard'
 import { useContextMenu } from '@/shared/hooks'
 import { SpaceFileContextMenu, SpaceFileMode } from '@/features/shared-archive'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
   fileList: FileData[]
   mode: SpaceFileMode
-  selectedIds: number[]
-  onSelect: (dataSourceId: number) => void
+  selectedFiles: CheckedFile[]
+  onSelect: (dataSourceId: number, fileName: string) => void
 }
 
-function CardView({ fileList, mode, selectedIds, onSelect }: Props) {
+function CardView({ fileList, mode, selectedFiles, onSelect }: Props) {
   const { closeMenu, handleContextMenu, activeMenu } = useContextMenu()
 
   return (
@@ -39,8 +40,10 @@ function CardView({ fileList, mode, selectedIds, onSelect }: Props) {
             createdAt={dataCreatedDate}
             imageUrl={imageUrl}
             sourceUrl={sourceUrl}
-            isSelected={selectedIds.includes(dataSourceId)}
-            onSelect={() => onSelect(dataSourceId)}
+            isSelected={selectedFiles.some(
+              item => item.dataSourceId === dataSourceId
+            )}
+            onSelect={() => onSelect(dataSourceId, title)}
             onContextMenu={(x, y) => handleContextMenu(dataSourceId, x, y)}
             contextMenu={
               activeMenu.targetId === dataSourceId ? (

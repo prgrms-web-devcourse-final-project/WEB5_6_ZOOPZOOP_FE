@@ -2,12 +2,13 @@ import { useModalStore } from '@/shared/lib'
 
 import { showInfoToast } from '@/shared/ui/toast/Toast'
 import { SpaceFileMode } from '../../list/model/type'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
   mode: SpaceFileMode
-  dataSourceIds?: number[]
+  selectedFiles: CheckedFile[]
 }
-function MoveToSpaceTrashButton({ mode, dataSourceIds }: Props) {
+function MoveToSpaceTrashButton({ mode, selectedFiles }: Props) {
   const openModal = useModalStore(s => s.openModal)
 
   return (
@@ -15,12 +16,12 @@ function MoveToSpaceTrashButton({ mode, dataSourceIds }: Props) {
       type="button"
       onClick={() => {
         if (mode === 'space') {
-          if (dataSourceIds!.length === 0) {
+          if (selectedFiles!.length === 0) {
             showInfoToast('한 개 이상의 파일을 선택해야 합니다')
           } else {
             openModal({
               type: 'go-to-space-trash',
-              props: { dataSourceId: dataSourceIds! }
+              props: { selectedFiles: selectedFiles! }
             })
           }
         }

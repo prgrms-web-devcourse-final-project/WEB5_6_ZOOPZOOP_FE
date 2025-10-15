@@ -1,3 +1,4 @@
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { SpaceFileMode } from '@/features/shared-archive'
 import { Badge } from '@/shared/ui/badge'
 import { ColumnDef } from '@tanstack/react-table'
@@ -14,8 +15,8 @@ export interface SpaceColumnType {
 
 export const getArchiveColumns = (
   mode: SpaceFileMode,
-  selectedFiles: number[],
-  onSelect: (cardId: number) => void,
+  selectedFiles: CheckedFile[],
+  onSelect: (dataSourceId: number, fileName: string) => void,
   onSelectAll: () => void
 ): ColumnDef<SpaceColumnType>[] => {
   const columns: ColumnDef<SpaceColumnType>[] = [
@@ -90,15 +91,15 @@ export const getArchiveColumns = (
       ),
       cell: ({ row }) => {
         const id = Number(row.original.id)
-
-        const checked = selectedFiles.includes(id)
+        const title = row.original.title
+        const checked = selectedFiles.some(f => f.dataSourceId === id)
 
         return (
           <input
             type="checkbox"
             className="checkbox"
             checked={checked}
-            onChange={() => onSelect(id)}
+            onChange={() => onSelect(id, title)}
           />
         )
       }
