@@ -22,13 +22,13 @@ const EmptySpaceFileList = ({ mode }: Props) => {
         height={300}
         priority
       />
-      <h3 className="text-2xl font-semibold">등록된 파일이 없습니다</h3>
+      <h3 className="text-2xl font-semibold">불러온 파일이 없습니다</h3>
       <p className="text-muted-foreground mb-5">
-        내 아카이브에서 URL을 불러와서 공유하세요!
+        내 아카이브에서 파일을 불러와서 공유하세요!
       </p>
       {mode === 'space' && (
         <Button onClick={() => openModal({ type: 'copy-to-space' })}>
-          <PlusCircle className="mr-2 h-4 w-4" /> URL 업로드 불러오기
+          <PlusCircle className="mr-2 h-4 w-4" /> 파일 불러오기
         </Button>
       )}
     </section>

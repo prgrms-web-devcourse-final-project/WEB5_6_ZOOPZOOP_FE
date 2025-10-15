@@ -4,19 +4,17 @@ import { useRestoreSpaceFileAction } from '../../model/useRestoreSpaceFileAction
 import { useSpaceStore } from '@/entities/space'
 import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
 import ModalLoading from '@/shared/ui/loading/ModalLoading'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
-  dataSourceId: number[]
+  selectedFiles: CheckedFile[]
 }
-function RestoreSpaceFileModal({ dataSourceId }: Props) {
+function RestoreSpaceFileModal({ selectedFiles }: Props) {
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
 
-  const { data, isLoading } = useSpaceFilesByFolderQuery(spaceId)
-  const selectedFiles =
-    data?.files?.filter(file =>
-      dataSourceId.filter(item => item === file.dataSourceId)
-    ) ?? []
+  const selectedFilesId = selectedFiles.map(item => item.dataSourceId)
+
   const { handelRestore, isPending } = useRestoreSpaceFileAction()
 
   return (
@@ -25,31 +23,29 @@ function RestoreSpaceFileModal({ dataSourceId }: Props) {
         파일 복구
       </h1>
       <p className="mx-auto text-base text-gray-darker  ">
-        <span className="font-bold"> {dataSourceId.length}개</span>의 파일이
+        <span className="font-bold"> {selectedFilesId.length}개</span>의 파일이
         복구됩니다.
       </p>
       {!isPending ? (
         <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
-          {!isLoading ? (
-            selectedFiles.map(item => (
-              <div
-                key={item.dataSourceId}
-                className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                {item.title}
-              </div>
-            ))
-          ) : (
-            <div className="flex items-center">
-              <ModalLoading />
+          {selectedFiles.map(item => (
+            <div
+              key={item.dataSourceId}
+              className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
+              {item.fileName}
             </div>
-          )}
+          ))}
         </div>
       ) : (
-        <ModalLoading />
+        <div className=" w-full flex justify-center items-center  min-h-[35vh] ">
+          <ModalLoading />
+        </div>
       )}
 
       <FolderActionButtons
-        onCreate={() => handelRestore({ spaceId, dataSourceId })}
+        onCreate={() =>
+          handelRestore({ spaceId, dataSourceId: selectedFilesId })
+        }
         isCreating={isPending}
         label={'복구'}
         disabled={false}

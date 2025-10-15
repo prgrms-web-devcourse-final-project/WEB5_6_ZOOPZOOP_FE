@@ -4,20 +4,16 @@ import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useMoveToSpaceTrashAction } from '../../model/useMoveToSpaceTrashAction'
 import ModalLoading from '@/shared/ui/loading/ModalLoading'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
-  dataSourceId: number[]
+  selectedFiles: CheckedFile[]
 }
 
-function MoveToSpaceTrashModal({ dataSourceId }: Props) {
+function MoveToSpaceTrashModal({ selectedFiles }: Props) {
   const { currentSpace } = useSpaceStore()
   const spaceId = currentSpace!.spaceId
-  const { data, isLoading } = useSpaceFilesByFolderQuery(spaceId)
-  const selectedFiles =
-    data?.files?.filter(file =>
-      dataSourceId.includes(Number(file.dataSourceId))
-    ) ?? []
-
+  const selectedFileList = selectedFiles.map(item => item.dataSourceId)
   const { handleMoveToTrash, isPending } = useMoveToSpaceTrashAction()
 
   return (
@@ -26,42 +22,31 @@ function MoveToSpaceTrashModal({ dataSourceId }: Props) {
         <h1 className="text-2xl text-gray-darker font-bold text-center">
           파일 임시 삭제
         </h1>
+        <p className="mx-auto text-base text-gray-darker  ">
+          <span className="font-bold"> {selectedFileList.length}개</span>의
+          파일이 휴지통으로 이동됩니다.
+        </p>
         {!isPending ? (
-          <>
-            <p className="mx-auto text-base text-gray-darker  ">
-              <span className="font-bold"> {dataSourceId.length}개</span>의
-              파일이 휴지통으로 이동됩니다.
-            </p>
-
-            <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
-              {!isLoading ? (
-                selectedFiles &&
-                selectedFiles.map(item => (
-                  <div
-                    key={item.dataSourceId}
-                    className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-                    {item.title}
-                  </div>
-                ))
-              ) : (
-                <div className=" w-full flex justify-center items-center  min-h-[35vh] ">
-                  <ModalLoading />
-                </div>
-              )}
-            </div>
-          </>
+          <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
+            {selectedFiles.map(item => (
+              <div
+                key={item.dataSourceId}
+                className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
+                {item.fileName}
+              </div>
+            ))}
+          </div>
         ) : (
           <div className=" w-full flex justify-center items-center  min-h-[35vh] ">
             <ModalLoading />
           </div>
         )}
-
         {/* 버튼 */}
         <FolderActionButtons
           onCreate={() => {
             handleMoveToTrash({
               spaceId: spaceId,
-              dataSourceId: dataSourceId
+              dataSourceId: selectedFileList
             })
           }}
           isCreating={isPending}
