@@ -8,6 +8,7 @@ interface Props {
 const FileThumbnail = ({ imageUrl, title }: Props) => {
   return (
     <Image
+      referrerPolicy="no-referrer"
       className="w-full h-[200px] rounded-t-lg overflow-hidden"
       src={
         imageUrl
