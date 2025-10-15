@@ -35,5 +35,5 @@ export const useCopyToSpaceAction = () => {
     })
   }
 
-  return { handleCopyToSpace, idPending: copyToSpace.isPending }
+  return { handleCopyToSpace, isPending: copyToSpace.isPending }
 }

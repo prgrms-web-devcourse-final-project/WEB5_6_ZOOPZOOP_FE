@@ -21,6 +21,7 @@ async function ArchiveTrashPage({ searchParams }: Props) {
 
   const initialFileData = await getInitialFileList({
     size: 12,
+    page: 0,
     isActive: false,
     sort: currentSort
   })

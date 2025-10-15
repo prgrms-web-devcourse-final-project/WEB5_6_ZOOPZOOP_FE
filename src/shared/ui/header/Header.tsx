@@ -5,7 +5,7 @@ import SearchBar from './Search'
 import { useCallback, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useModalStore } from '@/shared/lib'
-import { Plus, Upload } from 'lucide-react'
+import { ChevronLeft, Plus, Upload } from 'lucide-react'
 
 export type Button = {
   label: string
@@ -16,7 +16,6 @@ interface Props {
   buttons?: Button[]
   searchBar: {
     placeholder: string
-    // TODO: API 응답 타입에 따라 Promise<SearchResult[]> 등으로 변경 예정
     onSearch?: (query: string) => void | Promise<void>
   }
 }
@@ -37,51 +36,65 @@ function Header({ title, buttons, searchBar }: Props) {
 
   const searchHeader = useCallback(() => {
     return (
-      <SearchBar
-        placeholder={searchBar.placeholder}
-        value={query}
-        onChange={setQuery}
-        onEnter={handleSearch}
-      />
+      <header className="bg-gray-dark-active px-2 pb-5 py-1">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-1 p-2 rounded-lg hover:bg-gray-600  cursor-pointer transition-colors mb-2">
+          <ChevronLeft
+            className=" text-white"
+            size={20}
+          />
+          <p className="text-white text-sm">뒤로 가기</p>
+        </button>
+        <div className="px-4">
+          <h1 className="text-white font-bold text-2xl mb-5">{title}</h1>
+          <div className="flex items-center gap-3">
+            <SearchBar
+              placeholder={searchBar.placeholder}
+              value={query}
+              onChange={setQuery}
+              onEnter={handleSearch}
+            />
+          </div>
+        </div>
+      </header>
     )
-  }, [searchBar.placeholder, query, handleSearch])
+  }, [searchBar.placeholder, query, handleSearch, router])
 
   const buttonWithSearchHeader = useCallback(() => {
     return (
-      <div className="flex justify-between">
-        <div className="flex gap-3">
-          {buttons &&
-            buttons.map(button => {
-              const modalLabel =
-                button.label === '폴더 생성'
-                  ? 'create-folder'
-                  : 'upload-archive-url'
-              const Icon = button.label === '폴더 생성' ? Plus : Upload
-              return (
-                <ActionButton
-                  key={button.label}
-                  label={button.label}
-                  icon={Icon}
-                  onClick={() => openModal({ type: modalLabel })}
-                />
-              )
-            })}
+      <header className="bg-gray-dark-active p-6">
+        <h1 className="text-white font-bold text-2xl mb-7">{title}</h1>
+        <div className="flex justify-between">
+          <SearchBar
+            placeholder={searchBar.placeholder}
+            value={query}
+            onChange={setQuery}
+            onEnter={handleSearch}
+          />
+          <div className="flex gap-3">
+            {buttons &&
+              buttons.map(button => {
+                const modalLabel =
+                  button.label === '폴더 생성'
+                    ? 'create-folder'
+                    : 'upload-archive-url'
+                const Icon = button.label === '폴더 생성' ? Plus : Upload
+                return (
+                  <ActionButton
+                    key={button.label}
+                    label={button.label}
+                    icon={Icon}
+                    onClick={() => openModal({ type: modalLabel })}
+                  />
+                )
+              })}
+          </div>
         </div>
-        <SearchBar
-          placeholder={searchBar.placeholder}
-          value={query}
-          onChange={setQuery}
-          onEnter={handleSearch}
-        />
-      </div>
+      </header>
     )
   }, [buttons, searchBar.placeholder, query, handleSearch])
 
-  return (
-    <header className="bg-gray-dark-active p-6">
-      <h1 className="text-white font-bold text-2xl mb-7">{title}</h1>
-      {buttons ? buttonWithSearchHeader() : searchHeader()}
-    </header>
-  )
+  return <>{buttons ? buttonWithSearchHeader() : searchHeader()}</>
 }
 export default Header

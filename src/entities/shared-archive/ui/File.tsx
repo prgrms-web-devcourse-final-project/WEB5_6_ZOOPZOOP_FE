@@ -70,7 +70,7 @@ const File = ({
         )}
         <time
           className="text-xs text-gray-normal font-medium my-auto flex-1 text-end"
-          title={`작성일: ${formattedDate}`}>
+          title={`업로드 일: ${formattedDate}`}>
           {formattedDate}
         </time>
       </footer>

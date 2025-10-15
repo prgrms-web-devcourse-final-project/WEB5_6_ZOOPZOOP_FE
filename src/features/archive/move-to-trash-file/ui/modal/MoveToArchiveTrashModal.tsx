@@ -11,6 +11,7 @@ import { useMoveToTrashArchiveFilesQuery } from '../../model/queries'
 import { showSuccessToast } from '@/shared/ui/toast/Toast'
 import { SelectFileSection } from '@/features/archive/move-file'
 import { useRouter } from 'next/navigation'
+import ModalLoading from '@/shared/ui/loading/ModalLoading'
 
 function MoveToArchiveTrashModal() {
   const router = useRouter()
@@ -18,7 +19,7 @@ function MoveToArchiveTrashModal() {
     useMoveFileModalState()
 
   const closeModal = useModalStore(s => s.closeModal)
-  const { moveToTrash } = useMoveToTrashArchiveFilesQuery()
+  const { moveToTrash, isPending } = useMoveToTrashArchiveFilesQuery()
   const { foldersQuery } = useGetArchiveFoldersQuery()
   const folderList = foldersQuery.data?.data || []
 
@@ -40,7 +41,9 @@ function MoveToArchiveTrashModal() {
     moveToTrash.mutate(fileIdList, {
       onSuccess: () => {
         showSuccessToast('파일 휴지통으로 이동')
+
         closeModal()
+
         router.push('/archive/trash')
       }
     })
@@ -50,43 +53,52 @@ function MoveToArchiveTrashModal() {
     <ModalLayout size="lg">
       <div className=" w-full flex flex-col gap-2 min-h-[600px] ">
         <h1 className="text-2xl text-gray-darker font-bold text-center">
-          파일 삭제
+          파일 임시 삭제
         </h1>
         <p className="mx-auto text-base text-gray-darker  ">
           선택한 파일은 휴지통으로 이동됩니다.
         </p>
-        <div className="flex justify-between">
-          {/* 파일 위치 */}
-          <div className="w-1/2 flex flex-col gap-2.5 ">
-            <SelectFileSection
-              folderList={folderList}
-              filesForArchiveFolder={filesForArchiveFolder}
-              archiveFolderType={'file'}
-              selectedFiles={selectedFiles}
-              selectedFolder={selectedFolder}
-              onFolderSelect={handleSelectFolder}
-              onFileSelect={onSelectFiles}
-            />
+
+        {!isPending ? (
+          <>
+            <div className="flex justify-between">
+              {/* 파일 위치 */}
+              <div className="w-1/2 flex flex-col gap-2.5 ">
+                <SelectFileSection
+                  folderList={folderList}
+                  filesForArchiveFolder={filesForArchiveFolder}
+                  archiveFolderType={'file'}
+                  selectedFiles={selectedFiles}
+                  selectedFolder={selectedFolder}
+                  onFolderSelect={handleSelectFolder}
+                  onFileSelect={onSelectFiles}
+                />
+              </div>
+              <div className="flex items-center">
+                <ChevronsRight
+                  size={50}
+                  className="text-green-normal"
+                />
+              </div>
+              <div className="w-1/2 flex flex-col items-center justify-center">
+                <Trash2
+                  size={80}
+                  className="text-gray-normal"
+                />
+                <p className="text-xl">휴지통</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center  min-h-[500px] ">
+            <ModalLoading />
           </div>
-          <div className="flex items-center">
-            <ChevronsRight
-              size={50}
-              className="text-green-normal"
-            />
-          </div>
-          <div className="w-1/2 flex flex-col items-center justify-center">
-            <Trash2
-              size={80}
-              className="text-gray-normal"
-            />
-            <p className="text-xl">휴지통</p>
-          </div>
-        </div>
+        )}
 
         {/* 버튼 */}
         <FolderActionButtons
           onCreate={handleMoveToTrash}
-          isCreating={moveToTrash.isPending}
+          isCreating={isPending}
           label={'이동'}
           disabled={selectedFiles.length === 0}
         />

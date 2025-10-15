@@ -10,6 +10,7 @@ import SelectFileSection from './SelectFileSection'
 import SelectSaveFolderSection from './SelectSaveFolderSection'
 import { useMoveFileModalState } from '../../model/useMoveFileModalState'
 import { useMoveFileAction } from '../../model/useMoveFileAction'
+import ModalLoading from '@/shared/ui/loading/ModalLoading'
 
 export const MoveFileModal = () => {
   const {
@@ -45,36 +46,45 @@ export const MoveFileModal = () => {
     <ModalLayout size="lg">
       <div className=" w-full flex flex-col gap-5 min-h-[600px] ">
         <h1 className="text-2xl font-bold text-center">파일 이동</h1>
-        <div className="flex justify-between">
-          {/* 파일 위치 */}
-          <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
-            <SelectFileSection
-              folderList={folderList}
-              filesForArchiveFolder={filesForArchiveFolder}
-              archiveFolderType={'file'}
-              selectedFiles={selectedFiles}
-              selectedFolder={selectedFolder}
-              onFolderSelect={handleSelectFolder}
-              onFileSelect={onSelectFiles}
-            />
-          </div>
-          <div className="flex items-center">
-            <ChevronsRight
-              size={50}
-              className="text-green-normal"
-            />
-          </div>
 
-          <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
-            <SelectSaveFolderSection
-              location="내 아카이브"
-              folderList={folderList}
-              saveFolder={saveFolder}
-              selectedSaveFolder={selectedSaveFolder!}
-              onFolderSelect={handleSelectSaveFolder}
-            />
+        {!isPending ? (
+          <>
+            <div className="flex justify-between">
+              {/* 파일 위치 */}
+              <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
+                <SelectFileSection
+                  folderList={folderList}
+                  filesForArchiveFolder={filesForArchiveFolder}
+                  archiveFolderType={'file'}
+                  selectedFiles={selectedFiles}
+                  selectedFolder={selectedFolder}
+                  onFolderSelect={handleSelectFolder}
+                  onFileSelect={onSelectFiles}
+                />
+              </div>
+              <div className="flex items-center">
+                <ChevronsRight
+                  size={50}
+                  className="text-green-normal"
+                />
+              </div>
+
+              <div className="w-1/2 h-[600px] flex flex-col gap-2.5 overflow-hidden box-border">
+                <SelectSaveFolderSection
+                  location="내 아카이브"
+                  folderList={folderList}
+                  saveFolder={saveFolder}
+                  selectedSaveFolder={selectedSaveFolder!}
+                  onFolderSelect={handleSelectSaveFolder}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center  min-h-[500px] ">
+            <ModalLoading />
           </div>
-        </div>
+        )}
 
         {/* 버튼 */}
         <FolderActionButtons
