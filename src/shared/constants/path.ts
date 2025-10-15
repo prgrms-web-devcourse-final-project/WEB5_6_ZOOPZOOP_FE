@@ -21,5 +21,8 @@ export const PATH = {
   },
   PROFILE: {
     ROOT: '/profile'
+  },
+  ABOUT: {
+    ROOT: '/about'
   }
 } as const

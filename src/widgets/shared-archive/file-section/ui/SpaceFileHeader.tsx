@@ -1,3 +1,4 @@
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 import {
   DeleteSpaceFileButton,
   MoveToSpaceTrashButton,
@@ -14,7 +15,7 @@ interface Props {
   sortKey: SortKey
   direction: SortDirection
   isTableView: boolean
-  selectedIds: number[]
+  selectedFiles: CheckedFile[]
   mode: SpaceFileMode
   onChangeView: () => void
   toggleSort: (key: SortKey) => void
@@ -26,7 +27,7 @@ function SpaceFileHeader({
   direction,
   isTableView,
   mode,
-  selectedIds,
+  selectedFiles,
   onChangeView,
   toggleSort,
   handleSelectAll
@@ -50,7 +51,7 @@ function SpaceFileHeader({
             </button>
             <MoveToSpaceTrashButton
               mode="space"
-              dataSourceIds={selectedIds}
+              selectedFiles={selectedFiles}
             />
           </>
         )}
@@ -63,8 +64,8 @@ function SpaceFileHeader({
               className=" text-center cursor-pointer px-3 text-base hover:bg-gray-light-active border-r-2">
               전체 선택
             </button>
-            <RestoreSpaceFileButton selectedIds={selectedIds} />
-            <DeleteSpaceFileButton selectedIds={selectedIds} />
+            <RestoreSpaceFileButton selectedFiles={selectedFiles} />
+            <DeleteSpaceFileButton selectedFiles={selectedFiles} />
           </>
         )}
       </div>

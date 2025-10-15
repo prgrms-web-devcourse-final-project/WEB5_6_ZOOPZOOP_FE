@@ -24,7 +24,7 @@ export function Hero() {
                 지금 시작하기
               </Link>
               <Link
-                href="https://chromewebstore.google.com/detail/your-extension-id"
+                href="https://github.com/prgrms-web-devcourse-final-project/WEB5_6_ZOOPS_TENSION_FE"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full border-2 border-neutral-300 px-6 py-3 text-base font-semibold text-[#0b0b0b] transition-all hover:border-neutral-400 hover:bg-neutral-50">

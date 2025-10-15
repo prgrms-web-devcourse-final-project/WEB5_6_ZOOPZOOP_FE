@@ -29,7 +29,8 @@ export const usePostArchiveFolderQuery = () => {
   })
 
   return {
-    addFolder
+    addFolder,
+    isPending: addFolder.isPending
   }
 }
 

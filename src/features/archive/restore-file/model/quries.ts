@@ -7,7 +7,7 @@ export const useRestoreArchiveFilesQuery = () => {
     mutationFn: (dataSourceId: number[]) =>
       restoreManyArchiveFileClient(dataSourceId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['archiveSoftDelete'] })
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
     }
   })
 

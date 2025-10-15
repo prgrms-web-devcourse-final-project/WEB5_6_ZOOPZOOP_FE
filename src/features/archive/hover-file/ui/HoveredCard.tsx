@@ -1,6 +1,4 @@
-// HoveredCard.tsx
 import { Checkbox } from '@/shared/ui'
-import Link from 'next/link'
 import { tw } from '@/shared/lib'
 import { FileMode } from '../../list'
 

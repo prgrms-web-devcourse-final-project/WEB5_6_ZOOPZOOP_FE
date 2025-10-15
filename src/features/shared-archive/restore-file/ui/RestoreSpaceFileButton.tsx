@@ -1,23 +1,24 @@
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 import { useModalStore } from '@/shared/lib'
 import { showInfoToast } from '@/shared/ui/toast/Toast'
 
 interface Props {
-  selectedIds: number[]
+  selectedFiles: CheckedFile[]
 }
 
-function RestoreSpaceFileButton({ selectedIds }: Props) {
+function RestoreSpaceFileButton({ selectedFiles }: Props) {
   const openModal = useModalStore(s => s.openModal)
 
   return (
     <button
       type="button"
       onClick={() => {
-        if (selectedIds.length === 0) {
+        if (selectedFiles.length === 0) {
           showInfoToast('한 개 이상의 파일을 선택해야 합니다')
         } else {
           openModal({
             type: 'restore-space-file',
-            props: { dataSourceId: selectedIds }
+            props: { selectedFiles: selectedFiles }
           })
         }
       }}

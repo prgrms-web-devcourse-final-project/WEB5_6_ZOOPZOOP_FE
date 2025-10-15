@@ -8,7 +8,8 @@ import {
   TextSearch,
   Users,
   BotMessageSquare,
-  LucideIcon
+  LucideIcon,
+  Book
 } from 'lucide-react'
 import { PATH } from '../constants'
 
@@ -77,6 +78,6 @@ export const navItems: MainNav[] = [
     ]
   },
   { href: PATH.NEWS.ROOT, label: '뉴스', icon: ScrollText },
-
+  { href: PATH.ABOUT.ROOT, label: '사용 방법', icon: Book },
   { href: PATH.PROFILE.ROOT, label: '계정 관리', icon: Settings }
 ]

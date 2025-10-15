@@ -39,7 +39,7 @@ export default function SpaceFileSection({
   // 뷰 전환, 정렬, 선택 훅
   const { viewMode, onSwitchViewMode } = useSwitchSpaceFileView()
   const { sort, toggleSort } = useSortFile()
-  const { selectedIds, handleSelect, handleSelectAll } = useSelectSpaceFiles()
+  const { selectedFiles, handleSelect, handleSelectAll } = useSelectSpaceFiles()
 
   useSpaceFilesQuery({
     query: {
@@ -65,7 +65,7 @@ export default function SpaceFileSection({
         sortKey={sort.key}
         direction={sort.direction}
         isTableView={viewMode === 'list'}
-        selectedIds={selectedIds}
+        selectedFiles={selectedFiles}
         onChangeView={onSwitchViewMode}
         toggleSort={toggleSort}
         handleSelectAll={() => handleSelectAll(fileList)}
@@ -77,13 +77,13 @@ export default function SpaceFileSection({
           <TableView
             mode={mode}
             fileList={fileList}
-            selectedFiles={selectedIds}
+            selectedFiles={selectedFiles}
             onSelect={handleSelect}
             onSelectAll={handleSelectAll}
           />
         ) : (
           <CardView
-            selectedIds={selectedIds}
+            selectedFiles={selectedFiles}
             onSelect={handleSelect}
             mode={mode}
             fileList={initialFileData.data.items}

@@ -11,7 +11,6 @@ export const getInitialFileList = async (
       token,
       cache: 'no-store',
       next: { tags: ['archiveFiles'] }
-      // next: { revalidate: 60, tags: ['archiveFiles'] }
     })
   })
 

@@ -7,11 +7,12 @@ export const useMoveToTrashArchiveFilesQuery = () => {
     mutationFn: (dataSourceId: number[]) =>
       softDeleteArchiveFileClient(dataSourceId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['archiveSoftDelete'] }) // 추후 최신화
+      queryClient.invalidateQueries({ queryKey: ['archiveFilesPage'] })
     }
   })
 
   return {
-    moveToTrash
+    moveToTrash,
+    isPending: moveToTrash.isPending
   }
 }

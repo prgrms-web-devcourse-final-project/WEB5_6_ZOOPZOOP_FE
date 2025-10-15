@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
   const isPublicPath = publicPaths.some(path => path === pathname)
 
   if (accessToken && isPublicPath) {
-    return NextResponse.redirect(new URL(PATH.NEWS.ROOT, request.url))
+    return NextResponse.redirect(new URL(PATH.ARCHIVE.ROOT, request.url))
   }
 
   if (!accessToken && !isPublicPath) {

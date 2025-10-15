@@ -18,10 +18,13 @@ export const GET = async () => {
     )
     return NextResponse.json(response)
   } catch (error) {
-    return NextResponse.json(
-      { error: '폴더 조회 중 오류 발생' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      status: 500,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '폴더 조회 중 오류 발생' }
+    })
   }
 }
 
@@ -37,10 +40,13 @@ export const POST = async (request: Request) => {
     )
     return NextResponse.json(response)
   } catch (error) {
-    return NextResponse.json(
-      { error: '폴더 생성 중 오류 발생' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      status: 500,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '폴더 생성 중 오류 발생' }
+    })
   }
 }
 
@@ -67,10 +73,13 @@ export const PATCH = async (request: Request) => {
     )
     return NextResponse.json(response)
   } catch (error) {
-    return NextResponse.json(
-      { error: '폴더 이름 변경 중 오류 발생' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      status: 500,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '폴더 이름 변경 중 오류 발생' }
+    })
   }
 }
 
@@ -86,9 +95,12 @@ export const DELETE = async (request: Request) => {
     )
     return NextResponse.json(response)
   } catch (error) {
-    return NextResponse.json(
-      { error: '폴더 삭제 중 오류 발생' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      status: 500,
+      msg:
+        error instanceof Error
+          ? error.message
+          : { error: '폴더 삭제 변경 중 오류 발생' }
+    })
   }
 }

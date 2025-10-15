@@ -2,6 +2,7 @@ import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useRestoreFileAction } from '../../model/useRestoreFileAction'
 import { CheckedFile } from '@/features/archive/move-file/model/type'
+import ModalLoading from '@/shared/ui/loading/ModalLoading'
 
 interface Props {
   selectedFiles: CheckedFile[]
@@ -19,16 +20,20 @@ function RestoreFileModal({ selectedFiles }: Props) {
         복구됩니다.
       </p>
 
-      <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
-        {selectedFiles &&
-          selectedFiles.map(item => (
-            <div
-              key={item.dataSourceId}
-              className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
-              {item.fileName}
-            </div>
-          ))}
-      </div>
+      {!isPending ? (
+        <div className="w-full flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto">
+          {selectedFiles &&
+            selectedFiles.map(item => (
+              <div
+                key={item.dataSourceId}
+                className="min-h-12 flex items-center border border-gray-light rounded-md px-3 text-base bg-gray-light truncate">
+                {item.fileName}
+              </div>
+            ))}
+        </div>
+      ) : (
+        <ModalLoading />
+      )}
 
       <FolderActionButtons
         onCreate={() => handelRestore(selectedFilesId)}

@@ -1,6 +1,4 @@
 import { useModalStore } from '@/shared/lib'
-import { FileMode } from '../../list'
-import { showInfoToast } from '@/shared/ui/toast/Toast'
 
 function MoveToTrashButton() {
   const openModal = useModalStore(s => s.openModal)

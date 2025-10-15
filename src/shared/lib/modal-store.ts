@@ -15,13 +15,13 @@ type ModalType =
   | { type: 'delete-account' }
   | { type: 'copy-to-space' }
   | { type: 'go-to-archive-trash' }
-  | { type: 'go-to-space-trash'; props: { dataSourceId: number[] } }
+  | { type: 'go-to-space-trash'; props: { selectedFiles: CheckedFile[] } }
   | { type: 'edit-archive-file'; props: { fileData: FileData } }
   | { type: 'edit-space-file'; props: { fileData: FileData } }
   | { type: 'delete-archive-file'; props: { selectedFiles: CheckedFile[] } }
-  | { type: 'delete-space-file'; props: { dataSourceId: number[] } }
+  | { type: 'delete-space-file'; props: { selectedFiles: CheckedFile[] } }
   | { type: 'restore-archive-file'; props: { selectedFiles: CheckedFile[] } }
-  | { type: 'restore-space-file'; props: { dataSourceId: number[] } }
+  | { type: 'restore-space-file'; props: { selectedFiles: CheckedFile[] } }
   | {
       type: 'add-member'
       props: {

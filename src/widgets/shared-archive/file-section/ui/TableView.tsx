@@ -2,12 +2,13 @@ import { CustomTable } from '@/shared/ui'
 import { getArchiveColumns, SpaceColumnType } from './SpaceColumn'
 import { FileData } from '@/entities/archive/file'
 import { SpaceFileMode } from '@/features/shared-archive'
+import { CheckedFile } from '@/features/archive/move-file/model/type'
 
 interface Props {
   fileList: FileData[]
   mode: SpaceFileMode
-  selectedFiles: number[]
-  onSelect: (cardId: number) => void
+  selectedFiles: CheckedFile[]
+  onSelect: (dataSourceId: number, fileName: string) => void
   onSelectAll: (files: FileData[]) => void
 }
 
@@ -23,7 +24,8 @@ function TableView({
     title: item.title,
     category: item.category,
     createdAt: item.dataCreatedDate,
-    origin: item.source
+    origin: item.source,
+    sourceUrl: item.sourceUrl
   }))
 
   const columns = getArchiveColumns(mode, selectedFiles, onSelect, () =>
