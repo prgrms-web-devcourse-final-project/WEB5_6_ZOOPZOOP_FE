@@ -2,7 +2,6 @@ import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
 import { useDeleteFileAction } from '../../model/useDeleteFileAction'
 import { useSpaceStore } from '@/entities/space'
-import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
 import ModalLoading from '@/shared/ui/loading/ModalLoading'
 import { CheckedFile } from '@/features/archive/move-file/model/type'
 

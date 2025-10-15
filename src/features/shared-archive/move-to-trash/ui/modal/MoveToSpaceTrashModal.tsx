@@ -1,4 +1,3 @@
-import { useSpaceFilesByFolderQuery } from '@/entities/shared-archive/model/queries'
 import { useSpaceStore } from '@/entities/space'
 import { ModalLayout } from '@/shared/ui'
 import { FolderActionButtons } from '@/shared/ui/modal/create-folder/FolderActionButtons'
