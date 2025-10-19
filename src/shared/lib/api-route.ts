@@ -43,21 +43,37 @@ export const requireAuth = async <T>(handler: AuthHandler<T>) => {
   if (!token) return { status: 401, data: null, msg: '토큰 없음, 인증 필요' }
   const response = await handler(token)
 
-  if (response.status !== 401) {
-    return response
-  }
+  // 에러 코드 중에서도 401(인증 실패) 일 경우
+  if (response.status !== 401) return response
 
-  const newAccessToken = await refreshAccessTokenOnce()
+  const newAccessToken = await refreshAccessToken()
 
-  if (newAccessToken) {
-    return handler(newAccessToken)
-  }
-
-  return response
+  return newAccessToken ? handler(newAccessToken) : response
 }
 
-const refreshAccessTokenOnce = async () => {
+// 클로저를 사용하기 위한 iife 패턴
+const refreshAccessToken = (() => {
+  // 플래그
+  let inProgress: Promise<string | null> | null = null
+
+  return async () => {
+    //  진행 중이면 대기
+    // 동일한 promise 이기 때문에 중복 요청은 동일하게 기다림
+    if (inProgress) return inProgress
+    // 새 작업을 Promise에 저장
+    // finally는 마이크로 태스트 큐에서 실행 됨
+    // return 이 반환된 다음 실행
+    inProgress = executeRefresh().finally(() => {
+      inProgress = null
+    })
+
+    return inProgress
+  }
+})()
+
+const executeRefresh = async () => {
   const sessionId = await getSessionId()
+  // 세션아이디가 없는 경우
   if (!sessionId) {
     await clearToken()
     return null
@@ -71,13 +87,16 @@ const refreshAccessTokenOnce = async () => {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to refresh token: ${response.status}`)
+      // eslint-disable-next-line no-console
+      console.warn(`Failed to refresh token: ${response.status}`)
+      return null
     }
     const newAccessToken = await getAccessToken()
 
     if (!newAccessToken) {
       // eslint-disable-next-line no-console
       console.warn('Refresh succeeded but no access token was set.')
+      return null
     }
 
     return newAccessToken
