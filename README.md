@@ -138,8 +138,8 @@
 
 | 기술 | 선택 이유 |
 |------|------------|
-| **Radix UI** | 접근성 있는 Headless 컴포넌트 |
-| **Lucide Icons** | 일관된 아이콘 세트, Tree Shaking 지원 |
+| **Shadcn/UI** | Tailwind 스타일로 구성해 커스터마이징이 쉽고, 디자인 시스템 일관성을 유지할 수 있음 |
+| **Lucide Icons** | 일관된 아이콘 세트 |
 | **Tailwind CSS 4** | 빠른 스타일링, 클래스 정렬 자동화 (Prettier 플러그인) |
 
 ### Developer Experience
